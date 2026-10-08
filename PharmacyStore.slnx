@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Clients/">
+    <Project Path="Store.POS/Store.POS.csproj" Id="2362697a-0c5d-479b-9d68-ba170b277b85" />
+  </Folder>
+  <Folder Name="/Server/">
+    <Project Path="Store.API/Store.API.csproj" Id="db6e884d-b0f8-4a11-94d9-c7900f140f02" />
+    <Project Path="Store.BLL/Store.BLL.csproj" Id="c0e42718-1c26-4810-be00-4c227f37173b" />
+    <Project Path="Store.DAL/Store.DAL.csproj" Id="052b0512-5dd2-4f3c-a36b-df0ff67fa38c" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Store.Shared/Store.Shared.csproj" Id="7e7f8d12-09bf-4bd9-9a3b-aa9da83abf6c" />
+  </Folder>
+</Solution>
