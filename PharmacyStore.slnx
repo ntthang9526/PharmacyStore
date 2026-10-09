@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Clients/">
-    <Project Path="Store.POS/Store.POS.csproj" Id="2362697a-0c5d-479b-9d68-ba170b277b85" />
+    <Project Path="Store.POS/Store.POS.csproj" Id="726d3760-eeba-4419-8725-6564d18afe12" />
   </Folder>
   <Folder Name="/Server/">
     <Project Path="Store.API/Store.API.csproj" Id="db6e884d-b0f8-4a11-94d9-c7900f140f02" />
