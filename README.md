@@ -1,1 +1,1 @@
-"Sau khi clone repo về, các bạn vào thư mục Database, mở file InitDatabase.sql bằng SSMS và bấm F5 (Execute) để tạo DB trước khi chạy project nhé."
+"Sau khi clone repo về, các bạn vào thư mục Store.DAL/Database, mở file InitDatabase.sql bằng SSMS và bấm F5 (Execute) để tạo DB trước khi chạy project nhé."
