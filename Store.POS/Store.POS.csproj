@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Store.DAL\Store.DAL.csproj" />
     <ProjectReference Include="..\Store.Shared\Store.Shared.csproj" />
   </ItemGroup>
 
