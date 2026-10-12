@@ -45,6 +45,9 @@ namespace Store.POS
                     return;
                 }
                 MessageBox.Show(result.Message);
+                this.Hide();
+                ShowFormMain();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -56,6 +59,11 @@ namespace Store.POS
             {
                 btnDangNhap.Enabled = true;
             }
+        }
+        private void ShowFormMain()
+        {
+            using var frmMain = new frmMain();
+            frmMain.ShowDialog();
         }
     }
 }
