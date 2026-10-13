@@ -17,7 +17,7 @@ namespace Store.POS
             string password = txtBoxMatKhau.Text;
             if (string.IsNullOrEmpty(username))
             {
-                MessageBox.Show("Tài khoản không được để trống!","Lỗi đăng nhập");
+                MessageBox.Show("Tài khoản không được để trống!", "Lỗi đăng nhập");
                 txtBoxTaiKhoan.Focus();
                 return;
             }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Store.Shared.Models
 {
-    internal class Medicine
+    public class Medicine
     {
+        public int ID { get; set; }
     }
 }
