@@ -2,6 +2,7 @@
 using Store.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Store.DAL
         {
             Dictionary<int, Medicine> list = new();
 
-            string sql = "select * from Medicines";
+            string sql = "select * from Medicines where IsActive = 1";
             using var connection = DBConnection.GetDbConnection();
             using var command = new SqlCommand(sql, connection);
 
@@ -39,6 +40,29 @@ namespace Store.DAL
                 list.Add(medicine.Id, medicine);
             }
             return list;
+        }
+
+
+        public int SoLuongConHan(int medId)
+        {
+            string sql = """
+                select b.MedicineId, SUM(b.Stock) as TotalStock
+                from Batches b
+                where CAST(b.ExpiryDate AS DATE) > CAST(GETDATE() AS DATE) and b.MedicineId = @MedicineId
+                group by b.MedicineId
+                """;
+
+            using var connection = DBConnection.GetDbConnection();
+            using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@MedicineId", SqlDbType.Int).Value = medId;
+
+            using var reader = command.ExecuteReader();
+            if (!reader.Read())
+            {
+                return -1;
+            }
+            return reader.GetInt32(reader.GetOrdinal("TotalStock"));
         }
     }
 }

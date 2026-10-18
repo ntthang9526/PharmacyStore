@@ -1,4 +1,5 @@
-﻿using Store.DAL;
+﻿using Store.BLL;
+using Store.DAL;
 using Store.POS.FormBanHang;
 using Store.Shared.Models;
 using System;
@@ -9,7 +10,9 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace Store.POS
@@ -19,8 +22,14 @@ namespace Store.POS
         private readonly BindingList<RowData> gioHang = new();
         private readonly BindingList<Medicine> timKiem = new();
         private readonly MedicineDAL medicineDAL = new();
-        private readonly Dictionary<int, Medicine>? danhSachThuoc = new();
+        private readonly MedicineBLL medicineBLL = new();
+        private readonly BatchDAL batchDAL = new();
+        private readonly Dictionary<int, Medicine> danhSachThuoc = new();
         private readonly Dictionary<Medicine, int> danhSachGioHang = new();
+        private bool isAddedVoucher = false;
+        private readonly CustomerDAL customerDAL = new();
+        private bool isAddedCustomer = false;
+        private decimal tongTien;
         public frmBanHang()
         {
             InitializeComponent();
@@ -37,6 +46,17 @@ namespace Store.POS
             }
             tableGioHang.DataSource = gioHang;
             tableTimKiem.DataSource = timKiem;
+
+            timerDateTime.Start();
+            UpdateDateTime();
+        }
+        private void timerDateTime_Tick(object sender, EventArgs e)
+        {
+            UpdateDateTime();
+        }
+        private void UpdateDateTime()
+        {
+            lblDateTime.Text = "Thời gian: " + DateTime.Now.ToString("HH:mm:ss") + " | " + DateTime.Now.ToString("dd/MM/yyyy");
         }
 
         private void frmBanHang_KeyDown(object sender, KeyEventArgs e)
@@ -47,6 +67,11 @@ namespace Store.POS
                 this.Close();
             }
         }
+        private void tableGioHang_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            tableGioHang.ClearSelection();
+            tableGioHang.CurrentCell = null;
+        }
 
         private void frmBanHang_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -56,13 +81,91 @@ namespace Store.POS
         {
         }
 
-        private void tableGioHang_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        // Chức năng tìm kiếm
+        private void tableTimKiem_CellContentClick(object sender, DataGridViewCellEventArgs e)///Logic
         {
-            tableGioHang.ClearSelection();
-            tableGioHang.CurrentCell = null;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+            if (tableTimKiem.Rows[e.RowIndex].DataBoundItem is not Medicine medicine)
+            {
+                return;
+            }
+            ThemSanPhamVaoGioHang(medicine);
+            CapNhatGiaTien();
+            boxTimKiem.Text = "";
+            tableTimKiem.Visible = false;
+        }
+        private void tableTimKiem_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            tableTimKiem.ClearSelection();
+            tableTimKiem.CurrentCell = null;
+        }
+        private void tableTimKiem_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+            var row = tableTimKiem.Rows[e.RowIndex];
+            if (row.IsNewRow) return;
+
+            if (!row.Selected)
+            {
+                tableTimKiem.ClearSelection();
+                row.Selected = true;
+            }
+        }
+        private void boxTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            string text = boxTimKiem.Text.ToLower();
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                Dictionary<int, Medicine> listData = new();
+                if (danhSachThuoc == null) return;
+                foreach (var item in danhSachThuoc)
+                {
+                    if (item.Key.ToString().Contains(text) || item.Value.Name.ToString().ToLower().Contains(text))
+                    {
+                        listData.Add(item.Key, item.Value);
+                    }
+                }
+                if (listData.Count == 0)
+                {
+                    tableTimKiem.Visible = false;
+                    return;
+                }
+                FillTableTimKiem(listData);
+                if (listData.Count >= 4)
+                {
+                    tableTimKiem.Size = new Size(tableTimKiem.Size.Width, 33 * 4);
+                }
+                else tableTimKiem.Size = new Size(tableTimKiem.Size.Width, 33 * listData.Count);
+            }
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                tableTimKiem.Visible = false;
+            }
+
+        }
+        private void FillTableTimKiem(Dictionary<int, Medicine> listData)
+        {
+            timKiem.Clear();
+            foreach (var item in listData)
+            {
+                timKiem.Add(item.Value);
+            }
+            tableTimKiem.Visible = true;
+
+        }
+        private void btnXoaTimKiem_Click(object sender, EventArgs e)
+        {
+            boxTimKiem.Text = "";
+            tableTimKiem.Visible = false;
         }
 
-
+        // Giỏ hàng
         private void tableGioHang_Leave(object sender, EventArgs e)
         {
             if (panelAction.Visible == true)
@@ -86,18 +189,6 @@ namespace Store.POS
                 panelAction.Visible = true;
             }
         }
-        private void ThemVaoGioHang(Medicine medicine)
-        {
-            var rowData = new RowData
-            {
-                Id = medicine.Id,
-                Name = medicine.Name,
-                Price = medicine.Price,
-                Quantity = 1,
-                Unit = medicine.Unit
-            };
-        }
-
         private void tableGioHang_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
@@ -126,7 +217,52 @@ namespace Store.POS
             panelAction.Location = new Point(panelAction.Location.X, viTri.Y);
             panelAction.Visible = true;
         }
-
+        // Thao tác sản phẩm trên giỏ hàng
+        private void numericSoLuong_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (tableGioHang.SelectedRows.Count < 0)
+            {
+                return;
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                CapNhatSoLuongGioHang();
+                CapNhatGiaTien();
+            }
+        }
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (tableGioHang.SelectedRows.Count > 0 && tableGioHang.SelectedRows[0].DataBoundItem is RowData row)
+            {
+                gioHang.Remove(row);
+                DemSoThuTu();
+                panelAction.Visible = false;
+            }
+        }
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            CapNhatSoLuongGioHang();
+            CapNhatGiaTien();
+            panelAction.Visible = false;
+        }
+        private void btnNhapSanPham_Click(object sender, EventArgs e)
+        {
+            NhapGioHang();
+        }
+        private void boxNhapSanPham_KeyDown(object sender, KeyEventArgs e)///Logic
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (string.IsNullOrWhiteSpace(boxNhapSanPham.Text.Trim()))
+                {
+                    MessageBox.Show("Mã sản phẩm không được để trống!", "Cảnh báo");
+                    return;
+                }
+                NhapGioHang();
+                CapNhatGiaTien();
+            }
+        }
+        // Hàm hỗ trợ/tái sử dụng
         private void AnActionNeuChuotRaNgoai(object? sender, EventArgs e)
         {
             Point chuot = Cursor.Position;
@@ -144,16 +280,6 @@ namespace Store.POS
                 tableGioHang.ClearSelection();
             }
         }
-
-        private void btnXoa_Click(object sender, EventArgs e)
-        {
-            if (tableGioHang.SelectedRows.Count > 0 && tableGioHang.SelectedRows[0].DataBoundItem is RowData row)
-            {
-                gioHang.Remove(row);
-                DemSoThuTu();
-                panelAction.Visible = false;
-            }
-        }
         private void DemSoThuTu()
         {
             for (int i = 0; i < gioHang.Count; i++)
@@ -162,78 +288,22 @@ namespace Store.POS
                 gioHang.ResetItem(i);
             }
         }
-
-        private void boxTimKiem_TextChanged(object sender, EventArgs e)
+        private void ThemSanPhamVaoGioHang(Medicine medicine)
         {
-            string text = boxTimKiem.Text.ToLower();
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                Dictionary<int, Medicine> listData = new();
-                if (danhSachThuoc == null) return;
-                foreach (var item in danhSachThuoc)
-                {
-                    if (item.Key.ToString().Contains(text) || item.Value.Name.ToString().ToLower().Contains(text))
-                    {
-                        listData.Add(item.Key, item.Value);
-                    }
-                }
-                if (listData.Count == 0)
-                {
-                    tableTimKiem.Visible = false;
-                    return;
-                }
-                FillTableTimKiem(listData);
-                if (listData.Count >= 4)
-                {
-                    tableTimKiem.Size = new Size(tableTimKiem.Size.Width, 35 * 4);
-                }
-                else tableTimKiem.Size = new Size(tableTimKiem.Size.Width, 35 * listData.Count);
-            }
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                tableTimKiem.Visible = false;
-            }
-
-        }
-        private void ResizeTable()
-        {
-
-        }
-        private void FillTableTimKiem(Dictionary<int, Medicine> listData)
-        {
-            timKiem.Clear();
-            foreach (var item in listData)
-            {
-                timKiem.Add(item.Value);
-            }
-            tableTimKiem.Visible = true;
-
-        }
-
-        private void frmBanHang_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableTimKiem_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0)
-            {
-                return;
-            }
-            if (tableTimKiem.Columns[e.ColumnIndex].Name != "btnThemGioHang")
-            {
-                return;
-            }
-            if (tableTimKiem.Rows[e.RowIndex].DataBoundItem is not Medicine medicine)
-            {
-                return;
-            }
             var existingRow = gioHang.FirstOrDefault(row => row.Id == medicine.Id);
             if (existingRow != null)
             {
-                existingRow.Quantity++;
-                gioHang.ResetItem(gioHang.IndexOf(existingRow));
+                try
+                {
+                    medicineBLL.KiemTraSoLuongConHan(medicine, existingRow.Quantity + 1);
+                    existingRow.Quantity++;
+                    gioHang.ResetItem(gioHang.IndexOf(existingRow));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
             }
             else
             {
@@ -247,43 +317,166 @@ namespace Store.POS
                     Price = medicine.Price
                 });
             }
-            boxTimKiem.Text = "";
-            tableTimKiem.Visible = false;
         }
-
-        private void tableTimKiem_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void CapNhatSoLuongGioHang()///Logic
         {
-            tableTimKiem.ClearSelection();
-            tableTimKiem.CurrentCell = null;
-        }
-
-        private void tableTimKiem_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            if (tableGioHang.SelectedRows[0].DataBoundItem is RowData row)
             {
+                int soLuong = int.Parse(numericSoLuong.Value.ToString());
+                if (soLuong == 0)
+                {
+                    gioHang.Remove(row);
+                }
+                int totalStock = medicineDAL.SoLuongConHan(row.Id);
+                if (totalStock == -1)
+                {
+                    MessageBox.Show("Vui lòng kiểm tra lại!");
+                    return;
+                }
+                try
+                {
+                    medicineBLL.KiemTraSoLuongConHan(row.Id, soLuong);
+                    row.Quantity = soLuong;
+                    gioHang.ResetItem(gioHang.IndexOf(row));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+            panelAction.Visible = false;
+        }
+        private void NhapGioHang()
+        {
+            string text = boxNhapSanPham.Text.Trim();
+            if (int.TryParse(text, out int ma))
+            {
+                Medicine medicine = danhSachThuoc.FirstOrDefault(med => med.Key == ma).Value;
+                if (medicine == null)
+                {
+                    MessageBox.Show("Không tìm thấy sản phẩm!", "Cảnh báo");
+                    boxNhapSanPham.SelectAll();
+                    boxNhapSanPham.Focus();
+                    return;
+                }
+                ThemSanPhamVaoGioHang(medicine);
+                CapNhatGiaTien();
+                boxNhapSanPham.Clear();
+                boxNhapSanPham.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Mã sản phẩm không hợp lệ!");
+                boxNhapSanPham.SelectAll();
+                boxNhapSanPham.Focus();
                 return;
             }
-            var row = tableTimKiem.Rows[e.RowIndex];
-            if (row.IsNewRow) return;
+        }
 
-            if (!row.Selected)
+
+        // Thanh toán
+        public void CapNhatGiaTien()
+        {
+            decimal tamTinh = 0;
+            tongTien = 0;
+            //Voucher
+            foreach (var row in gioHang)
             {
-                tableTimKiem.ClearSelection();
-                row.Selected = true;
+                tamTinh += row.Total;
+            }
+            labelTienTamTinh.Text = tamTinh + " đ";
+            if (isAddedVoucher)
+            {
+
+            }
+            if (isAddedCustomer)
+            {
+
+            }
+            tongTien = tamTinh /* - voucher*/;
+            labelTienTongTien.Text = tongTien + " đ";
+        }
+        private void ThemKhachHang()// Note
+        {
+            string text = boxMaKhachHang.Text.ToString();
+            if (!ValidatePhone(text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!");
+                return;
+            }
+            Customer? _customer = customerDAL.GetCustomerByPhone(text);
+            if (_customer == null)
+            {
+                DialogResult option = MessageBox.Show("Không tìm thấy khách hàng, bạn có muốn thêm mới?", "Lỗi", MessageBoxButtons.YesNo);
+                if (option == DialogResult.No)
+                {
+                    boxMaKhachHang.Clear();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Thêm mới khách hàng");
+                }
             }
         }
 
-        private void btnXoaTimKiem_Click(object sender, EventArgs e)
+
+        private bool ValidatePhone(string phone)
         {
-            boxTimKiem.Text = "";
-            tableTimKiem.Visible = false;
+            return Regex.IsMatch(phone, @"^0[35789]\d{8}$");
         }
 
-        private void btnThem_Click(object sender, EventArgs e)
+        private void tableGioHang_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            if (tableGioHang.SelectedRows.Count > 0 && tableGioHang.SelectedRows[0].DataBoundItem is RowData row)
-            {
+            CapNhatGiaTien();
+        }
 
+        private void tableGioHang_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            CapNhatGiaTien();
+        }
+
+        private void btnNhapKhachHang_Click(object sender, EventArgs e)
+        {
+            ThemKhachHang();
+        }
+
+        private void btnHuyHoaDon_Click(object sender, EventArgs e)
+        {
+            DialogResult option = MessageBox.Show("Bạn có muốn hủy hóa đơn?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
+            if (option == DialogResult.Yes)
+            {
+                gioHang.Clear();
+            }
+        }
+
+        private void boxTienKhach_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void boxTienKhach_TextChanged(object sender, EventArgs e)
+        {
+            string input = boxTienKhach.Text.Trim();
+            if (decimal.TryParse(input, out decimal tienKhachDua))
+            {
+                if (tienKhachDua >= tongTien)
+                {
+                    decimal tienTraLai = tienKhachDua - tongTien;
+                    boxTraLai.Text = tienTraLai + "";
+                }
+                else
+                {
+                    boxTraLai.Text = "Chưa đủ tiền";
+                }
+            }
+            else
+            {
+                boxTraLai.Text = "";
             }
         }
     }
