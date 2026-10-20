@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             tableTimKiem = new DataGridView();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
@@ -56,7 +56,10 @@
             numericSoLuong = new NumericUpDown();
             btnXoa = new Button();
             groupThanhToan = new GroupBox();
-            panel10 = new Panel();
+            panel13 = new Panel();
+            radioChuyenKhoan = new RadioButton();
+            radioTienMat = new RadioButton();
+            panelTienMat = new Panel();
             panel12 = new Panel();
             boxTraLai = new TextBox();
             label2 = new Label();
@@ -104,7 +107,8 @@
             panelAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericSoLuong).BeginInit();
             groupThanhToan.SuspendLayout();
-            panel10.SuspendLayout();
+            panel13.SuspendLayout();
+            panelTienMat.SuspendLayout();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
             panel7.SuspendLayout();
@@ -136,14 +140,14 @@
             tableTimKiem.ColumnHeadersVisible = false;
             tableTimKiem.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn1, btnThemGioHang });
             tableTimKiem.DataSource = medicineBindingSource;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            tableTimKiem.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            tableTimKiem.DefaultCellStyle = dataGridViewCellStyle6;
             tableTimKiem.Location = new Point(215, 83);
             tableTimKiem.Name = "tableTimKiem";
             tableTimKiem.ReadOnly = true;
@@ -219,34 +223,34 @@
             tableGioHang.AllowUserToDeleteRows = false;
             tableGioHang.AllowUserToResizeColumns = false;
             tableGioHang.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = Color.White;
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
-            tableGioHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.BackColor = Color.White;
+            dataGridViewCellStyle7.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.ControlText;
+            tableGioHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             tableGioHang.AutoGenerateColumns = false;
             tableGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tableGioHang.BackgroundColor = SystemColors.ScrollBar;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            tableGioHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            tableGioHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             tableGioHang.ColumnHeadersHeight = 30;
             tableGioHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             tableGioHang.Columns.AddRange(new DataGridViewColumn[] { noDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn, unitDataGridViewTextBoxColumn, quantityDataGridViewTextBoxColumn, priceDataGridViewTextBoxColumn, totalDataGridViewTextBoxColumn, btnAction });
             tableGioHang.DataSource = rowDataBindingSource;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            tableGioHang.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.Window;
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
+            tableGioHang.DefaultCellStyle = dataGridViewCellStyle10;
             tableGioHang.EnableHeadersVisualStyles = false;
             tableGioHang.Location = new Point(0, 100);
             tableGioHang.MultiSelect = false;
@@ -322,12 +326,12 @@
             // 
             // btnAction
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ControlText;
-            btnAction.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.ControlText;
+            btnAction.DefaultCellStyle = dataGridViewCellStyle9;
             btnAction.FillWeight = 5F;
             btnAction.FlatStyle = FlatStyle.Flat;
             btnAction.HeaderText = "";
@@ -412,7 +416,8 @@
             // 
             // groupThanhToan
             // 
-            groupThanhToan.Controls.Add(panel10);
+            groupThanhToan.Controls.Add(panel13);
+            groupThanhToan.Controls.Add(panelTienMat);
             groupThanhToan.Controls.Add(panel7);
             groupThanhToan.Controls.Add(panel3);
             groupThanhToan.Controls.Add(panel5);
@@ -425,25 +430,61 @@
             groupThanhToan.TabStop = false;
             groupThanhToan.Text = "Thông tin thanh toán";
             // 
-            // panel10
+            // panel13
             // 
-            panel10.Controls.Add(panel12);
-            panel10.Controls.Add(label2);
-            panel10.Controls.Add(label1);
-            panel10.Controls.Add(panel11);
-            panel10.Location = new Point(1, 395);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(349, 162);
-            panel10.TabIndex = 6;
+            panel13.Controls.Add(radioChuyenKhoan);
+            panel13.Controls.Add(radioTienMat);
+            panel13.Location = new Point(1, 367);
+            panel13.Name = "panel13";
+            panel13.Size = new Size(349, 44);
+            panel13.TabIndex = 7;
+            // 
+            // radioChuyenKhoan
+            // 
+            radioChuyenKhoan.AutoSize = true;
+            radioChuyenKhoan.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            radioChuyenKhoan.Location = new Point(179, 6);
+            radioChuyenKhoan.Name = "radioChuyenKhoan";
+            radioChuyenKhoan.Size = new Size(165, 32);
+            radioChuyenKhoan.TabIndex = 1;
+            radioChuyenKhoan.Text = "Chuyển khoản";
+            radioChuyenKhoan.UseVisualStyleBackColor = true;
+            radioChuyenKhoan.CheckedChanged += radioChuyenKhoan_CheckedChanged;
+            radioChuyenKhoan.Click += radioChuyenKhoan_Click;
+            // 
+            // radioTienMat
+            // 
+            radioTienMat.AutoSize = true;
+            radioTienMat.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            radioTienMat.Location = new Point(12, 6);
+            radioTienMat.Name = "radioTienMat";
+            radioTienMat.Size = new Size(113, 32);
+            radioTienMat.TabIndex = 0;
+            radioTienMat.Text = "Tiền mặt";
+            radioTienMat.UseVisualStyleBackColor = true;
+            radioTienMat.CheckedChanged += radioTienMat_CheckedChanged;
+            radioTienMat.Click += radioTienMat_Click;
+            // 
+            // panelTienMat
+            // 
+            panelTienMat.Controls.Add(panel12);
+            panelTienMat.Controls.Add(label2);
+            panelTienMat.Controls.Add(label1);
+            panelTienMat.Controls.Add(panel11);
+            panelTienMat.Location = new Point(1, 409);
+            panelTienMat.Name = "panelTienMat";
+            panelTienMat.Size = new Size(349, 141);
+            panelTienMat.TabIndex = 6;
+            panelTienMat.Visible = false;
             // 
             // panel12
             // 
             panel12.BackColor = SystemColors.Menu;
             panel12.BorderStyle = BorderStyle.FixedSingle;
             panel12.Controls.Add(boxTraLai);
-            panel12.Location = new Point(8, 111);
+            panel12.Location = new Point(146, 50);
             panel12.Name = "panel12";
-            panel12.Size = new Size(184, 35);
+            panel12.Size = new Size(198, 35);
             panel12.TabIndex = 8;
             // 
             // boxTraLai
@@ -452,44 +493,48 @@
             boxTraLai.Enabled = false;
             boxTraLai.Location = new Point(3, 5);
             boxTraLai.Name = "boxTraLai";
-            boxTraLai.Size = new Size(176, 23);
+            boxTraLai.Size = new Size(190, 23);
             boxTraLai.TabIndex = 0;
+            boxTraLai.TextAlign = HorizontalAlignment.Right;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 85);
+            label2.Location = new Point(8, 56);
             label2.Name = "label2";
-            label2.Size = new Size(90, 23);
+            label2.Size = new Size(94, 23);
             label2.TabIndex = 7;
-            label2.Text = "Tiền trả lại";
+            label2.Text = "Tiền trả lại:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(8, 9);
+            label1.Location = new Point(8, 16);
             label1.Name = "label1";
-            label1.Size = new Size(128, 23);
+            label1.Size = new Size(132, 23);
             label1.TabIndex = 4;
-            label1.Text = "Tiền khách đưa";
+            label1.Text = "Tiền khách đưa:";
             // 
             // panel11
             // 
             panel11.BackColor = SystemColors.Window;
             panel11.BorderStyle = BorderStyle.FixedSingle;
             panel11.Controls.Add(boxTienKhach);
-            panel11.Location = new Point(8, 35);
+            panel11.Location = new Point(146, 8);
             panel11.Name = "panel11";
-            panel11.Size = new Size(184, 35);
+            panel11.Size = new Size(198, 36);
             panel11.TabIndex = 2;
             // 
             // boxTienKhach
             // 
+            boxTienKhach.BackColor = SystemColors.Window;
             boxTienKhach.BorderStyle = BorderStyle.None;
+            boxTienKhach.Enabled = false;
             boxTienKhach.Location = new Point(3, 5);
             boxTienKhach.Name = "boxTienKhach";
-            boxTienKhach.Size = new Size(176, 23);
+            boxTienKhach.Size = new Size(190, 23);
             boxTienKhach.TabIndex = 0;
+            boxTienKhach.TextAlign = HorizontalAlignment.Right;
             boxTienKhach.TextChanged += boxTienKhach_TextChanged;
             boxTienKhach.KeyPress += boxTienKhach_KeyPress;
             // 
@@ -714,6 +759,7 @@
             btnThanhToan.TabIndex = 0;
             btnThanhToan.Text = "THANH TOÁN";
             btnThanhToan.UseVisualStyleBackColor = true;
+            btnThanhToan.Click += btnThanhToan_Click;
             // 
             // groupGioHang
             // 
@@ -798,7 +844,7 @@
             panel8.Controls.Add(labelTongTien);
             panel8.Location = new Point(821, 330);
             panel8.Name = "panel8";
-            panel8.Size = new Size(349, 71);
+            panel8.Size = new Size(349, 50);
             panel8.TabIndex = 7;
             // 
             // labelTienTongTien
@@ -843,8 +889,10 @@
             panelAction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericSoLuong).EndInit();
             groupThanhToan.ResumeLayout(false);
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
+            panel13.ResumeLayout(false);
+            panel13.PerformLayout();
+            panelTienMat.ResumeLayout(false);
+            panelTienMat.PerformLayout();
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
             panel11.ResumeLayout(false);
@@ -929,12 +977,15 @@
         private Panel panel9;
         private Button btnHuyHoaDon;
         private Button btnThanhToan;
-        private Panel panel10;
+        private Panel panelTienMat;
         private Label label1;
         private Panel panel11;
         private TextBox boxTienKhach;
         private Panel panel12;
         private TextBox boxTraLai;
         private Label label2;
+        private Panel panel13;
+        private RadioButton radioTienMat;
+        private RadioButton radioChuyenKhoan;
     }
 }

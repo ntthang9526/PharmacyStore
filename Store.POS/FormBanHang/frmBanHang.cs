@@ -448,6 +448,8 @@ namespace Store.POS
             if (option == DialogResult.Yes)
             {
                 gioHang.Clear();
+                radioChuyenKhoan.Checked = false;
+                radioTienMat.Checked = false;
             }
         }
 
@@ -477,6 +479,89 @@ namespace Store.POS
             else
             {
                 boxTraLai.Text = "";
+            }
+        }
+
+        private void btnThanhToan_Click(object sender, EventArgs e)
+        {
+            if (gioHang.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng đang trống!");
+                return;
+            }
+            if (radioChuyenKhoan.Checked == false && radioTienMat.Checked == false)
+            {
+                MessageBox.Show("Chưa chọn phương thức thanh toán!");
+                return;
+            }
+            if (radioTienMat.Checked == true)
+            {
+                if (string.IsNullOrEmpty(boxTienKhach.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập số tiền!");
+                    return;
+                }
+                if (tongTien > decimal.Parse(boxTienKhach.Text))
+                {
+                    MessageBox.Show("Chưa đủ tiền!");
+                    return;
+                }
+                else
+                {
+                    LuuHoaDon();
+                }
+            }
+            if (radioChuyenKhoan.Checked == true)
+            {
+                using (var frmQR = new frmThanhToanQR(tongTien))
+                {
+                    if (frmQR.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LuuHoaDon();
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
+        }
+        private void LuuHoaDon()
+        {
+            MessageBox.Show("Thanh toán thành công");
+            gioHang.Clear();
+            boxTienKhach.Clear();
+        }
+
+        private void radioTienMat_CheckedChanged(object sender, EventArgs e)
+        {
+            boxTienKhach.Enabled = false;
+            panelTienMat.Visible = false;
+        }
+
+        private void radioTienMat_Click(object sender, EventArgs e)
+        {
+            if (gioHang.Count == 0)
+            {
+                radioTienMat.Checked = false;
+                return;
+            }
+            boxTienKhach.Enabled = true;
+            panelTienMat.Visible = true;
+        }
+
+        private void radioChuyenKhoan_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioChuyenKhoan_Click(object sender, EventArgs e)
+        {
+            if (gioHang.Count == 0)
+            {
+                radioChuyenKhoan.Checked = false;
+                return;
             }
         }
     }
