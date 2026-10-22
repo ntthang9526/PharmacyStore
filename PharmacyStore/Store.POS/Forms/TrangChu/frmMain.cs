@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Store.POS
+{
+    public partial class frmMain : Form
+    {
+        private readonly ContextMenuStrip menuQuanLyKhac;
+
+        private Panel pnlContainer;
+        
+        public frmMain()
+        {
+            InitializeComponent();
+            menuQuanLyKhac = new ContextMenuStrip(components ??= new Container());
+            menuQuanLyKhac.Items.Add("Nhóm thuốc", null, (_, _) => MoForm<frmNhomThuoc>());
+            menuQuanLyKhac.Items.Add("Nhà cung cấp", null, (_, _) => MoForm<frmNhaCungCap>());
+            menuQuanLyKhac.Items.Add("Khách hàng", null, (_, _) => MoForm<frmKhachHang>());
+            menuQuanLyKhac.Items.Add("Lô hàng", null, (_, _) => MoForm<frmLoHang>());
+            menuQuanLyKhac.Items.Add("Voucher", null, (_, _) => MoForm<frmVoucher>());
+            menuQuanLyKhac.Items.Add("Hóa đơn", null, (_, _) => MoForm<frmHoaDon>());
+            
+            pnlContainer = new Panel();
+            pnlContainer.Dock = DockStyle.Fill;                 // tự giãn khi phóng to / thu nhỏ cửa sổ
+            pnlContainer.BackColor = dashboard.BackColor;
+            pnlContainer.AutoScroll = true;                     // form con lớn hơn vùng chứa thì hiện thanh cuộn thay vì bị cắt
+
+            this.Controls.Remove(dashboard);
+            this.Controls.Add(pnlContainer);
+            pnlContainer.BringToFront();                        // Fill phải ở trên cùng z-order để được dock sau các thanh Top/Left
+            
+            dashboard.Dock = DockStyle.Fill;
+            pnlContainer.Controls.Add(dashboard);
+
+            ConfigureDashboard();
+        }
+
+        private void MoForm<T>() where T : Form, new()
+        {
+            try 
+            { 
+                foreach (Control ctrl in pnlContainer.Controls)
+                {
+                    if (ctrl is Form oldForm)
+                    {
+                        oldForm.Close();
+                        oldForm.Dispose();
+                    }
+                }
+                
+                dashboard.Visible = false;
+                
+                var form = new T(); 
+                form.TopLevel = false;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                
+                pnlContainer.Controls.Add(form);
+                form.Show();
+                form.BringToFront();
+            }
+            catch (Exception ex) { MessageBox.Show(this, "Không mở được chức năng: " + ex.Message, "Lỗi"); }
+        }
+
+        private void btnTrangChu_Click(object sender, EventArgs e)
+        {
+            foreach (Control ctrl in pnlContainer.Controls)
+            {
+                if (ctrl is Form oldForm)
+                {
+                    oldForm.Close();
+                    oldForm.Dispose();
+                }
+            }
+            dashboard.Visible = true;
+            TaiTongQuan();
+        }
+
+        private void ShowFormBanHang()
+        {
+            MoForm<frmBanHang>();
+        }
+        private void ShowFormQuanLyThuoc()
+        {
+            MoForm<frmQuanLyThuoc>();
+        }
+        private void ShowFormQuanLyKhac()
+        {
+            menuQuanLyKhac.Show(btnQuanLyKhac, new Point(0, btnQuanLyKhac.Height));
+        }
+        private void ShowFormNhapKho()
+        {
+            MoForm<frmNhapKho>();
+        }
+        private void ShowFormCanhBao()
+        {
+            MoForm<frmCanhBao>();
+        }
+        private void ShowFormBaoCao()
+        {
+            MoForm<frmBaoCao>();
+        }
+
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                ShowFormBanHang();
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                ShowFormQuanLyThuoc();
+            }
+            if (e.KeyCode == Keys.F3)
+            {
+                ShowFormQuanLyKhac();
+            }
+            if (e.KeyCode == Keys.F4)
+            {
+                ShowFormNhapKho();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                ShowFormCanhBao();
+            }
+            if (e.KeyCode == Keys.F6)
+            {
+                ShowFormBaoCao();
+            }
+        }
+
+        private void btnBanHang_Click(object sender, EventArgs e)
+        {
+            ShowFormBanHang();
+        }
+
+        private void btnQuanLyThuoc_Click(object sender, EventArgs e)
+        {
+            ShowFormQuanLyThuoc();
+        }
+
+        private void btnQuanLyKhac_Click(object sender, EventArgs e)
+        {
+            ShowFormQuanLyKhac();
+        }
+
+        private void btnNhapKho_Click(object sender, EventArgs e)
+        {
+            ShowFormNhapKho();
+        }
+
+        private void btnCanhBao_Click(object sender, EventArgs e)
+        {
+            ShowFormCanhBao();
+        }
+
+        private void btnBaoCao_Click(object sender, EventArgs e)
+        {
+            ShowFormBaoCao();
+        }
+    }
+}
