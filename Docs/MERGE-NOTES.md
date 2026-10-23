@@ -103,3 +103,35 @@ Chuyển 14 bố cục sang InitializeComponent chuẩn trong .Designer.cs: tran
 Tách form thêm nhóm thành frmThemNhomThuoc, giữ frmThemDanhMuc cho thêm NCC để mỗi loại có một bản Design chỉnh được. frmThemThuoc có constructor mặc định để mở Design. Các nút thêm nhanh, validate và trả ID để tự chọn mục mới được giữ lại. Giao diện đăng nhập, bán hàng, QR vốn đã có Designer được giữ bố cục. Việc tải danh sách thuốc ở form bán hàng được chuyển từ constructor sang Load và bỏ qua khi DesignMode; QR có constructor mặc định và không tải QR mạng trong DesignMode.
 
 Đã đối chiếu cây control/khung/màu/font/cột của Designer với constructor cho cả 14 form; 513 kiểm tra bố cục đạt, cùng các bộ kiểm tra thao tác cũ. Ảnh Design không có dữ liệu thật, dữ liệu chỉ nạp khi chạy. Báo cáo đối chiếu tại artifacts/logs/designer-parity.log; ảnh tại artifacts/designer/. Có Backups/BACKUP-before-designer-sync.zip để phục hồi mã trước đợt này. Chưa thao tác trực tiếp trong Visual Studio hoặc thử DPI khác.
+
+
+## Sửa theo các mục 1, 2, 8, 9 (22/10/2026)
+
+- Khôi phục cột bảng thuốc và khách hàng trực tiếp trong Designer; tắt tự sinh cột, hiện tiêu đề tiếng Việt và ẩn khóa nhóm/NCC trong bảng thuốc. Giữ bố cục và thay đổi hiện có của người dùng.
+- Tiền làm tròn đến đồng nguyên, từ 0,5 làm tròn lên. Làm tròn đơn giá trước khi nhân số lượng; đồng bộ giỏ hàng, tiền mặt, tiền thừa, QR, kiểm tra giá trong giao dịch, giá lưu chi tiết hóa đơn và nhập kho. Voucher tiền cố định làm tròn về đồng; voucher phần trăm vẫn nhập tối đa 2 số thập phân và làm tròn số tiền giảm. Áp dụng cho giao dịch mới, không ghi lại lịch sử hóa đơn cũ.
+- Điện thoại khách hàng bắt buộc đúng 10 chữ số ASCII, bắt đầu bằng 0, dùng chung kiểm tra khi thêm/sửa/tra cứu bán hàng. Số điện thoại NCC giữ quy tắc cũ để hỗ trợ số bàn.
+- Bán hàng: tìm theo mã vạch; ô nhập nhận mã vạch rồi Enter (cả máy quét dạng bàn phím), giữ nguyên số 0 đầu và mã dài 13 số. Ưu tiên mã vạch khớp chính xác, sau đó mã thuốc nội bộ. Mã vạch trùng yêu cầu chọn trong danh sách tìm kiếm.
+- Sao lưu mã trước sửa tại Backups/BACKUP-before-selected-fixes.zip. Không thêm database hay thay cấu trúc bảng. Bản chạy kiểm tra riêng tại artifacts/builds/selected-fixes/Store.POS.exe do bản chạy cũ đang mở giữ tệp.
+- Xác nhận cuối: build 0 lỗi/0 cảnh báo; đạt 104 kiểm tra nghiệp vụ và sửa mới, 127 voucher/nhập kho/hóa đơn, 17 Designer không SQL, 62 tìm kiếm/bỏ chọn và 513 bố cục. Tổng 823 kiểm tra. Số bản ghi thật giữ nguyên (1 hóa đơn, 2 khách hàng, 4 thuốc); checksum mã nguồn gốc: 0 tệp thay đổi. Chưa kiểm tra máy quét vật lý hoặc giao dịch ngân hàng thật.
+- Sau khi ứng dụng cũ đóng, đã build thành công lại đường dẫn chạy thông thường Store.POS/bin/Debug/net8.0-windows/Store.POS.exe (0 cảnh báo, 0 lỗi). Có thể mở bản này hoặc chạy lại từ Visual Studio.
+
+## Quản lý nhân viên, tạm ẩn và đồng bộ form (23/10/2026)
+
+- Quản lý khác → Nhân viên: tìm họ tên/tài khoản/điện thoại/mã; thêm, sửa, đổi mật khẩu, khóa/mở lại tài khoản. Mật khẩu trống khi sửa sẽ giữ mật khẩu cũ. Không hiển thị mật khẩu trong danh sách; mật khẩu mới và đổi mật khẩu được lưu bằng PBKDF2 có salt. Tài khoản cũ vẫn đăng nhập được.
+- Kiểm tra họ tên bắt buộc tối đa 100 ký tự; tài khoản 3–50 ký tự chữ/số/_.-; mật khẩu mới 6–128 ký tự; điện thoại nếu nhập phải đúng 10 số bắt đầu bằng 0. Chặn trùng tài khoản và khóa tài khoản đang đăng nhập. Khóa là ngừng đăng nhập, giữ nguyên lịch sử hóa đơn/nhập kho.
+- Các form chức năng mở độc lập, mỗi chức năng dùng lại một cửa sổ. Nút Tạm ẩn giữ nguyên giỏ hàng, phiếu nhập và thông tin chưa lưu. Mở lại từ nút chức năng hoặc Form đang mở trên trang chính. Khi đóng ứng dụng có thông báo nếu còn form đang mở/ẩn.
+- Sau khi ghi dữ liệu thành công, các form trong cùng phiên chạy tự tải lại trong khoảng 0,5 giây, gồm cả form đang ẩn. Giữ bộ lọc, các mục đang chọn và nội dung đang soạn; cập nhật dữ liệu tham chiếu, tên, giá và tồn kho. Giỏ hàng tính lại voucher, tổng tiền, tiền thừa; báo và khóa thanh toán nếu thuốc ngừng bán hoặc vượt tồn. Khi đổi giá ngay trước thanh toán, yêu cầu kiểm tra lại số tiền mới.
+- Đồng bộ áp dụng trong cùng ứng dụng; nút Làm mới trang chính tải lại toàn bộ form đang mở. Quyền truy cập vẫn theo cơ chế chung hiện có của dự án; không bổ sung vai trò.
+- Không tạo database/bảng mới; tiếp tục dùng Employees trong PharmacyStoreTrialDB. Sao lưu trước thay đổi: Backups/BACKUP-before-employees-windows.zip. Mã nhân viên chia trong Store.POS/Forms/NhanVien, Store.BLL/NhanVien và Store.DAL/NhanVien; phần tải lại của mỗi form nằm cùng form trong file .Refresh.cs.
+- Kiểm tra: build 0 cảnh báo/0 lỗi; 94 kiểm tra mới nhân viên/cửa sổ, 106 nghiệp vụ, 130 nhập kho/voucher/hóa đơn, 63 tìm kiếm/bỏ chọn, 33 thêm nhanh, 18 Designer không SQL và 598 bố cục (tổng 1.042 kiểm tra). Đã chạy lại 94 kiểm tra mới trên bản build thông thường. Nhật ký: artifacts/logs/employees-windows-*.log. Ảnh: artifacts/previews/frmNhanVien.png và sales-refresh-warning.png.
+- Bản chạy đã cập nhật: Store.POS/bin/Debug/net8.0-windows/Store.POS.exe. Các kiểm tra dọn đúng dữ liệu tạm; dữ liệu có sẵn còn 2 nhân viên, 1 hóa đơn, 2 khách hàng và 4 thuốc. Không sửa thư mục PharmacyStore gốc.
+
+## Form nhúng và điều hướng dọc (23/10/2026)
+
+- Bỏ thanh điều hướng ngang; chuyển Trang chủ và Form đang mở sang thanh dọc bên trái. Cửa sổ chính mặc định phóng to, có thể thu/phóng bằng nút tiêu chuẩn của Windows.
+- Toàn bộ 12 form chức năng nhúng không viền trong contentHost; mỗi lần hiện một form. Chuyển chức năng, về Trang chủ hoặc Tạm ẩn chỉ ẩn form để giữ giỏ hàng, phiếu nhập và nội dung chưa lưu. Mở lại từ nút chức năng hoặc Form đang mở sẽ dùng đúng instance cũ. Đóng form đang hiện trả về trang tổng quan.
+- Giữ cơ chế đồng bộ khi lưu dữ liệu, gồm cả form đang ẩn. Giữ quản lý nhân viên, quy tắc làm tròn, số điện thoại, mã vạch và trừ kho FEFO. F1–F6 vẫn hoạt động khi con trỏ đang ở form nhúng.
+- Bố cục trang chính nằm trong Designer với TableLayoutPanel; sửa thứ tự Dock/Anchor để bố cục co giãn thật sự. Bán hàng có giỏ hàng co giãn, cột thanh toán riêng; phần tiền mặt có thể cuộn nếu thiếu chiều cao. Nút thao tác giỏ hàng và danh sách tìm kiếm đặt theo vị trí thực của bảng/ô tìm kiếm.
+- Kiểm tra: 61 kiểm tra form nhúng/kích thước, 94 giữ trạng thái/nhân viên/đồng bộ, 106 nghiệp vụ, 130 nhập kho/voucher/hóa đơn, 63 tìm kiếm/bỏ chọn, 33 thêm nhanh, 18 Designer không SQL, 598 bố cục; tổng 1.103 kiểm tra đạt. Build thường và bản kiểm tra đều 0 cảnh báo/0 lỗi. Chưa thử mức DPI khác.
+- Nhật ký tại artifacts/logs/embedded-forms-*.log. Ảnh tại artifacts/previews/embedded-home.png, embedded-sales-laptop.png, embedded-sales-cash.png và embedded-employees.png. Có kiểm tra cửa sổ ở kích thước 1100x700, 1366x728 và 1600x900.
+- Sao lưu trước thay đổi: Backups/BACKUP-before-embedded-forms.zip. Bản chạy: Store.POS/bin/Debug/net8.0-windows/Store.POS.exe. Không thay cấu trúc database.

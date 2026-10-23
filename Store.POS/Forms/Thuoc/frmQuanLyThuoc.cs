@@ -3,7 +3,7 @@ using Store.BLL;
 
 namespace Store.POS
 {
-    public partial class frmQuanLyThuoc : Form
+    public partial class frmQuanLyThuoc : Form, ILamMoiDuLieu
     {
         private ThuocBLL bll = new ThuocBLL(); // Gọi tầng BLL để xử lý nghiệp vụ và validate
 
@@ -139,7 +139,7 @@ namespace Store.POS
                 cboNhomThuoc.SelectedValue = row.Cells["MaNhom"].Value;
                 cboNhaCungCap.SelectedValue = row.Cells["MaNCC"].Value;
                 cboDonViTinh.Text = row.Cells["DonViTinh"].Value.ToString();
-                txtDonGia.Text = row.Cells["DonGia"].Value.ToString();
+                txtDonGia.Text = Store.Shared.TienTe.LamTron(Convert.ToDecimal(row.Cells["DonGia"].Value)).ToString("0");
                 txtSoLuongTon.Text = row.Cells["SoLuongTon"].Value.ToString();
             }
         }
@@ -222,6 +222,7 @@ namespace Store.POS
                 MessageBox.Show("Vui lòng chọn nhóm thuốc và nhà cung cấp!");
                 return;
             }
+            txtDonGia.Text = Store.Shared.TienTe.LamTron(donGia).ToString("0");
             string error = "";
             bool kq = false;
             string maNhom = cboNhomThuoc.SelectedValue?.ToString() ?? "";

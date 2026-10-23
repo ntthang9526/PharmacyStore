@@ -38,6 +38,16 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
+        if(args.Contains("--embedded-ui"))
+        {
+            try {TestEmbeddedUi();Console.WriteLine($"ALL {checks} EMBEDDED UI CHECKS PASSED");return 0;}
+            catch(Exception ex) {Console.WriteLine(ex);return 1;}
+        }
+        if (args.Contains("--employees-windows"))
+        {
+            try { TestEmployeesWindows(); Console.WriteLine($"ALL {checks} EMPLOYEE/WINDOW CHECKS PASSED"); return 0; }
+            catch(Exception ex) {Console.WriteLine(ex);return 1;}
+        }
         if (args.Contains("--designer-offline"))
         {
             try { TestDesignerOffline(); Console.WriteLine($"ALL {checks} DESIGNER OFFLINE CHECKS PASSED"); return 0; }
@@ -75,7 +85,7 @@ internal static partial class Program
 
     static void TestManagementMenu()
     {
-        using var main = new frmMain { ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new System.Drawing.Point(-20000, -20000) };
+        using var main = new frmMain { WindowState=FormWindowState.Normal, ShowInTaskbar = false, StartPosition = FormStartPosition.Manual, Location = new System.Drawing.Point(-20000, -20000) };
         main.Show();
         var show = typeof(frmMain).GetMethod("ShowFormQuanLyKhac", BindingFlags.NonPublic | BindingFlags.Instance)!;
         var menu = (ContextMenuStrip)typeof(frmMain).GetField("menuQuanLyKhac", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(main)!;
@@ -88,23 +98,15 @@ internal static partial class Program
             Application.DoEvents();
             Check(!menu.IsDisposed && !main.IsDisposed, "closing menu keeps it alive, cycle " + cycle);
         }
-        var types = new[] { typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon) };
+        var types = new[] { typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien) };
         for (int index = 0; index < types.Length; index++)
         {
-            bool opened = false;
-            var expected = types[index];
-            using var timer = new System.Windows.Forms.Timer { Interval = 50 };
-            timer.Tick += (_, _) =>
-            {
-                var child = Application.OpenForms.Cast<Form>().FirstOrDefault(f => f.GetType() == expected);
-                if (child != null) { opened = true; timer.Stop(); child.Close(); }
-            };
-            show.Invoke(main, null);
-            menu.Close(ToolStripDropDownCloseReason.ItemClicked);
-            timer.Start();
-            menu.Items[index].PerformClick();
-            timer.Stop();
-            Check(opened && !menu.IsDisposed && !main.IsDisposed, "management command opens " + expected.Name + " and returns to main");
+            var expected=types[index];
+            show.Invoke(main,null);menu.Close(ToolStripDropDownCloseReason.ItemClicked);
+            menu.Items[index].PerformClick();Application.DoEvents();
+            var child=Application.OpenForms.Cast<Form>().FirstOrDefault(f=>f.GetType()==expected && f.Parent?.FindForm()==main);
+            Check(child!=null && !child.TopLevel && !child.Modal && main.Enabled && !menu.IsDisposed,"management command opens embedded "+expected.Name);
+            child?.Close();Application.DoEvents();
         }
         main.Dispose();
         Check(menu.IsDisposed, "main form disposes its menu");
@@ -139,17 +141,19 @@ internal static partial class Program
         var catalog=new ThuocBLL();
         Check(catalog.ThemMoiThuoc("",name,categoryId.ToString(),"Hộp","1000.25","0",supplierId,out error),"medicine auto-ID and supplier selection: "+error);
         medicineId=Count("SELECT Id FROM Medicines WHERE Name=@n",("@n",name));
+        Check(Convert.ToDecimal(Scalar("SELECT Price FROM Medicines WHERE Id=@id",("@id",medicineId)))==1000,"new medicine stores whole-dong price");
         Check(Stock()==0 && new BatchDAL().TimToanBoSoLuongConHan(medicineId)==0,"new medicine has zero stock without null errors");
         Check(catalog.TimKiemThuoc("O'Brien").Rows.Count>0,"search with apostrophe uses SQL parameters");
         Check(!catalog.ThemMoiThuoc("",name,categoryId.ToString(),"Hộp","invalid","0",supplierId,out error),"invalid price rejected");
 
         var imports=new NhapKhoBLL();
         var lines=new List<NhapKhoItem> {
-            new() { MaThuoc=medicineId,TenThuoc=name,SoLo=prefix+"EARLY",HanDung=DateTime.Today.AddDays(2),SoLuong=5,GiaNhap=500 },
-            new() { MaThuoc=medicineId,TenThuoc=name,SoLo=prefix+"LATE",HanDung=DateTime.Today.AddDays(40),SoLuong=8,GiaNhap=600 }};
+            new() { MaThuoc=medicineId,TenThuoc=name,SoLo=prefix+"EARLY",HanDung=DateTime.Today.AddDays(2),SoLuong=5,GiaNhap=500.25m },
+            new() { MaThuoc=medicineId,TenThuoc=name,SoLo=prefix+"LATE",HanDung=DateTime.Today.AddDays(40),SoLuong=8,GiaNhap=599.75m }};
         Check(!imports.LuuPhieuNhap(employeeId,1,"Wrong supplier",lines,out _,out _,out error) && Stock()==0,"wrong supplier rejected and import rolled back");
         Check(imports.LuuPhieuNhap(employeeId,supplierId,"Test",lines,out int stockInId,out decimal cost,out error),"stock-in saved: "+error);
         Check(stockInId>0 && cost==7300 && Stock()==13,"stock-in cost/details and stock increment");
+        Check(Count("SELECT COUNT(*) FROM StockInDetails WHERE StockInId=@id AND UnitCost<>ROUND(UnitCost,0)",("@id",stockInId))==0,"stock-in detail costs are whole dong");
         var importedBatches = new LoHangBLL().TimKiem(prefix);
         Check(importedBatches.Rows.Count == 2 && importedBatches.Rows.Cast<System.Data.DataRow>().Sum(row => (int)row["SoLuongDaNhap"]) == 13,
             "batch inventory aggregates quantities from saved import lines");
@@ -158,7 +162,9 @@ internal static partial class Program
         Scalar("INSERT INTO Batches(MedicineId,BatchNumber,ExpiryDate,Stock) VALUES(@m,@n,DATEADD(day,-1,CAST(GETDATE() AS date)),10)",("@m",medicineId),("@n",prefix+"EXPIRED"));
         Check(catalog.SuaThuoc(medicineId.ToString(),name,categoryId.ToString(),"Hộp","1000.25","999",supplierId,out error) && Stock()==13,"catalog update does not overwrite batch stocks");
 
-        voucherId=Count("INSERT INTO Vouchers(Code,DiscountType,DiscountValue,Quantity,IsActive) VALUES(@code,'FIXED',100,1,1);SELECT CAST(SCOPE_IDENTITY() AS int)",("@code",prefix));
+        TestSelectedFixes();
+
+        voucherId=Count("INSERT INTO Vouchers(Code,DiscountType,DiscountValue,Quantity,IsActive) VALUES(@code,'FIXED',100.25,1,1);SELECT CAST(SCOPE_IDENTITY() AS int)",("@code",prefix));
         var voucherBLL=new VoucherBLL();
         Check(voucherBLL.KiemTra(prefix,out var voucher,out error),"voucher lookup: "+error);
         Check(voucherBLL.TinhGiamGia(new VoucherInfo { DiscountType="PERCENT",DiscountValue=10 },1005)==101,"percentage rounding");
@@ -168,11 +174,12 @@ internal static partial class Program
         Check(!sales.ThanhToan(0,Cart(1),null,null,1000.25m,out _,out _,out _,out error),"sale requires login");
         Check(!sales.ThanhToan(employeeId,Cart(-1),null,null,0,out _,out _,out _,out error),"negative sale quantity rejected");
         Check(!sales.ThanhToan(employeeId,Cart(7),prefix,customerId,1,out _,out _,out _,out error) && Stock()==13,"changed payable rejected without inventory mutation");
-        Check(!sales.ThanhToan(employeeId,Cart(14),prefix,customerId,14*1000.25m-100,out _,out _,out _,out error),"insufficient stock rejected");
+        Check(!sales.ThanhToan(employeeId,Cart(14),prefix,customerId,14*1000m-100,out _,out _,out _,out error),"insufficient stock rejected");
         Check(Stock()==13 && Count("SELECT Quantity FROM Vouchers WHERE Id=@id",("@id",voucherId))==1,"failed sale rolls back stock and voucher");
         Check(Count("SELECT COUNT(*) FROM Orders WHERE CustomerId=@id",("@id",customerId))==0,"failed sale leaves no orphan order");
-        Check(sales.ThanhToan(employeeId,Cart(7),prefix,customerId,7*1000.25m-100,out int orderId,out decimal subtotal,out decimal discount,out error),"sale commits: "+error);
-        Check(orderId>0 && subtotal==7001.75m && discount==100,"decimal prices and payable preserved");
+        Check(sales.ThanhToan(employeeId,Cart(7),prefix,customerId,7*1000m-100,out int orderId,out decimal subtotal,out decimal discount,out error),"sale commits: "+error);
+        Check(Count("SELECT COUNT(*) FROM OrderDetails WHERE OrderId=@id AND UnitPrice<>1000",("@id",orderId))==0,"legacy fractional price saved to new invoice as whole dong");
+        Check(orderId>0 && subtotal==7000m && discount==100,"whole-dong prices and payable persisted consistently");
         Check(Count("SELECT COUNT(*) FROM Orders WHERE Id=@o AND CustomerId=@c",("@o",orderId),("@c",customerId))==1,"customer linked to persisted order");
         Check(Count("SELECT COUNT(*) FROM OrderDetails WHERE OrderId=@o",("@o",orderId))==2,"FEFO sale split over two batches");
         Check(Count("SELECT Stock FROM Batches WHERE MedicineId=@m AND BatchNumber=@n",("@m",medicineId),("@n",prefix+"EARLY"))==0,"earliest batch consumed first");
@@ -180,7 +187,7 @@ internal static partial class Program
         Check(Count("SELECT Quantity FROM Vouchers WHERE Id=@id",("@id",voucherId))==0,"voucher decremented exactly once");
         Check(!sales.ThanhToan(employeeId,Cart(1),prefix,null,900.25m,out _,out _,out _,out error) && Stock()==6,"exhausted voucher rejected without stock loss");
 
-        var concurrent=Enumerable.Range(0,2).Select(index=>Task.Run(()=>new BanHangBLL().ThanhToan(employeeId,Cart(4),null,null,4001m,out _,out _,out _,out _))).ToArray();
+        var concurrent=Enumerable.Range(0,2).Select(index=>Task.Run(()=>new BanHangBLL().ThanhToan(employeeId,Cart(4),null,null,4000m,out _,out _,out _,out _))).ToArray();
         Task.WaitAll(concurrent);
         Check(concurrent.Count(t=>t.Result)==1 && Stock()==2,"concurrent sales cannot oversell");
         Check(new CanhBaoDAL().LayThuocSapHet(10).Rows.Cast<System.Data.DataRow>().Any(r=>(int)r["MaThuoc"]==medicineId),"low stock warning includes test medicine");
@@ -190,9 +197,10 @@ internal static partial class Program
 
 
 
-        foreach(var type in new[]{typeof(frmDangNhap),typeof(frmMain),typeof(frmBanHang),typeof(frmThanhToanQR),typeof(frmQuanLyThuoc),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmNhapKho),typeof(frmCanhBao),typeof(frmBaoCao),typeof(frmLoHang),typeof(frmVoucher),typeof(frmHoaDon)})
+        foreach(var type in new[]{typeof(frmDangNhap),typeof(frmMain),typeof(frmBanHang),typeof(frmThanhToanQR),typeof(frmQuanLyThuoc),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmNhapKho),typeof(frmCanhBao),typeof(frmBaoCao),typeof(frmLoHang),typeof(frmVoucher),typeof(frmHoaDon),typeof(frmNhanVien)})
         {
             using var form=(Form)(type==typeof(frmThanhToanQR)?Activator.CreateInstance(type,1000m)!:Activator.CreateInstance(type)!);
+            if(form is frmMain) form.WindowState=FormWindowState.Normal;
             form.ShowInTaskbar = false;
             form.StartPosition = FormStartPosition.Manual;
             form.Location = new System.Drawing.Point(-20000, -20000);
@@ -217,9 +225,10 @@ internal static partial class Program
     static void RenderForms()
     {
         Directory.CreateDirectory("artifacts/previews");
-        foreach (var type in new[] { typeof(frmDangNhap), typeof(frmMain), typeof(frmBanHang), typeof(frmQuanLyThuoc), typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmNhapKho), typeof(frmCanhBao), typeof(frmBaoCao), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon) })
+        foreach (var type in new[] { typeof(frmDangNhap), typeof(frmMain), typeof(frmBanHang), typeof(frmQuanLyThuoc), typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmNhapKho), typeof(frmCanhBao), typeof(frmBaoCao), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien) })
         {
             using var form = (Form)Activator.CreateInstance(type)!;
+            if(form is frmMain) form.WindowState=FormWindowState.Normal;
             form.ShowInTaskbar = false;
             form.StartPosition = FormStartPosition.Manual;
             form.Location = new System.Drawing.Point(-20000, -20000);

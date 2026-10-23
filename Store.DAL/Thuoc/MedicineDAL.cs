@@ -32,7 +32,7 @@ namespace Store.DAL
                     Name = reader.GetString(reader.GetOrdinal("Name")),
                     ActiveIngredient = reader.IsDBNull(reader.GetOrdinal("ActiveIngredient")) ? "" : reader.GetString(reader.GetOrdinal("ActiveIngredient")),
                     Unit = reader.GetString(reader.GetOrdinal("Unit")),
-                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                    Price = Store.Shared.TienTe.LamTron(reader.GetDecimal(reader.GetOrdinal("Price"))),
                     IsPrescription = reader.GetBoolean(reader.GetOrdinal("IsPrescription")),
                     IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
                     

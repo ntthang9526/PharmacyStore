@@ -1,6 +1,6 @@
 ﻿using Store.BLL;
 namespace Store.POS;
-public partial class frmLoHang : Form
+public partial class frmLoHang : Form, ILamMoiDuLieu
 {
     private readonly LoHangBLL bll = new();
 

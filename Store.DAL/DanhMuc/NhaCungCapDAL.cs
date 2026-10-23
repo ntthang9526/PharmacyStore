@@ -35,6 +35,7 @@ public class NhaCungCapDAL
         command.Parameters.Add("@address", SqlDbType.NVarChar, 250).Value = address;
         int id = Convert.ToInt32(command.ExecuteScalar());
         transaction.Commit();
+        DBConnection.NotifyDataChanged();
         return id;
     }
 

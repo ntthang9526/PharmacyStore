@@ -13,7 +13,8 @@ namespace Store.POS.FormBanHang
         public string Name { get; set; } = "";
         public string Unit { get; set; } = "";
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        private decimal price;
+        public decimal Price { get => price; set => price = Store.Shared.TienTe.LamTron(value); }
         public decimal Total => Price * Quantity;
     }
 }

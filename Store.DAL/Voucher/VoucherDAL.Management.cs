@@ -27,7 +27,9 @@ public partial class VoucherDAL
         cmd.Parameters.Add("@qty", SqlDbType.Int).Value = quantity;
         cmd.Parameters.Add("@active", SqlDbType.Bit).Value = active;
         cmd.Parameters.Add("@oldQty", SqlDbType.Int).Value = (object?)originalQuantity ?? DBNull.Value;
-        return cmd.ExecuteNonQuery() == 1;
+        bool changed = cmd.ExecuteNonQuery() == 1;
+        if (changed) DBConnection.NotifyDataChanged();
+        return changed;
     }
 
     public bool Xoa(int id) => new DBConnection().CapNhatDuLieu(

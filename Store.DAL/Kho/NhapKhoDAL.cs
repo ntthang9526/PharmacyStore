@@ -45,6 +45,9 @@ namespace Store.DAL
                 using var tran = conn.BeginTransaction(IsolationLevel.Serializable);
                 try
                 {
+                    if (items.Count == 0 || items.Any(it => it.GiaNhap != TienTe.LamTron(it.GiaNhap)) ||
+                        items.Sum(it => it.GiaNhap * it.SoLuong) != tongVon)
+                        throw new InvalidOperationException("Tổng tiền nhập kho phải khớp đơn giá theo đồng nguyên.");
                     // 1. Phiếu nhập
                     using (var cmdP = new SqlCommand(@"
                         INSERT INTO StockIns(SupplierId, EmployeeId, TotalCost, Note)
@@ -118,6 +121,8 @@ namespace Store.DAL
                     }
 
                     tran.Commit();
+
+                    DBConnection.NotifyDataChanged();
                     return true;
                 }
                 catch

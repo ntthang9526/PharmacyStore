@@ -29,6 +29,7 @@ public class NhomThuocDAL
         command.Parameters.Add("@name", SqlDbType.NVarChar, 100).Value = name;
         int id = Convert.ToInt32(command.ExecuteScalar());
         transaction.Commit();
+        DBConnection.NotifyDataChanged();
         return id;
     }
 

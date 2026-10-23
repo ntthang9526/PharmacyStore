@@ -18,10 +18,10 @@ namespace Store.POS.FormBanHang
         {
             InitializeComponent();
 
-            this.tongTien = tongTien;
+            this.tongTien = Store.Shared.TienTe.LamTron(tongTien);
 
             lblTongTien.Text =
-                $"Thanh toán: {tongTien:N0} đ";
+                $"Thanh toán: {this.tongTien:N0} đ";
 
 
             this.Shown += frmThanhToanQR_Shown;

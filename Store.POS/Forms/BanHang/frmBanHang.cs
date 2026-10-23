@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace Store.POS
 {
-    public partial class frmBanHang : Form
+    public partial class frmBanHang : Form, ILamMoiDuLieu
     {
         private readonly BindingList<RowData> gioHang = new();
         private readonly BindingList<Medicine> timKiem = new();
@@ -131,14 +131,15 @@ namespace Store.POS
         }
         private void boxTimKiem_TextChanged(object sender, EventArgs e)
         {
-            string text = boxTimKiem.Text.ToLower();
+            string text = boxTimKiem.Text.Trim().ToLowerInvariant();
             if (!string.IsNullOrWhiteSpace(text))
             {
                 Dictionary<int, Medicine> listData = new();
                 if (danhSachThuoc == null) return;
                 foreach (var item in danhSachThuoc)
                 {
-                    if (item.Key.ToString().Contains(text) || item.Value.Name.ToString().ToLower().Contains(text))
+                    if (item.Key.ToString().Contains(text) || item.Value.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+                        (item.Value.BarCode?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false))
                     {
                         listData.Add(item.Key, item.Value);
                     }
@@ -168,6 +169,8 @@ namespace Store.POS
             {
                 timKiem.Add(item.Value);
             }
+            tableTimKiem.Location=groupGioHang.PointToClient(panel1.PointToScreen(new Point(0,panel1.Height)));
+            tableTimKiem.Width=panel1.Width;tableTimKiem.BringToFront();
             tableTimKiem.Visible = true;
 
         }
@@ -197,7 +200,8 @@ namespace Store.POS
             {
                 Rectangle cell = tableGioHang.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 Point viTri = this.PointToClient(tableGioHang.PointToScreen(cell.Location));
-                panelAction.Location = new Point(panelAction.Location.X, viTri.Y);
+                panelAction.Location = new Point(Math.Min(viTri.X,ClientSize.Width-panelAction.Width), Math.Min(viTri.Y,ClientSize.Height-panelAction.Height));
+                panelAction.BringToFront();
                 panelAction.Visible = true;
             }
         }
@@ -226,7 +230,8 @@ namespace Store.POS
             }
             Rectangle cell = tableGioHang.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
             Point viTri = this.PointToClient(tableGioHang.PointToScreen(cell.Location));
-            panelAction.Location = new Point(panelAction.Location.X, viTri.Y);
+            panelAction.Location = new Point(Math.Min(viTri.X,ClientSize.Width-panelAction.Width), Math.Min(viTri.Y,ClientSize.Height-panelAction.Height));
+                panelAction.BringToFront();
             panelAction.Visible = true;
         }
         // Thao tác sản phẩm trên giỏ hàng
@@ -267,6 +272,7 @@ namespace Store.POS
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.SuppressKeyPress = true;
                 if (string.IsNullOrWhiteSpace(boxNhapSanPham.Text.Trim()))
                 {
                     MessageBox.Show("Mã sản phẩm không được để trống!", "Cảnh báo");
@@ -351,28 +357,28 @@ namespace Store.POS
         private void NhapGioHang()
         {
             string text = boxNhapSanPham.Text.Trim();
-            if (int.TryParse(text, out int ma))
+            var barcodeMatches = danhSachThuoc.Values.Where(m =>
+                !string.IsNullOrWhiteSpace(m.BarCode) && string.Equals(m.BarCode.Trim(), text, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (barcodeMatches.Count > 1)
             {
-                Medicine medicine = danhSachThuoc.FirstOrDefault(med => med.Key == ma).Value;
-                if (medicine == null)
-                {
-                    MessageBox.Show("Không tìm thấy sản phẩm!", "Cảnh báo");
-                    boxNhapSanPham.SelectAll();
-                    boxNhapSanPham.Focus();
-                    return;
-                }
-                ThemSanPhamVaoGioHang(medicine);
-                CapNhatGiaTien();
-                boxNhapSanPham.Clear();
-                boxNhapSanPham.Focus();
+                MessageBox.Show("Mã vạch đang trùng ở nhiều thuốc. Hãy tìm và chọn đúng thuốc trong danh sách.", "Cảnh báo");
+                boxTimKiem.Text = text;
+                boxTimKiem.Focus();
+                return;
             }
-            else
+            Medicine? medicine = barcodeMatches.SingleOrDefault();
+            if (medicine == null && int.TryParse(text, out int ma)) danhSachThuoc.TryGetValue(ma, out medicine);
+            if (medicine == null)
             {
-                MessageBox.Show("Mã sản phẩm không hợp lệ!");
+                MessageBox.Show("Không tìm thấy thuốc theo mã thuốc hoặc mã vạch!", "Cảnh báo");
                 boxNhapSanPham.SelectAll();
                 boxNhapSanPham.Focus();
                 return;
             }
+            ThemSanPhamVaoGioHang(medicine);
+            CapNhatGiaTien();
+            boxNhapSanPham.Clear();
+            boxNhapSanPham.Focus();
         }
 
 
@@ -386,6 +392,7 @@ namespace Store.POS
             labelTienGiamGia.Text = $"{discount:N0} đ";
             labelTienTongTien.Text = $"{tongTien:N0} đ";
             boxTienKhach_TextChanged(this, EventArgs.Empty);
+            KiemTraGioHangHienTai();
         }
 
         private void ApDungVoucher()
@@ -398,7 +405,7 @@ namespace Store.POS
         private void ThemKhachHang()
         {
             string phone = boxMaKhachHang.Text.Trim();
-            if (!ValidatePhone(phone)) { MessageBox.Show("Số điện thoại không hợp lệ!"); return; }
+            if (!ValidatePhone(phone)) { MessageBox.Show(DanhMucValidation.CustomerPhoneError(phone)); return; }
             try
             {
                 khachHang = customerDAL.GetCustomerByPhone(phone);
@@ -416,7 +423,7 @@ namespace Store.POS
 
         private bool ValidatePhone(string phone)
         {
-            return Regex.IsMatch(phone, @"^0[35789]\d{8}$");
+            return DanhMucValidation.CustomerPhoneError(phone) == null;
         }
 
         private void tableGioHang_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -454,12 +461,12 @@ namespace Store.POS
         private void boxTienKhach_TextChanged(object sender, EventArgs e)
         {
             string input = boxTienKhach.Text.Trim();
-            if (decimal.TryParse(input, out decimal tienKhachDua))
+            if (decimal.TryParse(input, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out decimal tienKhachDua))
             {
                 if (tienKhachDua >= tongTien)
                 {
                     decimal tienTraLai = tienKhachDua - tongTien;
-                    boxTraLai.Text = tienTraLai + "";
+                    boxTraLai.Text = tienTraLai.ToString("N0");
                 }
                 else
                 {
@@ -474,6 +481,13 @@ namespace Store.POS
 
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
+            try
+            {
+                decimal previous=tongTien;LamMoiDuLieu();
+                if(previous!=tongTien) {MessageBox.Show("Giá thuốc hoặc voucher đã thay đổi. Hãy kiểm tra tổng tiền mới và bấm thanh toán lại.","Đã cập nhật dữ liệu");return;}
+                if(gioHang.Count>0 && !btnThanhToan.Enabled) {MessageBox.Show(lblTinhTrangGioHang.Text,"Kiểm tra giỏ hàng");return;}
+            }
+            catch(Exception ex) {MessageBox.Show("Không kiểm tra được giỏ hàng: "+ex.Message);return;}
             if (gioHang.Count == 0)
             {
                 MessageBox.Show("Giỏ hàng đang trống!");
@@ -491,7 +505,7 @@ namespace Store.POS
                     MessageBox.Show("Vui lòng nhập số tiền!");
                     return;
                 }
-                if (!decimal.TryParse(boxTienKhach.Text, out decimal received) || tongTien > received)
+                if (!decimal.TryParse(boxTienKhach.Text.Trim(), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out decimal received) || tongTien > received)
                 {
                     MessageBox.Show("Chưa đủ tiền!");
                     return;

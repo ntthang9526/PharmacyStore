@@ -20,6 +20,8 @@ public partial class VoucherBLL
         else if (quantity < 0) error = "Số lượt còn lại không được âm.";
         else if (id.HasValue && (id <= 0 || originalQuantity is null or < 0)) error = "Vui lòng chọn lại voucher cần sửa.";
         if (error.Length > 0) return false;
+        if (type == "FIXED") value = Store.Shared.TienTe.LamTron(value);
+        if (value <= 0) { error = "Giá trị giảm sau khi làm tròn phải từ 1 đồng."; return false; }
         try
         {
             if (dal.Luu(id,code,type,value,quantity,active,originalQuantity)) return true;

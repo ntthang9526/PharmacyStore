@@ -372,7 +372,6 @@ partial class frmThemThuoc
         // nudGiaBan
         // 
         nudGiaBan.BackColor = Color.White;
-        nudGiaBan.DecimalPlaces = 2;
         nudGiaBan.Dock = DockStyle.Top;
         nudGiaBan.Font = new Font("Segoe UI", 10.2F);
         nudGiaBan.ForeColor = SystemColors.ControlText;

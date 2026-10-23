@@ -19,7 +19,7 @@ internal static partial class Program
             "Server=invalid-designer-host;Database=PharmacyStoreTrialDB;Trusted_Connection=True;TrustServerCertificate=True;Connect Timeout=1;");
         try
         {
-            foreach(var type in new[]{typeof(frmDangNhap),typeof(frmMain),typeof(frmBanHang),typeof(frmThanhToanQR),typeof(frmQuanLyThuoc),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmNhapKho),typeof(frmCanhBao),typeof(frmBaoCao),typeof(frmLoHang),typeof(frmVoucher),typeof(frmHoaDon),typeof(frmThemThuoc),typeof(frmThemDanhMuc),typeof(frmThemNhomThuoc)})
+            foreach(var type in new[]{typeof(frmDangNhap),typeof(frmMain),typeof(frmBanHang),typeof(frmThanhToanQR),typeof(frmQuanLyThuoc),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmNhapKho),typeof(frmCanhBao),typeof(frmBaoCao),typeof(frmLoHang),typeof(frmVoucher),typeof(frmHoaDon),typeof(frmNhanVien),typeof(frmThemThuoc),typeof(frmThemDanhMuc),typeof(frmThemNhomThuoc)})
             {
                 using var form=(Form)Activator.CreateInstance(type)!;
                 form.Site=new FormDesignSite(form);

@@ -28,6 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            salesLayout=new TableLayoutPanel();
+            cartLayout=new TableLayoutPanel();
+            searchLayout=new TableLayoutPanel();
+            entryLayout=new TableLayoutPanel();
+            paymentScroll=new Panel();
+            paymentLayout=new TableLayoutPanel();
+
+            btnTamAn = new Button();
+            lblTinhTrangGioHang = new Label();
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
@@ -212,7 +221,7 @@
             boxTimKiem.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             boxTimKiem.Location = new Point(6, 4);
             boxTimKiem.Name = "boxTimKiem";
-            boxTimKiem.PlaceholderText = "Nhập tên thuốc hoặc mã thuốc cần tìm";
+            boxTimKiem.PlaceholderText = "Tìm tên thuốc, mã thuốc hoặc mã vạch";
             boxTimKiem.Size = new Size(408, 23);
             boxTimKiem.TabIndex = 2;
             boxTimKiem.TextChanged += boxTimKiem_TextChanged;
@@ -308,6 +317,7 @@
             // 
             // priceDataGridViewTextBoxColumn
             // 
+            priceDataGridViewTextBoxColumn.DefaultCellStyle.Format = "N0";
             priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
             priceDataGridViewTextBoxColumn.FillWeight = 15F;
             priceDataGridViewTextBoxColumn.HeaderText = "Đơn giá";
@@ -317,6 +327,7 @@
             // 
             // totalDataGridViewTextBoxColumn
             // 
+            totalDataGridViewTextBoxColumn.DefaultCellStyle.Format = "N0";
             totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
             totalDataGridViewTextBoxColumn.FillWeight = 15F;
             totalDataGridViewTextBoxColumn.HeaderText = "Thành tiền";
@@ -701,6 +712,7 @@
             boxMaKhachHang.BorderStyle = BorderStyle.None;
             boxMaKhachHang.Location = new Point(3, 5);
             boxMaKhachHang.Name = "boxMaKhachHang";
+            boxMaKhachHang.MaxLength = 10;
             boxMaKhachHang.Size = new Size(176, 23);
             boxMaKhachHang.TabIndex = 0;
             // 
@@ -763,6 +775,12 @@
             // 
             // groupGioHang
             // 
+            groupGioHang.Controls.Add(lblTinhTrangGioHang);
+            lblTinhTrangGioHang.Name="lblTinhTrangGioHang";lblTinhTrangGioHang.Location=new Point(8,610);lblTinhTrangGioHang.Size=new Size(780,18);
+            lblTinhTrangGioHang.ForeColor=Color.Firebrick;lblTinhTrangGioHang.Font=new Font("Segoe UI",8F);lblTinhTrangGioHang.AutoEllipsis=true;
+            groupGioHang.Controls.Add(btnTamAn);
+            btnTamAn.Name="btnTamAn";btnTamAn.Text="Tạm ẩn";btnTamAn.Location=new Point(669,575);btnTamAn.Size=new Size(122,34);
+            btnTamAn.Click+=btnTamAn_Click;
             groupGioHang.Controls.Add(btnNhapSanPham);
             groupGioHang.Controls.Add(panel2);
             groupGioHang.Controls.Add(btnXoaTimKiem);
@@ -807,7 +825,8 @@
             boxNhapSanPham.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             boxNhapSanPham.Location = new Point(6, 3);
             boxNhapSanPham.Name = "boxNhapSanPham";
-            boxNhapSanPham.PlaceholderText = "Mã sản phẩm";
+            boxNhapSanPham.PlaceholderText = "Mã thuốc hoặc mã vạch (quét rồi Enter)";
+            boxNhapSanPham.MaxLength = 50;
             boxNhapSanPham.Size = new Size(408, 23);
             boxNhapSanPham.TabIndex = 2;
             boxNhapSanPham.KeyDown += boxNhapSanPham_KeyDown;
@@ -866,17 +885,65 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             ClientSize = new Size(1182, 653);
-            Controls.Add(panel9);
-            Controls.Add(panel8);
-            Controls.Add(groupGioHang);
+
+
+
             Controls.Add(panelAction);
-            Controls.Add(groupThanhToan);
+
+            salesLayout.Name="salesLayout";salesLayout.Dock=DockStyle.Fill;salesLayout.Padding=new Padding(10);
+            salesLayout.ColumnCount=2;salesLayout.RowCount=1;salesLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+            salesLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,365F));salesLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+            salesLayout.Controls.Add(groupGioHang,0,0);salesLayout.Controls.Add(groupThanhToan,1,0);Controls.Add(salesLayout);
+            groupGioHang.Dock=DockStyle.Fill;groupGioHang.Margin=new Padding(0,0,8,0);groupGioHang.Padding=new Padding(8,24,8,6);
+            groupThanhToan.Dock=DockStyle.Fill;groupThanhToan.Margin=new Padding(0);groupThanhToan.Padding=new Padding(4,24,4,4);
+            cartLayout.Name="cartLayout";cartLayout.Dock=DockStyle.Fill;cartLayout.Margin=new Padding(0);
+            cartLayout.ColumnCount=1;cartLayout.RowCount=4;cartLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+            cartLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48F));cartLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+            cartLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,44F));cartLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,20F));
+            labelTimKiem.Text="Tìm thuốc";btnXoaTimKiem.Text="Xóa lọc";
+            searchLayout.Name="searchLayout";searchLayout.Dock=DockStyle.Fill;searchLayout.ColumnCount=3;searchLayout.RowCount=1;
+            searchLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,122F));searchLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));searchLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,94F));
+            searchLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+            searchLayout.Controls.Add(labelTimKiem,0,0);searchLayout.Controls.Add(panel1,1,0);searchLayout.Controls.Add(btnXoaTimKiem,2,0);
+            labelTimKiem.AutoSize=false;labelTimKiem.Dock=DockStyle.Fill;labelTimKiem.TextAlign=ContentAlignment.MiddleLeft;
+            panel1.Dock=DockStyle.Fill;panel1.Margin=new Padding(3,4,3,4);panel1.Padding=new Padding(5);
+            boxTimKiem.Dock=DockStyle.Fill;btnXoaTimKiem.Dock=DockStyle.Fill;btnXoaTimKiem.Margin=new Padding(3,4,3,4);
+            tableGioHang.Dock=DockStyle.Fill;tableGioHang.Margin=new Padding(0);
+            entryLayout.Name="entryLayout";entryLayout.Dock=DockStyle.Fill;entryLayout.ColumnCount=3;entryLayout.RowCount=1;
+            entryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));entryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,86F));entryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,112F));entryLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+            entryLayout.Controls.Add(panel2,0,0);entryLayout.Controls.Add(btnNhapSanPham,1,0);entryLayout.Controls.Add(btnTamAn,2,0);
+            panel2.Dock=DockStyle.Fill;panel2.Margin=new Padding(0,5,3,3);panel2.Padding=new Padding(5);boxNhapSanPham.Dock=DockStyle.Fill;
+            btnNhapSanPham.Dock=DockStyle.Fill;btnNhapSanPham.Margin=new Padding(3,5,3,3);btnTamAn.Dock=DockStyle.Fill;btnTamAn.Margin=new Padding(3,5,0,3);
+            lblTinhTrangGioHang.Dock=DockStyle.Fill;lblTinhTrangGioHang.Margin=new Padding(0);
+            cartLayout.Controls.Add(searchLayout,0,0);cartLayout.Controls.Add(tableGioHang,0,1);cartLayout.Controls.Add(entryLayout,0,2);cartLayout.Controls.Add(lblTinhTrangGioHang,0,3);
+            groupGioHang.Controls.Add(cartLayout);
+            paymentScroll.Name="paymentScroll";paymentScroll.Dock=DockStyle.Fill;paymentScroll.AutoScroll=true;
+            paymentLayout.Name="paymentLayout";paymentLayout.Dock=DockStyle.Top;paymentLayout.AutoSize=true;paymentLayout.AutoSizeMode=AutoSizeMode.GrowAndShrink;
+            paymentLayout.ColumnCount=1;paymentLayout.RowCount=8;paymentLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panelThongTinHoaDon.Dock=DockStyle.Top;panelThongTinHoaDon.Margin=new Padding(0);paymentLayout.Controls.Add(panelThongTinHoaDon,0,0);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel5.Dock=DockStyle.Top;panel5.Margin=new Padding(0);paymentLayout.Controls.Add(panel5,0,1);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel3.Dock=DockStyle.Top;panel3.Margin=new Padding(0);paymentLayout.Controls.Add(panel3,0,2);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel7.Dock=DockStyle.Top;panel7.Margin=new Padding(0);paymentLayout.Controls.Add(panel7,0,3);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel8.Dock=DockStyle.Top;panel8.Margin=new Padding(0);paymentLayout.Controls.Add(panel8,0,4);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel13.Dock=DockStyle.Top;panel13.Margin=new Padding(0);paymentLayout.Controls.Add(panel13,0,5);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panelTienMat.Dock=DockStyle.Top;panelTienMat.Margin=new Padding(0);paymentLayout.Controls.Add(panelTienMat,0,6);
+            paymentLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            panel9.Dock=DockStyle.Top;panel9.Margin=new Padding(0);paymentLayout.Controls.Add(panel9,0,7);
+            paymentScroll.Controls.Add(paymentLayout);groupThanhToan.Controls.Add(paymentScroll);
+            tableTimKiem.BringToFront();panelAction.BringToFront();
             FormBorderStyle = FormBorderStyle.FixedSingle;
             KeyPreview = true;
             MaximizeBox = false;
             Name = "frmBanHang";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = " ";
+            Text = "Bán hàng | Hiệu thuốc ABC";
             FormClosing += frmBanHang_FormClosing;
             FormClosed += frmBanHang_FormClosed;
             KeyDown += frmBanHang_KeyDown;
@@ -987,5 +1054,13 @@
         private Panel panel13;
         private RadioButton radioTienMat;
         private RadioButton radioChuyenKhoan;
+        private Button btnTamAn;
+        private Label lblTinhTrangGioHang;
+        private TableLayoutPanel salesLayout;
+        private TableLayoutPanel cartLayout;
+        private TableLayoutPanel searchLayout;
+        private TableLayoutPanel entryLayout;
+        private Panel paymentScroll;
+        private TableLayoutPanel paymentLayout;
     }
 }

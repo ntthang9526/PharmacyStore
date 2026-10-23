@@ -7,7 +7,7 @@ public partial class frmMain
     private void ConfigureDashboard()
     {
         PosFormStyle.ConfigureGridSelection(this, dashboard, null);
-        btnLamMoiTongQuan.Click += (_, _) => TaiTongQuan();
+        btnLamMoiTongQuan.Click += (_, _) => DongBoDuLieu(true);
         void Wire(Control c, Action action)
         {
             c.Click += (_, _) => action();
@@ -22,8 +22,9 @@ public partial class frmMain
         dgvGanNhat.CellDoubleClick+=(_,e)=>
         {
             if(e.RowIndex<0) return;
-            using var dialog=new frmHoaDon(Convert.ToInt32(dgvGanNhat.Rows[e.RowIndex].Cells["MaHD"].Value));
-            dialog.ShowDialog(this);TaiTongQuan();
+            int id=Convert.ToInt32(dgvGanNhat.Rows[e.RowIndex].Cells["MaHD"].Value);
+            MoCuaSo(typeof(frmHoaDon),()=>new frmHoaDon(id));
+            if(cuaSoDangMo.TryGetValue(typeof(frmHoaDon),out var form)) ((frmHoaDon)form).MoHoaDon(id);
         };
         Shown+=(_,_)=>TaiTongQuan();
     }
@@ -36,7 +37,7 @@ public partial class frmMain
         {
             var bills=new HoaDonBLL();var alerts=new CanhBaoBLL();
             var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet();var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
-            lblDoanhThu.Text=$"{summary["DoanhThu"]:#,##0.##} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
+            lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
             lblSapHet.Text=low.Rows.Count.ToString();lblSapHetHan.Text=expiry.Rows.Count.ToString();
             dgvSapHet.DataSource=low;dgvSapHetHan.DataSource=expiry;dgvGanNhat.DataSource=recent;
             dgvSapHet.Visible=low.Rows.Count>0;lblKhongSapHet.Visible=!dgvSapHet.Visible;

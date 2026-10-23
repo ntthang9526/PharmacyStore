@@ -5,7 +5,7 @@ using Store.Shared;
 
 namespace Store.POS
 {
-    public partial class frmNhapKho : Form
+    public partial class frmNhapKho : Form, ILamMoiDuLieu
     {
         private readonly NhapKhoBLL bll = new NhapKhoBLL();
         private static readonly CultureInfo vn = new CultureInfo("vi-VN");
@@ -72,7 +72,12 @@ namespace Store.POS
             {
                 cboNhaCungCap.DisplayMember="TenNCC";cboNhaCungCap.ValueMember="MaNCC";
                 cboNhaCungCap.DataSource=bll.LayNhaCungCap();
-                if(selected.HasValue) cboNhaCungCap.SelectedValue=selected.Value; else cboNhaCungCap.SelectedIndex=-1;
+                cboNhaCungCap.SelectedIndex=-1;
+                if(selected.HasValue)
+                {
+                    cboNhaCungCap.SelectedValue=selected.Value;
+                    if(cboNhaCungCap.SelectedValue is not int id || id!=selected.Value) cboNhaCungCap.SelectedIndex=-1;
+                }
             }
             finally {dangNapNCC=false;}
             NapThuocTheoNCC();
@@ -164,7 +169,7 @@ namespace Store.POS
                 soLo.ToUpper(),
                 dtpHanDung.Value.Date,
                 (int)nudSoLuong.Value,
-                nudGiaNhap.Value);
+                Store.Shared.TienTe.LamTron(nudGiaNhap.Value));
 
             txtSoLo.Clear();
             nudSoLuong.Value = 1;

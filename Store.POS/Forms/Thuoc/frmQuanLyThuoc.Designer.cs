@@ -13,6 +13,8 @@ partial class frmQuanLyThuoc
 
     private void InitializeComponent()
     {
+        headerLayout = new System.Windows.Forms.TableLayoutPanel();
+        btnTamAn = new System.Windows.Forms.Button();
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -27,6 +29,16 @@ partial class frmQuanLyThuoc
         txtTimKiem = new TextBox();
         btnTimKiem = new Button();
         dgvThuoc = new DataGridView();
+        MaThuoc = new DataGridViewTextBoxColumn();
+        TenThuoc = new DataGridViewTextBoxColumn();
+        MaNhom = new DataGridViewTextBoxColumn();
+        MaNCC = new DataGridViewTextBoxColumn();
+        TenNhom = new DataGridViewTextBoxColumn();
+        TenNCC = new DataGridViewTextBoxColumn();
+        DonViTinh = new DataGridViewTextBoxColumn();
+        DonGia = new DataGridViewTextBoxColumn();
+        SoLuongTon = new DataGridViewTextBoxColumn();
+
         groupBox6 = new GroupBox();
         tableLayoutPanel7 = new TableLayoutPanel();
         tableLayoutPanel8 = new TableLayoutPanel();
@@ -88,7 +100,19 @@ partial class frmQuanLyThuoc
         posLayout.BackColor = SystemColors.Control;
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        posLayout.Controls.Add(posHeading, 0, 0);
+        headerLayout.Name = "headerLayout";
+        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+        headerLayout.Margin = new System.Windows.Forms.Padding(0);
+        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
+        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
+        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
+        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
+        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
+        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
+        btnTamAn.Click += btnTamAn_Click;
+        posLayout.Controls.Add(headerLayout, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         posLayout.Dock = DockStyle.Fill;
         posLayout.Font = new Font("Segoe UI", 10.2F);
@@ -245,6 +269,8 @@ partial class frmQuanLyThuoc
         dgvThuoc.AllowUserToResizeRows = false;
         dataGridViewCellStyle1.BackColor = Color.White;
         dgvThuoc.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+        dgvThuoc.AutoGenerateColumns = false;
+        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, MaNhom, MaNCC, TenNhom, TenNCC, DonViTinh, DonGia, SoLuongTon });
         dgvThuoc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         dgvThuoc.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         dgvThuoc.BackgroundColor = SystemColors.ScrollBar;
@@ -289,6 +315,75 @@ partial class frmQuanLyThuoc
         dgvThuoc.TabIndex = 18;
         dgvThuoc.CellClick += dgvThuoc_CellClick;
         // 
+        // MaThuoc
+        MaThuoc.DataPropertyName = "MaThuoc";
+        MaThuoc.HeaderText = "Mã thuốc";
+        MaThuoc.Name = "MaThuoc";
+        MaThuoc.ReadOnly = true;
+        MaThuoc.FillWeight = 65F;
+        MaThuoc.MinimumWidth = 50;
+        // TenThuoc
+        TenThuoc.DataPropertyName = "TenThuoc";
+        TenThuoc.HeaderText = "Tên thuốc";
+        TenThuoc.Name = "TenThuoc";
+        TenThuoc.ReadOnly = true;
+        TenThuoc.FillWeight = 170F;
+        TenThuoc.MinimumWidth = 50;
+        // MaNhom
+        MaNhom.DataPropertyName = "MaNhom";
+        MaNhom.HeaderText = "Mã nhóm";
+        MaNhom.Name = "MaNhom";
+        MaNhom.ReadOnly = true;
+        MaNhom.FillWeight = 60F;
+        MaNhom.MinimumWidth = 50;
+        MaNhom.Visible = false;
+        // MaNCC
+        MaNCC.DataPropertyName = "MaNCC";
+        MaNCC.HeaderText = "Mã NCC";
+        MaNCC.Name = "MaNCC";
+        MaNCC.ReadOnly = true;
+        MaNCC.FillWeight = 60F;
+        MaNCC.MinimumWidth = 50;
+        MaNCC.Visible = false;
+        // TenNhom
+        TenNhom.DataPropertyName = "TenNhom";
+        TenNhom.HeaderText = "Nhóm thuốc";
+        TenNhom.Name = "TenNhom";
+        TenNhom.ReadOnly = true;
+        TenNhom.FillWeight = 120F;
+        TenNhom.MinimumWidth = 50;
+        // TenNCC
+        TenNCC.DataPropertyName = "TenNCC";
+        TenNCC.HeaderText = "Nhà cung cấp";
+        TenNCC.Name = "TenNCC";
+        TenNCC.ReadOnly = true;
+        TenNCC.FillWeight = 145F;
+        TenNCC.MinimumWidth = 50;
+        // DonViTinh
+        DonViTinh.DataPropertyName = "DonViTinh";
+        DonViTinh.HeaderText = "Đơn vị";
+        DonViTinh.Name = "DonViTinh";
+        DonViTinh.ReadOnly = true;
+        DonViTinh.FillWeight = 65F;
+        DonViTinh.MinimumWidth = 50;
+        // DonGia
+        DonGia.DataPropertyName = "DonGia";
+        DonGia.HeaderText = "Đơn giá (đ)";
+        DonGia.Name = "DonGia";
+        DonGia.ReadOnly = true;
+        DonGia.FillWeight = 95F;
+        DonGia.MinimumWidth = 50;
+        DonGia.DefaultCellStyle.Format = "N0";
+        DonGia.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        // SoLuongTon
+        SoLuongTon.DataPropertyName = "SoLuongTon";
+        SoLuongTon.HeaderText = "Tồn kho";
+        SoLuongTon.Name = "SoLuongTon";
+        SoLuongTon.ReadOnly = true;
+        SoLuongTon.FillWeight = 65F;
+        SoLuongTon.MinimumWidth = 50;
+        SoLuongTon.DefaultCellStyle.Format = "N0";
+        SoLuongTon.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         // groupBox6
         // 
         groupBox6.BackColor = SystemColors.Control;
@@ -947,15 +1042,15 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.TextBox txtTimKiem;
     private global::System.Windows.Forms.Button btnTimKiem;
     private global::System.Windows.Forms.DataGridView dgvThuoc;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn1;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn2;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn3;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn4;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn5;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn6;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn7;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn8;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvThuocColumn9;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaThuoc;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenThuoc;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaNhom;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaNCC;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenNhom;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenNCC;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn DonViTinh;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn DonGia;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn SoLuongTon;
     private global::System.Windows.Forms.GroupBox groupBox6;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
@@ -991,4 +1086,6 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.Button btnLuu;
     private global::System.Windows.Forms.Button btnBoQua;
     private global::System.Windows.Forms.Button btnThoat;
+    private System.Windows.Forms.TableLayoutPanel headerLayout;
+    private System.Windows.Forms.Button btnTamAn;
 }

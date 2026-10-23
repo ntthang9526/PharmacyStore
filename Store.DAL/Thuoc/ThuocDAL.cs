@@ -6,7 +6,7 @@ public partial class ThuocDAL
     private readonly DBConnection db = new();
     private const string SelectSql = @"
         SELECT m.Id AS MaThuoc, m.Name AS TenThuoc, m.CategoryId AS MaNhom,
-               m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, m.Price AS DonGia,
+               m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, ROUND(m.Price, 0) AS DonGia,
                ISNULL(SUM(b.Stock), 0) AS SoLuongTon
         FROM Medicines m
         JOIN Categories c ON c.Id = m.CategoryId
@@ -44,7 +44,7 @@ public partial class ThuocDAL
                 new SqlParameter("@sup", SqlDbType.Int) { Value = supplierId },
                 new SqlParameter("@name", SqlDbType.NVarChar, 150) { Value = name.Trim() },
                 new SqlParameter("@unit", SqlDbType.NVarChar, 30) { Value = unit.Trim() },
-                new SqlParameter("@price", SqlDbType.Decimal) { Precision = 18, Scale = 2, Value = price });
+                new SqlParameter("@price", SqlDbType.Decimal) { Precision = 18, Scale = 2, Value = Store.Shared.TienTe.LamTron(price) });
         }
         catch (Exception ex) { error = ex.Message; return false; }
     }

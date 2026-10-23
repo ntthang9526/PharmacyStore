@@ -64,8 +64,8 @@ namespace Store.BLL
             if (tongTien <= 0) return 0;
 
             decimal giam = voucher.DiscountType == "PERCENT"
-                ? Math.Round(tongTien * voucher.DiscountValue / 100m, 0, MidpointRounding.AwayFromZero)
-                : voucher.DiscountValue;
+                ? TienTe.LamTron(tongTien * voucher.DiscountValue / 100m)
+                : TienTe.LamTron(voucher.DiscountValue);
 
             if (giam < 0) giam = 0;
             if (giam > tongTien) giam = tongTien;

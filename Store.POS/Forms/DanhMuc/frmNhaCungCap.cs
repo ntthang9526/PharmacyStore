@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Store.POS
 {
-    public partial class frmNhaCungCap : Form
+    public partial class frmNhaCungCap : Form, ILamMoiDuLieu
     {
         private NhaCungCapBLL bll = new NhaCungCapBLL();
         public frmNhaCungCap()

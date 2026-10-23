@@ -109,7 +109,7 @@ internal static partial class Program
                 UiField<NumericUpDown>(form,"nudGiaTri").Value=100.50m;UiField<NumericUpDown>(form,"nudSoLuot").Value=4;
                 UiField<Button>(form,"btnLuu").PerformClick();
                 voucher=Count("SELECT Id FROM Vouchers WHERE Code=@code",("@code",code));
-                Check(voucher>0 && vouchers.KiemTra(code.ToLowerInvariant(),out var info,out _) && info!.DiscountValue==100.50m,"voucher created through UI usable by sales");
+                Check(voucher>0 && vouchers.KiemTra(code.ToLowerInvariant(),out var info,out _) && info!.DiscountValue==101m,"voucher created through UI usable by sales");
                 Check(!vouchers.Luu(null,code.ToLowerInvariant(),"FIXED",1,1,true,null,out _),"duplicate voucher code rejected");
                 UiField<TextBox>(form,"txtTimKiem").Text=code;UiField<Button>(form,"btnTimKiem").PerformClick();
                 Check(grid.Rows.Count==1,"voucher text search returns matching voucher");
@@ -126,12 +126,12 @@ internal static partial class Program
             Check(vouchers.TimKiem("' OR 1=1 --").Rows.Count==0 && vouchers.TimKiem("[%]_").Rows.Count==0,"voucher search is parameterized and treats wildcards literally");
             var imports=new NhapKhoBLL();
             Check(imports.LuuPhieuNhap(employee,supplier,prefix,new List<NhapKhoItem>{new(){MaThuoc=medicine,TenThuoc=medName,SoLo=prefix,HanDung=DateTime.Today.AddDays(20),SoLuong=4,GiaNhap=1000}},out _,out _,out var error),"new medicine can be imported: "+error);
-            Check(new BanHangBLL().ThanhToan(employee,new List<CartItem>{new(){MaThuoc=medicine,SoLuong=1}},code,null,1875.50m,out int order,out _,out _,out error),"new voucher applies to real trial sale: "+error);
+            Check(new BanHangBLL().ThanhToan(employee,new List<CartItem>{new(){MaThuoc=medicine,SoLuong=1}},code,null,1876m,out int order,out _,out _,out error),"new voucher applies to real trial sale: "+error);
             Check(!vouchers.Xoa(voucher,out error) && error.Contains("hóa đơn"),"referenced voucher cannot be deleted");
             var bills=new HoaDonBLL();var results=bills.TimKiem(code,DateTime.Today,DateTime.Today);
-            Check(results.Rows.Count==1 && (int)results.Rows[0]["MaHD"]==order && (decimal)results.Rows[0]["ThucThu"]==1875.50m,"invoice search/filter returns exact stored net revenue");
+            Check(results.Rows.Count==1 && (int)results.Rows[0]["MaHD"]==order && (decimal)results.Rows[0]["ThucThu"]==1876m,"invoice search/filter returns exact stored net revenue");
             var detail=bills.ChiTiet(order);
-            Check(detail.Rows.Count==1 && (string)detail.Rows[0]["TenThuoc"]==medName && (decimal)detail.Rows[0]["ThanhTien"]==2500.50m,"invoice details preserve sale price and batch");
+            Check(detail.Rows.Count==1 && (string)detail.Rows[0]["TenThuoc"]==medName && (decimal)detail.Rows[0]["ThanhTien"]==2501m,"invoice details preserve sale price and batch");
             Check(bills.TimKiem("HD"+order.ToString("D5")).Rows.Cast<DataRow>().Any(row=>(int)row["MaHD"]==order),"formatted invoice ID is searchable");
             Check(bills.TimKiem("Khách lẻ").Rows.Cast<DataRow>().Any(row=>(int)row["MaHD"]==order),"guest invoices searchable by displayed customer name");
             Check(bills.TimKiem(code,DateTime.Today.AddDays(1),DateTime.Today.AddDays(1)).Rows.Count==0,"invoice date range excludes other days");
@@ -155,7 +155,7 @@ internal static partial class Program
             {
                 Offscreen(main);var summary=bills.ThongKeHomNay().Rows[0];
                 Check(UiField<Label>(main,"lblSoHoaDon").Text==summary["SoHoaDon"].ToString(),"dashboard today invoice count matches database");
-                Check(UiField<Label>(main,"lblDoanhThu").Text==$"{summary["DoanhThu"]:#,##0.##} đ","dashboard revenue deducts discounts");
+                Check(UiField<Label>(main,"lblDoanhThu").Text==$"{summary["DoanhThu"]:N0} đ","dashboard revenue deducts discounts");
                 Check(UiField<Label>(main,"lblSapHet").Text==new CanhBaoBLL().LayThuocSapHet().Rows.Count.ToString() && UiField<Label>(main,"lblSapHetHan").Text==new CanhBaoBLL().LayLoSapHetHan().Rows.Count.ToString(),"dashboard warning counts match stock and expiry views");
                 Check(UiField<DataGridView>(main,"dgvGanNhat").Rows.Count<=5 && UiField<DataGridView>(main,"dgvGanNhat").CurrentCell==null,"dashboard recent list capped at five and unselected");
                 Check(!UiField<Label>(main,"lblTongQuan").Text.Contains("Chưa tải"),"dashboard loads without hidden data error");

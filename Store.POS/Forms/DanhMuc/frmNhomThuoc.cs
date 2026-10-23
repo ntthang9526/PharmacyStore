@@ -3,7 +3,7 @@ using Store.BLL;
 
 namespace Store.POS
 {
-    public partial class frmNhomThuoc : Form
+    public partial class frmNhomThuoc : Form, ILamMoiDuLieu
     {
         private NhomThuocBLL bll = new NhomThuocBLL();
 

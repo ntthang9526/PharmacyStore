@@ -6,7 +6,7 @@ namespace Store.DAL
 {
     public class BanHangDAL
     {
-        // Tham số tiền tệ khớp DECIMAL(18,2) (tránh bị làm tròn về 0 chữ số thập phân)
+        // Giữ kiểu DECIMAL(18,2) của DB; giá trị tiền được chuẩn hóa về đồng nguyên.
         private static SqlParameter TienParam(string ten, decimal giaTri)
         {
             return new SqlParameter(ten, SqlDbType.Decimal) { Precision = 18, Scale = 2, Value = giaTri };
@@ -83,7 +83,7 @@ namespace Store.DAL
                         using var priceCommand = new SqlCommand("SELECT Price FROM Medicines WITH (UPDLOCK, HOLDLOCK) WHERE Id=@id AND IsActive=1", conn, tran);
                         priceCommand.Parameters.Add("@id", SqlDbType.Int).Value = item.MaThuoc;
                         var value = priceCommand.ExecuteScalar();
-                        if (value == null || value == DBNull.Value || Convert.ToDecimal(value) != item.DonGia || item.SoLuong <= 0)
+                        if (value == null || value == DBNull.Value || TienTe.LamTron(Convert.ToDecimal(value)) != item.DonGia || item.SoLuong <= 0)
                             throw new InvalidOperationException("Giá hoặc trạng thái thuốc đã đổi. Vui lòng tải lại giỏ hàng.");
                         verifiedTotal += item.DonGia * item.SoLuong;
                     }
@@ -98,7 +98,7 @@ namespace Store.DAL
                         if (!reader.Read()) throw new InvalidOperationException("Voucher đã hết lượt hoặc bị khóa.");
                         decimal value = reader.GetDecimal(1);
                         verifiedDiscount = reader.GetString(0).Trim().ToUpperInvariant() == "PERCENT"
-                            ? Math.Round(tongTien * value / 100m, 0, MidpointRounding.AwayFromZero) : value;
+                            ? TienTe.LamTron(tongTien * value / 100m) : TienTe.LamTron(value);
                         verifiedDiscount = Math.Clamp(verifiedDiscount, 0, tongTien);
                     }
                     if (verifiedDiscount != giamGia)
@@ -196,6 +196,8 @@ namespace Store.DAL
                     }
 
                     tran.Commit();
+
+                    DBConnection.NotifyDataChanged();
                     return true;
                 }
                 catch

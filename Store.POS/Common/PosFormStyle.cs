@@ -50,6 +50,16 @@ internal static class PosFormStyle
         form.Deactivate += (_, _) => ClearAll();
     }
 
+    internal static void RebindCombo(ComboBox combo, System.Data.DataTable data, int? id)
+    {
+        combo.DataSource=data;combo.SelectedIndex=-1;
+        if(id.HasValue)
+        {
+            combo.SelectedValue=id.Value;
+            if(combo.SelectedValue is not int selected || selected!=id.Value) combo.SelectedIndex=-1;
+        }
+    }
+
     private static IEnumerable<DataGridView> FindGrids(Control root)
     {
         foreach (Control child in root.Controls)

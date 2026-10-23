@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Store.BLL;
 namespace Store.POS;
-public partial class frmVoucher : Form
+public partial class frmVoucher : Form, ILamMoiDuLieu
 {
     private readonly VoucherBLL bll=new();
 
@@ -11,6 +11,21 @@ public partial class frmVoucher : Form
         InitializeComponent();
         cboLoai.DisplayMember="Text";cboLoai.ValueMember="Value";
         cboLoai.DataSource=new[] {new {Text="Số tiền (đ)",Value="FIXED"},new {Text="Phần trăm (%)",Value="PERCENT"}};
+        cboLoai.SelectedValueChanged += (_, _) =>
+        {
+            bool percent = cboLoai.SelectedValue as string == "PERCENT";
+            nudGiaTri.DecimalPlaces = percent ? 2 : 0;
+            if (!percent) nudGiaTri.Value = Store.Shared.TienTe.LamTron(nudGiaTri.Value);
+        };
+        dgvVoucher.CellFormatting += (_, e) =>
+        {
+            if (e.RowIndex >= 0 && dgvVoucher.Columns[e.ColumnIndex].DataPropertyName == "DiscountValue" &&
+                dgvVoucher.Rows[e.RowIndex].DataBoundItem is DataRowView row && (string)row["DiscountType"] == "FIXED" && e.Value is decimal amount)
+            {
+                e.Value = Store.Shared.TienTe.LamTron(amount).ToString("N0");
+                e.FormattingApplied = true;
+            }
+        };
         PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
         btnTimKiem.Click+=(_,_)=>TimKiem();
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
@@ -41,7 +56,7 @@ public partial class frmVoucher : Form
         if(row.DataBoundItem is not DataRowView data) return;
         selectedId=(int)data["Id"];originalQuantity=(int)data["Quantity"];
         txtCode.Text=(string)data["Code"];cboLoai.SelectedValue=(string)data["DiscountType"];
-        nudGiaTri.Value=Convert.ToDecimal(data["DiscountValue"]);nudSoLuot.Value=originalQuantity.Value;
+        nudGiaTri.Value=(string)data["DiscountType"]=="FIXED" ? Store.Shared.TienTe.LamTron(Convert.ToDecimal(data["DiscountValue"])) : Convert.ToDecimal(data["DiscountValue"]);nudSoLuot.Value=originalQuantity.Value;
         chkHoatDong.Checked=(bool)data["IsActive"];lblTrangThai.Text="";SetEditing(false);
     }
     private void TimKiem()

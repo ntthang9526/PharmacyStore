@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.DAL;
 using Store.Shared;
 
@@ -50,6 +50,7 @@ namespace Store.BLL
                     error = $"Số lượng của \"{it.TenThuoc}\" phải lớn hơn 0!";
                     return false;
                 }
+                it.GiaNhap = TienTe.LamTron(it.GiaNhap);
                 if (it.GiaNhap <= 0)
                 {
                     error = $"Giá nhập của \"{it.TenThuoc}\" phải lớn hơn 0!";

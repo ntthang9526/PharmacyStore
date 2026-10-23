@@ -19,10 +19,11 @@ public partial class ThuocDAL
         cmd.Parameters.Add("@cat",SqlDbType.Int).Value=categoryId;
         cmd.Parameters.Add("@sup",SqlDbType.Int).Value=supplierId;
         cmd.Parameters.Add("@unit",SqlDbType.NVarChar,30).Value=unit;
-        cmd.Parameters.Add("@price",SqlDbType.Decimal).Value=price;
+        cmd.Parameters.Add("@price",SqlDbType.Decimal).Value=Store.Shared.TienTe.LamTron(price);
         cmd.Parameters["@price"].Precision=18;cmd.Parameters["@price"].Scale=2;
         int id=Convert.ToInt32(cmd.ExecuteScalar());
         transaction.Commit();
+        DBConnection.NotifyDataChanged();
         return id;
     }
 }

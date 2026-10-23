@@ -4,7 +4,7 @@ using Store.BLL;
 
 namespace Store.POS
 {
-    public partial class frmBaoCao : Form
+    public partial class frmBaoCao : Form, ILamMoiDuLieu
     {
         private readonly BaoCaoBLL bll = new BaoCaoBLL();
         private static readonly CultureInfo vn = new CultureInfo("vi-VN");
@@ -21,7 +21,7 @@ namespace Store.POS
             DateTime homNay = DateTime.Today;
             dtpTuNgay.Value = new DateTime(homNay.Year, homNay.Month, 1);   // Mặc định: từ đầu tháng
             dtpDenNgay.Value = homNay;
-            XemBaoCao();
+            XemBaoCao(false);
         }
 
         private void btnXem_Click(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace Store.POS
             XemBaoCao();
         }
 
-        private void XemBaoCao()
+        private void XemBaoCao(bool notifyEmpty=true)
         {
             if (bll.LayBaoCao(dtpTuNgay.Value, dtpDenNgay.Value,
                     out DataTable theoNgay, out DataTable hoaDon,
@@ -44,7 +44,7 @@ namespace Store.POS
                 lblGiamGia.Text = giamGia.ToString("N0", vn) + " đ";
                 lblDoanhThu.Text = doanhThu.ToString("N0", vn) + " đ";
 
-                if (soHD == 0)
+                if (notifyEmpty && soHD == 0)
                     MessageBox.Show("Không có hóa đơn nào trong khoảng ngày đã chọn.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

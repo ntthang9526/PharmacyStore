@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Store.POS
 {
-    public partial class frmKhachHang : Form
+    public partial class frmKhachHang : Form, ILamMoiDuLieu
     {
         private KhachHangBLL bll = new KhachHangBLL();
         public frmKhachHang()
@@ -94,9 +94,9 @@ namespace Store.POS
                 return;
             }
 
-            if (!sdt.All(char.IsDigit) || sdt.Length < 9 || sdt.Length > 11)
+            if (DanhMucValidation.CustomerPhoneError(sdt) is string phoneError)
             {
-                MessageBox.Show("Số điện thoại phải là dãy số từ 9 đến 11 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(phoneError, "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }
@@ -150,9 +150,9 @@ namespace Store.POS
             }
 
             string sdt = txtDienThoai.Text.Trim();
-            if (!string.IsNullOrEmpty(sdt) && (!sdt.All(char.IsDigit) || sdt.Length < 9 || sdt.Length > 11))
+            if (DanhMucValidation.CustomerPhoneError(sdt) is string phoneError)
             {
-                MessageBox.Show("Số điện thoại phải là dãy số từ 9 đến 11 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(phoneError, "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }

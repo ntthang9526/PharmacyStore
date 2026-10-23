@@ -36,7 +36,7 @@ namespace Store.BLL
             {
                 return LoginFailed();
             }
-            if (!password.Equals(employee.PasswordHash))
+            if (!MatKhauNhanVien.KiemTra(password, employee.PasswordHash))
             {
                 return LoginFailed();
             }

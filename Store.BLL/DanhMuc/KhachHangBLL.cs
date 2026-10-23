@@ -23,6 +23,9 @@ namespace Store.BLL
                 return false;
             }
 
+            string? phoneError = DanhMucValidation.CustomerPhoneError(dienThoai);
+            if (phoneError != null) { error = phoneError; return false; }
+
             try
             {
                 return dal.InsertKhachHang(maKH.Trim(), tenKH.Trim(), dienThoai.Trim(), diem.Trim());
@@ -42,6 +45,9 @@ namespace Store.BLL
                 error = "Vui lòng chọn khách hàng cần sửa và nhập tên!";
                 return false;
             }
+
+            string? phoneError = DanhMucValidation.CustomerPhoneError(dienThoai);
+            if (phoneError != null) { error = phoneError; return false; }
 
             try
             {

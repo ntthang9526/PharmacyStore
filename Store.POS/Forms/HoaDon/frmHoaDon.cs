@@ -1,10 +1,11 @@
 ﻿using System.Data;
 using Store.BLL;
 namespace Store.POS;
-public partial class frmHoaDon : Form
+public partial class frmHoaDon : Form, ILamMoiDuLieu
 {
     private readonly HoaDonBLL bll=new();
     private readonly int? maMoSan;
+    private int? hoaDonDangXem;
 
     public frmHoaDon():this(null) {}
     public frmHoaDon(int? id)
@@ -32,6 +33,7 @@ public partial class frmHoaDon : Form
     }
     private void XoaChiTiet()
     {
+        hoaDonDangXem=null;
         dgvChiTiet.DataSource=null;
         lblChiTiet.Text="Chọn hóa đơn trong bảng để xem các thuốc đã bán.";
     }
@@ -43,7 +45,7 @@ public partial class frmHoaDon : Form
             var rows=bll.TimKiem(txtTimKiem.Text,dtpTuNgay.Checked?dtpTuNgay.Value:null,dtpDenNgay.Checked?dtpDenNgay.Value:null);
             XoaChiTiet();dgvHoaDon.DataSource=rows;
             decimal total=rows.Rows.Cast<DataRow>().Sum(row=>(decimal)row["ThucThu"]);
-            lblTrangThai.Text=$"{rows.Rows.Count} hóa đơn · Tổng thực thu: {total:#,##0.##} đ";
+            lblTrangThai.Text=$"{rows.Rows.Count} hóa đơn · Tổng thực thu: {total:N0} đ";
             lblTrangThai.ForeColor=SystemColors.ControlText;
         }
         catch(Exception ex) {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text=ex.Message;}
@@ -53,8 +55,9 @@ public partial class frmHoaDon : Form
         if(row.DataBoundItem is not DataRowView data) return;
         try
         {
+            hoaDonDangXem=(int)data["MaHD"];
             dgvChiTiet.DataSource=bll.ChiTiet((int)data["MaHD"]);
-            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["KhachHang"]} · NV: {data["NhanVien"]}\nTiền hàng: {data["TongTien"]:#,##0.##} đ    Giảm: {data["GiamGia"]:#,##0.##} đ    Thực thu: {data["ThucThu"]:#,##0.##} đ";
+            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["KhachHang"]} · NV: {data["NhanVien"]}\nTiền hàng: {data["TongTien"]:N0} đ    Giảm: {data["GiamGia"]:N0} đ    Thực thu: {data["ThucThu"]:N0} đ";
         }
         catch(Exception ex) {XoaChiTiet();lblTrangThai.Text="Không tải được chi tiết: "+ex.Message;}
     }

@@ -36,7 +36,7 @@ partial class frmThemNhomThuoc
         posLayout.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         posLayout.Padding = new global::System.Windows.Forms.Padding(12, 12, 12, 12);
         posLayout.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        posLayout.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         posLayout.AutoSize = false;
         posLayout.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         posLayout.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
@@ -66,7 +66,7 @@ partial class frmThemNhomThuoc
         posHeading.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
         posHeading.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         posHeading.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        posHeading.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         posHeading.AutoSize = false;
         posHeading.Font = new global::System.Drawing.Font("Segoe UI Semibold", 18F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         posHeading.ForeColor = global::System.Drawing.SystemColors.ControlText;
@@ -90,7 +90,7 @@ partial class frmThemNhomThuoc
         groupBox1.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         groupBox1.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
         groupBox1.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        groupBox1.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         groupBox1.AutoSize = false;
         groupBox1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox1.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
@@ -112,7 +112,7 @@ partial class frmThemNhomThuoc
         tableLayoutPanel2.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel2.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel2.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        tableLayoutPanel2.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         tableLayoutPanel2.AutoSize = false;
         tableLayoutPanel2.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel2.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
@@ -143,7 +143,7 @@ partial class frmThemNhomThuoc
         tableLayoutPanel3.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel3.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel3.Dock = global::System.Windows.Forms.DockStyle.Top;
-        tableLayoutPanel3.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         tableLayoutPanel3.AutoSize = true;
         tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
@@ -172,7 +172,7 @@ partial class frmThemNhomThuoc
         tableLayoutPanel4.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel4.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel4.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        tableLayoutPanel4.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         tableLayoutPanel4.AutoSize = false;
         tableLayoutPanel4.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
@@ -202,7 +202,7 @@ partial class frmThemNhomThuoc
         label5.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
         label5.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         label5.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        label5.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         label5.AutoSize = false;
         label5.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label5.ForeColor = global::System.Drawing.SystemColors.ControlText;
@@ -226,7 +226,7 @@ partial class frmThemNhomThuoc
         txtTen.Margin = new global::System.Windows.Forms.Padding(0, 1, 24, 5);
         txtTen.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         txtTen.Dock = global::System.Windows.Forms.DockStyle.Top;
-        txtTen.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         txtTen.AutoSize = true;
         txtTen.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         txtTen.ForeColor = global::System.Drawing.SystemColors.ControlText;
@@ -254,7 +254,7 @@ partial class frmThemNhomThuoc
         lblLoi.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
         lblLoi.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         lblLoi.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        lblLoi.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         lblLoi.AutoSize = false;
         lblLoi.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         lblLoi.ForeColor = global::System.Drawing.Color.Firebrick;
@@ -278,7 +278,7 @@ partial class frmThemNhomThuoc
         tableLayoutPanel6.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel6.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel6.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        tableLayoutPanel6.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         tableLayoutPanel6.AutoSize = true;
         tableLayoutPanel6.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel6.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
@@ -308,7 +308,7 @@ partial class frmThemNhomThuoc
         btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
         btnLuu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnLuu.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        btnLuu.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         btnLuu.AutoSize = false;
         btnLuu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
@@ -338,7 +338,7 @@ partial class frmThemNhomThuoc
         btnHuy.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 0);
         btnHuy.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnHuy.Dock = global::System.Windows.Forms.DockStyle.Fill;
-        btnHuy.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+
         btnHuy.AutoSize = false;
         btnHuy.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         btnHuy.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);

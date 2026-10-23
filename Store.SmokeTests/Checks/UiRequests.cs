@@ -18,6 +18,7 @@ internal static partial class Program
         => target.GetType().GetMethod(name, PrivateInstance)!.Invoke(target, args);
     static void Offscreen(Form form)
     {
+        if(form is frmMain) form.WindowState=FormWindowState.Normal;
         form.ShowInTaskbar = false;
         form.StartPosition = FormStartPosition.Manual;
         form.Location = new Point(-20000, -20000);

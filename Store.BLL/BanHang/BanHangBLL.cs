@@ -63,7 +63,7 @@ namespace Store.BLL
                         return false;
                     }
                     it.TenThuoc = dt.Rows[0]["Name"].ToString() ?? "";
-                    it.DonGia = Convert.ToDecimal(dt.Rows[0]["Price"]);
+                    it.DonGia = TienTe.LamTron(Convert.ToDecimal(dt.Rows[0]["Price"]));
                     tongTien += it.DonGia * it.SoLuong;
                 }
 
