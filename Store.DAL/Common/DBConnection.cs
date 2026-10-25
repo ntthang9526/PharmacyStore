@@ -34,9 +34,12 @@ public class DBConnection
     public bool CapNhatDuLieu(string sql, params SqlParameter[] parameters)
     {
         using var connection = GetDbConnection();
-        using var command = new SqlCommand(sql, connection);
+        using var transaction = connection.BeginTransaction();
+        PhanQuyenDAL.YeuCau(Quyen.QuanTri,connection,transaction);
+        using var command = new SqlCommand(sql, connection,transaction);
         command.Parameters.AddRange(parameters);
         bool changed = command.ExecuteNonQuery() > 0;
+        transaction.Commit();
         if (changed) NotifyDataChanged();
         return changed;
     }

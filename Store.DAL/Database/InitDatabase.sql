@@ -1,6 +1,6 @@
 ﻿:ON ERROR EXIT
 -- ==============================================================
--- CƠ SỞ DỮ LIỆU: PharmacyStoreTrialDB (Đã bỏ Role ở Employees)
+-- CƠ SỞ DỮ LIỆU: PharmacyStoreTrialDB (Admin / Nhân viên)
 -- Dành cho nhóm: WinForms POS + ASP.NET Core Web API + SQL Server
 -- ==============================================================
 
@@ -23,7 +23,7 @@ GO
 GO
 
 -- ==============================================================
--- 1. TÀI KHOẢN & NHÂN SỰ (ĐÃ BỎ CỘT ROLE)
+-- 1. TÀI KHOẢN & NHÂN SỰ (ADMIN / STAFF)
 -- ==============================================================
 CREATE TABLE Employees (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -31,7 +31,8 @@ CREATE TABLE Employees (
     Username VARCHAR(50) UNIQUE NOT NULL,     -- Tài khoản đăng nhập
     PasswordHash VARCHAR(255) NOT NULL,       -- Mật khẩu
     Phone VARCHAR(15) NULL,
-    IsActive BIT NOT NULL DEFAULT 1           -- 1: Đang làm việc, 0: Đã khóa
+    IsActive BIT NOT NULL DEFAULT 1,          -- 1: Đang làm việc, 0: Đã khóa
+    Role VARCHAR(10) NOT NULL DEFAULT 'STAFF' CHECK(Role IN ('ADMIN','STAFF'))
 );
 
 -- ==============================================================
@@ -124,6 +125,7 @@ GO
 INSERT INTO Employees (FullName, Username, PasswordHash, Phone, IsActive) VALUES
 (N'Quản lý hệ thống', 'admin', '123456', '0901111222', 1),
 (N'Dược sĩ Mai', 'mai_duocsi', '123456', '0903333444', 1);
+UPDATE Employees SET Role='ADMIN' WHERE Username='admin';
 
 -- 2. Nhà cung cấp & Danh mục
 INSERT INTO Suppliers (Name, Phone, Address) VALUES 

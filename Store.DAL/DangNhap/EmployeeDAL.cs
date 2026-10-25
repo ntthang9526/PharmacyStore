@@ -14,7 +14,7 @@ namespace Store.DAL
         public Employee? GetEmployeeByUsername(string username)
         {
             string sql = """
-                select Id, FullName, Username, PasswordHash, Phone, IsActive
+                select Id, FullName, Username, PasswordHash, Phone, IsActive, Role
                 from Employees
                 where Username = @Username
                 """;
@@ -36,6 +36,7 @@ namespace Store.DAL
                 Username = reader.GetString(reader.GetOrdinal("Username")),
                 PasswordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
                 Phone = reader.IsDBNull(reader.GetOrdinal("Phone")) ? null : reader.GetString(reader.GetOrdinal("Phone")),
+                Role = reader.GetString(reader.GetOrdinal("Role")),
                 IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
             };
         }

@@ -1,0 +1,98 @@
+﻿#nullable disable
+namespace Store.POS;
+partial class frmPhieuNhap
+{
+    private System.ComponentModel.IContainer components=null;
+    protected override void Dispose(bool disposing) {if(disposing) components?.Dispose();base.Dispose(disposing);}
+    private void InitializeComponent()
+    {
+        posLayout=new TableLayoutPanel();posLayout.Name="posLayout";
+        search=new TableLayoutPanel();search.Name="search";
+        details=new TableLayoutPanel();details.Name="details";
+        posHeading=new Label();posHeading.Name="posHeading";
+        lblTu=new Label();lblTu.Name="lblTu";
+        lblDen=new Label();lblDen.Name="lblDen";
+        lblChiTiet=new Label();lblChiTiet.Name="lblChiTiet";
+        lblTrangThai=new Label();lblTrangThai.Name="lblTrangThai";
+        txtTimKiem=new TextBox();txtTimKiem.Name="txtTimKiem";
+        btnTimKiem=new Button();btnTimKiem.Name="btnTimKiem";
+        btnLamMoi=new Button();btnLamMoi.Name="btnLamMoi";
+        dtpTuNgay=new DateTimePicker();dtpTuNgay.Name="dtpTuNgay";
+        dtpDenNgay=new DateTimePicker();dtpDenNgay.Name="dtpDenNgay";
+        dgvPhieuNhap=new DataGridView();dgvPhieuNhap.Name="dgvPhieuNhap";
+        dgvChiTiet=new DataGridView();dgvChiTiet.Name="dgvChiTiet";
+        ((System.ComponentModel.ISupportInitialize)dgvPhieuNhap).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dgvChiTiet).BeginInit();SuspendLayout();
+        posLayout.Dock=DockStyle.Fill;posLayout.Padding=new Padding(12);posLayout.ColumnCount=1;posLayout.RowCount=5;
+        posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
+        posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48));
+        posLayout.RowStyles.Add(new RowStyle(SizeType.Percent,46));posLayout.RowStyles.Add(new RowStyle(SizeType.Percent,54));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,32));
+        posHeading.Text="Phiếu nhập hàng";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI",18,FontStyle.Bold);
+        search.Dock=DockStyle.Fill;search.ColumnCount=7;search.RowCount=1;
+        search.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
+        search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,40));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,155));
+        search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,50));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,155));
+        search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100));
+        search.RowStyles.Add(new RowStyle(SizeType.Percent,100));
+        txtTimKiem.Dock=DockStyle.Fill;txtTimKiem.MaxLength=200;txtTimKiem.PlaceholderText="Mã phiếu, NCC, nhân viên, thuốc, số lô";
+        lblTu.Text="Từ";lblTu.Dock=DockStyle.Fill;lblTu.TextAlign=ContentAlignment.MiddleCenter;
+        lblDen.Margin=Padding.Empty;lblDen.Text="Đến";lblDen.Dock=DockStyle.Fill;lblDen.TextAlign=ContentAlignment.MiddleCenter;
+        dtpTuNgay.Format=DateTimePickerFormat.Custom;dtpTuNgay.CustomFormat="dd/MM/yyyy";dtpTuNgay.ShowCheckBox=true;dtpTuNgay.Checked=false;dtpTuNgay.Dock=DockStyle.Fill;
+        dtpDenNgay.Format=DateTimePickerFormat.Custom;dtpDenNgay.CustomFormat="dd/MM/yyyy";dtpDenNgay.ShowCheckBox=true;dtpDenNgay.Checked=false;dtpDenNgay.Dock=DockStyle.Fill;
+        btnTimKiem.Text="Tìm kiếm";btnTimKiem.Dock=DockStyle.Fill;btnLamMoi.Text="Làm mới";btnLamMoi.Dock=DockStyle.Fill;
+        search.Controls.Add(txtTimKiem,0,0);search.Controls.Add(lblTu,1,0);search.Controls.Add(dtpTuNgay,2,0);search.Controls.Add(lblDen,3,0);
+        search.Controls.Add(dtpDenNgay,4,0);search.Controls.Add(btnTimKiem,5,0);search.Controls.Add(btnLamMoi,6,0);
+        details.Dock=DockStyle.Fill;details.ColumnCount=1;details.RowCount=2;details.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
+        details.RowStyles.Add(new RowStyle(SizeType.Absolute,60));details.RowStyles.Add(new RowStyle(SizeType.Percent,100));
+        lblChiTiet.Dock=DockStyle.Fill;lblChiTiet.Text="Chọn phiếu để xem chi tiết nhập hàng.";lblChiTiet.TextAlign=ContentAlignment.MiddleLeft;
+        lblTrangThai.Dock=DockStyle.Fill;lblTrangThai.TextAlign=ContentAlignment.MiddleLeft;
+        dgvPhieuNhap.Dock=DockStyle.Fill;dgvPhieuNhap.AutoGenerateColumns=false;
+        dgvPhieuNhap.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;dgvPhieuNhap.ReadOnly=true;
+        dgvPhieuNhap.AllowUserToAddRows=false;dgvPhieuNhap.AllowUserToDeleteRows=false;dgvPhieuNhap.MultiSelect=false;dgvPhieuNhap.RowHeadersVisible=false;
+        dgvPhieuNhap.SelectionMode=DataGridViewSelectionMode.FullRowSelect;dgvPhieuNhap.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvPhieuNhap.BackgroundColor=SystemColors.ScrollBar;dgvPhieuNhap.RowTemplate.Height=32;
+        dgvPhieuNhapCol0=new DataGridViewTextBoxColumn();dgvPhieuNhapCol0.Name="MaPhieu";dgvPhieuNhapCol0.DataPropertyName="MaPhieu";dgvPhieuNhapCol0.HeaderText="Mã phiếu";dgvPhieuNhapCol0.FillWeight=65;dgvPhieuNhapCol0.ReadOnly=true;
+        dgvPhieuNhapCol1=new DataGridViewTextBoxColumn();dgvPhieuNhapCol1.Name="NgayNhap";dgvPhieuNhapCol1.DataPropertyName="NgayNhap";dgvPhieuNhapCol1.HeaderText="Ngày nhập";dgvPhieuNhapCol1.FillWeight=120;dgvPhieuNhapCol1.ReadOnly=true;
+        dgvPhieuNhapCol1.DefaultCellStyle.Format="dd/MM/yyyy HH:mm";
+        dgvPhieuNhapCol2=new DataGridViewTextBoxColumn();dgvPhieuNhapCol2.Name="TenNCC";dgvPhieuNhapCol2.DataPropertyName="TenNCC";dgvPhieuNhapCol2.HeaderText="Nhà cung cấp";dgvPhieuNhapCol2.FillWeight=150;dgvPhieuNhapCol2.ReadOnly=true;
+        dgvPhieuNhapCol3=new DataGridViewTextBoxColumn();dgvPhieuNhapCol3.Name="NhanVien";dgvPhieuNhapCol3.DataPropertyName="NhanVien";dgvPhieuNhapCol3.HeaderText="Nhân viên nhập";dgvPhieuNhapCol3.FillWeight=140;dgvPhieuNhapCol3.ReadOnly=true;
+        dgvPhieuNhapCol4=new DataGridViewTextBoxColumn();dgvPhieuNhapCol4.Name="TongTien";dgvPhieuNhapCol4.DataPropertyName="TongTien";dgvPhieuNhapCol4.HeaderText="Tổng tiền (đ)";dgvPhieuNhapCol4.FillWeight=100;dgvPhieuNhapCol4.ReadOnly=true;
+        dgvPhieuNhapCol4.DefaultCellStyle.Format="N0";
+        dgvPhieuNhapCol4.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
+        dgvPhieuNhapCol5=new DataGridViewTextBoxColumn();dgvPhieuNhapCol5.Name="GhiChu";dgvPhieuNhapCol5.DataPropertyName="GhiChu";dgvPhieuNhapCol5.HeaderText="Ghi chú";dgvPhieuNhapCol5.FillWeight=150;dgvPhieuNhapCol5.ReadOnly=true;
+        dgvPhieuNhap.Columns.AddRange(new DataGridViewColumn[] {dgvPhieuNhapCol0,dgvPhieuNhapCol1,dgvPhieuNhapCol2,dgvPhieuNhapCol3,dgvPhieuNhapCol4,dgvPhieuNhapCol5});
+        dgvChiTiet.Dock=DockStyle.Fill;dgvChiTiet.AutoGenerateColumns=false;
+        dgvChiTiet.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;dgvChiTiet.ReadOnly=true;
+        dgvChiTiet.AllowUserToAddRows=false;dgvChiTiet.AllowUserToDeleteRows=false;dgvChiTiet.MultiSelect=false;dgvChiTiet.RowHeadersVisible=false;
+        dgvChiTiet.SelectionMode=DataGridViewSelectionMode.FullRowSelect;dgvChiTiet.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvChiTiet.BackgroundColor=SystemColors.ScrollBar;dgvChiTiet.RowTemplate.Height=32;
+        dgvChiTietCol0=new DataGridViewTextBoxColumn();dgvChiTietCol0.Name="TenThuoc";dgvChiTietCol0.DataPropertyName="TenThuoc";dgvChiTietCol0.HeaderText="Thuốc";dgvChiTietCol0.FillWeight=180;dgvChiTietCol0.ReadOnly=true;
+        dgvChiTietCol1=new DataGridViewTextBoxColumn();dgvChiTietCol1.Name="DonVi";dgvChiTietCol1.DataPropertyName="DonVi";dgvChiTietCol1.HeaderText="Đơn vị";dgvChiTietCol1.FillWeight=65;dgvChiTietCol1.ReadOnly=true;
+        dgvChiTietCol2=new DataGridViewTextBoxColumn();dgvChiTietCol2.Name="SoLo";dgvChiTietCol2.DataPropertyName="SoLo";dgvChiTietCol2.HeaderText="Số lô";dgvChiTietCol2.FillWeight=110;dgvChiTietCol2.ReadOnly=true;
+        dgvChiTietCol3=new DataGridViewTextBoxColumn();dgvChiTietCol3.Name="HanDung";dgvChiTietCol3.DataPropertyName="HanDung";dgvChiTietCol3.HeaderText="Hạn dùng";dgvChiTietCol3.FillWeight=100;dgvChiTietCol3.ReadOnly=true;
+        dgvChiTietCol3.DefaultCellStyle.Format="dd/MM/yyyy";
+        dgvChiTietCol4=new DataGridViewTextBoxColumn();dgvChiTietCol4.Name="SoLuong";dgvChiTietCol4.DataPropertyName="SoLuong";dgvChiTietCol4.HeaderText="Số lượng";dgvChiTietCol4.FillWeight=75;dgvChiTietCol4.ReadOnly=true;
+        dgvChiTietCol4.DefaultCellStyle.Format="N0";
+        dgvChiTietCol4.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
+        dgvChiTietCol5=new DataGridViewTextBoxColumn();dgvChiTietCol5.Name="GiaNhap";dgvChiTietCol5.DataPropertyName="GiaNhap";dgvChiTietCol5.HeaderText="Giá nhập (đ)";dgvChiTietCol5.FillWeight=100;dgvChiTietCol5.ReadOnly=true;
+        dgvChiTietCol5.DefaultCellStyle.Format="N0";
+        dgvChiTietCol5.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
+        dgvChiTietCol6=new DataGridViewTextBoxColumn();dgvChiTietCol6.Name="ThanhTien";dgvChiTietCol6.DataPropertyName="ThanhTien";dgvChiTietCol6.HeaderText="Thành tiền (đ)";dgvChiTietCol6.FillWeight=110;dgvChiTietCol6.ReadOnly=true;
+        dgvChiTietCol6.DefaultCellStyle.Format="N0";
+        dgvChiTietCol6.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
+        dgvChiTiet.Columns.AddRange(new DataGridViewColumn[] {dgvChiTietCol0,dgvChiTietCol1,dgvChiTietCol2,dgvChiTietCol3,dgvChiTietCol4,dgvChiTietCol5,dgvChiTietCol6});
+        details.Controls.Add(lblChiTiet,0,0);details.Controls.Add(dgvChiTiet,0,1);
+        posLayout.Controls.Add(posHeading,0,0);posLayout.Controls.Add(search,0,1);posLayout.Controls.Add(dgvPhieuNhap,0,2);
+        posLayout.Controls.Add(details,0,3);posLayout.Controls.Add(lblTrangThai,0,4);
+        AutoScaleDimensions=new SizeF(8,20);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
+        ClientSize=new Size(1182,653);MinimumSize=new Size(1000,620);Name="frmPhieuNhap";Text="Phiếu nhập hàng";Controls.Add(posLayout);
+        ((System.ComponentModel.ISupportInitialize)dgvPhieuNhap).EndInit();((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();ResumeLayout(false);
+    }
+    private TableLayoutPanel posLayout,search,details;
+    private Label posHeading,lblTu,lblDen,lblChiTiet,lblTrangThai;
+    private TextBox txtTimKiem;
+    private Button btnTimKiem,btnLamMoi;
+    private DateTimePicker dtpTuNgay,dtpDenNgay;
+    private DataGridView dgvPhieuNhap,dgvChiTiet;
+    private DataGridViewTextBoxColumn dgvPhieuNhapCol0,dgvPhieuNhapCol1,dgvPhieuNhapCol2,dgvPhieuNhapCol3,dgvPhieuNhapCol4,dgvPhieuNhapCol5,dgvChiTietCol0,dgvChiTietCol1,dgvChiTietCol2,dgvChiTietCol3,dgvChiTietCol4,dgvChiTietCol5,dgvChiTietCol6;
+}

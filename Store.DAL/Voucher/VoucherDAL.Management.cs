@@ -13,12 +13,14 @@ public partial class VoucherDAL
     public bool Luu(int? id, string code, string type, decimal value, int quantity, bool active, int? originalQuantity)
     {
         using var conn = DBConnection.GetDbConnection();
+        using var transaction=conn.BeginTransaction();
+        PhanQuyenDAL.YeuCau(Quyen.QuanTri,conn,transaction);
         using var cmd = new SqlCommand(id.HasValue ? @"
             UPDATE Vouchers SET Code=@code, DiscountType=@type, DiscountValue=@value,
                    Quantity=@qty, IsActive=@active
             WHERE Id=@id AND Quantity=@oldQty" : @"
             INSERT INTO Vouchers(Code,DiscountType,DiscountValue,Quantity,IsActive)
-            VALUES(@code,@type,@value,@qty,@active)", conn);
+            VALUES(@code,@type,@value,@qty,@active)", conn,transaction);
         cmd.Parameters.Add("@id", SqlDbType.Int).Value = (object?)id ?? DBNull.Value;
         cmd.Parameters.Add("@code", SqlDbType.VarChar, 20).Value = code;
         cmd.Parameters.Add("@type", SqlDbType.VarChar, 10).Value = type;
@@ -28,6 +30,7 @@ public partial class VoucherDAL
         cmd.Parameters.Add("@active", SqlDbType.Bit).Value = active;
         cmd.Parameters.Add("@oldQty", SqlDbType.Int).Value = (object?)originalQuantity ?? DBNull.Value;
         bool changed = cmd.ExecuteNonQuery() == 1;
+        transaction.Commit();
         if (changed) DBConnection.NotifyDataChanged();
         return changed;
     }

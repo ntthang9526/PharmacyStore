@@ -13,8 +13,6 @@ partial class frmHoaDon
 
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -1257,19 +1255,7 @@ partial class frmHoaDon
         lblTrangThai.Visible = true;
         lblTrangThai.Enabled = true;
         this.Controls.Add(posLayout);
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);
+        posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 0);
         tableLayoutPanel2.Controls.Add(label3, 0, 0);
@@ -1385,6 +1371,4 @@ partial class frmHoaDon
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvChiTietColumn6;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvChiTietColumn7;
     private global::System.Windows.Forms.Label lblTrangThai;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
 }

@@ -9,6 +9,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     public frmNhanVien()
     {
         InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
         PosFormStyle.ConfigureGridSelection(this,posLayout,ResetDetails);
         btnThem.Click+=(_,_)=> {ResetDetails();SetEditing(true);txtHoTen.Focus();};
         btnSua.Click+=(_,_)=> {if(selectedId.HasValue) {SetEditing(true);txtHoTen.Focus();} else BaoLoi("Chọn nhân viên trong bảng.");};
@@ -21,20 +22,21 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     }
     private void SetEditing(bool edit)
     {
-        txtHoTen.Enabled=txtTaiKhoan.Enabled=txtDienThoai.Enabled=txtMatKhau.Enabled=chkDangLam.Enabled=edit;
+        txtHoTen.Enabled=txtTaiKhoan.Enabled=txtDienThoai.Enabled=txtMatKhau.Enabled=chkDangLam.Enabled=cboVaiTro.Enabled=edit;
         btnLuu.Enabled=btnHuy.Enabled=edit;btnThem.Enabled=!edit;
         btnSua.Enabled=btnKhoa.Enabled=!edit && selectedId.HasValue;
     }
     private void ResetDetails()
     {
-        selectedId=null;txtMaNV.Clear();txtHoTen.Clear();txtTaiKhoan.Clear();txtDienThoai.Clear();txtMatKhau.Clear();
-        chkDangLam.Checked=true;lblTrangThai.Text="";SetEditing(false);
+        selectedId=null;txtHoTen.Clear();txtTaiKhoan.Clear();txtDienThoai.Clear();txtMatKhau.Clear();
+        cboVaiTro.SelectedIndex=0;chkDangLam.Checked=true;lblTrangThai.Text="";SetEditing(false);
     }
     private void Chon(DataGridViewRow row)
     {
         if(row.DataBoundItem is not DataRowView data) return;
-        selectedId=(int)data["MaNV"];txtMaNV.Text=selectedId.ToString();txtHoTen.Text=(string)data["HoTen"];
+        selectedId=(int)data["MaNV"];txtHoTen.Text=(string)data["HoTen"];
         txtTaiKhoan.Text=(string)data["TaiKhoan"];txtDienThoai.Text=data["DienThoai"].ToString();
+        cboVaiTro.SelectedIndex=(string)data["VaiTro"]=="ADMIN"?1:0;
         txtMatKhau.Clear();chkDangLam.Checked=(bool)data["DangLam"];SetEditing(false);
     }
     private void TimKiem()
@@ -57,7 +59,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     private void Luu()
     {
         if(!bll.Luu(selectedId,txtHoTen.Text,txtTaiKhoan.Text,txtMatKhau.Text,txtDienThoai.Text,chkDangLam.Checked,
-            PhienDangNhap.NhanVienId,out _,out string error)) {BaoLoi(error);return;}
+            PhienDangNhap.NhanVienId,out _,out string error,cboVaiTro.SelectedIndex==1?"ADMIN":"STAFF")) {BaoLoi(error);return;}
         TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã lưu nhân viên.";
     }
     private void Khoa()
@@ -68,5 +70,5 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
         TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã khóa tài khoản.";
     }
     private void BaoLoi(string error) {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text=error;}
-    private void btnTamAn_Click(object? sender,EventArgs e) => CuaSoLamViec.TamAn(this);
+
 }

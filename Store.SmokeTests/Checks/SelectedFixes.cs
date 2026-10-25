@@ -10,6 +10,7 @@ internal static partial class Program
 {
     static void TestSelectedFixes()
     {
+        TestCartActions();
         Check(TienTe.LamTron(1000.25m)==1000 && TienTe.LamTron(1000.50m)==1001 && TienTe.LamTron(1000.75m)==1001,
             "currency rounds to nearest whole dong, half upward");
         var row=new RowData {Price=1000.25m,Quantity=3};
@@ -35,7 +36,7 @@ internal static partial class Program
         using(var form=new frmQuanLyThuoc())
         {
             var grid=UiField<DataGridView>(form,"dgvThuoc");
-            Check(!grid.AutoGenerateColumns && grid.Columns.Count==9,"medicine columns exist before data load in Designer");
+            Check(!grid.AutoGenerateColumns && grid.Columns.Count==10,"medicine columns exist before data load in Designer");
             Check(grid.Columns["TenThuoc"].HeaderText=="Tên thuốc" && grid.Columns["DonGia"].DefaultCellStyle.Format=="N0" &&
                   !grid.Columns["MaNhom"].Visible && !grid.Columns["MaNCC"].Visible,
                   "medicine Designer declares Vietnamese headers, whole money and hidden foreign keys");
@@ -43,7 +44,7 @@ internal static partial class Program
             grid.CurrentCell=grid.Rows.Cast<DataGridViewRow>().Single(r=>Convert.ToInt32(r.Cells["MaThuoc"].Value)==medicineId).Cells["TenThuoc"];
             typeof(DataGridView).GetMethod("OnCellClick",PrivateInstance)!.Invoke(grid,new object[]{new DataGridViewCellEventArgs(grid.Columns["TenThuoc"].Index,grid.CurrentCell.RowIndex)});
             Check(UiField<TextBox>(form,"txtDonGia").Text=="1000","medicine selected price editor has no fractional digits");
-            Check(grid.Columns.Count==9 && grid.Columns["TenNCC"].Visible && grid.Columns["TenNhom"].Visible,
+            Check(grid.Columns.Count==10 && grid.Columns["TenNCC"].Visible && grid.Columns["TenNhom"].Visible,
                 "runtime preserves explicit columns and displays supplier/group names");
         }
 

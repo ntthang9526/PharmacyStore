@@ -40,3 +40,17 @@ dotnet run --project Store.SmokeTests/Store.SmokeTests.csproj -- --render-only
 Kiểm tra dùng database thử riêng, dọn các bản ghi do chính bài kiểm tra tạo ra. Ảnh được lưu vào `artifacts/previews/`.
 
 Xem [ghi chú gộp](Docs/MERGE-NOTES.md) để biết nội dung, cách tạo database và các giới hạn. Bản nguồn `PharmacyStore` được giữ nguyên.
+
+## Phân quyền và nhập hàng
+
+Admin quản lý danh mục, giá bán, voucher và nhân viên. Nhân viên được bán hàng, nhập kho, thêm/sửa thông tin cơ bản khách hàng và tra cứu. Cả hai xem toàn bộ hóa đơn, báo cáo và phiếu nhập. Đổi vai trò ở **Quản lý khác → Nhân viên → Sửa → Vai trò**.
+
+- **Quản lý khác → Phiếu nhập hàng**: xem các lần nhập, nhân viên nhập và chi tiết giá/số lượng theo lô; tìm kiếm bằng chữ và lọc ngày.
+- **Quản lý khác → Đổi mật khẩu**: đổi mật khẩu tài khoản đang đăng nhập. Admin có thể đặt lại mật khẩu nhân viên trong form Nhân viên.
+- Giá nhập trên bảng thuốc/lô là **giá nhập gần nhất**; dấu — nghĩa là chưa có phiếu nhập tương ứng.
+- Database thử hiện tại đã bổ sung Role. Với bản database thử cũ khác, chạy `Store.DAL/Database/AddEmployeeRoles.sql` trên đúng database đó; không chạy lại InitDatabase.sql.
+- Kiểm tra mới: `dotnet run --project Store.SmokeTests/Store.SmokeTests.csproj -- --roles`.
+
+Phân quyền hiện nằm trong ứng dụng POS; kết nối SQL trực tiếp chưa phải ranh giới bảo mật cho máy trạm không tin cậy. Chi tiết ở cuối ghi chú gộp.
+
+Các mục/nút không được cấp quyền sẽ ẩn. Nhân viên dùng Nhập kho (F4) để lập và lưu phiếu, tên nhân viên được ghi trên phiếu. Thêm mới thuốc/NCC/nhóm vẫn do Admin thực hiện. Các ô mã tự sinh đã bỏ khỏi phần nhập liệu; mã vẫn có trên bảng danh sách.

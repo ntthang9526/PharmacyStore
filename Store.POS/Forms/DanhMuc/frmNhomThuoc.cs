@@ -5,11 +5,13 @@ namespace Store.POS
 {
     public partial class frmNhomThuoc : Form, ILamMoiDuLieu
     {
+        private string maDangChon="";
         private NhomThuocBLL bll = new NhomThuocBLL();
 
         public frmNhomThuoc()
         {
             InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
             btnTimNhom.Click += (_, _) => TimNhom();
             txtTimNhom.KeyDown += (_, e) =>
             {
@@ -27,7 +29,7 @@ namespace Store.POS
         private void ResetDetails()
         {
             SetControlState(false);
-            txtMaNhom.Clear(); txtTenNhom.Clear();
+            maDangChon=""; txtTenNhom.Clear();
         }
 
         private void frmNhomThuoc_Load(object sender, EventArgs e)
@@ -44,7 +46,6 @@ namespace Store.POS
         }
         private void SetControlState(bool status)
         {
-            txtMaNhom.Enabled = false;
             txtTenNhom.Enabled = status;
         }
         private void dgvNhomThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -52,9 +53,8 @@ namespace Store.POS
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvNhomThuoc.Rows[e.RowIndex];
-                txtMaNhom.Text = row.Cells["MaNhom"].Value.ToString();
+                maDangChon = row.Cells["MaNhom"].Value.ToString()??"";
                 txtTenNhom.Text = row.Cells["TenNhom"].Value.ToString();
-                txtMaNhom.Enabled = false;
                 SetControlState(false);
             }
         }
@@ -64,8 +64,7 @@ namespace Store.POS
             if (!txtTenNhom.Enabled)
             {
                 SetControlState(true); // Mở khóa các ô
-                txtMaNhom.Enabled = false;
-                txtMaNhom.Clear();
+                maDangChon="";
                 txtTenNhom.Clear();
                 txtTenNhom.Focus();
                 return;
@@ -81,7 +80,7 @@ namespace Store.POS
             }
 
             // Gọi BLL để thêm mới
-            if (bll.ThemMoiNhom(txtMaNhom.Text.Trim(), txtTenNhom.Text.Trim(), out string error))
+            if (bll.ThemMoiNhom(maDangChon.Trim(), txtTenNhom.Text.Trim(), out string error))
             {
                 MessageBox.Show("Thêm nhóm thuốc thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
@@ -95,7 +94,7 @@ namespace Store.POS
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            string maNhom = txtMaNhom.Text;
+            string maNhom = maDangChon;
             if (string.IsNullOrEmpty(maNhom))
             {
                 MessageBox.Show("Vui lòng chọn nhóm thuốc cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -121,9 +120,8 @@ namespace Store.POS
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             txtTimNhom.Clear();
-            txtMaNhom.Clear();
+            maDangChon="";
             txtTenNhom.Clear();
-            txtMaNhom.Enabled = false;
             SetControlState(false);
             LoadData();
             txtTenNhom.Focus();
@@ -133,20 +131,19 @@ namespace Store.POS
         {
             if (!txtTenNhom.Enabled)
             {
-                if (string.IsNullOrEmpty(txtMaNhom.Text))
+                if (string.IsNullOrEmpty(maDangChon))
                 {
                     MessageBox.Show("Vui lòng chọn nhóm thuốc cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 SetControlState(true);  // Mở khóa các ô để sửa thông tin
-                txtMaNhom.Enabled = false; // Khóa mã nhóm lại vì là khóa chính không được sửa
                 txtTenNhom.Focus();
                 return;
             }
 
             // Trường hợp 2: Khi đã sửa xong thông tin trên ô, bấm nút Sửa lần nữa để LƯU xuống CSDL
-            string maNhom = txtMaNhom.Text.Trim();
+            string maNhom = maDangChon.Trim();
             string tenNhom = txtTenNhom.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(tenNhom))

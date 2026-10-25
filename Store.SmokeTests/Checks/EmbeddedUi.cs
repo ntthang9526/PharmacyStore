@@ -6,12 +6,12 @@ internal static partial class Program
     static void TestEmbeddedUi()
     {
         using var main=new frmMain();
-        Check(main.WindowState==FormWindowState.Maximized && main.MaximizeBox,"home starts maximized and remains resizable");
+        Check(main.WindowState==FormWindowState.Normal && main.ClientSize==new Size(1382,753) && main.StartPosition==FormStartPosition.CenterScreen && main.MaximizeBox,"home opens centered at original size and remains resizable");
         Offscreen(main);
         var host=UiField<Panel>(main,"contentHost");var dashboard=UiField<TableLayoutPanel>(main,"dashboard");
         var sidebar=UiField<Panel>(main,"panelChucNang");
         Check(main.Controls.Find("panelMenuBar",true).Length==0,"top navigation bar removed");
-        Check(sidebar.Contains(UiField<Button>(main,"btnTrangChu")) && sidebar.Contains(UiField<Button>(main,"btnCuaSo")),"home and open-form controls are on vertical navigation");
+        Check(sidebar.Contains(UiField<Button>(main,"btnTrangChu")) && main.Controls.Find("btnCuaSo",true).Length==0,"sidebar keeps Home without redundant open-forms button");
         Form Open(Type type)
         {
             typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();
@@ -43,8 +43,8 @@ internal static partial class Program
         UiField<Button>(main,"btnTrangChu").PerformClick();Application.DoEvents();
         Check(dashboard.Visible && !medicine.Visible && !medicine.IsDisposed,"home shows dashboard and retains form draft");
         Check(ReferenceEquals(medicine,Open(typeof(frmQuanLyThuoc))) && UiField<TextBox>(medicine,"txtTenThuoc").Text=="Thuốc chưa lưu","opening same function restores draft instance");
-        UiField<Button>(medicine,"btnTamAn").PerformClick();
-        Check(dashboard.Visible && !medicine.Visible,"hide embedded form returns to dashboard");
+        UiField<Button>(main,"btnTrangChu").PerformClick();
+        Check(dashboard.Visible && !medicine.Visible,"Home hides embedded form and returns to dashboard");
         Open(typeof(frmBanHang));
         Check(UiField<TextBox>(sales,"boxMaVoucher").Text=="DRAFT-NOT-APPLIED","switching retains sale inputs");
         foreach(var size in new[]{new Size(1600,900),new Size(1366,728),new Size(1100,700)})
@@ -68,6 +68,7 @@ internal static partial class Program
         {
             var form=Open(type);
             Check(!form.TopLevel && form.Parent==host && form.Visible,"function embeds correctly: "+type.Name);
+            Check(form.Controls.Find("btnTamAn",true).Length==0,"redundant Hide button removed: "+type.Name);
             Check(UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo").Values.Count(f=>f.Visible)==1,"one active content view: "+type.Name);
         }
         Preview("embedded-employees");

@@ -24,6 +24,7 @@ public class NhaCungCapDAL
     {
         using var connection = DBConnection.GetDbConnection();
         using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+        PhanQuyenDAL.YeuCau(Quyen.QuanTri,connection,transaction);
         using var command = new SqlCommand(@"
             IF EXISTS (SELECT 1 FROM Suppliers WITH (UPDLOCK, HOLDLOCK)
                        WHERE UPPER(LTRIM(RTRIM(Name))) = UPPER(@name) OR Phone = @phone)

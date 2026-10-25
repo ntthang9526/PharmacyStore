@@ -38,6 +38,16 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
+        if(!args.Contains("--designer-offline")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(args.Contains("--layout-audit"))
+        {
+            try {AuditEmbeddedLayouts();return 0;} catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--roles"))
+        {
+            try {TestRoles();Console.WriteLine($"ALL {checks} ROLE/IMPORT CHECKS PASSED");return 0;}
+            catch(Exception ex) {Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--embedded-ui"))
         {
             try {TestEmbeddedUi();Console.WriteLine($"ALL {checks} EMBEDDED UI CHECKS PASSED");return 0;}
@@ -98,7 +108,7 @@ internal static partial class Program
             Application.DoEvents();
             Check(!menu.IsDisposed && !main.IsDisposed, "closing menu keeps it alive, cycle " + cycle);
         }
-        var types = new[] { typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien) };
+        var types = new[] { typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien), typeof(frmPhieuNhap), typeof(frmDoiMatKhau) };
         for (int index = 0; index < types.Length; index++)
         {
             var expected=types[index];
@@ -225,7 +235,7 @@ internal static partial class Program
     static void RenderForms()
     {
         Directory.CreateDirectory("artifacts/previews");
-        foreach (var type in new[] { typeof(frmDangNhap), typeof(frmMain), typeof(frmBanHang), typeof(frmQuanLyThuoc), typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmNhapKho), typeof(frmCanhBao), typeof(frmBaoCao), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien) })
+        foreach (var type in new[] { typeof(frmDangNhap), typeof(frmMain), typeof(frmBanHang), typeof(frmQuanLyThuoc), typeof(frmNhomThuoc), typeof(frmNhaCungCap), typeof(frmKhachHang), typeof(frmNhapKho), typeof(frmCanhBao), typeof(frmBaoCao), typeof(frmLoHang), typeof(frmVoucher), typeof(frmHoaDon), typeof(frmNhanVien), typeof(frmPhieuNhap), typeof(frmDoiMatKhau) })
         {
             using var form = (Form)Activator.CreateInstance(type)!;
             if(form is frmMain) form.WindowState=FormWindowState.Normal;

@@ -27,7 +27,6 @@ partial class frmMain
         btnBanHang = new global::System.Windows.Forms.Button();
         lblTitle = new global::System.Windows.Forms.Label();
         btnTrangChu = new global::System.Windows.Forms.Button();
-        btnCuaSo = new global::System.Windows.Forms.Button();
         dashboard = new global::System.Windows.Forms.TableLayoutPanel();
         tableLayoutPanel1 = new global::System.Windows.Forms.TableLayoutPanel();
         lblTieuDeTongQuan = new global::System.Windows.Forms.Label();
@@ -1957,9 +1956,6 @@ partial class frmMain
 
 
         shellLayout.Controls.Add(lblTitle,1,0);
-        btnCuaSo.Name="btnCuaSo";btnCuaSo.Text="Form đang mở (0)";
-        btnCuaSo.Location=new global::System.Drawing.Point(112,0);btnCuaSo.Size=new global::System.Drawing.Size(210,35);
-        btnCuaSo.FlatStyle=global::System.Windows.Forms.FlatStyle.Flat;btnCuaSo.FlatAppearance.BorderSize=0;
         contentHost.Controls.Add(dashboard);
         dashboard.Controls.Add(tableLayoutPanel1, 0, 0);
         tableLayoutPanel1.Controls.Add(lblTieuDeTongQuan, 0, 0);
@@ -2008,7 +2004,7 @@ partial class frmMain
         shellLayout.Controls.Add(contentHost,1,1);Controls.Add(shellLayout);
         panelChucNang.Margin=new System.Windows.Forms.Padding(0);
         sideButtons.Name="sideButtons";sideButtons.Dock=System.Windows.Forms.DockStyle.Fill;
-        sideButtons.ColumnCount=1;sideButtons.RowCount=9;sideButtons.Padding=new System.Windows.Forms.Padding(12,14,12,0);
+        sideButtons.ColumnCount=1;sideButtons.RowCount=8;sideButtons.Padding=new System.Windows.Forms.Padding(12,14,12,0);
         sideButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent,100F));
         sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
         btnTrangChu.Dock=System.Windows.Forms.DockStyle.Fill;btnTrangChu.Margin=new System.Windows.Forms.Padding(0,5,0,5);
@@ -2045,11 +2041,6 @@ partial class frmMain
         btnBaoCao.BackColor=System.Drawing.Color.White;btnBaoCao.ForeColor=System.Drawing.Color.Black;
         btnBaoCao.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnBaoCao.FlatAppearance.BorderSize=0;
         sideButtons.Controls.Add(btnBaoCao,0,6);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnCuaSo.Dock=System.Windows.Forms.DockStyle.Fill;btnCuaSo.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnCuaSo.BackColor=System.Drawing.Color.White;btnCuaSo.ForeColor=System.Drawing.Color.Black;
-        btnCuaSo.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnCuaSo.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnCuaSo,0,7);
         sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent,100F));
         panelChucNang.Controls.Add(sideButtons);
         AutoScaleDimensions = new global::System.Drawing.SizeF(8F, 20F);
@@ -2062,7 +2053,7 @@ partial class frmMain
         MaximumSize = new global::System.Drawing.Size(0, 0);
         FormBorderStyle = global::System.Windows.Forms.FormBorderStyle.Sizable;
         MaximizeBox = true;
-        WindowState = System.Windows.Forms.FormWindowState.Maximized;
+        WindowState = System.Windows.Forms.FormWindowState.Normal;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "QUẢN LÝ HIỆU THUỐC";
@@ -2126,7 +2117,6 @@ partial class frmMain
     private global::System.Windows.Forms.Button btnBanHang;
     private global::System.Windows.Forms.Label lblTitle;
     private global::System.Windows.Forms.Button btnTrangChu;
-    private global::System.Windows.Forms.Button btnCuaSo;
     private global::System.Windows.Forms.TableLayoutPanel dashboard;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private global::System.Windows.Forms.Label lblTieuDeTongQuan;

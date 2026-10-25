@@ -20,6 +20,7 @@ public class NhomThuocDAL
     {
         using var connection = DBConnection.GetDbConnection();
         using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+        PhanQuyenDAL.YeuCau(Quyen.QuanTri,connection,transaction);
         using var command = new SqlCommand(@"
             IF EXISTS (SELECT 1 FROM Categories WITH (UPDLOCK, HOLDLOCK)
                        WHERE UPPER(LTRIM(RTRIM(Name))) = UPPER(@name))

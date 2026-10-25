@@ -60,8 +60,9 @@ internal static partial class Program
             using(var form=new frmNhanVien())
             {
                 Offscreen(form);
+                Check(form.Controls.Find("txtMaNV",true).Length==0,"employee ID input removed; selected ID remains internal");
                 var grid=UiField<DataGridView>(form,"dgvNhanVien");
-                Check(!grid.AutoGenerateColumns && grid.Columns.Count==5 && grid.CurrentCell==null,"employee form explicit columns and no initial selection");
+                Check(!grid.AutoGenerateColumns && grid.Columns.Count==6 && grid.CurrentCell==null,"employee form explicit columns and no initial selection");
                 UiField<Button>(form,"btnThem").PerformClick();UiField<Button>(form,"btnLuu").PerformClick();
                 Check(UiField<Label>(form,"lblTrangThai").Text.Length>0,"employee form displays validation errors");
                 UiField<TextBox>(form,"txtHoTen").Text=tag+" UI";UiField<TextBox>(form,"txtTaiKhoan").Text=user+"ui";
@@ -86,7 +87,7 @@ internal static partial class Program
             customer=Count("SELECT Id FROM Customers WHERE Phone=@p",("@p",phone));
             Check(vouchers.Luu(null,tag,"FIXED",100,5,true,null,out error),"window fixture voucher created");
             voucher=Count("SELECT Id FROM Vouchers WHERE Code=@c",("@c",tag));
-            Check(imports.LuuPhieuNhap(employee,supplier,tag,new List<NhapKhoItem>{new(){MaThuoc=med,TenThuoc=tag,SoLo=tag,HanDung=DateTime.Today.AddDays(30),SoLuong=6,GiaNhap=500}},out _,out _,out error),"window fixture stock imported");
+            Check(imports.LuuPhieuNhap(operatorId,supplier,tag,new List<NhapKhoItem>{new(){MaThuoc=med,TenThuoc=tag,SoLo=tag,HanDung=DateTime.Today.AddDays(30),SoLuong=6,GiaNhap=500}},out _,out _,out error),"window fixture stock imported");
 
             using(var main=new frmMain())
             {
@@ -104,34 +105,34 @@ internal static partial class Program
                 UiField<TextBox>(sales,"boxMaKhachHang").Text=phone;InvokePrivate(sales,"ThemKhachHang");
                 UiField<TextBox>(sales,"boxTienKhach").Text="5000";
                 var cart=UiField<BindingList<RowData>>(sales,"gioHang");
-                UiField<Button>(sales,"btnTamAn").PerformClick();
+                UiField<Button>(main,"btnTrangChu").PerformClick();
                 Check(!sales.Visible && !sales.IsDisposed && cart.Count==1 && UiField<TextBox>(sales,"boxTienKhach").Text=="5000","hide sales preserves cart and cash draft");
                 var stock=(frmNhapKho)Open(typeof(frmNhapKho));
                 UiField<ComboBox>(stock,"cboNhaCungCap").SelectedValue=supplier;UiField<ComboBox>(stock,"cboThuoc").SelectedValue=med;
                 UiField<TextBox>(stock,"txtSoLo").Text=tag+"Draft";UiField<NumericUpDown>(stock,"nudSoLuong").Value=2;UiField<NumericUpDown>(stock,"nudGiaNhap").Value=500;
                 UiField<TextBox>(stock,"txtGhiChu").Text="Phiếu nhập đang soạn";UiField<Button>(stock,"btnThemThuoc").PerformClick();
-                UiField<TextBox>(stock,"txtSoLo").Text="NEXT-LOT";UiField<Button>(stock,"btnTamAn").PerformClick();
+                UiField<TextBox>(stock,"txtSoLo").Text="NEXT-LOT";UiField<Button>(main,"btnTrangChu").PerformClick();
                 var medicine=(frmQuanLyThuoc)Open(typeof(frmQuanLyThuoc));var medGrid=UiField<DataGridView>(medicine,"dgvThuoc");
                 var medRow=medGrid.Rows.Cast<DataGridViewRow>().Single(r=>(int)r.Cells["MaThuoc"].Value==med);
                 InvokePrivate(medicine,"dgvThuoc_CellClick",medGrid,new DataGridViewCellEventArgs(0,medRow.Index));
                 UiField<Button>(medicine,"btnSua").PerformClick();UiField<TextBox>(medicine,"txtTenThuoc").Text="Tên chưa lưu";
-                UiField<Button>(medicine,"btnTamAn").PerformClick();
+                UiField<Button>(main,"btnTrangChu").PerformClick();
                 var batch=(frmLoHang)Open(typeof(frmLoHang));UiField<TextBox>(batch,"txtTimKiem").Text=tag;UiField<Button>(batch,"btnTimKiem").PerformClick();
-                UiField<Button>(batch,"btnTamAn").PerformClick();
+                UiField<Button>(main,"btnTrangChu").PerformClick();
                 var invoices=(frmHoaDon)Open(typeof(frmHoaDon));UiField<TextBox>(invoices,"txtTimKiem").Text=tag;UiField<Button>(invoices,"btnTimKiem").PerformClick();
-                UiField<Button>(invoices,"btnTamAn").PerformClick();
-                var staffForm=(frmNhanVien)Open(typeof(frmNhanVien));UiField<Button>(staffForm,"btnTamAn").PerformClick();
-                var groupForm=Open(typeof(frmNhomThuoc));UiField<Button>(groupForm,"btnTamAn").PerformClick();
-                var supplierForm=Open(typeof(frmNhaCungCap));UiField<Button>(supplierForm,"btnTamAn").PerformClick();
-                var customerForm=Open(typeof(frmKhachHang));UiField<Button>(customerForm,"btnTamAn").PerformClick();
-                var voucherForm=Open(typeof(frmVoucher));UiField<Button>(voucherForm,"btnTamAn").PerformClick();
-                var alerts=Open(typeof(frmCanhBao));UiField<Button>(alerts,"btnTamAn").PerformClick();
-                var report=Open(typeof(frmBaoCao));UiField<Button>(report,"btnTamAn").PerformClick();
-                var windows=UiField<ContextMenuStrip>(main,"menuCuaSo");UiField<Button>(main,"btnCuaSo").PerformClick();
-                Check(windows.Items.Count==12 && windows.Items.Cast<ToolStripItem>().All(i=>i.Text?.Contains("đang ẩn")==true),"home lists all hidden functional forms");
-                windows.Close();windows.Items.Cast<ToolStripItem>().First(i=>i.Text?.StartsWith("Bán hàng")==true).PerformClick();
-                Check(sales.Visible && ReferenceEquals(sales,Application.OpenForms.OfType<frmBanHang>().Single()),"window menu restores same sales instance");
-                UiField<Button>(sales,"btnTamAn").PerformClick();
+                UiField<Button>(main,"btnTrangChu").PerformClick();
+                var staffForm=(frmNhanVien)Open(typeof(frmNhanVien));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var groupForm=Open(typeof(frmNhomThuoc));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var supplierForm=Open(typeof(frmNhaCungCap));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var customerForm=Open(typeof(frmKhachHang));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var voucherForm=Open(typeof(frmVoucher));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var alerts=Open(typeof(frmCanhBao));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var report=Open(typeof(frmBaoCao));UiField<Button>(main,"btnTrangChu").PerformClick();
+                var cached=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo");
+                Check(cached.Count==12 && cached.Values.All(f=>!f.Visible),"Home retains all functional forms hidden without extra buttons");
+                Open(typeof(frmBanHang));
+                Check(sales.Visible && ReferenceEquals(sales,Application.OpenForms.OfType<frmBanHang>().Single()),"sidebar restores same sales instance");
+                UiField<Button>(main,"btnTrangChu").PerformClick();
                 Check(catalog.SuaThuoc(med.ToString(),tag+" Renamed",group.ToString(),"Hộp","1200","0",supplier,out error),"medicine price/name changed through business layer");
                 Synced(()=>cart[0].Price==1200,"timer refreshes hidden sales automatically after commit");
                 Check(cart.Count==1 && cart[0].Quantity==1 && cart[0].Name==tag+" Renamed" && UiField<decimal>(sales,"tongTien")==1100,"cart prices/names and voucher total recomputed without dropping cart");
@@ -146,9 +147,11 @@ internal static partial class Program
                 Synced(()=>UiField<TextBox>(sales,"boxMaKhachHang").Text==newPhone,"applied sales customer refreshes by stable ID after phone change");
                 Check(vouchers.Luu(voucher,tag,"PERCENT",25,5,true,5,out error),"voucher changed through business layer");
                 Synced(()=>UiField<decimal>(sales,"tongTien")==900,"applied voucher and totals update after voucher edit");
-                Check(imports.LuuPhieuNhap(employee,supplier,tag,new List<NhapKhoItem>{new(){MaThuoc=med,TenThuoc=tag,SoLo=tag,HanDung=DateTime.Today.AddDays(30),SoLuong=3,GiaNhap=500}},out _,out _,out error),"additional stock committed");
+                Check(imports.LuuPhieuNhap(operatorId,supplier,tag,new List<NhapKhoItem>{new(){MaThuoc=med,TenThuoc=tag,SoLo=tag,HanDung=DateTime.Today.AddDays(30),SoLuong=3,GiaNhap=500}},out _,out _,out error),"additional stock committed");
                 Synced(()=>UiField<DataGridView>(batch,"dgvLoHang").Rows.Cast<DataGridViewRow>().Any(r=>(int)r.Cells["TonKho"].Value==9),"hidden batch view refreshes stock and retains search");
+                PhanQuyenDAL.NhanVienId=employee;
                 Check(new BanHangBLL().ThanhToan(employee,new List<CartItem>{new(){MaThuoc=med,SoLuong=1}},tag,customer,900,out order,out _,out _,out error),"sale committed for refresh/history checks: "+error);
+                PhanQuyenDAL.NhanVienId=operatorId;
                 Synced(()=>UiField<DataGridView>(invoices,"dgvHoaDon").Rows.Cast<DataGridViewRow>().Any(r=>(int)r.Cells["MaHD"].Value==order),"hidden invoice list refreshes after saved sale");
                 Check(UiField<TextBox>(invoices,"txtTimKiem").Text==tag && UiField<Label>(main,"lblSoHoaDon").Text==Count("SELECT COUNT(*) FROM Orders WHERE CAST(OrderDate AS date)=CAST(GETDATE() AS date)").ToString(),"invoice filter preserved and home count refreshed");
                 invoices.MoHoaDon(order);Check(UiField<DataGridView>(invoices,"dgvChiTiet").Rows.Count==1,"existing invoice window can navigate to requested order");
@@ -163,7 +166,7 @@ internal static partial class Program
                 Check(UiField<DataTable>(stock,"dtPhieu").Rows.Count==1,"inactive catalog item does not silently discard stock-in draft");
                 CheckLayout(sales,"sales hide control");Preview(sales,"sales-refresh-warning");
                 foreach(var form in UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo").Values.ToArray()) form.Close();
-                Check(UiField<Button>(main,"btnCuaSo").Text.Contains("(0)"),"closing forms removes them from open-window list");
+                Check(UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo").Count==0,"closing forms removes their cached instances");
             }
             using(var modalMain=new frmMain {WindowState=FormWindowState.Normal,ShowInTaskbar=false,StartPosition=FormStartPosition.Manual,Location=new Point(-20000,-20000)})
             {
@@ -177,7 +180,7 @@ internal static partial class Program
                         typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(typeof(frmBanHang)).Invoke(modalMain,null);
                         var child=(frmBanHang)UiField<Dictionary<Type,Form>>(modalMain,"cuaSoDangMo")[typeof(frmBanHang)];
                         Check(modalMain.Modal && modalMain.Enabled && child.Visible && !child.TopLevel && !child.Modal,"real login-style home supports embedded functional forms");
-                        UiField<Button>(child,"btnTamAn").PerformClick();
+                        UiField<Button>(modalMain,"btnTrangChu").PerformClick();
                         Check(!child.Visible && modalMain.Enabled,"hide returns to enabled home under modal login loop");
                     }
                     catch(Exception ex) {failure=ex;}

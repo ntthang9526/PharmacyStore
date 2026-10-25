@@ -17,6 +17,7 @@ namespace Store.POS
         public frmNhapKho()
         {
             InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
             txtSoLo.MaxLength=50;
             cboNhaCungCap.SelectedIndexChanged += (_,_) => { if(!dangNapNCC) NapThuocTheoNCC(); };

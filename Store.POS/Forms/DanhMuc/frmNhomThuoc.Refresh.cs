@@ -4,11 +4,11 @@ using Store.DAL;
 namespace Store.POS;
 public partial class frmNhomThuoc
 {
-    private void btnTamAn_Click(object? sender,EventArgs e) => CuaSoLamViec.TamAn(this);
+
     public void LamMoiDuLieu()
     {
         if(PosFormStyle.IsInDesigner(this)) return;
-        bool editing=txtTenNhom.Enabled;string id=txtMaNhom.Text;
+        bool editing=txtTenNhom.Enabled;string id=maDangChon;
         dgvNhomThuoc.DataSource=bll.TimKiemNhom(txtTimNhom.Text);
         if(!editing && id.Length>0)
         {

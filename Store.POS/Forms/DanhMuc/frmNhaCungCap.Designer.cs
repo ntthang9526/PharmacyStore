@@ -13,8 +13,6 @@ partial class frmNhaCungCap
 
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -33,9 +31,6 @@ partial class frmNhaCungCap
         groupBox6 = new global::System.Windows.Forms.GroupBox();
         tableLayoutPanel7 = new global::System.Windows.Forms.TableLayoutPanel();
         tableLayoutPanel8 = new global::System.Windows.Forms.TableLayoutPanel();
-        tableLayoutPanel9 = new global::System.Windows.Forms.TableLayoutPanel();
-        label10 = new global::System.Windows.Forms.Label();
-        txtMaNCC = new global::System.Windows.Forms.TextBox();
         tableLayoutPanel11 = new global::System.Windows.Forms.TableLayoutPanel();
         label12 = new global::System.Windows.Forms.Label();
         txtTenNCC = new global::System.Windows.Forms.TextBox();
@@ -60,7 +55,6 @@ partial class frmNhaCungCap
         groupBox6.SuspendLayout();
         tableLayoutPanel7.SuspendLayout();
         tableLayoutPanel8.SuspendLayout();
-        tableLayoutPanel9.SuspendLayout();
         tableLayoutPanel11.SuspendLayout();
         tableLayoutPanel13.SuspendLayout();
         tableLayoutPanel15.SuspendLayout();
@@ -547,7 +541,7 @@ partial class frmNhaCungCap
         tableLayoutPanel7.ColumnCount = 1;
         tableLayoutPanel7.Enabled = true;
         tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 224F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 168F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 132F));
 
@@ -571,7 +565,7 @@ partial class frmNhaCungCap
         tableLayoutPanel8.AccessibleName = null;
         tableLayoutPanel8.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
         tableLayoutPanel8.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel8.RowCount = 4;
+        tableLayoutPanel8.RowCount = 3;
         tableLayoutPanel8.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
         tableLayoutPanel8.AutoScroll = false;
         tableLayoutPanel8.Visible = true;
@@ -581,89 +575,12 @@ partial class frmNhaCungCap
         tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
-        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
 
-        // tableLayoutPanel9
-        tableLayoutPanel9.Name = "tableLayoutPanel9";
-        tableLayoutPanel9.Text = "";
-        tableLayoutPanel9.Location = new global::System.Drawing.Point(0, 0);
-        tableLayoutPanel9.Size = new global::System.Drawing.Size(330, 56);
-        tableLayoutPanel9.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel9.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel9.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
-        tableLayoutPanel9.AutoSize = false;
-        tableLayoutPanel9.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel9.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel9.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel9.BackColor = global::System.Drawing.SystemColors.Control;
-        tableLayoutPanel9.Cursor = global::System.Windows.Forms.Cursors.Default;
-        tableLayoutPanel9.TabIndex = 0;
-        tableLayoutPanel9.TabStop = false;
-        tableLayoutPanel9.AccessibleName = null;
-        tableLayoutPanel9.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel9.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel9.RowCount = 2;
-        tableLayoutPanel9.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel9.AutoScroll = false;
-        tableLayoutPanel9.Visible = true;
-        tableLayoutPanel9.ColumnCount = 1;
-        tableLayoutPanel9.Enabled = true;
-        tableLayoutPanel9.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel9.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
-        tableLayoutPanel9.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
 
-        // label10
-        label10.Name = "label10";
-        label10.Text = "Mã nhà cung cấp (tự động)";
-        label10.Location = new global::System.Drawing.Point(3, 0);
-        label10.Size = new global::System.Drawing.Size(324, 22);
-        label10.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label10.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label10.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
-        label10.AutoSize = false;
-        label10.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label10.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label10.BackColor = global::System.Drawing.SystemColors.Control;
-        label10.Cursor = global::System.Windows.Forms.Cursors.Default;
-        label10.TabIndex = 0;
-        label10.TabStop = false;
-        label10.AccessibleName = null;
-        label10.AutoEllipsis = false;
-        label10.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
-        label10.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label10.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label10.Visible = true;
-        label10.Enabled = true;
 
-        // txtMaNCC
-        txtMaNCC.Name = "txtMaNCC";
-        txtMaNCC.Text = "";
-        txtMaNCC.Location = new global::System.Drawing.Point(0, 23);
-        txtMaNCC.Size = new global::System.Drawing.Size(330, 30);
-        txtMaNCC.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
-        txtMaNCC.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        txtMaNCC.Dock = global::System.Windows.Forms.DockStyle.Top;
 
-        txtMaNCC.AutoSize = true;
-        txtMaNCC.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        txtMaNCC.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        txtMaNCC.BackColor = global::System.Drawing.Color.White;
-        txtMaNCC.Cursor = global::System.Windows.Forms.Cursors.IBeam;
-        txtMaNCC.TabIndex = 5;
-        txtMaNCC.TabStop = true;
-        txtMaNCC.AccessibleName = null;
-        txtMaNCC.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
-        txtMaNCC.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-        txtMaNCC.Multiline = false;
-        txtMaNCC.ReadOnly = false;
-        txtMaNCC.MaxLength = 32767;
-        txtMaNCC.PlaceholderText = "";
-        txtMaNCC.CharacterCasing = global::System.Windows.Forms.CharacterCasing.Normal;
-        txtMaNCC.ScrollBars = global::System.Windows.Forms.ScrollBars.None;
-        txtMaNCC.Visible = true;
-        txtMaNCC.Enabled = false;
 
         // tableLayoutPanel11
         tableLayoutPanel11.Name = "tableLayoutPanel11";
@@ -1093,19 +1010,7 @@ partial class frmNhaCungCap
         btnThoat.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
         btnThoat.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
         this.Controls.Add(posLayout);
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);
+        posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         tableLayoutPanel1.Controls.Add(groupBox2, 0, 0);
         groupBox2.Controls.Add(tableLayoutPanel3);
@@ -1117,9 +1022,6 @@ partial class frmNhaCungCap
         tableLayoutPanel1.Controls.Add(groupBox6, 1, 0);
         groupBox6.Controls.Add(tableLayoutPanel7);
         tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
-        tableLayoutPanel8.Controls.Add(tableLayoutPanel9, -1, -1);
-        tableLayoutPanel9.Controls.Add(label10, 0, 0);
-        tableLayoutPanel9.Controls.Add(txtMaNCC, 0, 1);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11, -1, -1);
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
         tableLayoutPanel11.Controls.Add(txtTenNCC, 0, 1);
@@ -1169,8 +1071,6 @@ partial class frmNhaCungCap
         tableLayoutPanel13.PerformLayout();
         tableLayoutPanel11.ResumeLayout(false);
         tableLayoutPanel11.PerformLayout();
-        tableLayoutPanel9.ResumeLayout(false);
-        tableLayoutPanel9.PerformLayout();
         tableLayoutPanel8.ResumeLayout(false);
         tableLayoutPanel8.PerformLayout();
         tableLayoutPanel7.ResumeLayout(false);
@@ -1209,9 +1109,6 @@ partial class frmNhaCungCap
     private global::System.Windows.Forms.GroupBox groupBox6;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-    private global::System.Windows.Forms.Label label10;
-    private global::System.Windows.Forms.TextBox txtMaNCC;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
     private global::System.Windows.Forms.Label label12;
     private global::System.Windows.Forms.TextBox txtTenNCC;
@@ -1227,6 +1124,4 @@ partial class frmNhaCungCap
     private global::System.Windows.Forms.Button btnXoa;
     private global::System.Windows.Forms.Button btnLamMoi;
     private global::System.Windows.Forms.Button btnThoat;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
 }

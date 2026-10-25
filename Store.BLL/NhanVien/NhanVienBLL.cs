@@ -9,7 +9,7 @@ public class NhanVienBLL
     private readonly NhanVienDAL dal=new();
     public DataTable TimKiem(string keyword) => dal.TimKiem(keyword);
     public bool Luu(int? id,string name,string username,string password,string phone,bool active,int operatorId,
-        out int savedId,out string error)
+        out int savedId,out string error,string role="STAFF")
     {
         savedId=0;error="";name=name.Trim();username=username.Trim();phone=phone.Trim();
         error=DanhMucValidation.NameError(name,100)??"";
@@ -20,11 +20,12 @@ public class NhanVienBLL
         if(error.Length==0 && phone.Length>0 && DanhMucValidation.CustomerPhoneError(phone)!=null)
             error="Số điện thoại phải gồm đúng 10 chữ số, bắt đầu bằng 0.";
         if(error.Length==0 && (operatorId<=0 || id is <=0)) error="Vui lòng đăng nhập và chọn nhân viên hợp lệ.";
+        if(error.Length==0 && role is not ("ADMIN" or "STAFF")) error="Vai trò không hợp lệ.";
         if(error.Length>0) return false;
         try
         {
             savedId=dal.Luu(id,DanhMucValidation.NormalizeName(name),username,password.Length==0?null:MatKhauNhanVien.Tao(password),
-                phone.Length==0?null:phone,active,operatorId);
+                phone.Length==0?null:phone,active,operatorId,role);
             return true;
         }
         catch(SqlException ex) when(ex.Number is 2601 or 2627) {error="Tài khoản đăng nhập đã tồn tại.";}

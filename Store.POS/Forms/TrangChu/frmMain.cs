@@ -13,7 +13,6 @@ namespace Store.POS
     public partial class frmMain : Form
     {
         private readonly ContextMenuStrip menuQuanLyKhac;
-        private readonly ContextMenuStrip menuCuaSo;
         private readonly Dictionary<Type, Form> cuaSoDangMo = new();
         private long phienBanDuLieu = Store.DAL.DBConnection.DataVersion;
         private bool dangDongBo;
@@ -29,8 +28,9 @@ namespace Store.POS
             menuQuanLyKhac.Items.Add("Voucher", null, (_, _) => MoForm<frmVoucher>());
             menuQuanLyKhac.Items.Add("Hóa đơn", null, (_, _) => MoForm<frmHoaDon>());
             menuQuanLyKhac.Items.Add("Nhân viên", null, (_, _) => MoForm<frmNhanVien>());
-            menuCuaSo = new ContextMenuStrip(components);
-            btnCuaSo.Click += (_, _) => { CapNhatDanhSachCuaSo(); menuCuaSo.Show(btnCuaSo,new Point(0,btnCuaSo.Height)); };
+            menuQuanLyKhac.Items.Add("Phiếu nhập hàng", null, (_, _) => MoForm<frmPhieuNhap>());
+            menuQuanLyKhac.Items.Add("Đổi mật khẩu", null, (_, _) => MoForm<frmDoiMatKhau>());
+            Shown+=(_,_)=>CapNhatQuyen();
             var timerDongBo = new System.Windows.Forms.Timer(components) { Interval=500 };
             timerDongBo.Tick += (_, _) => DongBoDuLieu();
             Shown += (_, _) => { if(!PosFormStyle.IsInDesigner(this)) timerDongBo.Start(); };
@@ -39,6 +39,18 @@ namespace Store.POS
                 if(e.CloseReason==CloseReason.UserClosing && cuaSoDangMo.Count>0 &&
                     MessageBox.Show(this,"Đóng ứng dụng sẽ đóng cả các form đang tạm ẩn. Tiếp tục?","Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes) e.Cancel=true;
             };
+            var timerQuyen=new System.Windows.Forms.Timer(components) {Interval=5000};
+            timerQuyen.Tick+=(_,_)=>
+            {
+                try {CapNhatQuyen();}
+                catch(UnauthorizedAccessException ex)
+                {
+                    timerQuyen.Stop();timerDongBo.Stop();
+                    Enabled=false;MessageBox.Show(this,ex.Message,"Phiên đăng nhập");Dispose();
+                }
+                catch(Exception ex) {lblTongQuan.Text="Chưa kiểm tra được phiên đăng nhập: "+ex.Message;}
+            };
+            Shown+=(_,_)=> {if(!PosFormStyle.IsInDesigner(this)) timerQuyen.Start();};
             ConfigureDashboard();
         }
 
@@ -52,6 +64,9 @@ namespace Store.POS
             Form? form=null;
             try
             {
+                CapNhatQuyen();
+                if(PhanQuyenGiaoDien.ChiAdmin(type) && !PhienDangNhap.LaAdmin)
+                    throw new UnauthorizedAccessException("Chức năng này chỉ dành cho Admin.");
                 DongBoDuLieu();
                 if(cuaSoDangMo.TryGetValue(type,out form) && !form.IsDisposed)
                 {
@@ -67,7 +82,7 @@ namespace Store.POS
                     if(e.Modifiers==Keys.None && e.KeyCode is Keys.F1 or Keys.F2 or Keys.F3 or Keys.F4 or Keys.F5 or Keys.F6)
                     {e.SuppressKeyPress=true;frmMain_KeyDown(this,e);}
                 };
-                form.MinimumSize=new Size(900,570);form.MaximumSize=Size.Empty;
+                form.MinimumSize=Size.Empty;form.MaximumSize=Size.Empty;
                 form.Dock=DockStyle.Fill;contentHost.Controls.Add(form);
                 cuaSoDangMo[type]=form;
                 form.FormClosed+=(_,_)=>
@@ -76,11 +91,10 @@ namespace Store.POS
                     if(!IsDisposed && !Disposing)
                     {
                         if(!cuaSoDangMo.Values.Any(f=>!f.IsDisposed && f.Visible)) VeTrangChu();
-                        CapNhatDanhSachCuaSo();TaiTongQuan();
+                        TaiTongQuan();
                     }
                 };
-                form.VisibleChanged+=(_,_)=> {if(!IsDisposed && !Disposing) CapNhatDanhSachCuaSo();};
-                HienFormNhung(form);CapNhatDanhSachCuaSo();
+                HienFormNhung(form);
             }
             catch(Exception ex)
             {
@@ -92,27 +106,14 @@ namespace Store.POS
         {
             foreach(var other in cuaSoDangMo.Values.ToArray())
                 if(other!=form && !other.IsDisposed) other.Hide();
-            dashboard.Hide();form.Show();form.BringToFront();form.Select();
-            CapNhatDanhSachCuaSo();
+            dashboard.Hide();form.Show();PhanQuyenGiaoDien.ApDung(form);form.BringToFront();form.Select();
+            
         }
         internal void VeTrangChu()
         {
             foreach(var form in cuaSoDangMo.Values.ToArray()) if(!form.IsDisposed) form.Hide();
             dashboard.Show();dashboard.BringToFront();TaiTongQuan();
-            CapNhatDanhSachCuaSo();
-        }
-        private void CapNhatDanhSachCuaSo()
-        {
-            foreach(ToolStripItem item in menuCuaSo.Items.Cast<ToolStripItem>().ToArray()) item.Dispose();
-            menuCuaSo.Items.Clear();
-            foreach(var entry in cuaSoDangMo.ToArray())
-            {
-                var form=entry.Value;if(form.IsDisposed) continue;
-                var item=menuCuaSo.Items.Add(form.Text+(form.Visible?"":" (đang ẩn)"));
-                item.Click+=(_,_)=>MoCuaSo(entry.Key,()=>throw new InvalidOperationException("Form đã đóng."));
-            }
-            if(menuCuaSo.Items.Count==0) menuCuaSo.Items.Add("Chưa mở form nào").Enabled=false;
-            btnCuaSo.Text=$"Form đang mở ({cuaSoDangMo.Count})";
+            
         }
         private void DongBoDuLieu(bool force=false)
         {
@@ -123,12 +124,7 @@ namespace Store.POS
             var errors=new List<string>();
             try
             {
-                if(PhienDangNhap.NhanVienId>0)
-                {
-                    var account=new Store.DAL.NhanVienDAL().TimKiem("").Rows.Cast<System.Data.DataRow>()
-                        .FirstOrDefault(r=>(int)r["MaNV"]==PhienDangNhap.NhanVienId);
-                    if(account!=null) PhienDangNhap.HoTen=(string)account["HoTen"];
-                }
+                CapNhatQuyen();
                 foreach(var form in cuaSoDangMo.Values.ToArray())
                     if(!form.IsDisposed && form is ILamMoiDuLieu data)
                         try {data.LamMoiDuLieu();} catch(Exception ex) {errors.Add(form.Text+": "+ex.Message);}
@@ -141,6 +137,29 @@ namespace Store.POS
                 lblTongQuan.Text="Chưa cập nhật được dữ liệu. Bấm Làm mới để thử lại. "+ex.Message;
             }
             finally {dangDongBo=false;}
+        }
+
+        private void CapNhatQuyen()
+        {
+            if(PosFormStyle.IsInDesigner(this)) return;
+            var account=Store.DAL.PhanQuyenDAL.LayPhien();
+            bool changed=PhienDangNhap.VaiTro!=account.VaiTro;
+            PhienDangNhap.HoTen=account.HoTen;PhienDangNhap.VaiTro=account.VaiTro;
+            btnNhapKho.Enabled=true;
+            menuQuanLyKhac.Items[6].Visible=PhienDangNhap.LaAdmin;
+            // Khởi tạo lại editor có quyền thay đổi; giữ giỏ hàng và các màn hình chỉ xem.
+            if(changed)
+            {
+                foreach(var pair in cuaSoDangMo.ToArray())
+                    if(PhanQuyenGiaoDien.ChiAdmin(pair.Key) || pair.Value is frmQuanLyThuoc or frmNhomThuoc or frmNhaCungCap or frmVoucher or frmKhachHang)
+                    {cuaSoDangMo.Remove(pair.Key);pair.Value.Dispose();}
+                VeTrangChu();
+            }
+            foreach(var form in cuaSoDangMo.Values.ToArray())
+            {
+                PhanQuyenGiaoDien.ApDung(form);
+                if(changed && form is frmNhapKho stock) stock.LamMoiDuLieu();
+            }
         }
 
         private void btnTrangChu_Click(object sender, EventArgs e)

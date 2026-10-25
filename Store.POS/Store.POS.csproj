@@ -68,4 +68,24 @@
     <Compile Update="Forms/DanhMuc/frmThemNhomThuoc.cs"><SubType>Form</SubType></Compile>
     <Compile Update="Forms/DanhMuc/frmThemNhomThuoc.Designer.cs"><DependentUpon>frmThemNhomThuoc.cs</DependentUpon></Compile>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Forms/**/*.Refresh.resx" />
+    <Compile Update="Forms/BanHang/frmBanHang.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBanHang.cs</DependentUpon></Compile>
+    <Compile Update="Forms/BaoCao/frmBaoCao.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBaoCao.cs</DependentUpon></Compile>
+    <Compile Update="Forms/CanhBao/frmCanhBao.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmCanhBao.cs</DependentUpon></Compile>
+    <Compile Update="Forms/DanhMuc/frmKhachHang.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmKhachHang.cs</DependentUpon></Compile>
+    <Compile Update="Forms/DanhMuc/frmNhaCungCap.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmNhaCungCap.cs</DependentUpon></Compile>
+    <Compile Update="Forms/DanhMuc/frmNhomThuoc.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmNhomThuoc.cs</DependentUpon></Compile>
+    <Compile Update="Forms/HoaDon/frmHoaDon.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmHoaDon.cs</DependentUpon></Compile>
+    <Compile Update="Forms/Kho/frmLoHang.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmLoHang.cs</DependentUpon></Compile>
+    <Compile Update="Forms/NhapKho/frmNhapKho.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmNhapKho.cs</DependentUpon></Compile>
+    <Compile Update="Forms/Thuoc/frmQuanLyThuoc.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmQuanLyThuoc.cs</DependentUpon></Compile>
+    <Compile Update="Forms/Voucher/frmVoucher.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmVoucher.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms/NhapKho/frmPhieuNhap.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/NhapKho/frmPhieuNhap.Designer.cs"><DependentUpon>frmPhieuNhap.cs</DependentUpon></Compile>
+    <Compile Update="Forms/DangNhap/frmDoiMatKhau.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/DangNhap/frmDoiMatKhau.Designer.cs"><DependentUpon>frmDoiMatKhau.cs</DependentUpon></Compile>
+  </ItemGroup>
 </Project>

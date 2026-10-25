@@ -6,8 +6,6 @@ partial class frmNhanVien
     protected override void Dispose(bool disposing) {if(disposing) components?.Dispose();base.Dispose(disposing);}
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         posLayout = new TableLayoutPanel();
         posHeading = new Label();
         content = new TableLayoutPanel();
@@ -15,11 +13,11 @@ partial class frmNhanVien
         left = new TableLayoutPanel();
         editor = new TableLayoutPanel();
         details = new GroupBox();
+        detailLayout=new TableLayoutPanel();editorScroll=new Panel();
         actions = new FlowLayoutPanel();
         dgvNhanVien = new DataGridView();
         lblTrangThai = new Label();
         txtTimKiem = new TextBox();
-        txtMaNV = new TextBox();
         txtHoTen = new TextBox();
         txtTaiKhoan = new TextBox();
         txtDienThoai = new TextBox();
@@ -32,7 +30,7 @@ partial class frmNhanVien
         btnHuy = new Button();
         btnKhoa = new Button();
         chkDangLam = new CheckBox();
-        lblField0 = new Label();
+        cboVaiTro = new ComboBox();lblVaiTro=new Label();colVaiTro=new DataGridViewTextBoxColumn();
         lblField1 = new Label();
         lblField2 = new Label();
         lblField3 = new Label();
@@ -45,6 +43,8 @@ partial class frmNhanVien
         colDienThoai = new DataGridViewTextBoxColumn();
         colDangLam = new DataGridViewCheckBoxColumn();
         ((System.ComponentModel.ISupportInitialize)dgvNhanVien).BeginInit();
+        components=new System.ComponentModel.Container();
+        passwordHint=new ToolTip(components);passwordHint.SetToolTip(txtMatKhau,"Để trống để giữ mật khẩu cũ. Nhập mật khẩu mới khi cần đặt lại.");
         SuspendLayout();
         posLayout.Name="posLayout";posLayout.Dock=DockStyle.Fill;posLayout.Padding=new Padding(12);posLayout.ColumnCount=1;posLayout.RowCount=3;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
@@ -58,82 +58,87 @@ partial class frmNhanVien
         search.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100F));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100F));search.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
         txtTimKiem.Name="txtTimKiem";txtTimKiem.Dock=DockStyle.Fill;txtTimKiem.MaxLength=200;txtTimKiem.PlaceholderText="Họ tên, tài khoản, điện thoại hoặc mã nhân viên";
         dgvNhanVien.Name="dgvNhanVien";dgvNhanVien.Dock=DockStyle.Fill;dgvNhanVien.AutoGenerateColumns=false;
+        dgvNhanVien.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dgvNhanVien.AllowUserToAddRows=false;dgvNhanVien.AllowUserToDeleteRows=false;dgvNhanVien.ReadOnly=true;dgvNhanVien.RowHeadersVisible=false;
         dgvNhanVien.MultiSelect=false;dgvNhanVien.SelectionMode=DataGridViewSelectionMode.FullRowSelect;dgvNhanVien.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
         dgvNhanVien.BackgroundColor=SystemColors.ScrollBar;dgvNhanVien.RowTemplate.Height=34;dgvNhanVien.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.AllCells;
-        dgvNhanVien.Columns.AddRange(new DataGridViewColumn[] {colMaNV,colHoTen,colTaiKhoan,colDienThoai,colDangLam});
-        colMaNV.Name="MaNV";colMaNV.HeaderText="Mã NV";colMaNV.DataPropertyName="MaNV";colMaNV.ReadOnly=true;colMaNV.FillWeight=65F;
-        colHoTen.Name="HoTen";colHoTen.HeaderText="Họ tên";colHoTen.DataPropertyName="HoTen";colHoTen.ReadOnly=true;colHoTen.FillWeight=160F;
-        colTaiKhoan.Name="TaiKhoan";colTaiKhoan.HeaderText="Tài khoản";colTaiKhoan.DataPropertyName="TaiKhoan";colTaiKhoan.ReadOnly=true;colTaiKhoan.FillWeight=110F;
-        colDienThoai.Name="DienThoai";colDienThoai.HeaderText="Điện thoại";colDienThoai.DataPropertyName="DienThoai";colDienThoai.ReadOnly=true;colDienThoai.FillWeight=110F;
-        colDangLam.Name="DangLam";colDangLam.HeaderText="Đang làm";colDangLam.DataPropertyName="DangLam";colDangLam.ReadOnly=true;colDangLam.FillWeight=70F;
+        dgvNhanVien.Columns.AddRange(new DataGridViewColumn[] {colMaNV,colHoTen,colTaiKhoan,colDienThoai,colVaiTro,colDangLam});
+        colMaNV.Name="MaNV";colMaNV.HeaderText="Mã NV";colMaNV.DataPropertyName="MaNV";colMaNV.ReadOnly=true;colMaNV.MinimumWidth=60;colMaNV.FillWeight=65F;
+        colHoTen.Name="HoTen";colHoTen.HeaderText="Họ tên";colHoTen.DataPropertyName="HoTen";colHoTen.ReadOnly=true;colHoTen.MinimumWidth=150;colHoTen.DefaultCellStyle.WrapMode=DataGridViewTriState.True;colHoTen.FillWeight=160F;
+        colTaiKhoan.Name="TaiKhoan";colTaiKhoan.HeaderText="Tài khoản";colTaiKhoan.DataPropertyName="TaiKhoan";colTaiKhoan.ReadOnly=true;colTaiKhoan.MinimumWidth=115;colTaiKhoan.FillWeight=110F;
+        colDienThoai.Name="DienThoai";colDienThoai.HeaderText="Điện thoại";colDienThoai.DataPropertyName="DienThoai";colDienThoai.ReadOnly=true;colDienThoai.MinimumWidth=115;colDienThoai.FillWeight=110F;
+        colVaiTro.Name="TenVaiTro";colVaiTro.HeaderText="Vai trò";colVaiTro.DataPropertyName="TenVaiTro";colVaiTro.ReadOnly=true;colVaiTro.MinimumWidth=95;colVaiTro.FillWeight=80F;
+        colDangLam.Name="DangLam";colDangLam.HeaderText="Đang làm";colDangLam.DataPropertyName="DangLam";colDangLam.ReadOnly=true;colDangLam.MinimumWidth=85;colDangLam.FillWeight=70F;
         details.Name="details";details.Text="Thông tin nhân viên";details.Dock=DockStyle.Fill;details.Padding=new Padding(12);
-        editor.Name="editor";editor.Dock=DockStyle.Fill;editor.ColumnCount=1;editor.RowCount=15;
-        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
-        lblField0.Name="lblField0";lblField0.Text="Mã nhân viên (tự động)";lblField0.Dock=DockStyle.Fill;lblField0.Font=new Font("Segoe UI",9F);
-        txtMaNV.Name="txtMaNV";txtMaNV.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField0,0,0);editor.Controls.Add(txtMaNV,0,1);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
+        editor.Name="editor";editor.Dock=DockStyle.Top;editor.AutoSize=true;editor.AutoSizeMode=AutoSizeMode.GrowAndShrink;editor.ColumnCount=2;editor.RowCount=6;
+        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,40F));editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,60F));
+        
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
+        
         lblField1.Name="lblField1";lblField1.Text="Họ tên *";lblField1.Dock=DockStyle.Fill;lblField1.Font=new Font("Segoe UI",9F);
         txtHoTen.Name="txtHoTen";txtHoTen.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField1,0,2);editor.Controls.Add(txtHoTen,0,3);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
-        lblField2.Name="lblField2";lblField2.Text="Tài khoản đăng nhập *";lblField2.Dock=DockStyle.Fill;lblField2.Font=new Font("Segoe UI",9F);
+        editor.Controls.Add(lblField1,0,0);editor.Controls.Add(txtHoTen,1,0);
+        
+        lblField2.Name="lblField2";lblField2.Text="Tài khoản *";lblField2.Dock=DockStyle.Fill;lblField2.Font=new Font("Segoe UI",9F);
         txtTaiKhoan.Name="txtTaiKhoan";txtTaiKhoan.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField2,0,4);editor.Controls.Add(txtTaiKhoan,0,5);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
+        editor.Controls.Add(lblField2,0,1);editor.Controls.Add(txtTaiKhoan,1,1);
+        
         lblField3.Name="lblField3";lblField3.Text="Số điện thoại";lblField3.Dock=DockStyle.Fill;lblField3.Font=new Font("Segoe UI",9F);
         txtDienThoai.Name="txtDienThoai";txtDienThoai.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField3,0,6);editor.Controls.Add(txtDienThoai,0,7);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
-        lblField4.Name="lblField4";lblField4.Text="Mật khẩu (để trống khi giữ mật khẩu cũ)";lblField4.Dock=DockStyle.Fill;lblField4.Font=new Font("Segoe UI",9F);
+        editor.Controls.Add(lblField3,0,2);editor.Controls.Add(txtDienThoai,1,2);
+        
+        lblField4.Name="lblField4";lblField4.Text="Mật khẩu mới";lblField4.Dock=DockStyle.Fill;lblField4.Font=new Font("Segoe UI",9F);
         txtMatKhau.Name="txtMatKhau";txtMatKhau.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField4,0,8);editor.Controls.Add(txtMatKhau,0,9);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
+        editor.Controls.Add(lblField4,0,3);editor.Controls.Add(txtMatKhau,1,3);
+        
         lblField5.Name="lblField5";lblField5.Text="Trạng thái";lblField5.Dock=DockStyle.Fill;lblField5.Font=new Font("Segoe UI",9F);
         chkDangLam.Name="chkDangLam";chkDangLam.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField5,0,10);editor.Controls.Add(chkDangLam,0,11);
-        editor.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));editor.RowStyles.Add(new RowStyle(SizeType.Absolute,90F));
+        editor.Controls.Add(lblField5,0,4);editor.Controls.Add(chkDangLam,1,4);
+
         lblField6.Name="lblField6";lblField6.Text="Thao tác";lblField6.Dock=DockStyle.Fill;lblField6.Font=new Font("Segoe UI",9F);
         actions.Name="actions";actions.Dock=DockStyle.Fill;
-        editor.Controls.Add(lblField6,0,12);editor.Controls.Add(actions,0,13);
-        editor.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
-        txtMaNV.ReadOnly=true;txtHoTen.MaxLength=100;txtTaiKhoan.MaxLength=50;txtDienThoai.MaxLength=10;
+
+        
+        lblVaiTro.Name="lblVaiTro";lblVaiTro.Text="Vai trò *";lblVaiTro.Dock=DockStyle.Fill;
+        cboVaiTro.Name="cboVaiTro";cboVaiTro.Dock=DockStyle.Fill;cboVaiTro.DropDownStyle=ComboBoxStyle.DropDownList;
+        cboVaiTro.Items.AddRange(new object[]{"Nhân viên","Admin"});
+        editor.Controls.Add(lblVaiTro,0,5);editor.Controls.Add(cboVaiTro,1,5);
+
+        txtHoTen.MaxLength=100;txtTaiKhoan.MaxLength=50;txtDienThoai.MaxLength=10;
         txtDienThoai.PlaceholderText="10 chữ số; có thể bỏ trống";txtMatKhau.MaxLength=128;txtMatKhau.UseSystemPasswordChar=true;
-        chkDangLam.Text="Đang làm việc / cho phép đăng nhập";
+        chkDangLam.Text="Hoạt động";
         actions.FlowDirection=FlowDirection.LeftToRight;actions.WrapContents=true;actions.Margin=new Padding(0);actions.Padding=new Padding(0);
-        btnTimKiem.Name="btnTimKiem";btnTimKiem.Text="Tìm kiếm";btnTimKiem.Size=new Size(98,38);btnTimKiem.Margin=new Padding(3);
+        btnTimKiem.Name="btnTimKiem";btnTimKiem.Text="Tìm kiếm";btnTimKiem.Size=new Size(84,34);btnTimKiem.Margin=new Padding(3);
         btnTimKiem.Dock=DockStyle.Fill;
-        btnLamMoi.Name="btnLamMoi";btnLamMoi.Text="Làm mới";btnLamMoi.Size=new Size(98,38);btnLamMoi.Margin=new Padding(3);
+        btnLamMoi.Name="btnLamMoi";btnLamMoi.Text="Làm mới";btnLamMoi.Size=new Size(84,34);btnLamMoi.Margin=new Padding(3);
         btnLamMoi.Dock=DockStyle.Fill;
-        btnThem.Name="btnThem";btnThem.Text="Thêm";btnThem.Size=new Size(98,38);btnThem.Margin=new Padding(3);
+        btnThem.Name="btnThem";btnThem.Text="Thêm";btnThem.Size=new Size(84,34);btnThem.Margin=new Padding(3);
         actions.Controls.Add(btnThem);
-        btnSua.Name="btnSua";btnSua.Text="Sửa";btnSua.Size=new Size(98,38);btnSua.Margin=new Padding(3);
+        btnSua.Name="btnSua";btnSua.Text="Sửa";btnSua.Size=new Size(84,34);btnSua.Margin=new Padding(3);
         actions.Controls.Add(btnSua);
-        btnLuu.Name="btnLuu";btnLuu.Text="Lưu";btnLuu.Size=new Size(98,38);btnLuu.Margin=new Padding(3);
+        btnLuu.Name="btnLuu";btnLuu.Text="Lưu";btnLuu.Size=new Size(84,34);btnLuu.Margin=new Padding(3);
         actions.Controls.Add(btnLuu);
-        btnHuy.Name="btnHuy";btnHuy.Text="Bỏ qua";btnHuy.Size=new Size(98,38);btnHuy.Margin=new Padding(3);
+        btnHuy.Name="btnHuy";btnHuy.Text="Bỏ qua";btnHuy.Size=new Size(84,34);btnHuy.Margin=new Padding(3);
         actions.Controls.Add(btnHuy);
-        btnKhoa.Name="btnKhoa";btnKhoa.Text="Khóa";btnKhoa.Size=new Size(98,38);btnKhoa.Margin=new Padding(3);
+        btnKhoa.Name="btnKhoa";btnKhoa.Text="Khóa";btnKhoa.Size=new Size(84,34);btnKhoa.Margin=new Padding(3);
         actions.Controls.Add(btnKhoa);
         search.Controls.Add(txtTimKiem,0,0);search.Controls.Add(btnTimKiem,1,0);search.Controls.Add(btnLamMoi,2,0);
-        left.Controls.Add(search,0,0);left.Controls.Add(dgvNhanVien,0,1);details.Controls.Add(editor);
+        left.Controls.Add(search,0,0);left.Controls.Add(dgvNhanVien,0,1);
+        detailLayout.Name="detailLayout";detailLayout.Dock=DockStyle.Fill;detailLayout.Margin=Padding.Empty;
+        detailLayout.ColumnCount=1;detailLayout.RowCount=3;detailLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+        detailLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+        detailLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));detailLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,120F));
+        editorScroll.Name="editorScroll";editorScroll.Dock=DockStyle.Fill;editorScroll.AutoScroll=true;editorScroll.Margin=Padding.Empty;
+        editorScroll.Controls.Add(editor);detailLayout.Controls.Add(editorScroll,0,0);
+        detailLayout.Controls.Add(lblField6,0,1);detailLayout.Controls.Add(actions,0,2);details.Controls.Add(detailLayout);
         content.Controls.Add(left,0,0);content.Controls.Add(details,1,0);
         lblTrangThai.Name="lblTrangThai";lblTrangThai.Dock=DockStyle.Fill;lblTrangThai.TextAlign=ContentAlignment.MiddleLeft;
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);posLayout.Controls.Add(content,0,1);posLayout.Controls.Add(lblTrangThai,0,2);
+        posLayout.Controls.Add(posHeading, 0, 0);posLayout.Controls.Add(content,0,1);posLayout.Controls.Add(lblTrangThai,0,2);
         AutoScaleDimensions=new SizeF(8F,20F);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
         ClientSize=new Size(1182,700);MinimumSize=new Size(1150,739);StartPosition=FormStartPosition.CenterScreen;
         Name="frmNhanVien";Text="Quản lý nhân viên | Hiệu thuốc ABC";Controls.Add(posLayout);
@@ -150,7 +155,6 @@ partial class frmNhanVien
     private DataGridView dgvNhanVien;
     private Label lblTrangThai;
     private TextBox txtTimKiem;
-    private TextBox txtMaNV;
     private TextBox txtHoTen;
     private TextBox txtTaiKhoan;
     private TextBox txtDienThoai;
@@ -163,7 +167,6 @@ partial class frmNhanVien
     private Button btnHuy;
     private Button btnKhoa;
     private CheckBox chkDangLam;
-    private Label lblField0;
     private Label lblField1;
     private Label lblField2;
     private Label lblField3;
@@ -175,6 +178,10 @@ partial class frmNhanVien
     private DataGridViewTextBoxColumn colTaiKhoan;
     private DataGridViewTextBoxColumn colDienThoai;
     private DataGridViewCheckBoxColumn colDangLam;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
+    private TableLayoutPanel detailLayout;
+    private Panel editorScroll;
+    private ToolTip passwordHint;
+    private ComboBox cboVaiTro;
+    private Label lblVaiTro;
+    private DataGridViewTextBoxColumn colVaiTro;
 }

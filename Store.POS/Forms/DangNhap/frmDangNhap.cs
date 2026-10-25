@@ -20,6 +20,7 @@ public partial class frmDangNhap : Form
                 return;
             }
             PhienDangNhap.NhanVienId = result.EmployeeID.Value;
+            PhienDangNhap.VaiTro = result.Role;
             PhienDangNhap.HoTen = result.FullName ?? "";
             Hide();
             using var main = new frmMain();

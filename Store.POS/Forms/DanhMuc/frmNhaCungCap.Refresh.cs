@@ -4,11 +4,11 @@ using Store.DAL;
 namespace Store.POS;
 public partial class frmNhaCungCap
 {
-    private void btnTamAn_Click(object? sender,EventArgs e) => CuaSoLamViec.TamAn(this);
+
     public void LamMoiDuLieu()
     {
         if(PosFormStyle.IsInDesigner(this)) return;
-        bool editing=txtTenNCC.Enabled;string id=txtMaNCC.Text;
+        bool editing=txtTenNCC.Enabled;string id=maDangChon;
         dgvNhaCungCap.DataSource=bll.TimKiemNCC(txtTimKiem.Text);
         if(!editing && id.Length>0)
         {

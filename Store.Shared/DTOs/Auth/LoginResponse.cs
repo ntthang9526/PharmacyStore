@@ -12,5 +12,6 @@ namespace Store.Shared.DTOs.Auth
         public string Message { get; set; } = string.Empty;
         public int? EmployeeID { get; set; }
         public string? FullName { get; set; }
+        public string Role { get; set; } = "STAFF";
     }
 }

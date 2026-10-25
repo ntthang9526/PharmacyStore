@@ -12,6 +12,7 @@ public partial class frmThemThuoc : Form
     {
         this.supplierId=supplierId;
         InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
         label3.Text="NCC: "+supplierName;
         Load+=(_,_)=>NapNhom();
         btnThemNhom.Click+=(_,_)=>

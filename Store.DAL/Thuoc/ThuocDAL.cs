@@ -7,13 +7,16 @@ public partial class ThuocDAL
     private const string SelectSql = @"
         SELECT m.Id AS MaThuoc, m.Name AS TenThuoc, m.CategoryId AS MaNhom,
                m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, ROUND(m.Price, 0) AS DonGia,
-               ISNULL(SUM(b.Stock), 0) AS SoLuongTon
+               ISNULL(SUM(b.Stock), 0) AS SoLuongTon, gia.UnitCost AS GiaNhapGanNhat
         FROM Medicines m
         JOIN Categories c ON c.Id = m.CategoryId
         JOIN Suppliers s ON s.Id = m.SupplierId
         LEFT JOIN Batches b ON b.MedicineId = m.Id
+        OUTER APPLY (SELECT TOP(1) d.UnitCost FROM StockInDetails d
+                     JOIN StockIns i ON i.Id=d.StockInId JOIN Batches ib ON ib.Id=d.BatchId
+                     WHERE ib.MedicineId=m.Id ORDER BY i.ImportDate DESC,i.Id DESC,d.Id DESC) gia
         WHERE m.IsActive = 1 {0}
-        GROUP BY m.Id, m.Name, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price ORDER BY m.Id";
+        GROUP BY m.Id, m.Name, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price, gia.UnitCost ORDER BY m.Id";
     public DataTable GetAllThuoc() => db.DocBang(string.Format(SelectSql, ""));
     public DataTable TimKiemThuoc(string keyword) => db.DocBang(
         string.Format(SelectSql, "AND (CAST(m.Id AS NVARCHAR(20)) LIKE @kw OR m.Name LIKE @kw OR c.Name LIKE @kw OR s.Name LIKE @kw OR m.BarCode LIKE @kw)"),

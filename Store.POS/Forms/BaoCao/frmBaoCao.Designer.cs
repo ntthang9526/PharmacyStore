@@ -13,8 +13,6 @@ partial class frmBaoCao
 
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -1239,19 +1237,7 @@ partial class frmBaoCao
         dgvHoaDon.AutoGenerateColumns = false;
         dgvHoaDon.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvHoaDonColumn1, dgvHoaDonColumn2, dgvHoaDonColumn3, dgvHoaDonColumn4, dgvHoaDonColumn5, dgvHoaDonColumn6, dgvHoaDonColumn7 });
         this.Controls.Add(posLayout);
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);
+        posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         tableLayoutPanel1.Controls.Add(groupBox2, 0, 0);
         groupBox2.Controls.Add(tableLayoutPanel3);
@@ -1371,6 +1357,4 @@ partial class frmBaoCao
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn5;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn6;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn7;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
 }

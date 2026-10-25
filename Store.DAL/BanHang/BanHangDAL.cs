@@ -77,6 +77,7 @@ namespace Store.DAL
                 using var tran = conn.BeginTransaction(IsolationLevel.Serializable);
                 try
                 {
+                    PhanQuyenDAL.YeuCau(Quyen.BanHang,conn,tran,employeeId);
                     decimal verifiedTotal = 0;
                     foreach (var item in items.OrderBy(x => x.MaThuoc))
                     {

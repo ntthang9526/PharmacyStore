@@ -5,10 +5,12 @@ namespace Store.POS
 {
     public partial class frmKhachHang : Form, ILamMoiDuLieu
     {
+        private string maDangChon="";
         private KhachHangBLL bll = new KhachHangBLL();
         public frmKhachHang()
         {
             InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
             txtTimKiem.MaxLength = 200;
             txtTimKiem.PlaceholderText = "Tên hoặc số điện thoại";
             txtTimKiem.KeyDown += (_, e) =>
@@ -21,7 +23,7 @@ namespace Store.POS
         private void ResetDetails()
         {
             SetControlState(false);
-            txtMaKH.Clear(); txtTenKH.Clear(); txtDienThoai.Clear(); txtDiem.Text = "0";
+            maDangChon=""; txtTenKH.Clear(); txtDienThoai.Clear(); txtDiem.Text = "0";
         }
 
         private void frmKhachHang_Load(object sender, EventArgs e)
@@ -40,7 +42,6 @@ namespace Store.POS
         // Hàm quản lý trạng thái khóa/mở các ô nhập liệu
         private void SetControlState(bool status)
         {
-            txtMaKH.Enabled = false;
             txtTenKH.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiem.Enabled = status;
@@ -50,11 +51,10 @@ namespace Store.POS
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvKhachHang.Rows[e.RowIndex];
-                txtMaKH.Text = row.Cells["MaKH"].Value.ToString();
+                maDangChon = row.Cells["MaKH"].Value.ToString()??"";
                 txtTenKH.Text = row.Cells["TenKH"].Value.ToString();
                 txtDienThoai.Text = row.Cells["DienThoai"].Value.ToString();
                 txtDiem.Text = row.Cells["Diem"].Value.ToString();
-                txtMaKH.Enabled = false; // Khóa mã không cho sửa khi đang chọn dòng cập nhật
                 SetControlState(false);
             }
         }
@@ -65,8 +65,7 @@ namespace Store.POS
             if (!txtTenKH.Enabled)
             {
                 SetControlState(true); // Mở khóa tất cả các ô
-                txtMaKH.Enabled = false;
-                txtMaKH.Clear();
+                maDangChon="";
                 txtTenKH.Clear();
                 txtDienThoai.Clear();
                 txtDiem.Text = "0";
@@ -110,7 +109,7 @@ namespace Store.POS
             }
 
             // 5. Gọi BLL để thêm mới
-            if (bll.ThemMoiKhachHang(txtMaKH.Text.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
+            if (bll.ThemMoiKhachHang(maDangChon.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
             {
                 MessageBox.Show("Thêm khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
@@ -129,14 +128,13 @@ namespace Store.POS
             // Trường hợp 1: Nếu chưa mở khóa (Bấm lần đầu để mở khóa sửa)
             if (!txtTenKH.Enabled)
             {
-                if (string.IsNullOrEmpty(txtMaKH.Text))
+                if (string.IsNullOrEmpty(maDangChon))
                 {
                     MessageBox.Show("Vui lòng chọn khách hàng cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 SetControlState(true);  // Mở khóa các ô để sửa thông tin
-                txtMaKH.Enabled = false; // Khóa mã KH lại vì là khóa chính không được sửa
                 txtTenKH.Focus();
                 return;
             }
@@ -165,7 +163,7 @@ namespace Store.POS
             }
 
             // Gọi hàm sửa trong BLL
-            if (bll.SuaKhachHang(txtMaKH.Text.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
+            if (bll.SuaKhachHang(maDangChon.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
             {
                 MessageBox.Show("Cập nhật khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
@@ -183,7 +181,7 @@ namespace Store.POS
             DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn xóa khách hàng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
-                if (bll.XoaKhachHang(txtMaKH.Text, out string error))
+                if (bll.XoaKhachHang(maDangChon, out string error))
                 {
                     MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
@@ -198,11 +196,10 @@ namespace Store.POS
 
         private void btnLamLai_Click(object sender, EventArgs e)
         {
-            txtMaKH.Clear();
+            maDangChon="";
             txtTenKH.Clear();
             txtDienThoai.Clear();
             txtDiem.Text = "0";
-            txtMaKH.Enabled = false;
             txtTimKiem.Clear();
             SetControlState(false);
             LoadData();

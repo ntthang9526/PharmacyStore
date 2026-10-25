@@ -44,19 +44,20 @@ internal static partial class Program
         {
             using var form=(Form)Activator.CreateInstance(type)!;
             Offscreen(form);
+            Check(form.Controls.Find(idField,true).Length==0,type.Name+": redundant ID input removed");
             var grid=UiField<DataGridView>(form,gridName);
             Check(grid.SelectedRows.Count==0 && grid.CurrentCell==null && UiField<TextBox>(form,nameField).Text=="",type.Name+": initial record details empty");
             grid.Focus();
             var visibleColumn=grid.Columns.Cast<DataGridViewColumn>().First(c=>c.Visible);
             grid.CurrentCell=grid.Rows[0].Cells[visibleColumn.Index];grid.Rows[0].Selected=true;
             InvokePrivate(form,gridName+"_CellClick",grid,new DataGridViewCellEventArgs(visibleColumn.Index,0));
-            Check(UiField<TextBox>(form,idField).Text!="" && UiField<TextBox>(form,nameField).Text!="",type.Name+": selecting row fills details");
+            Check(UiField<string>(form,"maDangChon")!="" && UiField<TextBox>(form,nameField).Text!="",type.Name+": selecting row fills details");
             InvokePrivate(form,"btnSua_Click",UiField<Button>(form,"btnSua"),EventArgs.Empty);
             string previous=UiField<TextBox>(form,nameField).Text;
             typeof(Control).GetMethod("OnMouseDown",PrivateInstance)!.Invoke(UiField<TextBox>(form,nameField),new object[]{new MouseEventArgs(MouseButtons.Left,1,1,1,0)});
             Check(UiField<TextBox>(form,nameField).Text==previous && UiField<TextBox>(form,nameField).Enabled,type.Name+": clicking editable input preserves data");
             ClickBackground(form);
-            Check(UiField<TextBox>(form,idField).Text=="" && UiField<TextBox>(form,nameField).Text=="" && !UiField<TextBox>(form,nameField).Enabled,type.Name+": blank click resets fields and edit mode");
+            Check(UiField<string>(form,"maDangChon")=="" && UiField<TextBox>(form,nameField).Text=="" && !UiField<TextBox>(form,nameField).Enabled,type.Name+": blank click resets fields and edit mode");
             Check(grid.SelectedRows.Count==0 && grid.CurrentCell==null,type.Name+": blank click also clears grid selection");
             if(type==typeof(frmQuanLyThuoc))
             {

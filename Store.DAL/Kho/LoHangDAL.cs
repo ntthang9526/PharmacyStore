@@ -8,7 +8,7 @@ public class LoHangDAL
         const string sql = @"
             SELECT b.Id AS MaLo, b.BatchNumber AS SoLo, m.Name AS TenThuoc,
                    s.Name AS TenNCC, c.Name AS TenNhom, b.ExpiryDate AS HanDung,
-                   b.Stock AS TonKho, nhap.SoLuongDaNhap, nhap.NgayNhapGanNhat
+                   b.Stock AS TonKho, nhap.SoLuongDaNhap, nhap.NgayNhapGanNhat, gia.UnitCost AS GiaNhapGanNhat
             FROM Batches b
             JOIN Medicines m ON m.Id = b.MedicineId
             JOIN Suppliers s ON s.Id = m.SupplierId
@@ -18,6 +18,8 @@ public class LoHangDAL
                 FROM StockInDetails d JOIN StockIns i ON i.Id = d.StockInId
                 WHERE d.BatchId = b.Id
             ) nhap
+            OUTER APPLY (SELECT TOP(1) d.UnitCost FROM StockInDetails d JOIN StockIns i ON i.Id=d.StockInId
+                         WHERE d.BatchId=b.Id ORDER BY i.ImportDate DESC,i.Id DESC,d.Id DESC) gia
             WHERE b.BatchNumber LIKE @kw OR m.Name LIKE @kw OR m.BarCode LIKE @kw
                OR s.Name LIKE @kw OR c.Name LIKE @kw OR CAST(b.Id AS NVARCHAR(20)) LIKE @kw
             ORDER BY b.ExpiryDate, b.Id";

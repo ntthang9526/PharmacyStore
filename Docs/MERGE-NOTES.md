@@ -135,3 +135,61 @@ Tách form thêm nhóm thành frmThemNhomThuoc, giữ frmThemDanhMuc cho thêm N
 - Kiểm tra: 61 kiểm tra form nhúng/kích thước, 94 giữ trạng thái/nhân viên/đồng bộ, 106 nghiệp vụ, 130 nhập kho/voucher/hóa đơn, 63 tìm kiếm/bỏ chọn, 33 thêm nhanh, 18 Designer không SQL, 598 bố cục; tổng 1.103 kiểm tra đạt. Build thường và bản kiểm tra đều 0 cảnh báo/0 lỗi. Chưa thử mức DPI khác.
 - Nhật ký tại artifacts/logs/embedded-forms-*.log. Ảnh tại artifacts/previews/embedded-home.png, embedded-sales-laptop.png, embedded-sales-cash.png và embedded-employees.png. Có kiểm tra cửa sổ ở kích thước 1100x700, 1366x728 và 1600x900.
 - Sao lưu trước thay đổi: Backups/BACKUP-before-embedded-forms.zip. Bản chạy: Store.POS/bin/Debug/net8.0-windows/Store.POS.exe. Không thay cấu trúc database.
+
+## Thu nhỏ cửa sổ mặc định (24/10/2026)
+
+Đổi cửa sổ chính về trạng thái Normal, mở giữa màn hình với vùng nội dung 1382x753 như kích thước cũ. Vẫn cho phép người dùng kéo giãn/phóng to khi cần; giữ giao diện nhúng và thanh điều hướng dọc.
+
+
+## Sửa panel thao tác giỏ hàng (24/10/2026)
+
+- Bố cục bán hàng thành 3 cột: Giỏ hàng → panelAction (120px) → Thanh toán. Panel không còn đặt nổi trên ô +, không che giỏ hàng hay thanh toán; cấu hình nằm trong Designer.
+- Bấm dòng hoặc rê vào nút + để chọn sản phẩm cần thao tác. Giữ sản phẩm đang sửa khi chuột đi qua vùng trống, dòng khác hoặc khi tải lại dữ liệu; dùng tham chiếu dòng giỏ hàng thay vì phụ thuộc vào vùng tô chọn. Sửa số lượng, Enter, xóa và đặt số lượng 0 đều cập nhật đúng dòng; xóa hết giỏ thì đóng panel.
+- Mở rộng giới hạn hiển thị số lượng đến int.MaxValue để không lỗi khi giỏ có dòng trên 1000; kiểm tra tồn kho khi áp dụng vẫn giữ nguyên.
+- Sửa lỗi build trùng frmBanHang.resources do frmBanHang.Refresh.resx rỗng bị nhận nhầm là tài nguyên form; giữ tệp, loại khỏi EmbeddedResource và đánh dấu các .Refresh.cs là Code, nhóm dưới form tương ứng. Khôi phục 4 cột bị thiếu trong Designer khách hàng, giữ các chỉnh sửa bố cục hiện có.
+- Build thường: 0 cảnh báo/0 lỗi. Đạt 125 kiểm tra nghiệp vụ (gồm 19 kiểm tra mới panel), 61 form nhúng, 18 Designer không SQL, 94 trạng thái/đồng bộ/nhân viên, 63 tìm kiếm/bỏ chọn và 598 bố cục (tổng 959 kiểm tra). Kiểm tra panel không chồng lấn ở 1182x653, 1120x650 và 900x570.
+- Nhật ký: artifacts/logs/cart-actions-*.log. Ảnh: artifacts/previews/cart-actions-columns.png. Bản sao trước sửa giỏ hàng: Backups/BACKUP-before-cart-actions.zip; trước khôi phục cột khách hàng: Backups/BACKUP-customer-designer-before-column-repair.zip. Không thay đổi cấu trúc database.
+
+## Điều chỉnh panel theo yêu cầu (24/10/2026)
+
+Bỏ cột thao tác riêng, phục hồi hai cột Giỏ hàng/Thanh toán. Panel action nổi phía trên groupbox Thanh toán, nằm hoàn toàn bên phải giỏ hàng; tự đặt theo dòng đang chọn và giới hạn trong vùng thanh toán khi cuộn/đổi kích thước. Giữ các sửa lỗi chọn dòng, sửa/xóa và tải lại dữ liệu. Build 0 lỗi/0 cảnh báo; 125 kiểm tra đạt. Ảnh: artifacts/previews/cart-actions-payment-overlay.png.
+
+
+## Khôi phục tự ẩn panel thao tác (24/10/2026)
+
+Khôi phục xử lý MouseLeave cho panel và toàn bộ ô nhập/nút bên trong. Chuột ra khỏi nút + của dòng đang thao tác và panel thì tự ẩn sau 180ms; thời gian ngắn này cho phép đi qua khoảng cách từ nút + sang panel. Rê vào panel/ô nhập sẽ hủy lịch ẩn. Giữ vị trí nổi trên Thanh toán và các sửa lỗi dòng chọn. Build 0 lỗi/0 cảnh báo, 130 kiểm tra nghiệp vụ và hành vi panel đạt.
+
+
+## Tinh gọn điều hướng (24/10/2026)
+
+Bỏ nút Tạm ẩn ở 12 form chức năng và nút Form đang mở ở thanh bên; bỏ menu và mã xử lý dư. Chuyển chức năng tự ẩn form cũ, giữ instance và dữ liệu chưa lưu; bấm chức năng tương ứng để mở lại. Trang chủ ẩn các form và hiện tổng quan. Giữ đồng bộ dữ liệu và hành vi panel thao tác đã sửa. Build 0 lỗi/0 cảnh báo; đạt 71 kiểm tra điều hướng nhúng, 92 giữ trạng thái/đồng bộ/nhân viên, 130 nghiệp vụ/panel, 18 Designer và 554 bố cục. Sao lưu: Backups/BACKUP-before-simple-navigation.zip.
+
+
+## Phân quyền, giá nhập và phiếu nhập (24/10/2026)
+
+- Tiếp tục sửa trên PharmacyStore-MergedTrial, không sửa PharmacyStore gốc. Sao lưu nguồn trước sửa: Backups/BACKUP-before-roles-import-history.zip.
+- Thêm Employees.Role (ADMIN / STAFF) trên PharmacyStoreTrialDB hiện có bằng Store.DAL/Database/AddEmployeeRoles.sql. Script có thể chạy lại, không tạo database/bảng mới, không đặt lại mật khẩu hoặc dữ liệu. Tài khoản admin được gán ADMIN lần đầu; các tài khoản cũ khác là STAFF. InitDatabase.sql đã đồng bộ cấu trúc cho database mới, không chạy lại trên database đang dùng.
+- Admin quản lý thuốc, nhóm, NCC, nhập kho, voucher và nhân viên; được đổi vai trò/đặt lại mật khẩu nhân viên. Nhân viên bán hàng, thêm/sửa thông tin cơ bản khách hàng, tra cứu thuốc/danh mục/lô/voucher; không tự chỉnh điểm hay xóa khách hàng. Cả hai xem toàn bộ hóa đơn, báo cáo và phiếu nhập, không lọc theo nhân viên lập.
+- Quyền được kiểm tra khi ghi dữ liệu, trong transaction; đối chiếu tài khoản đang hoạt động và EmployeeId của phiên với nhân viên lập giao dịch. Chặn sửa quyền bằng cách giả mã Admin, thêm nhanh, chỉnh giá và sửa voucher ngoài giao diện. Không khóa tài khoản hiện tại hoặc khóa/hạ quyền Admin cuối cùng. Giao diện cập nhật quyền khi chuyển chức năng, sau ghi dữ liệu và định kỳ 5 giây; editor có quyền thay đổi được khởi tạo lại khi vai trò đổi, giỏ bán hàng vẫn giữ nguyên.
+- Giá nhập gần nhất trên bảng thuốc/lô lấy từ StockInDetails theo ImportDate, StockInId, DetailId. Có nhãn riêng; dữ liệu lô chưa có phiếu nhập hiện dấu —. Không lấy giá bán làm giá nhập, không suy ra giá vốn tồn kho từ giá nhập gần nhất.
+- Quản lý khác → Phiếu nhập hàng: tìm theo mã phiếu, NCC, nhân viên, ghi chú, tên thuốc, số lô/mã vạch; lọc khoảng ngày. Chọn phiếu để xem chi tiết thuốc, đơn vị, số lô, HSD, số lượng, giá nhập, thành tiền và nhân viên nhập. Phiếu đã lưu chỉ xem, giữ nguyên giá lịch sử; tạo phiếu mới vẫn ở Nhập kho (F4), chỉ Admin. Chưa thêm sửa/hủy phiếu đã ghi sổ vì cần xử lý đối ứng tồn kho.
+- Quản lý khác → Đổi mật khẩu: chỉ đổi tài khoản hiện tại, yêu cầu mật khẩu cũ, mật khẩu mới 6–128 ký tự và xác nhận khớp, không trùng mật khẩu cũ. Lưu PBKDF2 có salt, kiểm tra ghi đồng thời để không ghi đè mật khẩu vừa thay đổi. Chuyển form sẽ xóa ô mật khẩu. Admin đặt lại mật khẩu khi quên tại Quản lý khác → Nhân viên → Sửa.
+- Bố cục hai form mới nằm trong Designer, mở Design không cần SQL; đã kiểm tra khi nhúng và thu nhỏ cửa sổ. Bộ kiểm tra --roles bao gồm 254 kiểm tra quyền/mật khẩu/lịch sử/đồng bộ và bố cục, dọn riêng fixture sau chạy. Các bộ hồi quy đạt: nghiệp vụ 132, nhân viên/cửa sổ 93, điều hướng nhúng 71, Designer 20, bố cục 592. Build solution 0 cảnh báo/0 lỗi. Nhật ký artifacts/*roles-check.log và artifacts/roles-check.log.
+- Giới hạn bảo mật hiện tại: đây là kiểm tra quyền trong ứng dụng POS đang kết nối SQL trực tiếp bằng Windows. Không ngăn người có quyền SQL trực tiếp hoặc sửa chương trình máy trạm. Khi triển khai máy trạm không tin cậy, chuyển thao tác dữ liệu qua API xác thực và kiểm tra quyền phía máy chủ; API hiện tại chỉ có đăng nhập, chưa có token/endpoint nghiệp vụ bảo vệ.
+
+## Sửa phần giao diện bị che khi nhúng (24/10/2026)
+
+- Rà cả 14 form chức năng khi nhúng vào cửa sổ chính 1382x753 và khi thu về 1100x700. Kiểm tra mới tính phần nhìn thấy qua toàn bộ các panel cha, không chỉ giới hạn của panel trực tiếp; kiểm tra cả ô nhập, combo, bảng và chữ trong label. Bộ --layout-audit tạo ảnh từng màn hình vào artifacts/previews/layout-audit và báo lỗi nếu còn phần bị cắt.
+- Bỏ MinimumSize 900x570 áp cứng vào form con khi nhúng. Vùng nội dung ở cửa sổ nhỏ thực tế chỉ rộng 880px, trước đây form con tràn mép phải và che một phần nút/cột. Giữ nguyên kích thước mặc định cửa sổ chính và kích thước tối thiểu của form khi mở độc lập.
+- Form Nhân viên: nhóm thông tin chuyển sang hai cột nhãn/ô nhập để đủ chỗ cho vai trò. Nhóm nút cố định riêng ở dưới, đủ cả Thêm/Sửa/Lưu/Bỏ qua/Khóa; vùng thông tin có cuộn dự phòng. Rút gọn nhãn, thêm gợi ý mật khẩu giữ nguyên nếu để trống. Tự tăng chiều cao tiêu đề bảng; đặt độ rộng tối thiểu các cột để số điện thoại/vai trò không bị ép nhỏ.
+- Form Thuốc: cột tên/nhóm/NCC có độ rộng tối thiểu và xuống dòng, hàng tự tăng chiều cao. Các cột số/tiền có độ rộng đủ đọc; dùng cuộn ngang khi vùng bảng nhỏ. Form Phiếu nhập tự tăng chiều cao tiêu đề hai bảng. Các dòng tiền Tạm tính/Giảm giá/Tổng tiền ở Bán hàng tăng chiều cao để không cắt ký tự theo font.
+- Kiểm tra đạt: toàn bộ 14 form tại hai kích thước không còn control/label bị cắt, 94 nhân viên/cửa sổ, 71 điều hướng nhúng, 254 quyền/phiếu nhập, 132 nghiệp vụ/panel bán hàng, 20 Designer không SQL và 594 bố cục. Build solution 0 cảnh báo/0 lỗi. Nhật ký artifacts/layout-audit.log và artifacts/*layout-check.log.
+- Chỉ thay đổi giao diện và bộ kiểm tra, không đổi cấu trúc/dữ liệu database. Sao lưu trước sửa: Backups/BACKUP-before-layout-clipping.zip. Chưa kiểm tra ở các mức phóng đại Windows khác với môi trường hiện tại.
+
+## Nhân viên nhập kho và tinh gọn phân quyền (24/10/2026)
+
+- Theo yêu cầu mới, STAFF được nhập kho như Admin: chọn NCC/thuốc có sẵn, thêm dòng, lập và lưu phiếu; dùng Quyen.NhapKho riêng trong transaction. EmployeeId phải khớp phiên, tài khoản còn hoạt động; phiếu ghi đúng nhân viên nhập. Quyền tạo/sửa thuốc, NCC, nhóm và voucher vẫn dành cho Admin, gồm cả các form thêm nhanh.
+- Nhân viên không thấy mục Nhân viên trong Quản lý khác, các nút thêm/sửa/xóa/lưu/hủy chỉnh sửa ở màn hình chỉ xem, nút thêm nhanh NCC/thuốc/nhóm và ô chỉnh điểm khách hàng. Mở rộng ô chọn NCC/thuốc khi ẩn nút +. Không thay đổi quyền xem toàn bộ hóa đơn, báo cáo, lô và phiếu nhập.
+- Bỏ hẳn TextBox mã tự sinh cùng nhãn ở Thuốc, NCC, Nhóm thuốc, Khách hàng và Nhân viên trong Designer. Các form dùng biến mã bản ghi riêng (hoặc selectedId đã có); sửa/xóa/tải lại vẫn dùng đúng bản ghi được chọn. Mã trên bảng danh sách, ô nhập số lô và mã tra cứu/voucher vẫn giữ.
+- Đổi vai trò khi đang mở Nhập kho cập nhật ngay nút thêm nhanh; giữ instance và các dòng phiếu đang soạn. Các lần bị từ chối quyền không ghi dữ liệu. Không sửa cấu trúc database, không đặt lại tài khoản/mật khẩu.
+- Build solution 0 cảnh báo/0 lỗi. Đạt 280 kiểm tra phân quyền/phiếu nhập, 69 tìm kiếm/chọn/sửa sau bỏ ô mã, 132 nghiệp vụ; kiểm tra bố cục cả 14 form ở cỡ mặc định và thu nhỏ đạt, Designer không SQL 20, bố cục độc lập 576. Bộ nhân viên/cửa sổ đạt 94 kiểm tra, gồm xác nhận không còn ô mã. Nhật ký artifacts/staff-stock-*.log. Sao lưu Backups/BACKUP-before-staff-stock-hidden-controls.zip.

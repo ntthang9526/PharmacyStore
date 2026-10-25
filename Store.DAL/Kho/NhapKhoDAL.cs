@@ -45,6 +45,7 @@ namespace Store.DAL
                 using var tran = conn.BeginTransaction(IsolationLevel.Serializable);
                 try
                 {
+                    PhanQuyenDAL.YeuCau(Quyen.NhapKho,conn,tran,employeeId);
                     if (items.Count == 0 || items.Any(it => it.GiaNhap != TienTe.LamTron(it.GiaNhap)) ||
                         items.Sum(it => it.GiaNhap * it.SoLuong) != tongVon)
                         throw new InvalidOperationException("Tổng tiền nhập kho phải khớp đơn giá theo đồng nguyên.");

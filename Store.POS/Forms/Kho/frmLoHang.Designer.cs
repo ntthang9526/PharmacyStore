@@ -13,8 +13,6 @@ partial class frmLoHang
 
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -587,7 +585,12 @@ partial class frmLoHang
         dgvLoHangColumn9Style.NullValue = "—";
         dgvLoHangColumn9.DefaultCellStyle = dgvLoHangColumn9Style;
         dgvLoHang.AutoGenerateColumns = false;
-        dgvLoHang.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvLoHangColumn1, dgvLoHangColumn2, dgvLoHangColumn3, dgvLoHangColumn4, dgvLoHangColumn5, dgvLoHangColumn6, dgvLoHangColumn7, dgvLoHangColumn8, dgvLoHangColumn9 });
+        colGiaNhap = new DataGridViewTextBoxColumn();
+        colGiaNhap.Name="GiaNhapGanNhat";colGiaNhap.DataPropertyName="GiaNhapGanNhat";
+        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;colGiaNhap.MinimumWidth=130;
+        colGiaNhap.DefaultCellStyle.Format="N0";colGiaNhap.DefaultCellStyle.NullValue="—";
+        colGiaNhap.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
+        dgvLoHang.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvLoHangColumn1, dgvLoHangColumn2, dgvLoHangColumn3, dgvLoHangColumn4, dgvLoHangColumn5, dgvLoHangColumn6, dgvLoHangColumn7, dgvLoHangColumn8, dgvLoHangColumn9, colGiaNhap });
 
         // tableLayoutPanel6
         tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -733,19 +736,7 @@ partial class frmLoHang
         btnDong.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
         btnDong.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
         this.Controls.Add(posLayout);
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);
+        posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         tableLayoutPanel1.Controls.Add(groupBox2, 0, 0);
         groupBox2.Controls.Add(tableLayoutPanel3);
@@ -819,6 +810,5 @@ partial class frmLoHang
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private global::System.Windows.Forms.Button btnLamMoi;
     private global::System.Windows.Forms.Button btnDong;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
+    private DataGridViewTextBoxColumn colGiaNhap;
 }

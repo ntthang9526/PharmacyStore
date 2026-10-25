@@ -7,6 +7,7 @@ public partial class ThuocDAL
     {
         using var conn = DBConnection.GetDbConnection();
         using var transaction = conn.BeginTransaction(IsolationLevel.Serializable);
+        PhanQuyenDAL.YeuCau(Quyen.QuanTri,conn,transaction);
         using var cmd = new SqlCommand(@"
             IF EXISTS (SELECT 1 FROM Medicines WITH (UPDLOCK,HOLDLOCK)
                        WHERE IsActive=1 AND SupplierId=@sup AND UPPER(LTRIM(RTRIM(Name)))=UPPER(@name)

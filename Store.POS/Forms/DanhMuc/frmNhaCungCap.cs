@@ -5,10 +5,12 @@ namespace Store.POS
 {
     public partial class frmNhaCungCap : Form, ILamMoiDuLieu
     {
+        private string maDangChon="";
         private NhaCungCapBLL bll = new NhaCungCapBLL();
         public frmNhaCungCap()
         {
             InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
             txtTimKiem.MaxLength = 200;
             txtTimKiem.PlaceholderText = "Tên, điện thoại hoặc địa chỉ";
             txtTimKiem.KeyDown += (_, e) =>
@@ -21,7 +23,7 @@ namespace Store.POS
         private void ResetDetails()
         {
             SetControlState(false);
-            txtMaNCC.Clear(); txtTenNCC.Clear(); txtDienThoai.Clear(); txtDiaChi.Clear();
+            maDangChon=""; txtTenNCC.Clear(); txtDienThoai.Clear(); txtDiaChi.Clear();
         }
 
         private void frmNhaCungCap_Load(object sender, EventArgs e)
@@ -39,7 +41,6 @@ namespace Store.POS
 
         private void SetControlState(bool status)
         {
-            txtMaNCC.Enabled = false;
             txtTenNCC.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiaChi.Enabled = status;
@@ -49,11 +50,10 @@ namespace Store.POS
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvNhaCungCap.Rows[e.RowIndex];
-                txtMaNCC.Text = row.Cells["MaNCC"].Value.ToString();
+                maDangChon = row.Cells["MaNCC"].Value.ToString()??"";
                 txtTenNCC.Text = row.Cells["TenNCC"].Value.ToString();
                 txtDienThoai.Text = row.Cells["DienThoai"].Value.ToString();
                 txtDiaChi.Text = row.Cells["DiaChi"].Value.ToString();
-                txtMaNCC.Enabled = false;
                 SetControlState(false);
             }
         }
@@ -63,8 +63,7 @@ namespace Store.POS
             if (!txtTenNCC.Enabled)
             {
                 SetControlState(true); // Mở khóa tất cả các ô
-                txtMaNCC.Enabled = false;
-                txtMaNCC.Clear();
+                maDangChon="";
                 txtTenNCC.Clear();
                 txtDienThoai.Clear();
                 txtDiaChi.Clear();
@@ -105,7 +104,7 @@ namespace Store.POS
             }
 
             // Gọi BLL để thêm mới
-            if (bll.ThemMoiNCC(txtMaNCC.Text.Trim(), txtTenNCC.Text.Trim(), dienThoai, diaChi, out string error))
+            if (bll.ThemMoiNCC(maDangChon.Trim(), txtTenNCC.Text.Trim(), dienThoai, diaChi, out string error))
             {
                 MessageBox.Show("Thêm nhà cung cấp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
@@ -122,14 +121,13 @@ namespace Store.POS
         {
             if (!txtTenNCC.Enabled)
             {
-                if (string.IsNullOrEmpty(txtMaNCC.Text))
+                if (string.IsNullOrEmpty(maDangChon))
                 {
                     MessageBox.Show("Vui lòng chọn nhà cung cấp cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 SetControlState(true);  // Mở khóa các ô để sửa thông tin
-                txtMaNCC.Enabled = false; // Khóa mã NCC lại vì là khóa chính không được sửa
                 txtTenNCC.Focus();
                 return;
             }
@@ -151,7 +149,7 @@ namespace Store.POS
             }
 
             // Gọi hàm sửa trong BLL
-            if (bll.SuaNCC(txtMaNCC.Text.Trim(), txtTenNCC.Text.Trim(), dienThoai, txtDiaChi.Text.Trim(), out string error))
+            if (bll.SuaNCC(maDangChon.Trim(), txtTenNCC.Text.Trim(), dienThoai, txtDiaChi.Text.Trim(), out string error))
             {
                 MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
@@ -170,7 +168,7 @@ namespace Store.POS
             DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa nhà cung cấp này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
-                if (bll.XoaNCC(txtMaNCC.Text, out string error))
+                if (bll.XoaNCC(maDangChon, out string error))
                 {
                     MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
@@ -185,11 +183,10 @@ namespace Store.POS
 
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
-            txtMaNCC.Clear();
+            maDangChon="";
             txtTenNCC.Clear();
             txtDienThoai.Clear();
             txtDiaChi.Clear();
-            txtMaNCC.Enabled = false;
             txtTimKiem.Clear();
             SetControlState(false);
             LoadData();

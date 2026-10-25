@@ -46,7 +46,8 @@ namespace Store.BLL
                 Success = true,
                 Message = "Đăng nhập thành công! Xin chào " + employee.FullName + ".",
                 FullName = employee.FullName,
-                EmployeeID = employee.ID
+                EmployeeID = employee.ID,
+                Role = employee.Role
             };
 
 

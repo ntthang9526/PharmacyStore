@@ -5,12 +5,14 @@ namespace Store.POS
 {
     public partial class frmQuanLyThuoc : Form, ILamMoiDuLieu
     {
+        private string maDangChon="";
         private ThuocBLL bll = new ThuocBLL(); // Gọi tầng BLL để xử lý nghiệp vụ và validate
 
         private bool isThem = false;          // Biến cờ kiểm tra trạng thái: true là đang thêm mới, false là bình thường/sửa
         public frmQuanLyThuoc()
         {
             InitializeComponent();
+            PhanQuyenGiaoDien.Gan(this);
             var quickAddHints = new ToolTip(components ??= new System.ComponentModel.Container());
             quickAddHints.SetToolTip(btnThemNhom, "Thêm nhóm thuốc mới");
             quickAddHints.SetToolTip(btnThemNCC, "Thêm nhà cung cấp mới");
@@ -47,7 +49,7 @@ namespace Store.POS
         {
             isThem = false;
             SetControlState(false);
-            txtMaThuoc.Clear(); txtTenThuoc.Clear(); txtDonGia.Clear();
+            maDangChon=""; txtTenThuoc.Clear(); txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
             cboNhomThuoc.SelectedIndex = -1;
             cboNhaCungCap.SelectedIndex = -1;
@@ -96,7 +98,6 @@ namespace Store.POS
         // Hàm quản lý trạng thái bật/tắt của các control
         private void SetControlState(bool status)
         {
-            txtMaThuoc.Enabled = false;
             txtTenThuoc.Enabled = status;
             cboNhomThuoc.Enabled = status;
             cboDonViTinh.Enabled = status;
@@ -120,7 +121,7 @@ namespace Store.POS
             SetControlState(true); // Mở khóa các ô nhập liệu
 
             // Xóa trắng các ô để người dùng nhập mới
-            txtMaThuoc.Clear();
+            maDangChon="";
             txtTenThuoc.Clear();
             cboNhomThuoc.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;
@@ -134,7 +135,7 @@ namespace Store.POS
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvThuoc.Rows[e.RowIndex];
-                txtMaThuoc.Text = row.Cells["MaThuoc"].Value.ToString();
+                maDangChon = row.Cells["MaThuoc"].Value.ToString()??"";
                 txtTenThuoc.Text = row.Cells["TenThuoc"].Value.ToString();
                 cboNhomThuoc.SelectedValue = row.Cells["MaNhom"].Value;
                 cboNhaCungCap.SelectedValue = row.Cells["MaNCC"].Value;
@@ -146,7 +147,7 @@ namespace Store.POS
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaThuoc.Text))
+            if (string.IsNullOrEmpty(maDangChon))
             {
                 MessageBox.Show("Vui lòng chọn dòng cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -154,13 +155,12 @@ namespace Store.POS
 
             isThem = false;       // Đánh dấu đây là thao tác SỬA
             SetControlState(true); // Mở khóa các ô nhập liệu
-            txtMaThuoc.Enabled = false; // KHÔNG cho phép sửa mã thuốc (vì là khóa chính)
             txtTenThuoc.Focus();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaThuoc.Text))
+            if (string.IsNullOrEmpty(maDangChon))
             {
                 MessageBox.Show("Vui lòng chọn thuốc cần xóa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -171,7 +171,7 @@ namespace Store.POS
             if (dr == DialogResult.Yes)
             {
                 string error;
-                bool kq = bll.XoaThuoc(txtMaThuoc.Text.Trim(), out error);
+                bool kq = bll.XoaThuoc(maDangChon.Trim(), out error);
 
                 if (kq)
                 {
@@ -179,7 +179,7 @@ namespace Store.POS
                     LoadDataToGrid();
 
                     // Xóa trắng các ô nhập
-                    txtMaThuoc.Clear();
+                    maDangChon="";
                     txtTenThuoc.Clear();
                     cboNhomThuoc.SelectedIndex = -1;
                     cboDonViTinh.SelectedIndex = -1;
@@ -230,12 +230,12 @@ namespace Store.POS
 
             if (isThem)
             {
-                kq = bll.ThemMoiThuoc(txtMaThuoc.Text.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
+                kq = bll.ThemMoiThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
             }
             else
             {
                 // Gọi hàm Sửa
-                kq = bll.SuaThuoc(txtMaThuoc.Text.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
+                kq = bll.SuaThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
             }
 
             if (kq)
@@ -254,7 +254,7 @@ namespace Store.POS
         {
             SetControlState(false);
 
-            txtMaThuoc.Clear();
+            maDangChon="";
             txtTenThuoc.Clear();
             cboNhomThuoc.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;

@@ -33,19 +33,32 @@ namespace Store.POS
         private readonly CustomerDAL customerDAL = new();
         private Customer? khachHang;
         private decimal tongTien;
+        private RowData? dongDangThaoTac;
+        private readonly System.Windows.Forms.Timer timerAnPanelAction;
         public frmBanHang()
         {
             InitializeComponent();
+            timerAnPanelAction=new System.Windows.Forms.Timer(components ??= new Container()) {Interval=180};
+            timerAnPanelAction.Tick+=(_,_)=> {timerAnPanelAction.Stop();KiemTraAnPanelAction(Cursor.Position);};
+            void WireActionHover(Control control)
+            {
+                control.MouseEnter+=(_,_)=>timerAnPanelAction.Stop();
+                control.MouseLeave+=AnActionNeuChuotRaNgoai;
+                foreach(Control child in control.Controls) WireActionHover(child);
+            }
+            WireActionHover(panelAction);
+            tableGioHang.MouseLeave+=AnActionNeuChuotRaNgoai;
+            tableGioHang.CellMouseLeave+=(_,_)=>AnActionNeuChuotRaNgoai(tableGioHang,EventArgs.Empty);
             btnNhapMaVoucher.Click += (_, _) => ApDungVoucher();
             btnHuyVoucher.Click += (_, _) => { voucherApDung = null; boxMaVoucher.Clear(); CapNhatGiaTien(); };
             boxMaVoucher.TextChanged += (_, _) => { if (voucherApDung != null && !string.Equals(boxMaVoucher.Text.Trim(), voucherApDung.Code, StringComparison.OrdinalIgnoreCase)) { voucherApDung = null; CapNhatGiaTien(); } };
             btnHuyKhachHang.Click += (_, _) => { khachHang = null; boxMaKhachHang.Clear(); labelMaKhachHang.Text = "SĐT khách hàng"; };
             boxMaKhachHang.TextChanged += (_, _) => { khachHang = null; labelMaKhachHang.Text = "SĐT khách hàng"; };
-            foreach (Control control in panelAction.Controls)
-            {
-                control.MouseLeave += AnActionNeuChuotRaNgoai;
-            }
             Load += frmBanHang_Load;
+            groupThanhToan.LocationChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
+            groupThanhToan.SizeChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
+            VisibleChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
+            tableGioHang.Scroll += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
         }
         private void frmBanHang_Load(object? sender, EventArgs e)
         {
@@ -83,6 +96,9 @@ namespace Store.POS
         {
             tableGioHang.ClearSelection();
             tableGioHang.CurrentCell = null;
+            if(dongDangThaoTac!=null)
+                foreach(DataGridViewRow row in tableGioHang.Rows)
+                    if(ReferenceEquals(row.DataBoundItem,dongDangThaoTac)) {row.Selected=true;break;}
         }
 
         private void frmBanHang_FormClosing(object sender, FormClosingEventArgs e)
@@ -190,78 +206,78 @@ namespace Store.POS
             tableGioHang.ClearSelection();
             tableGioHang.CurrentCell = null;
         }
+        private void tableGioHang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex>=0 && e.ColumnIndex>=0) HienThaoTacGioHang(e.RowIndex);
+        }
         private void tableGioHang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0)
-            {
-                return;
-            }
-            if (tableGioHang.Columns[e.ColumnIndex].Name == "btnAction")
-            {
-                Rectangle cell = tableGioHang.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-                Point viTri = this.PointToClient(tableGioHang.PointToScreen(cell.Location));
-                panelAction.Location = new Point(Math.Min(viTri.X,ClientSize.Width-panelAction.Width), Math.Min(viTri.Y,ClientSize.Height-panelAction.Height));
-                panelAction.BringToFront();
-                panelAction.Visible = true;
-            }
+            if(e.RowIndex>=0 && e.ColumnIndex>=0 && tableGioHang.Columns[e.ColumnIndex].Name=="btnAction")
+                HienThaoTacGioHang(e.RowIndex);
         }
         private void tableGioHang_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0)
-            {
-                return;
-            }
-            var row = tableGioHang.Rows[e.RowIndex];
-            if (row.IsNewRow) return;
-
-            if (!row.Selected)
-            {
-                tableGioHang.ClearSelection();
-                row.Selected = true;
-            }
-            if (tableGioHang.Columns[e.ColumnIndex].Name != "btnAction")
-            {
-                panelAction.Visible = false;
-                return;
-            }
-            if (tableGioHang.SelectedRows.Count > 0 && tableGioHang.SelectedRows[0].DataBoundItem is RowData currRow)
-            {
-                numericSoLuong.Value = currRow.Quantity;
-            }
-            Rectangle cell = tableGioHang.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-            Point viTri = this.PointToClient(tableGioHang.PointToScreen(cell.Location));
-            panelAction.Location = new Point(Math.Min(viTri.X,ClientSize.Width-panelAction.Width), Math.Min(viTri.Y,ClientSize.Height-panelAction.Height));
-                panelAction.BringToFront();
-            panelAction.Visible = true;
+            if(e.RowIndex>=0 && e.ColumnIndex>=0 && tableGioHang.Columns[e.ColumnIndex].Name=="btnAction")
+                HienThaoTacGioHang(e.RowIndex);
+            else AnActionNeuChuotRaNgoai(tableGioHang,EventArgs.Empty);
         }
-        // Thao tác sản phẩm trên giỏ hàng
+        private void AnActionNeuChuotRaNgoai(object? sender,EventArgs e)
+        {
+            if(panelAction.Visible) {timerAnPanelAction.Stop();timerAnPanelAction.Start();}
+        }
+        private void KiemTraAnPanelAction(Point mousePosition)
+        {
+            if(!panelAction.Visible || panelAction.RectangleToScreen(panelAction.ClientRectangle).Contains(mousePosition)) return;
+            var row=tableGioHang.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>ReferenceEquals(r.DataBoundItem,dongDangThaoTac));
+            if(row!=null)
+            {
+                var button=tableGioHang.GetCellDisplayRectangle(tableGioHang.Columns["btnAction"].Index,row.Index,true);
+                if(!button.IsEmpty && tableGioHang.RectangleToScreen(button).Contains(mousePosition)) return;
+            }
+            AnThaoTacGioHang();
+        }
+        private void HienThaoTacGioHang(int index)
+        {
+            if(index<0 || index>=tableGioHang.Rows.Count || tableGioHang.Rows[index].DataBoundItem is not RowData row) return;
+            tableGioHang.ClearSelection();tableGioHang.Rows[index].Selected=true;
+            if(!ReferenceEquals(dongDangThaoTac,row)) numericSoLuong.Value=row.Quantity;
+            timerAnPanelAction.Stop();dongDangThaoTac=row;DinhViPanelAction();panelAction.Visible=true;
+        }
+        private void DinhViPanelAction()
+        {
+            if(dongDangThaoTac==null) return;
+            var row=tableGioHang.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>ReferenceEquals(r.DataBoundItem,dongDangThaoTac));
+            if(row==null) return;
+            var cell=tableGioHang.GetCellDisplayRectangle(tableGioHang.Columns["btnAction"].Index,row.Index,true);
+            var rowPosition=PointToClient(tableGioHang.PointToScreen(cell.Location));
+            var paymentPosition=PointToClient(groupThanhToan.PointToScreen(Point.Empty));
+            int top=paymentPosition.Y+20;
+            int bottom=Math.Max(top,paymentPosition.Y+groupThanhToan.Height-panelAction.Height-4);
+            panelAction.Location=new Point(paymentPosition.X+4,Math.Clamp(rowPosition.Y,top,bottom));
+            panelAction.BringToFront();
+        }
+        private void AnThaoTacGioHang()
+        {
+            timerAnPanelAction.Stop();dongDangThaoTac=null;panelAction.Visible=false;
+            tableGioHang.ClearSelection();tableGioHang.CurrentCell=null;
+        }
         private void numericSoLuong_KeyDown(object sender, KeyEventArgs e)
         {
-            if (tableGioHang.SelectedRows.Count == 0)
+            if(e.KeyCode==Keys.Enter)
             {
-                return;
-            }
-            if (e.KeyCode == Keys.Enter)
-            {
-                CapNhatSoLuongGioHang();
-                CapNhatGiaTien();
+                e.SuppressKeyPress=true;
+                CapNhatSoLuongGioHang();CapNhatGiaTien();
             }
         }
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (tableGioHang.SelectedRows.Count > 0 && tableGioHang.SelectedRows[0].DataBoundItem is RowData row)
-            {
-                gioHang.Remove(row);
-                DemSoThuTu();
-                panelAction.Visible = false;
-                CapNhatGiaTien();
-            }
+            if(dongDangThaoTac==null || !gioHang.Contains(dongDangThaoTac)) {AnThaoTacGioHang();return;}
+            var row=dongDangThaoTac;AnThaoTacGioHang();gioHang.Remove(row);
+            DemSoThuTu();CapNhatGiaTien();
         }
         private void btnSua_Click(object sender, EventArgs e)
         {
-            CapNhatSoLuongGioHang();
-            CapNhatGiaTien();
-            panelAction.Visible = false;
+            CapNhatSoLuongGioHang();CapNhatGiaTien();
         }
         private void btnNhapSanPham_Click(object sender, EventArgs e)
         {
@@ -283,23 +299,6 @@ namespace Store.POS
             }
         }
         // Hàm hỗ trợ/tái sử dụng
-        private void AnActionNeuChuotRaNgoai(object? sender, EventArgs e)
-        {
-            Point chuot = Cursor.Position;
-
-            bool trongBang = tableGioHang.ClientRectangle.Contains(
-                tableGioHang.PointToClient(chuot));
-
-            bool trongPanel = panelAction.Visible &&
-                panelAction.ClientRectangle.Contains(
-                    panelAction.PointToClient(chuot));
-
-            if (!trongBang && !trongPanel)
-            {
-                panelAction.Visible = false;
-                tableGioHang.ClearSelection();
-            }
-        }
         private void DemSoThuTu()
         {
             for (int i = 0; i < gioHang.Count; i++)
@@ -342,17 +341,15 @@ namespace Store.POS
         }
         private void CapNhatSoLuongGioHang()
         {
-            if (tableGioHang.SelectedRows.Count == 0 || tableGioHang.SelectedRows[0].DataBoundItem is not RowData row) return;
-            int quantity = (int)numericSoLuong.Value;
-            if (quantity == 0) { gioHang.Remove(row); DemSoThuTu(); panelAction.Visible = false; return; }
+            if(dongDangThaoTac==null || !gioHang.Contains(dongDangThaoTac)) {AnThaoTacGioHang();return;}
+            var row=dongDangThaoTac;int quantity=(int)numericSoLuong.Value;
+            if(quantity==0) {AnThaoTacGioHang();gioHang.Remove(row);DemSoThuTu();return;}
             try
             {
-                medicineBLL.KiemTraSoLuongConHan(row.Id, quantity);
-                row.Quantity = quantity;
-                gioHang.ResetItem(gioHang.IndexOf(row));
+                medicineBLL.KiemTraSoLuongConHan(row.Id,quantity);
+                row.Quantity=quantity;gioHang.ResetItem(gioHang.IndexOf(row));AnThaoTacGioHang();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            panelAction.Visible = false;
+            catch(Exception ex) {MessageBox.Show(ex.Message,"Số lượng");}
         }
         private void NhapGioHang()
         {
@@ -385,6 +382,7 @@ namespace Store.POS
         // Thanh toán
         public void CapNhatGiaTien()
         {
+            if(dongDangThaoTac!=null && !gioHang.Contains(dongDangThaoTac)) AnThaoTacGioHang();
             decimal subtotal = gioHang.Sum(row => row.Total);
             decimal discount = voucherApDung == null ? 0 : voucherBLL.TinhGiamGia(voucherApDung, subtotal);
             tongTien = subtotal - discount;

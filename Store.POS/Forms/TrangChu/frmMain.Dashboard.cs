@@ -44,7 +44,7 @@ public partial class frmMain
             dgvSapHetHan.Visible=expiry.Rows.Count>0;lblKhongSapHetHan.Visible=!dgvSapHetHan.Visible;
             dgvGanNhat.Visible=recent.Rows.Count>0;lblKhongHoaDon.Visible=!dgvGanNhat.Visible;
             lblTongQuan.ForeColor=Color.DimGray;
-            lblTongQuan.Text=$"{(string.IsNullOrWhiteSpace(PhienDangNhap.HoTen)?"Nhân viên":PhienDangNhap.HoTen)} · Cập nhật lúc {DateTime.Now:HH:mm:ss}";
+            lblTongQuan.Text=$"{(string.IsNullOrWhiteSpace(PhienDangNhap.HoTen)?"Nhân viên":PhienDangNhap.HoTen)} · {(PhienDangNhap.LaAdmin?"Admin":"Nhân viên")} · Cập nhật lúc {DateTime.Now:HH:mm:ss}";
         }
         catch(Exception ex) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải được tổng quan. Bấm Làm mới để thử lại. "+ex.Message;}
     }

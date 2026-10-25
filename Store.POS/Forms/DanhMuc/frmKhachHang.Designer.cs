@@ -13,14 +13,12 @@ partial class frmKhachHang
 
     private void InitializeComponent()
     {
-        headerLayout = new System.Windows.Forms.TableLayoutPanel();
-        btnTamAn = new System.Windows.Forms.Button();
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-        posLayout = new TableLayoutPanel();
         posHeading = new Label();
+        posLayout = new TableLayoutPanel();
         tableLayoutPanel1 = new TableLayoutPanel();
         groupBox2 = new GroupBox();
         tableLayoutPanel3 = new TableLayoutPanel();
@@ -37,9 +35,6 @@ partial class frmKhachHang
         groupBox6 = new GroupBox();
         tableLayoutPanel7 = new TableLayoutPanel();
         tableLayoutPanel8 = new TableLayoutPanel();
-        tableLayoutPanel9 = new TableLayoutPanel();
-        label10 = new Label();
-        txtMaKH = new TextBox();
         tableLayoutPanel11 = new TableLayoutPanel();
         label12 = new Label();
         txtTenKH = new TextBox();
@@ -64,31 +59,35 @@ partial class frmKhachHang
         groupBox6.SuspendLayout();
         tableLayoutPanel7.SuspendLayout();
         tableLayoutPanel8.SuspendLayout();
-        tableLayoutPanel9.SuspendLayout();
         tableLayoutPanel11.SuspendLayout();
         tableLayoutPanel13.SuspendLayout();
         tableLayoutPanel15.SuspendLayout();
         tableLayoutPanel17.SuspendLayout();
         SuspendLayout();
         // 
+        // 
+        // 
+        // posHeading
+        // 
+        posHeading.BackColor = SystemColors.Control;
+        posHeading.Dock = DockStyle.Fill;
+        posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+        posHeading.ForeColor = SystemColors.ControlText;
+        posHeading.Location = new Point(3, 0);
+        posHeading.Name = "posHeading";
+        posHeading.Size = new Size(1026, 48);
+        posHeading.TabIndex = 0;
+        posHeading.Text = "Khách hàng";
+        posHeading.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // 
+        // 
         // posLayout
         // 
         posLayout.BackColor = SystemColors.Control;
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        headerLayout.Name = "headerLayout";
-        headerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-        headerLayout.Margin = new System.Windows.Forms.Padding(0);
-        headerLayout.ColumnCount = 2;headerLayout.RowCount = 1;
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-        headerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-        headerLayout.Controls.Add(posHeading, 0, 0);headerLayout.Controls.Add(btnTamAn, 1, 0);
-        btnTamAn.Name = "btnTamAn";btnTamAn.Text = "Tạm ẩn";
-        btnTamAn.Dock = System.Windows.Forms.DockStyle.Fill;btnTamAn.Margin = new System.Windows.Forms.Padding(3, 5, 0, 5);
-        btnTamAn.Font = new System.Drawing.Font("Segoe UI", 10F);
-        btnTamAn.Click += btnTamAn_Click;
-        posLayout.Controls.Add(headerLayout, 0, 0);
+        posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
         posLayout.Dock = DockStyle.Fill;
         posLayout.Font = new Font("Segoe UI", 10.2F);
@@ -102,19 +101,6 @@ partial class frmKhachHang
         posLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         posLayout.Size = new Size(1182, 653);
         posLayout.TabIndex = 0;
-        // 
-        // posHeading
-        // 
-        posHeading.BackColor = SystemColors.Control;
-        posHeading.Dock = DockStyle.Fill;
-        posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-        posHeading.ForeColor = SystemColors.ControlText;
-        posHeading.Location = new Point(15, 12);
-        posHeading.Name = "posHeading";
-        posHeading.Size = new Size(1152, 48);
-        posHeading.TabIndex = 0;
-        posHeading.Text = "Khách hàng";
-        posHeading.TextAlign = ContentAlignment.MiddleLeft;
         // 
         // tableLayoutPanel1
         // 
@@ -247,6 +233,10 @@ partial class frmKhachHang
         dgvKhachHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
         dgvKhachHang.AutoGenerateColumns = false;
         dgvKhachHang.Columns.AddRange(new DataGridViewColumn[] { MaKH, TenKH, DienThoai, Diem });
+        MaKH.Name="MaKH";MaKH.DataPropertyName="MaKH";MaKH.HeaderText="Mã khách hàng";MaKH.ReadOnly=true;MaKH.FillWeight=80F;
+        TenKH.Name="TenKH";TenKH.DataPropertyName="TenKH";TenKH.HeaderText="Tên khách hàng";TenKH.ReadOnly=true;TenKH.FillWeight=180F;
+        DienThoai.Name="DienThoai";DienThoai.DataPropertyName="DienThoai";DienThoai.HeaderText="Điện thoại";DienThoai.ReadOnly=true;DienThoai.FillWeight=120F;
+        Diem.Name="Diem";Diem.DataPropertyName="Diem";Diem.HeaderText="Điểm";Diem.ReadOnly=true;Diem.FillWeight=65F;
         dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         dgvKhachHang.BackgroundColor = SystemColors.ScrollBar;
         dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -290,34 +280,6 @@ partial class frmKhachHang
         dgvKhachHang.TabIndex = 4;
         dgvKhachHang.CellClick += dgvKhachHang_CellClick;
         // 
-        // MaKH
-        MaKH.DataPropertyName = "MaKH";
-        MaKH.HeaderText = "Mã khách hàng";
-        MaKH.Name = "MaKH";
-        MaKH.ReadOnly = true;
-        MaKH.FillWeight = 80F;
-        MaKH.MinimumWidth = 50;
-        // TenKH
-        TenKH.DataPropertyName = "TenKH";
-        TenKH.HeaderText = "Tên khách hàng";
-        TenKH.Name = "TenKH";
-        TenKH.ReadOnly = true;
-        TenKH.FillWeight = 180F;
-        TenKH.MinimumWidth = 50;
-        // DienThoai
-        DienThoai.DataPropertyName = "DienThoai";
-        DienThoai.HeaderText = "Điện thoại";
-        DienThoai.Name = "DienThoai";
-        DienThoai.ReadOnly = true;
-        DienThoai.FillWeight = 120F;
-        DienThoai.MinimumWidth = 50;
-        // Diem
-        Diem.DataPropertyName = "Diem";
-        Diem.HeaderText = "Điểm";
-        Diem.Name = "Diem";
-        Diem.ReadOnly = true;
-        Diem.FillWeight = 65F;
-        Diem.MinimumWidth = 50;
         // groupBox6
         // 
         groupBox6.BackColor = SystemColors.Control;
@@ -348,7 +310,7 @@ partial class frmKhachHang
         tableLayoutPanel7.Margin = new Padding(0);
         tableLayoutPanel7.Name = "tableLayoutPanel7";
         tableLayoutPanel7.RowCount = 3;
-        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 224F));
+        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 168F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
         tableLayoutPanel7.Size = new Size(330, 544);
@@ -361,7 +323,6 @@ partial class frmKhachHang
         tableLayoutPanel8.BackColor = SystemColors.Control;
         tableLayoutPanel8.ColumnCount = 1;
         tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        tableLayoutPanel8.Controls.Add(tableLayoutPanel9);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel13);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel15);
@@ -371,60 +332,18 @@ partial class frmKhachHang
         tableLayoutPanel8.Location = new Point(0, 0);
         tableLayoutPanel8.Margin = new Padding(0);
         tableLayoutPanel8.Name = "tableLayoutPanel8";
-        tableLayoutPanel8.RowCount = 4;
-        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel8.RowCount = 3;
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel8.Size = new Size(330, 224);
         tableLayoutPanel8.TabIndex = 0;
         // 
-        // tableLayoutPanel9
         // 
-        tableLayoutPanel9.BackColor = SystemColors.Control;
-        tableLayoutPanel9.ColumnCount = 1;
-        tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        tableLayoutPanel9.Controls.Add(label10, 0, 0);
-        tableLayoutPanel9.Controls.Add(txtMaKH, 0, 1);
-        tableLayoutPanel9.Dock = DockStyle.Fill;
-        tableLayoutPanel9.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel9.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel9.Location = new Point(0, 0);
-        tableLayoutPanel9.Margin = new Padding(0);
-        tableLayoutPanel9.Name = "tableLayoutPanel9";
-        tableLayoutPanel9.RowCount = 2;
-        tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
-        tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-        tableLayoutPanel9.Size = new Size(330, 56);
-        tableLayoutPanel9.TabIndex = 0;
         // 
-        // label10
         // 
-        label10.BackColor = SystemColors.Control;
-        label10.Dock = DockStyle.Fill;
-        label10.Font = new Font("Segoe UI", 10.2F);
-        label10.ForeColor = SystemColors.ControlText;
-        label10.Location = new Point(3, 0);
-        label10.Name = "label10";
-        label10.Size = new Size(324, 22);
-        label10.TabIndex = 0;
-        label10.Text = "Mã khách hàng (tự động)";
-        label10.TextAlign = ContentAlignment.MiddleLeft;
         // 
-        // txtMaKH
         // 
-        txtMaKH.BackColor = Color.White;
-        txtMaKH.BorderStyle = BorderStyle.FixedSingle;
-        txtMaKH.Cursor = Cursors.IBeam;
-        txtMaKH.Dock = DockStyle.Top;
-        txtMaKH.Enabled = false;
-        txtMaKH.Font = new Font("Segoe UI", 10.2F);
-        txtMaKH.ForeColor = SystemColors.ControlText;
-        txtMaKH.Location = new Point(0, 23);
-        txtMaKH.Margin = new Padding(0, 1, 0, 5);
-        txtMaKH.Name = "txtMaKH";
-        txtMaKH.Size = new Size(330, 30);
-        txtMaKH.TabIndex = 2;
         // 
         // tableLayoutPanel11
         // 
@@ -516,8 +435,8 @@ partial class frmKhachHang
         txtDienThoai.ForeColor = SystemColors.ControlText;
         txtDienThoai.Location = new Point(0, 23);
         txtDienThoai.Margin = new Padding(0, 1, 0, 5);
-        txtDienThoai.Name = "txtDienThoai";
         txtDienThoai.MaxLength = 10;
+        txtDienThoai.Name = "txtDienThoai";
         txtDienThoai.Size = new Size(330, 30);
         txtDienThoai.TabIndex = 8;
         // 
@@ -709,8 +628,6 @@ partial class frmKhachHang
         tableLayoutPanel7.ResumeLayout(false);
         tableLayoutPanel7.PerformLayout();
         tableLayoutPanel8.ResumeLayout(false);
-        tableLayoutPanel9.ResumeLayout(false);
-        tableLayoutPanel9.PerformLayout();
         tableLayoutPanel11.ResumeLayout(false);
         tableLayoutPanel11.PerformLayout();
         tableLayoutPanel13.ResumeLayout(false);
@@ -738,9 +655,6 @@ partial class frmKhachHang
     private global::System.Windows.Forms.GroupBox groupBox6;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-    private global::System.Windows.Forms.Label label10;
-    private global::System.Windows.Forms.TextBox txtMaKH;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
     private global::System.Windows.Forms.Label label12;
     private global::System.Windows.Forms.TextBox txtTenKH;
@@ -756,6 +670,4 @@ partial class frmKhachHang
     private global::System.Windows.Forms.Button btnXoa;
     private global::System.Windows.Forms.Button btnLamLai;
     private global::System.Windows.Forms.Button btnThoat;
-    private System.Windows.Forms.TableLayoutPanel headerLayout;
-    private System.Windows.Forms.Button btnTamAn;
 }
