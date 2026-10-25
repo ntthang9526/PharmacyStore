@@ -146,7 +146,7 @@ partial class frmHoaDon
         tableLayoutPanel1.AccessibleName = null;
         tableLayoutPanel1.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
         tableLayoutPanel1.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel1.RowCount = 5;
+        tableLayoutPanel1.RowCount = 4;
         tableLayoutPanel1.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
         tableLayoutPanel1.AutoScroll = false;
         tableLayoutPanel1.Visible = true;
@@ -155,8 +155,7 @@ partial class frmHoaDon
         tableLayoutPanel1.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
         tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 58F));
-        tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 45F));
-        tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 55F));
+        tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 32F));
 
         // tableLayoutPanel2
@@ -718,13 +717,11 @@ partial class frmHoaDon
         dgvHoaDon.RowHeadersDefaultCellStyle = dgvHoaDonRowHeadersDefaultCellStyle;
         dgvHoaDon.RowTemplate.Height = 34;
         dgvHoaDonColumn1.Name = "MaHD";
-        dgvHoaDonColumn1.HeaderText = "Mã HĐ";
+        dgvHoaDonColumn1.HeaderText="Mã HĐ";
         dgvHoaDonColumn1.Visible = true;
         dgvHoaDonColumn1.ReadOnly = true;
-        dgvHoaDonColumn1.Width = 100;
-        dgvHoaDonColumn1.MinimumWidth = 6;
-        dgvHoaDonColumn1.FillWeight = 100F;
-        dgvHoaDonColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn1.DataPropertyName = "MaHD";
@@ -744,10 +741,8 @@ partial class frmHoaDon
         dgvHoaDonColumn2.HeaderText = "Ngày lập";
         dgvHoaDonColumn2.Visible = true;
         dgvHoaDonColumn2.ReadOnly = true;
-        dgvHoaDonColumn2.Width = 150;
-        dgvHoaDonColumn2.MinimumWidth = 6;
-        dgvHoaDonColumn2.FillWeight = 100F;
-        dgvHoaDonColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn2.DataPropertyName = "NgayLap";
@@ -767,10 +762,8 @@ partial class frmHoaDon
         dgvHoaDonColumn3.HeaderText = "Nhân viên";
         dgvHoaDonColumn3.Visible = true;
         dgvHoaDonColumn3.ReadOnly = true;
-        dgvHoaDonColumn3.Width = 160;
-        dgvHoaDonColumn3.MinimumWidth = 6;
-        dgvHoaDonColumn3.FillWeight = 100F;
-        dgvHoaDonColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn3.DataPropertyName = "NhanVien";
@@ -790,10 +783,8 @@ partial class frmHoaDon
         dgvHoaDonColumn4.HeaderText = "Khách hàng";
         dgvHoaDonColumn4.Visible = true;
         dgvHoaDonColumn4.ReadOnly = true;
-        dgvHoaDonColumn4.Width = 160;
-        dgvHoaDonColumn4.MinimumWidth = 6;
-        dgvHoaDonColumn4.FillWeight = 100F;
-        dgvHoaDonColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn4.DataPropertyName = "KhachHang";
@@ -813,10 +804,8 @@ partial class frmHoaDon
         dgvHoaDonColumn5.HeaderText = "Voucher";
         dgvHoaDonColumn5.Visible = true;
         dgvHoaDonColumn5.ReadOnly = true;
-        dgvHoaDonColumn5.Width = 115;
-        dgvHoaDonColumn5.MinimumWidth = 6;
-        dgvHoaDonColumn5.FillWeight = 100F;
-        dgvHoaDonColumn5.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn5.DataPropertyName = "Voucher";
@@ -836,10 +825,8 @@ partial class frmHoaDon
         dgvHoaDonColumn6.HeaderText = "Tiền hàng";
         dgvHoaDonColumn6.Visible = true;
         dgvHoaDonColumn6.ReadOnly = true;
-        dgvHoaDonColumn6.Width = 120;
-        dgvHoaDonColumn6.MinimumWidth = 6;
-        dgvHoaDonColumn6.FillWeight = 100F;
-        dgvHoaDonColumn6.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn6.DataPropertyName = "TongTien";
@@ -859,10 +846,8 @@ partial class frmHoaDon
         dgvHoaDonColumn7.HeaderText = "Giảm giá";
         dgvHoaDonColumn7.Visible = true;
         dgvHoaDonColumn7.ReadOnly = true;
-        dgvHoaDonColumn7.Width = 110;
-        dgvHoaDonColumn7.MinimumWidth = 6;
-        dgvHoaDonColumn7.FillWeight = 100F;
-        dgvHoaDonColumn7.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn7.DataPropertyName = "GiamGia";
@@ -882,10 +867,8 @@ partial class frmHoaDon
         dgvHoaDonColumn8.HeaderText = "Thực thu";
         dgvHoaDonColumn8.Visible = true;
         dgvHoaDonColumn8.ReadOnly = true;
-        dgvHoaDonColumn8.Width = 120;
-        dgvHoaDonColumn8.MinimumWidth = 6;
-        dgvHoaDonColumn8.FillWeight = 100F;
-        dgvHoaDonColumn8.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvHoaDonColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvHoaDonColumn8.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvHoaDonColumn8.DataPropertyName = "ThucThu";
@@ -903,8 +886,8 @@ partial class frmHoaDon
         dgvHoaDonColumn8.DefaultCellStyle = dgvHoaDonColumn8Style;
         dgvHoaDon.AutoGenerateColumns = false;
         colPaymentMethod=new DataGridViewTextBoxColumn();colPaymentStatus=new DataGridViewTextBoxColumn();
-        colPaymentMethod.Name="HinhThucThanhToan";colPaymentMethod.DataPropertyName="HinhThucThanhToan";colPaymentMethod.HeaderText="Thanh toán";colPaymentMethod.MinimumWidth=165;
-        colPaymentStatus.Name="TrangThai";colPaymentStatus.DataPropertyName="TrangThai";colPaymentStatus.HeaderText="Trạng thái";colPaymentStatus.MinimumWidth=165;
+        colPaymentMethod.Name="HinhThucThanhToan";colPaymentMethod.DataPropertyName="HinhThucThanhToan";colPaymentMethod.HeaderText="Thanh toán";
+        colPaymentStatus.Name="TrangThai";colPaymentStatus.DataPropertyName="TrangThai";colPaymentStatus.HeaderText="Trạng thái";
         dgvHoaDon.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvHoaDonColumn1, dgvHoaDonColumn2, dgvHoaDonColumn3, dgvHoaDonColumn4, dgvHoaDonColumn5, dgvHoaDonColumn6, dgvHoaDonColumn7, dgvHoaDonColumn8, colPaymentMethod, colPaymentStatus });
 
         // groupBox14
@@ -1074,10 +1057,8 @@ partial class frmHoaDon
         dgvChiTietColumn1.HeaderText = "Tên thuốc";
         dgvChiTietColumn1.Visible = true;
         dgvChiTietColumn1.ReadOnly = true;
-        dgvChiTietColumn1.Width = 230;
-        dgvChiTietColumn1.MinimumWidth = 6;
-        dgvChiTietColumn1.FillWeight = 220F;
-        dgvChiTietColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn1.DataPropertyName = "TenThuoc";
@@ -1097,10 +1078,8 @@ partial class frmHoaDon
         dgvChiTietColumn2.HeaderText = "ĐVT";
         dgvChiTietColumn2.Visible = true;
         dgvChiTietColumn2.ReadOnly = true;
-        dgvChiTietColumn2.Width = 70;
-        dgvChiTietColumn2.MinimumWidth = 6;
-        dgvChiTietColumn2.FillWeight = 65F;
-        dgvChiTietColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn2.DataPropertyName = "DonViTinh";
@@ -1120,10 +1099,8 @@ partial class frmHoaDon
         dgvChiTietColumn3.HeaderText = "Số lô";
         dgvChiTietColumn3.Visible = true;
         dgvChiTietColumn3.ReadOnly = true;
-        dgvChiTietColumn3.Width = 160;
-        dgvChiTietColumn3.MinimumWidth = 6;
-        dgvChiTietColumn3.FillWeight = 100F;
-        dgvChiTietColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn3.DataPropertyName = "SoLo";
@@ -1143,10 +1120,8 @@ partial class frmHoaDon
         dgvChiTietColumn4.HeaderText = "SL";
         dgvChiTietColumn4.Visible = true;
         dgvChiTietColumn4.ReadOnly = true;
-        dgvChiTietColumn4.Width = 65;
-        dgvChiTietColumn4.MinimumWidth = 6;
-        dgvChiTietColumn4.FillWeight = 100F;
-        dgvChiTietColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn4.DataPropertyName = "SoLuong";
@@ -1166,10 +1141,8 @@ partial class frmHoaDon
         dgvChiTietColumn5.HeaderText = "Đơn giá";
         dgvChiTietColumn5.Visible = true;
         dgvChiTietColumn5.ReadOnly = true;
-        dgvChiTietColumn5.Width = 115;
-        dgvChiTietColumn5.MinimumWidth = 6;
-        dgvChiTietColumn5.FillWeight = 100F;
-        dgvChiTietColumn5.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn5.DataPropertyName = "DonGia";
@@ -1189,10 +1162,8 @@ partial class frmHoaDon
         dgvChiTietColumn6.HeaderText = "Thành tiền";
         dgvChiTietColumn6.Visible = true;
         dgvChiTietColumn6.ReadOnly = true;
-        dgvChiTietColumn6.Width = 125;
-        dgvChiTietColumn6.MinimumWidth = 6;
-        dgvChiTietColumn6.FillWeight = 100F;
-        dgvChiTietColumn6.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn6.DataPropertyName = "ThanhTien";
@@ -1212,10 +1183,8 @@ partial class frmHoaDon
         dgvChiTietColumn7.HeaderText = "Hướng dẫn";
         dgvChiTietColumn7.Visible = true;
         dgvChiTietColumn7.ReadOnly = true;
-        dgvChiTietColumn7.Width = 230;
-        dgvChiTietColumn7.MinimumWidth = 6;
-        dgvChiTietColumn7.FillWeight = 100F;
-        dgvChiTietColumn7.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvChiTietColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvChiTietColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvChiTietColumn7.DataPropertyName = "HuongDan";
@@ -1289,13 +1258,20 @@ partial class frmHoaDon
         tableLayoutPanel4.Controls.Add(tableLayoutPanel12, 1, 0);
         tableLayoutPanel12.Controls.Add(btnLamMoi, 0, 0);
         tableLayoutPanel12.SetColumnSpan(btnLamMoi, 2);
-        tableLayoutPanel1.Controls.Add(groupBox13, 0, 2);
+        receiptColumns = new TableLayoutPanel();
+        receiptColumns.Name="receiptColumns";receiptColumns.Dock=DockStyle.Fill;
+        receiptColumns.ColumnCount=2;receiptColumns.RowCount=1;receiptColumns.Margin=Padding.Empty;
+        receiptColumns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,45));
+        receiptColumns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,55));
+        receiptColumns.RowStyles.Add(new RowStyle(SizeType.Percent,100));
+        tableLayoutPanel1.Controls.Add(receiptColumns,0,2);
+        receiptColumns.Controls.Add(groupBox13,0,0);
         groupBox13.Controls.Add(dgvHoaDon);
-        tableLayoutPanel1.Controls.Add(groupBox14, 0, 3);
+        receiptColumns.Controls.Add(groupBox14,1,0);
         groupBox14.Controls.Add(tableLayoutPanel15);
         tableLayoutPanel15.Controls.Add(lblChiTiet, 0, 0);
         tableLayoutPanel15.Controls.Add(dgvChiTiet, 0, 1);
-        tableLayoutPanel1.Controls.Add(lblTrangThai, 0, 4);
+        tableLayoutPanel1.Controls.Add(lblTrangThai, 0, 3);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
         BackColor = Color.FromArgb(248,250,252);
@@ -1341,7 +1317,6 @@ partial class frmHoaDon
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         posLayout.RowStyles.Insert(1,new RowStyle(SizeType.Absolute,46F));posLayout.RowCount=3;posLayout.SetRow(tableLayoutPanel1,2);
         colPaymentStatus.DisplayIndex=2;colPaymentMethod.DisplayIndex=3;
         dgvHoaDon.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;dgvHoaDon.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.EnableResizing;dgvHoaDon.ColumnHeadersHeight=36;
@@ -1362,12 +1337,135 @@ partial class frmHoaDon
         dgvChiTiet.DefaultCellStyle.BackColor=Color.White;dgvChiTiet.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvChiTiet.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvChiTiet.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvChiTiet.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvHoaDon.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvHoaDon.MultiSelect=false;
+        dgvHoaDon.AllowUserToResizeColumns=false;
+        dgvHoaDon.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvHoaDon.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDon.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDon.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvHoaDon.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvHoaDon.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvHoaDon.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvHoaDon.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvHoaDon.ColumnHeadersHeight=38;
+        dgvHoaDonColumn1.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn2.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn3.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn4.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn5.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn6.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn7.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvHoaDonColumn8.Resizable=DataGridViewTriState.False;
+        dgvHoaDonColumn8.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn1.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn2.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn3.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn4.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn5.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn6.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTietColumn7.Resizable=DataGridViewTriState.False;
+        dgvChiTietColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colPaymentMethod.Resizable=DataGridViewTriState.False;
+        colPaymentMethod.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colPaymentStatus.Resizable=DataGridViewTriState.False;
+        colPaymentStatus.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTiet.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvChiTiet.MultiSelect=false;
+        dgvChiTiet.AllowUserToResizeColumns=false;
+        dgvChiTiet.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvChiTiet.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTiet.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvChiTiet.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvChiTiet.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvChiTiet.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvChiTiet.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvChiTiet.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvChiTiet.ColumnHeadersHeight=38;
+                dgvHoaDonColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn1.MinimumWidth=100;
+        dgvHoaDonColumn1.Width=100;
+        dgvHoaDonColumn1.FillWeight=64F;
+        dgvHoaDonColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn2.MinimumWidth=180;
+        dgvHoaDonColumn2.Width=180;
+        dgvHoaDonColumn2.FillWeight=88F;
+        dgvHoaDonColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvHoaDonColumn3.MinimumWidth=150;
+        dgvHoaDonColumn3.Width=150;
+        dgvHoaDonColumn3.FillWeight=220F;
+        dgvHoaDonColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvHoaDonColumn4.MinimumWidth=150;
+        dgvHoaDonColumn4.Width=150;
+        dgvHoaDonColumn4.FillWeight=220F;
+        dgvHoaDonColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn5.MinimumWidth=93;
+        dgvHoaDonColumn5.Width=93;
+        dgvHoaDonColumn5.FillWeight=80F;
+        dgvHoaDonColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn6.MinimumWidth=115;
+        dgvHoaDonColumn6.Width=115;
+        dgvHoaDonColumn6.FillWeight=96F;
+        dgvHoaDonColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn7.MinimumWidth=115;
+        dgvHoaDonColumn7.Width=115;
+        dgvHoaDonColumn7.FillWeight=88F;
+        dgvHoaDonColumn8.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvHoaDonColumn8.MinimumWidth=115;
+        dgvHoaDonColumn8.Width=115;
+        dgvHoaDonColumn8.FillWeight=88F;
+        dgvChiTietColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvChiTietColumn1.MinimumWidth=180;
+        dgvChiTietColumn1.Width=180;
+        dgvChiTietColumn1.FillWeight=220F;
+        dgvChiTietColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn2.MinimumWidth=70;
+        dgvChiTietColumn2.Width=70;
+        dgvChiTietColumn2.FillWeight=48F;
+        dgvChiTietColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn3.MinimumWidth=140;
+        dgvChiTietColumn3.Width=140;
+        dgvChiTietColumn3.FillWeight=64F;
+        dgvChiTietColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn4.MinimumWidth=48;
+        dgvChiTietColumn4.Width=48;
+        dgvChiTietColumn4.FillWeight=48F;
+        dgvChiTietColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn5.MinimumWidth=115;
+        dgvChiTietColumn5.Width=115;
+        dgvChiTietColumn5.FillWeight=80F;
+        dgvChiTietColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn6.MinimumWidth=115;
+        dgvChiTietColumn6.Width=115;
+        dgvChiTietColumn6.FillWeight=104F;
+        dgvChiTietColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvChiTietColumn7.MinimumWidth=116;
+        dgvChiTietColumn7.Width=116;
+        dgvChiTietColumn7.FillWeight=96F;
+        colPaymentMethod.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colPaymentMethod.MinimumWidth=175;
+        colPaymentMethod.Width=175;
+        colPaymentMethod.FillWeight=104F;
+        colPaymentStatus.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colPaymentStatus.MinimumWidth=145;
+        colPaymentStatus.Width=145;
+        colPaymentStatus.FillWeight=104F;
+        ResumeLayout(false);
         PerformLayout();
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;
     private global::System.Windows.Forms.Label posHeading;
+    private TableLayoutPanel receiptColumns;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     private global::System.Windows.Forms.Label label3;

@@ -449,10 +449,8 @@ partial class frmVoucher
         dgvVoucherColumn1.HeaderText = "Id";
         dgvVoucherColumn1.Visible = false;
         dgvVoucherColumn1.ReadOnly = true;
-        dgvVoucherColumn1.Width = 109;
-        dgvVoucherColumn1.MinimumWidth = 6;
-        dgvVoucherColumn1.FillWeight = 100F;
-        dgvVoucherColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn1.DataPropertyName = "Id";
@@ -469,13 +467,11 @@ partial class frmVoucher
         dgvVoucherColumn1Style.NullValue = "";
         dgvVoucherColumn1.DefaultCellStyle = dgvVoucherColumn1Style;
         dgvVoucherColumn2.Name = "Code";
-        dgvVoucherColumn2.HeaderText = "Mã voucher";
+        dgvVoucherColumn2.HeaderText="Mã";
         dgvVoucherColumn2.Visible = true;
         dgvVoucherColumn2.ReadOnly = true;
-        dgvVoucherColumn2.Width = 209;
-        dgvVoucherColumn2.MinimumWidth = 6;
-        dgvVoucherColumn2.FillWeight = 150F;
-        dgvVoucherColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn2.DataPropertyName = "Code";
@@ -495,10 +491,8 @@ partial class frmVoucher
         dgvVoucherColumn3.HeaderText = "DiscountType";
         dgvVoucherColumn3.Visible = false;
         dgvVoucherColumn3.ReadOnly = true;
-        dgvVoucherColumn3.Width = 127;
-        dgvVoucherColumn3.MinimumWidth = 6;
-        dgvVoucherColumn3.FillWeight = 100F;
-        dgvVoucherColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn3.DataPropertyName = "DiscountType";
@@ -518,10 +512,8 @@ partial class frmVoucher
         dgvVoucherColumn4.HeaderText = "Loại giảm";
         dgvVoucherColumn4.Visible = true;
         dgvVoucherColumn4.ReadOnly = true;
-        dgvVoucherColumn4.Width = 139;
-        dgvVoucherColumn4.MinimumWidth = 6;
-        dgvVoucherColumn4.FillWeight = 100F;
-        dgvVoucherColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn4.DataPropertyName = "LoaiGiam";
@@ -541,10 +533,8 @@ partial class frmVoucher
         dgvVoucherColumn5.HeaderText = "Giá trị giảm";
         dgvVoucherColumn5.Visible = true;
         dgvVoucherColumn5.ReadOnly = true;
-        dgvVoucherColumn5.Width = 139;
-        dgvVoucherColumn5.MinimumWidth = 6;
-        dgvVoucherColumn5.FillWeight = 100F;
-        dgvVoucherColumn5.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn5.DataPropertyName = "DiscountValue";
@@ -564,10 +554,8 @@ partial class frmVoucher
         dgvVoucherColumn6.HeaderText = "Lượt còn lại";
         dgvVoucherColumn6.Visible = true;
         dgvVoucherColumn6.ReadOnly = true;
-        dgvVoucherColumn6.Width = 140;
-        dgvVoucherColumn6.MinimumWidth = 6;
-        dgvVoucherColumn6.FillWeight = 100F;
-        dgvVoucherColumn6.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvVoucherColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn6.DataPropertyName = "Quantity";
@@ -587,10 +575,8 @@ partial class frmVoucher
         dgvVoucherColumn7.HeaderText = "Hoạt động";
         dgvVoucherColumn7.Visible = true;
         dgvVoucherColumn7.ReadOnly = true;
-        dgvVoucherColumn7.Width = 139;
-        dgvVoucherColumn7.MinimumWidth = 6;
-        dgvVoucherColumn7.FillWeight = 100F;
-        dgvVoucherColumn7.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvVoucherColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
         dgvVoucherColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvVoucherColumn7.DataPropertyName = "IsActive";
@@ -1461,7 +1447,6 @@ partial class frmVoucher
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
         btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
@@ -1476,7 +1461,60 @@ partial class frmVoucher
         dgvVoucher.DefaultCellStyle.BackColor=Color.White;dgvVoucher.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvVoucher.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvVoucher.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvVoucher.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvVoucher.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvVoucher.MultiSelect=false;
+        dgvVoucher.AllowUserToResizeColumns=false;
+        dgvVoucher.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvVoucher.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucher.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucher.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvVoucher.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvVoucher.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvVoucher.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvVoucher.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvVoucher.ColumnHeadersHeight=38;
+        dgvVoucherColumn1.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn2.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn3.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn4.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn5.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn6.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvVoucherColumn7.Resizable=DataGridViewTriState.False;
+        dgvVoucherColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                dgvVoucherColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn1.MinimumWidth=48;
+        dgvVoucherColumn1.Width=48;
+        dgvVoucherColumn1.FillWeight=48F;
+        dgvVoucherColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn2.MinimumWidth=65;
+        dgvVoucherColumn2.Width=65;
+        dgvVoucherColumn2.FillWeight=104F;
+        dgvVoucherColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn3.MinimumWidth=132;
+        dgvVoucherColumn3.Width=132;
+        dgvVoucherColumn3.FillWeight=120F;
+        dgvVoucherColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn4.MinimumWidth=115;
+        dgvVoucherColumn4.Width=115;
+        dgvVoucherColumn4.FillWeight=96F;
+        dgvVoucherColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn5.MinimumWidth=120;
+        dgvVoucherColumn5.Width=120;
+        dgvVoucherColumn5.FillWeight=120F;
+        dgvVoucherColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn6.MinimumWidth=120;
+        dgvVoucherColumn6.Width=120;
+        dgvVoucherColumn6.FillWeight=120F;
+        dgvVoucherColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvVoucherColumn7.MinimumWidth=112;
+        dgvVoucherColumn7.Width=112;
+        dgvVoucherColumn7.FillWeight=96F;
+        dgvVoucherColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        ResumeLayout(false);
         PerformLayout();
     }
 

@@ -39,6 +39,16 @@ internal static partial class Program
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
         if(!args.Contains("--designer-offline")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(args.Contains("--fill-alert"))
+        {
+            try {TestFillAlert();Console.WriteLine($"ALL {checks} FILL/ALERT CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--grid-receipt-report"))
+        {
+            try {TestGridReceiptReport();Console.WriteLine($"ALL {checks} GRID/RECEIPT/REPORT CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--excel-payments"))
         {
             try {TestExcelPayments();Console.WriteLine($"ALL {checks} EXCEL/PAYMENT CHECKS PASSED");return 0;}
@@ -206,7 +216,7 @@ internal static partial class Program
         Task.WaitAll(concurrent);
         Check(concurrent.Count(t=>t.Result)==1 && Stock()==2,"concurrent sales cannot oversell");
         Check(new CanhBaoDAL().LayThuocSapHet(10).Rows.Cast<System.Data.DataRow>().Any(r=>(int)r["MaThuoc"]==medicineId),"low stock warning includes test medicine");
-        Check(new CanhBaoDAL().LayLoSapHetHan(30).Rows.Cast<System.Data.DataRow>().Any(r=>(int)r["MaThuoc"]==medicineId),"expired batch warning works");
+        TestExpirySoonOnly();
         Check(new BaoCaoBLL().LayBaoCao(DateTime.Today,DateTime.Today,out _,out var orders,out int orderCount,out _,out _,out _,out error) && orders.Rows.Cast<System.Data.DataRow>().Any(r=>(int)r["MaHD"]==orderId),"revenue report includes saved order: "+error);
         Check(!new BaoCaoBLL().LayBaoCao(DateTime.Today.AddDays(1),DateTime.Today,out _,out _,out _,out _,out _,out _,out error),"invalid report date range rejected");
 

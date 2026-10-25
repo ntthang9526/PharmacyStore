@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -70,6 +70,7 @@
     <Compile Update="Forms/DanhMuc/frmThemNhomThuoc.Designer.cs"><DependentUpon>frmThemNhomThuoc.cs</DependentUpon></Compile>
   </ItemGroup>
   <ItemGroup>
+    <!-- Refresh partial classes share their form resources; compiling another resx duplicates the output name. -->
     <EmbeddedResource Remove="Forms/**/*.Refresh.resx" />
     <Compile Update="Forms/BanHang/frmBanHang.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBanHang.cs</DependentUpon></Compile>
     <Compile Update="Forms/BaoCao/frmBaoCao.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBaoCao.cs</DependentUpon></Compile>

@@ -378,13 +378,11 @@ partial class frmLoHang
         dgvLoHang.RowHeadersDefaultCellStyle = dgvLoHangRowHeadersDefaultCellStyle;
         dgvLoHang.RowTemplate.Height = 34;
         dgvLoHangColumn1.Name = "MaLo";
-        dgvLoHangColumn1.HeaderText = "Mã lô";
+        dgvLoHangColumn1.HeaderText="Mã";
         dgvLoHangColumn1.Visible = true;
         dgvLoHangColumn1.ReadOnly = true;
-        dgvLoHangColumn1.Width = 65;
-        dgvLoHangColumn1.MinimumWidth = 6;
-        dgvLoHangColumn1.FillWeight = 100F;
-        dgvLoHangColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn1.DataPropertyName = "MaLo";
@@ -404,10 +402,8 @@ partial class frmLoHang
         dgvLoHangColumn2.HeaderText = "Số lô";
         dgvLoHangColumn2.Visible = true;
         dgvLoHangColumn2.ReadOnly = true;
-        dgvLoHangColumn2.Width = 170;
-        dgvLoHangColumn2.MinimumWidth = 6;
-        dgvLoHangColumn2.FillWeight = 100F;
-        dgvLoHangColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn2.DataPropertyName = "SoLo";
@@ -427,10 +423,8 @@ partial class frmLoHang
         dgvLoHangColumn3.HeaderText = "Tên thuốc";
         dgvLoHangColumn3.Visible = true;
         dgvLoHangColumn3.ReadOnly = true;
-        dgvLoHangColumn3.Width = 230;
-        dgvLoHangColumn3.MinimumWidth = 6;
-        dgvLoHangColumn3.FillWeight = 220F;
-        dgvLoHangColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn3.DataPropertyName = "TenThuoc";
@@ -450,10 +444,8 @@ partial class frmLoHang
         dgvLoHangColumn4.HeaderText = "Nhà cung cấp";
         dgvLoHangColumn4.Visible = true;
         dgvLoHangColumn4.ReadOnly = true;
-        dgvLoHangColumn4.Width = 220;
-        dgvLoHangColumn4.MinimumWidth = 6;
-        dgvLoHangColumn4.FillWeight = 220F;
-        dgvLoHangColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn4.DataPropertyName = "TenNCC";
@@ -473,10 +465,8 @@ partial class frmLoHang
         dgvLoHangColumn5.HeaderText = "Nhóm thuốc";
         dgvLoHangColumn5.Visible = true;
         dgvLoHangColumn5.ReadOnly = true;
-        dgvLoHangColumn5.Width = 200;
-        dgvLoHangColumn5.MinimumWidth = 6;
-        dgvLoHangColumn5.FillWeight = 170F;
-        dgvLoHangColumn5.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn5.DataPropertyName = "TenNhom";
@@ -496,10 +486,8 @@ partial class frmLoHang
         dgvLoHangColumn6.HeaderText = "Hạn dùng";
         dgvLoHangColumn6.Visible = true;
         dgvLoHangColumn6.ReadOnly = true;
-        dgvLoHangColumn6.Width = 115;
-        dgvLoHangColumn6.MinimumWidth = 6;
-        dgvLoHangColumn6.FillWeight = 100F;
-        dgvLoHangColumn6.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn6.DataPropertyName = "HanDung";
@@ -519,10 +507,8 @@ partial class frmLoHang
         dgvLoHangColumn7.HeaderText = "Tồn hiện tại";
         dgvLoHangColumn7.Visible = true;
         dgvLoHangColumn7.ReadOnly = true;
-        dgvLoHangColumn7.Width = 100;
-        dgvLoHangColumn7.MinimumWidth = 6;
-        dgvLoHangColumn7.FillWeight = 100F;
-        dgvLoHangColumn7.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn7.DataPropertyName = "TonKho";
@@ -542,10 +528,8 @@ partial class frmLoHang
         dgvLoHangColumn8.HeaderText = "Tổng đã nhập";
         dgvLoHangColumn8.Visible = true;
         dgvLoHangColumn8.ReadOnly = true;
-        dgvLoHangColumn8.Width = 115;
-        dgvLoHangColumn8.MinimumWidth = 6;
-        dgvLoHangColumn8.FillWeight = 100F;
-        dgvLoHangColumn8.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn8.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn8.DataPropertyName = "SoLuongDaNhap";
@@ -565,10 +549,8 @@ partial class frmLoHang
         dgvLoHangColumn9.HeaderText = "Nhập gần nhất";
         dgvLoHangColumn9.Visible = true;
         dgvLoHangColumn9.ReadOnly = true;
-        dgvLoHangColumn9.Width = 175;
-        dgvLoHangColumn9.MinimumWidth = 6;
-        dgvLoHangColumn9.FillWeight = 100F;
-        dgvLoHangColumn9.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvLoHangColumn9.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvLoHangColumn9.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvLoHangColumn9.DataPropertyName = "NgayNhapGanNhat";
@@ -587,7 +569,7 @@ partial class frmLoHang
         dgvLoHang.AutoGenerateColumns = false;
         colGiaNhap = new DataGridViewTextBoxColumn();
         colGiaNhap.Name="GiaNhapGanNhat";colGiaNhap.DataPropertyName="GiaNhapGanNhat";
-        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;colGiaNhap.MinimumWidth=130;
+        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;
         colGiaNhap.DefaultCellStyle.Format="N0";colGiaNhap.DefaultCellStyle.NullValue="—";
         colGiaNhap.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
         dgvLoHang.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvLoHangColumn1, dgvLoHangColumn2, dgvLoHangColumn3, dgvLoHangColumn4, dgvLoHangColumn5, dgvLoHangColumn6, dgvLoHangColumn7, dgvLoHangColumn8, dgvLoHangColumn9, colGiaNhap });
@@ -782,7 +764,6 @@ partial class frmLoHang
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
         btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
@@ -792,7 +773,77 @@ partial class frmLoHang
         dgvLoHang.DefaultCellStyle.BackColor=Color.White;dgvLoHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvLoHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvLoHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvLoHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvLoHang.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvLoHang.MultiSelect=false;
+        dgvLoHang.AllowUserToResizeColumns=false;
+        dgvLoHang.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvLoHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHang.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHang.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvLoHang.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvLoHang.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvLoHang.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvLoHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvLoHang.ColumnHeadersHeight=38;
+        dgvLoHangColumn1.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn2.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn3.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn4.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn5.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn6.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn7.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn8.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn8.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvLoHangColumn9.Resizable=DataGridViewTriState.False;
+        dgvLoHangColumn9.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colGiaNhap.Resizable=DataGridViewTriState.False;
+        colGiaNhap.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                dgvLoHangColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn1.MinimumWidth=65;
+        dgvLoHangColumn1.Width=65;
+        dgvLoHangColumn1.FillWeight=64F;
+        dgvLoHangColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn2.MinimumWidth=140;
+        dgvLoHangColumn2.Width=140;
+        dgvLoHangColumn2.FillWeight=64F;
+        dgvLoHangColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvLoHangColumn3.MinimumWidth=180;
+        dgvLoHangColumn3.Width=180;
+        dgvLoHangColumn3.FillWeight=220F;
+        dgvLoHangColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvLoHangColumn4.MinimumWidth=150;
+        dgvLoHangColumn4.Width=150;
+        dgvLoHangColumn4.FillWeight=220F;
+        dgvLoHangColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvLoHangColumn5.MinimumWidth=150;
+        dgvLoHangColumn5.Width=150;
+        dgvLoHangColumn5.FillWeight=220F;
+        dgvLoHangColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn6.MinimumWidth=112;
+        dgvLoHangColumn6.Width=112;
+        dgvLoHangColumn6.FillWeight=88F;
+        dgvLoHangColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn7.MinimumWidth=121;
+        dgvLoHangColumn7.Width=121;
+        dgvLoHangColumn7.FillWeight=120F;
+        dgvLoHangColumn8.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn8.MinimumWidth=137;
+        dgvLoHangColumn8.Width=137;
+        dgvLoHangColumn8.FillWeight=120F;
+        dgvLoHangColumn9.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvLoHangColumn9.MinimumWidth=146;
+        dgvLoHangColumn9.Width=146;
+        dgvLoHangColumn9.FillWeight=128F;
+        colGiaNhap.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colGiaNhap.MinimumWidth=198;
+        colGiaNhap.Width=198;
+        colGiaNhap.FillWeight=192F;
+        ResumeLayout(false);
         PerformLayout();
     }
 

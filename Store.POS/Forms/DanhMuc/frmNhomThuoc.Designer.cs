@@ -388,13 +388,11 @@ partial class frmNhomThuoc
         dgvNhomThuoc.RowHeadersDefaultCellStyle = dgvNhomThuocRowHeadersDefaultCellStyle;
         dgvNhomThuoc.RowTemplate.Height = 34;
         dgvNhomThuocColumn1.Name = "MaNhom";
-        dgvNhomThuocColumn1.HeaderText = "Mã nhóm";
+        dgvNhomThuocColumn1.HeaderText="Mã";
         dgvNhomThuocColumn1.Visible = true;
         dgvNhomThuocColumn1.ReadOnly = true;
-        dgvNhomThuocColumn1.Width = 245;
-        dgvNhomThuocColumn1.MinimumWidth = 6;
-        dgvNhomThuocColumn1.FillWeight = 80F;
-        dgvNhomThuocColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhomThuocColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhomThuocColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhomThuocColumn1.DataPropertyName = "MaNhom";
@@ -414,10 +412,8 @@ partial class frmNhomThuoc
         dgvNhomThuocColumn2.HeaderText = "Tên nhóm thuốc";
         dgvNhomThuocColumn2.Visible = true;
         dgvNhomThuocColumn2.ReadOnly = true;
-        dgvNhomThuocColumn2.Width = 521;
-        dgvNhomThuocColumn2.MinimumWidth = 6;
-        dgvNhomThuocColumn2.FillWeight = 170F;
-        dgvNhomThuocColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhomThuocColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhomThuocColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhomThuocColumn2.DataPropertyName = "TenNhom";
@@ -855,7 +851,6 @@ partial class frmNhomThuoc
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimNhom.BackColor=Color.FromArgb(15, 118, 110);btnTimNhom.ForeColor=Color.White;btnTimNhom.UseVisualStyleBackColor=false;
         btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
@@ -868,7 +863,29 @@ partial class frmNhomThuoc
         dgvNhomThuoc.DefaultCellStyle.BackColor=Color.White;dgvNhomThuoc.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvNhomThuoc.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhomThuoc.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvNhomThuoc.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvNhomThuoc.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvNhomThuoc.MultiSelect=false;
+        dgvNhomThuoc.AllowUserToResizeColumns=false;
+        dgvNhomThuoc.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvNhomThuoc.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhomThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhomThuoc.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvNhomThuoc.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvNhomThuoc.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvNhomThuoc.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvNhomThuoc.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvNhomThuoc.ColumnHeadersHeight=38;
+        dgvNhomThuocColumn1.Resizable=DataGridViewTriState.False;
+        dgvNhomThuocColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhomThuocColumn2.Resizable=DataGridViewTriState.False;
+        dgvNhomThuocColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                dgvNhomThuocColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvNhomThuocColumn1.MinimumWidth=65;
+        dgvNhomThuocColumn1.Width=65;
+        dgvNhomThuocColumn1.FillWeight=80F;
+        dgvNhomThuocColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvNhomThuocColumn2.MinimumWidth=155;
+        dgvNhomThuocColumn2.Width=155;
+        dgvNhomThuocColumn2.FillWeight=220F;
+        ResumeLayout(false);
         PerformLayout();
     }
 

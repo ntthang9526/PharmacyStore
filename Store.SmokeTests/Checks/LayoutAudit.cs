@@ -7,7 +7,7 @@ internal static partial class Program
         var problems=new List<string>();
         using var main=new frmMain();Offscreen(main);
         var types=new[]{typeof(frmQuanLyThuoc),typeof(frmNhanVien),typeof(frmNhapKho),typeof(frmLoHang),typeof(frmPhieuNhap),typeof(frmHoaDon),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmVoucher),typeof(frmBaoCao),typeof(frmCanhBao),typeof(frmDoiMatKhau),typeof(frmBanHang)};
-        foreach(var size in new[]{new Size(1382,753),new Size(1100,700)})
+        foreach(var size in new[]{new Size(1500,820),new Size(1382,753),new Size(1100,700)})
         {
             main.ClientSize=size;Application.DoEvents();
             foreach(var type in types)

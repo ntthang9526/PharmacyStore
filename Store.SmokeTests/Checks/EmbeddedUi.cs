@@ -6,7 +6,7 @@ internal static partial class Program
     static void TestEmbeddedUi()
     {
         using var main=new frmMain();
-        Check(main.WindowState==FormWindowState.Normal && main.ClientSize==new Size(1382,753) && main.StartPosition==FormStartPosition.CenterScreen && main.MaximizeBox,"home opens centered at original size and remains resizable");
+        Check(main.WindowState==FormWindowState.Normal && main.ClientSize==new Size(1500,820) && main.StartPosition==FormStartPosition.CenterScreen && main.MaximizeBox,"home opens centered at 1500x820 and remains resizable");
         Offscreen(main);
         var host=UiField<Panel>(main,"contentHost");var dashboard=UiField<TableLayoutPanel>(main,"dashboard");
         var sidebar=UiField<Panel>(main,"panelChucNang");

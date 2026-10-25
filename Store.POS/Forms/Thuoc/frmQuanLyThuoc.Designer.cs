@@ -263,7 +263,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.AutoGenerateColumns = false;
         colGiaNhap = new DataGridViewTextBoxColumn();
         colGiaNhap.Name="GiaNhapGanNhat";colGiaNhap.DataPropertyName="GiaNhapGanNhat";
-        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;colGiaNhap.MinimumWidth=130;
+        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;
         colGiaNhap.DefaultCellStyle.Format="N0";colGiaNhap.DefaultCellStyle.NullValue="—";
         colGiaNhap.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
         dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, MaNhom, MaNCC, TenNhom, TenNCC, DonViTinh, DonGia, SoLuongTon, colGiaNhap });
@@ -313,34 +313,30 @@ partial class frmQuanLyThuoc
         // 
         // MaThuoc
         MaThuoc.DataPropertyName = "MaThuoc";
-        MaThuoc.HeaderText = "Mã thuốc";
+        MaThuoc.HeaderText="Mã";
         MaThuoc.Name = "MaThuoc";
         MaThuoc.ReadOnly = true;
-        MaThuoc.FillWeight = 65F;
-        MaThuoc.MinimumWidth = 65;
+        
         // TenThuoc
         TenThuoc.DataPropertyName = "TenThuoc";
         TenThuoc.HeaderText = "Tên thuốc";
         TenThuoc.Name = "TenThuoc";
         TenThuoc.ReadOnly = true;
         TenThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        TenThuoc.FillWeight = 170F;
-        TenThuoc.MinimumWidth = 160;
+        
         // MaNhom
         MaNhom.DataPropertyName = "MaNhom";
-        MaNhom.HeaderText = "Mã nhóm";
+        MaNhom.HeaderText="Mã";
         MaNhom.Name = "MaNhom";
         MaNhom.ReadOnly = true;
-        MaNhom.FillWeight = 60F;
-        MaNhom.MinimumWidth = 50;
+        
         MaNhom.Visible = false;
         // MaNCC
         MaNCC.DataPropertyName = "MaNCC";
-        MaNCC.HeaderText = "Mã NCC";
+        MaNCC.HeaderText="Mã";
         MaNCC.Name = "MaNCC";
         MaNCC.ReadOnly = true;
-        MaNCC.FillWeight = 60F;
-        MaNCC.MinimumWidth = 50;
+        
         MaNCC.Visible = false;
         // TenNhom
         TenNhom.DataPropertyName = "TenNhom";
@@ -348,30 +344,26 @@ partial class frmQuanLyThuoc
         TenNhom.Name = "TenNhom";
         TenNhom.ReadOnly = true;
         TenNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        TenNhom.FillWeight = 120F;
-        TenNhom.MinimumWidth = 130;
+        
         // TenNCC
         TenNCC.DataPropertyName = "TenNCC";
         TenNCC.HeaderText = "Nhà cung cấp";
         TenNCC.Name = "TenNCC";
         TenNCC.ReadOnly = true;
         TenNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        TenNCC.FillWeight = 145F;
-        TenNCC.MinimumWidth = 160;
+        
         // DonViTinh
         DonViTinh.DataPropertyName = "DonViTinh";
         DonViTinh.HeaderText = "Đơn vị";
         DonViTinh.Name = "DonViTinh";
         DonViTinh.ReadOnly = true;
-        DonViTinh.FillWeight = 65F;
-        DonViTinh.MinimumWidth = 65;
+        
         // DonGia
         DonGia.DataPropertyName = "DonGia";
         DonGia.HeaderText = "Đơn giá (đ)";
         DonGia.Name = "DonGia";
         DonGia.ReadOnly = true;
-        DonGia.FillWeight = 95F;
-        DonGia.MinimumWidth = 100;
+        
         DonGia.DefaultCellStyle.Format = "N0";
         DonGia.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         // SoLuongTon
@@ -379,8 +371,7 @@ partial class frmQuanLyThuoc
         SoLuongTon.HeaderText = "Tồn kho";
         SoLuongTon.Name = "SoLuongTon";
         SoLuongTon.ReadOnly = true;
-        SoLuongTon.FillWeight = 65F;
-        SoLuongTon.MinimumWidth = 80;
+        
         SoLuongTon.DefaultCellStyle.Format = "N0";
         SoLuongTon.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         // groupBox6
@@ -983,7 +974,6 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23.ResumeLayout(false);
         tableLayoutPanel23.PerformLayout();
         tableLayoutPanel25.ResumeLayout(false);
-        
         posLayout.RowStyles.Insert(1,new RowStyle(SizeType.Absolute,46F));posLayout.RowCount=3;posLayout.SetRow(tableLayoutPanel1,2);
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
@@ -1003,7 +993,77 @@ partial class frmQuanLyThuoc
         dgvThuoc.DefaultCellStyle.BackColor=Color.White;dgvThuoc.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvThuoc.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvThuoc.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvThuoc.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvThuoc.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvThuoc.MultiSelect=false;
+        dgvThuoc.AllowUserToResizeColumns=false;
+        dgvThuoc.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvThuoc.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvThuoc.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvThuoc.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvThuoc.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvThuoc.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvThuoc.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvThuoc.ColumnHeadersHeight=38;
+        MaThuoc.Resizable=DataGridViewTriState.False;
+        MaThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        TenThuoc.Resizable=DataGridViewTriState.False;
+        TenThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        MaNhom.Resizable=DataGridViewTriState.False;
+        MaNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        MaNCC.Resizable=DataGridViewTriState.False;
+        MaNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        TenNhom.Resizable=DataGridViewTriState.False;
+        TenNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        TenNCC.Resizable=DataGridViewTriState.False;
+        TenNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        DonViTinh.Resizable=DataGridViewTriState.False;
+        DonViTinh.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        DonGia.Resizable=DataGridViewTriState.False;
+        DonGia.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        SoLuongTon.Resizable=DataGridViewTriState.False;
+        SoLuongTon.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colGiaNhap.Resizable=DataGridViewTriState.False;
+        colGiaNhap.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                MaThuoc.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        MaThuoc.MinimumWidth=65;
+        MaThuoc.Width=65;
+        MaThuoc.FillWeight=88F;
+        TenThuoc.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        TenThuoc.MinimumWidth=180;
+        TenThuoc.Width=180;
+        TenThuoc.FillWeight=220F;
+        MaNhom.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        MaNhom.MinimumWidth=65;
+        MaNhom.Width=65;
+        MaNhom.FillWeight=80F;
+        MaNCC.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        MaNCC.MinimumWidth=65;
+        MaNCC.Width=65;
+        MaNCC.FillWeight=72F;
+        TenNhom.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        TenNhom.MinimumWidth=150;
+        TenNhom.Width=150;
+        TenNhom.FillWeight=220F;
+        TenNCC.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        TenNCC.MinimumWidth=150;
+        TenNCC.Width=150;
+        TenNCC.FillWeight=220F;
+        DonViTinh.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        DonViTinh.MinimumWidth=79;
+        DonViTinh.Width=79;
+        DonViTinh.FillWeight=72F;
+        DonGia.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        DonGia.MinimumWidth=115;
+        DonGia.Width=115;
+        DonGia.FillWeight=112F;
+        SoLuongTon.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        SoLuongTon.MinimumWidth=92;
+        SoLuongTon.Width=92;
+        SoLuongTon.FillWeight=80F;
+        colGiaNhap.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colGiaNhap.MinimumWidth=198;
+        colGiaNhap.Width=198;
+        colGiaNhap.FillWeight=192F;
+        ResumeLayout(false);
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;

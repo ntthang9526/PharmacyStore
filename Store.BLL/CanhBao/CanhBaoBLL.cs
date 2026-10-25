@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.DAL;
 
 namespace Store.BLL
@@ -13,10 +13,10 @@ namespace Store.BLL
             return dal.LayThuocSapHet(nguongTon);
         }
 
-        // Lô còn hạn dưới soNgay ngày (mặc định 30), gồm cả lô đã quá hạn
-        public DataTable LayLoSapHetHan(int soNgay = 30)
+        // Chỉ lô còn hạn dưới soNgay ngày (mặc định 30), không gồm lô đã hết hạn.
+        public DataTable LayLoSapHetHan(int soNgay = 30, bool baoGomHetHan = false)
         {
-            return dal.LayLoSapHetHan(soNgay);
+            return dal.LayLoSapHetHan(soNgay, baoGomHetHan);
         }
     }
 }

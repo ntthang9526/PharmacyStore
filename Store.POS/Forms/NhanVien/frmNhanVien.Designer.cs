@@ -63,39 +63,33 @@ partial class frmNhanVien
         dgvNhanVien.MultiSelect=false;dgvNhanVien.SelectionMode=DataGridViewSelectionMode.FullRowSelect;dgvNhanVien.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
         dgvNhanVien.BackgroundColor=SystemColors.ScrollBar;dgvNhanVien.RowTemplate.Height=34;dgvNhanVien.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.AllCells;
         dgvNhanVien.Columns.AddRange(new DataGridViewColumn[] {colMaNV,colHoTen,colTaiKhoan,colDienThoai,colVaiTro,colDangLam});
-        colMaNV.Name="MaNV";colMaNV.HeaderText="Mã NV";colMaNV.DataPropertyName="MaNV";colMaNV.ReadOnly=true;colMaNV.MinimumWidth=60;colMaNV.FillWeight=65F;
-        colHoTen.Name="HoTen";colHoTen.HeaderText="Họ tên";colHoTen.DataPropertyName="HoTen";colHoTen.ReadOnly=true;colHoTen.MinimumWidth=150;colHoTen.DefaultCellStyle.WrapMode=DataGridViewTriState.True;colHoTen.FillWeight=160F;
-        colTaiKhoan.Name="TaiKhoan";colTaiKhoan.HeaderText="Tài khoản";colTaiKhoan.DataPropertyName="TaiKhoan";colTaiKhoan.ReadOnly=true;colTaiKhoan.MinimumWidth=115;colTaiKhoan.FillWeight=110F;
-        colDienThoai.Name="DienThoai";colDienThoai.HeaderText="Điện thoại";colDienThoai.DataPropertyName="DienThoai";colDienThoai.ReadOnly=true;colDienThoai.MinimumWidth=115;colDienThoai.FillWeight=110F;
-        colVaiTro.Name="TenVaiTro";colVaiTro.HeaderText="Vai trò";colVaiTro.DataPropertyName="TenVaiTro";colVaiTro.ReadOnly=true;colVaiTro.MinimumWidth=95;colVaiTro.FillWeight=80F;
-        colDangLam.Name="DangLam";colDangLam.HeaderText="Đang làm";colDangLam.DataPropertyName="DangLam";colDangLam.ReadOnly=true;colDangLam.MinimumWidth=85;colDangLam.FillWeight=70F;
+        colMaNV.Name="MaNV";colMaNV.HeaderText="Mã";colMaNV.DataPropertyName="MaNV";colMaNV.ReadOnly=true;
+        colHoTen.Name="HoTen";colHoTen.HeaderText="Họ tên";colHoTen.DataPropertyName="HoTen";colHoTen.ReadOnly=true;colHoTen.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
+        colTaiKhoan.Name="TaiKhoan";colTaiKhoan.HeaderText="Tài khoản";colTaiKhoan.DataPropertyName="TaiKhoan";colTaiKhoan.ReadOnly=true;
+        colDienThoai.Name="DienThoai";colDienThoai.HeaderText="Điện thoại";colDienThoai.DataPropertyName="DienThoai";colDienThoai.ReadOnly=true;
+        colVaiTro.Name="TenVaiTro";colVaiTro.HeaderText="Vai trò";colVaiTro.DataPropertyName="TenVaiTro";colVaiTro.ReadOnly=true;
+        colDangLam.Name="DangLam";colDangLam.HeaderText="Đang làm";colDangLam.DataPropertyName="DangLam";colDangLam.ReadOnly=true;
         details.Name="details";details.Text="Thông tin nhân viên";details.Dock=DockStyle.Fill;details.Padding=new Padding(12);
         editor.Name="editor";editor.Dock=DockStyle.Top;editor.AutoSize=true;editor.AutoSizeMode=AutoSizeMode.GrowAndShrink;editor.ColumnCount=2;editor.RowCount=6;
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,40F));editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,60F));
-        
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,36F));
-        
         lblField1.Name="lblField1";lblField1.Text="Họ tên *";lblField1.Dock=DockStyle.Fill;lblField1.Font=new Font("Segoe UI",9F);
         txtHoTen.Name="txtHoTen";txtHoTen.Dock=DockStyle.Fill;
         editor.Controls.Add(lblField1,0,0);editor.Controls.Add(txtHoTen,1,0);
-        
         lblField2.Name="lblField2";lblField2.Text="Tài khoản *";lblField2.Dock=DockStyle.Fill;lblField2.Font=new Font("Segoe UI",9F);
         txtTaiKhoan.Name="txtTaiKhoan";txtTaiKhoan.Dock=DockStyle.Fill;
         editor.Controls.Add(lblField2,0,1);editor.Controls.Add(txtTaiKhoan,1,1);
-        
         lblField3.Name="lblField3";lblField3.Text="Số điện thoại";lblField3.Dock=DockStyle.Fill;lblField3.Font=new Font("Segoe UI",9F);
         txtDienThoai.Name="txtDienThoai";txtDienThoai.Dock=DockStyle.Fill;
         editor.Controls.Add(lblField3,0,2);editor.Controls.Add(txtDienThoai,1,2);
-        
         lblField4.Name="lblField4";lblField4.Text="Mật khẩu mới";lblField4.Dock=DockStyle.Fill;lblField4.Font=new Font("Segoe UI",9F);
         txtMatKhau.Name="txtMatKhau";txtMatKhau.Dock=DockStyle.Fill;
         editor.Controls.Add(lblField4,0,3);editor.Controls.Add(txtMatKhau,1,3);
-        
         lblField5.Name="lblField5";lblField5.Text="Trạng thái";lblField5.Dock=DockStyle.Fill;lblField5.Font=new Font("Segoe UI",9F);
         chkDangLam.Name="chkDangLam";chkDangLam.Dock=DockStyle.Fill;
         editor.Controls.Add(lblField5,0,4);editor.Controls.Add(chkDangLam,1,4);
@@ -103,7 +97,6 @@ partial class frmNhanVien
         lblField6.Name="lblField6";lblField6.Text="Thao tác";lblField6.Dock=DockStyle.Fill;lblField6.Font=new Font("Segoe UI",9F);
         actions.Name="actions";actions.Dock=DockStyle.Fill;
 
-        
         lblVaiTro.Name="lblVaiTro";lblVaiTro.Text="Vai trò *";lblVaiTro.Dock=DockStyle.Fill;
         cboVaiTro.Name="cboVaiTro";cboVaiTro.Dock=DockStyle.Fill;cboVaiTro.DropDownStyle=ComboBoxStyle.DropDownList;
         cboVaiTro.Items.AddRange(new object[]{"Nhân viên","Admin"});
@@ -156,7 +149,53 @@ partial class frmNhanVien
         dgvNhanVien.DefaultCellStyle.BackColor=Color.White;dgvNhanVien.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvNhanVien.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhanVien.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvNhanVien.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvNhanVien.MultiSelect=false;
+        dgvNhanVien.AllowUserToResizeColumns=false;
+        dgvNhanVien.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvNhanVien.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhanVien.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhanVien.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvNhanVien.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvNhanVien.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvNhanVien.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvNhanVien.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvNhanVien.ColumnHeadersHeight=38;
+        colVaiTro.Resizable=DataGridViewTriState.False;
+        colVaiTro.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colMaNV.Resizable=DataGridViewTriState.False;
+        colMaNV.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colHoTen.Resizable=DataGridViewTriState.False;
+        colHoTen.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colTaiKhoan.Resizable=DataGridViewTriState.False;
+        colTaiKhoan.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colDienThoai.Resizable=DataGridViewTriState.False;
+        colDienThoai.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        colDangLam.Resizable=DataGridViewTriState.False;
+        colDangLam.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                colVaiTro.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        colVaiTro.MinimumWidth=135;
+        colVaiTro.Width=135;
+        colVaiTro.FillWeight=220F;
+        colMaNV.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colMaNV.MinimumWidth=65;
+        colMaNV.Width=65;
+        colMaNV.FillWeight=64F;
+        colHoTen.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        colHoTen.MinimumWidth=135;
+        colHoTen.Width=135;
+        colHoTen.FillWeight=220F;
+        colTaiKhoan.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colTaiKhoan.MinimumWidth=102;
+        colTaiKhoan.Width=102;
+        colTaiKhoan.FillWeight=96F;
+        colDienThoai.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colDienThoai.MinimumWidth=120;
+        colDienThoai.Width=120;
+        colDienThoai.FillWeight=104F;
+        colDangLam.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        colDangLam.MinimumWidth=104;
+        colDangLam.Width=104;
+        colDangLam.FillWeight=88F;
+        ResumeLayout(false);
     }
     private TableLayoutPanel posLayout;
     private Label posHeading;

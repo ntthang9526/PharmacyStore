@@ -204,3 +204,47 @@ Bỏ nút Tạm ẩn ở 12 form chức năng và nút Form đang mở ở thanh
 - Báo cáo và KPI chỉ tính PAID theo COALESCE(PaidAt,OrderDate); danh sách hóa đơn hiện trạng thái, phương thức, tiền cần trả/đã thu, NV lập/NV thu và lọc chỉ chờ. Trang chủ có trạng thái trong hóa đơn gần nhất. Thanh toán QR vẫn xác nhận thủ công, không có bank webhook.
 - Sao lưu nguồn trước gộp: Backups/BACKUP-before-excel-payment-theme.zip. Full backup SQL COPY_ONLY trước nâng cấp: C:/Program Files/Microsoft SQL Server/MSSQL17.SQLEXPRESS/MSSQL/Backup/PharmacyStoreTrialDB_before_excel_payment_20261025.bak.
 - Build 0 cảnh báo/0 lỗi. Đạt 110 kiểm tra Excel/thanh toán (đọc lại file báo cáo/hóa đơn/mẫu/danh mục, chống xác nhận đồng thời, giá snapshot, ngày thu tiền, rollback voucher/tồn, UI đơn chờ ở hai kích thước), 132 nghiệp vụ, 285 phân quyền, 94 nhân viên/cửa sổ, 71 form nhúng, 69 tìm kiếm/chọn, 21 Designer không SQL, 594 bố cục và kiểm tra 14 form nhúng tại mặc định/thu nhỏ. Nhật ký artifacts/excel-*.log. Các fixture được dọn riêng; dữ liệu có sẵn còn 1 hóa đơn, 4 thuốc và 3 nhân viên, không còn dòng chờ kiểm thử.
+
+## Chỉ cảnh báo lô sắp hết hạn (25/10/2026)
+
+Theo yêu cầu, LayLoSapHetHan chỉ trả về lô có tồn > 0, thuốc đang kinh doanh và HSD từ hôm nay đến trước N ngày (mặc định 0–29 ngày). Loại lô HSD trước hôm nay khỏi cả trang chủ và F5; giữ nguyên dữ liệu lô, tồn kho và màn hình quản lý lô. Đổi tiêu đề/thẻ/nhãn trống thành Lô sắp hết hạn, bỏ nhánh tô đỏ lô quá hạn trong F5. Không đổi ngưỡng cảnh báo sắp hết hàng.
+
+Đạt 140 kiểm tra nghiệp vụ, gồm các mốc hôm qua/hôm nay/1/29/30/31 ngày, lô hết tồn, ngưỡng tùy chọn, dữ liệu lô hết hạn còn nguyên và số lượng/nội dung hiển thị ở trang chủ/F5. Nhật ký artifacts/expiry-soon-check.log. Sao lưu Backups/BACKUP-before-expiry-soon-only.zip.
+
+Ứng dụng hiện đang mở và khóa các DLL trong thư mục bin mặc định; không đóng phiên của người dùng. Build/test riêng ở artifacts/builds/expiry-soon-only, chạy bằng Store.POS.exe trong thư mục đó. Mã nguồn đã cập nhật; khi đóng ứng dụng, build thông thường sẽ tạo lại bản bin mới.
+
+
+## 25/10/2026 — Bảng, bố cục phiếu và báo cáo doanh thu
+
+- Tất cả bảng chọn cả hàng, tiêu đề giữ màu nền khi chọn; khóa kéo giãn cột, tiêu đề và dữ liệu không xuống dòng. Cột tự căn theo nội dung và có thanh cuộn ngang khi cần. Giữ kích thước cửa sổ chính hiện tại.
+- Hóa đơn và phiếu nhập hàng: danh sách bên trái, chi tiết bên phải; thay đổi có trong Designer.
+- Báo cáo chỉ lấy hóa đơn PAID theo ngày thanh toán, dùng ngày lập cho dữ liệu cũ chưa có PaidAt. Tổng và bảng theo ngày được tính từ cùng danh sách hóa đơn để tránh lệch khi có thanh toán đồng thời.
+- Xuất Excel làm mới báo cáo theo khoảng ngày đang chọn trước khi xuất; bổ sung tên khách hàng vào dữ liệu xuất. Khoảng ngày sai xóa số liệu cũ trên form, không xuất báo cáo cũ.
+- Kiểm tra tập trung: --grid-receipt-report; kiểm tra thêm --layout-audit, --excel-payments, --designer-offline và bộ smoke mặc định. Không đổi cấu trúc database, các bản ghi kiểm tra được dọn sau khi chạy.
+- Bản chạy riêng: artifacts/builds/grid-receipt-report/Store.POS.exe. Dùng thư mục riêng vì ứng dụng đang mở khóa các thư viện trong bin thông thường.
+- Bản sao nguồn trước sửa: Backups/BACKUP-before-grid-receipt-report.zip.
+
+
+## 25/10/2026 — Giãn cột và lưu ngưỡng cảnh báo
+
+- Bảng giãn đầy chiều ngang khi nội dung đủ chỗ; nội dung rộng hơn khung giữ độ rộng cần thiết và cuộn ngang. Tính lại khi dữ liệu hoặc kích thước đổi.
+- F5 hiện lô sắp hết hạn tăng dần theo hạn trước, lô hết hạn cuối danh sách, số ngày âm hiển thị “Hết hạn” và hàng màu đỏ nhạt. Trang chủ tiếp tục chỉ hiện lô sắp hết hạn.
+- Nhấn Enter trong ô ngưỡng tồn để lưu số nguyên 1–100.000. Giá trị được lưu theo tài khoản Windows tại LocalAppData/PharmacyStore/nguong-ton.txt, giữ sau khi tắt ứng dụng và áp dụng cho trang chủ. Không thay đổi số lượng hàng thực tế hay cấu trúc DB.
+- Kiểm tra: --fill-alert, --grid-receipt-report, smoke mặc định và --layout-audit. Bản chạy: artifacts/builds/fill-alert-settings/Store.POS.exe. Bản sao nguồn: Backups/BACKUP-before-fill-alert-settings.zip.
+
+
+## 25/10/2026 — Độ rộng cột quản lý trong Designer
+
+- Bỏ ConfigureGridColumns và các sự kiện tự đo/ghi đè độ rộng cột khi chạy. Lựa chọn hàng và bỏ chọn vẫn nằm trong phần xử lý hành vi.
+- Toàn bộ thiết lập cố định của bảng (chọn hàng, màu tiêu đề, không kéo giãn, không xuống dòng, độ rộng và FillWeight) nằm trong từng Designer.cs.
+- Cột tên/địa chỉ/ghi chú nhận phần rộng còn dư; mã, ngày, đơn vị, số lượng và tiền dùng chiều rộng cố định phù hợp. Tên dài hiển thị cắt gọn, có tooltip mặc định của bảng.
+- Xem trước Excel có cột khai báo sẵn trong Designer cho cả thuốc và nhập kho; runtime chỉ ẩn cột không có trong dữ liệu.
+- Bố cục động theo thao tác (panel giỏ hàng, phân quyền, nhúng form), màu cảnh báo theo dữ liệu vẫn cập nhật runtime.
+- Bản chạy: artifacts/builds/designer-column-widths/Store.POS.exe. Bản sao nguồn: Backups/BACKUP-before-designer-column-widths.zip.
+
+
+## 25/10/2026 — Tăng nhẹ cửa sổ chính
+
+- ClientSize mặc định 1500 × 820, đặt trong frmMain.Designer.cs; cửa sổ mở giữa màn hình, vẫn kéo giãn được.
+- Kiểm tra bố cục form nhúng tại kích thước mới, kích thước cũ và khi thu nhỏ.
+- Bản chạy: artifacts/builds/main-size-1500x820/Store.POS.exe.

@@ -332,13 +332,11 @@ partial class frmNhapKho
         dgvPhieu.RowHeadersDefaultCellStyle = dgvPhieuRowHeadersDefaultCellStyle;
         dgvPhieu.RowTemplate.Height = 34;
         dgvPhieuColumn1.Name = "MaThuoc";
-        dgvPhieuColumn1.HeaderText = "Mã";
+        dgvPhieuColumn1.HeaderText="Mã";
         dgvPhieuColumn1.Visible = true;
         dgvPhieuColumn1.ReadOnly = true;
-        dgvPhieuColumn1.Width = 49;
-        dgvPhieuColumn1.MinimumWidth = 6;
-        dgvPhieuColumn1.FillWeight = 55F;
-        dgvPhieuColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn1.DataPropertyName = "MaThuoc";
@@ -358,10 +356,8 @@ partial class frmNhapKho
         dgvPhieuColumn2.HeaderText = "Tên thuốc";
         dgvPhieuColumn2.Visible = true;
         dgvPhieuColumn2.ReadOnly = true;
-        dgvPhieuColumn2.Width = 177;
-        dgvPhieuColumn2.MinimumWidth = 6;
-        dgvPhieuColumn2.FillWeight = 200F;
-        dgvPhieuColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn2.DataPropertyName = "TenThuoc";
@@ -381,10 +377,8 @@ partial class frmNhapKho
         dgvPhieuColumn3.HeaderText = "ĐVT";
         dgvPhieuColumn3.Visible = true;
         dgvPhieuColumn3.ReadOnly = true;
-        dgvPhieuColumn3.Width = 53;
-        dgvPhieuColumn3.MinimumWidth = 6;
-        dgvPhieuColumn3.FillWeight = 60F;
-        dgvPhieuColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn3.DataPropertyName = "DonViTinh";
@@ -404,10 +398,8 @@ partial class frmNhapKho
         dgvPhieuColumn4.HeaderText = "Số lô";
         dgvPhieuColumn4.Visible = true;
         dgvPhieuColumn4.ReadOnly = true;
-        dgvPhieuColumn4.Width = 89;
-        dgvPhieuColumn4.MinimumWidth = 6;
-        dgvPhieuColumn4.FillWeight = 100F;
-        dgvPhieuColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn4.DataPropertyName = "SoLo";
@@ -427,10 +419,8 @@ partial class frmNhapKho
         dgvPhieuColumn5.HeaderText = "Hạn dùng";
         dgvPhieuColumn5.Visible = true;
         dgvPhieuColumn5.ReadOnly = true;
-        dgvPhieuColumn5.Width = 110;
-        dgvPhieuColumn5.MinimumWidth = 6;
-        dgvPhieuColumn5.FillWeight = 125F;
-        dgvPhieuColumn5.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn5.DataPropertyName = "HanDung";
@@ -450,10 +440,8 @@ partial class frmNhapKho
         dgvPhieuColumn6.HeaderText = "Số lượng";
         dgvPhieuColumn6.Visible = true;
         dgvPhieuColumn6.ReadOnly = true;
-        dgvPhieuColumn6.Width = 89;
-        dgvPhieuColumn6.MinimumWidth = 6;
-        dgvPhieuColumn6.FillWeight = 100F;
-        dgvPhieuColumn6.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn6.DataPropertyName = "SoLuong";
@@ -473,10 +461,8 @@ partial class frmNhapKho
         dgvPhieuColumn7.HeaderText = "Giá nhập";
         dgvPhieuColumn7.Visible = true;
         dgvPhieuColumn7.ReadOnly = true;
-        dgvPhieuColumn7.Width = 88;
-        dgvPhieuColumn7.MinimumWidth = 6;
-        dgvPhieuColumn7.FillWeight = 100F;
-        dgvPhieuColumn7.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn7.DataPropertyName = "GiaNhap";
@@ -496,10 +482,8 @@ partial class frmNhapKho
         dgvPhieuColumn8.HeaderText = "Thành tiền";
         dgvPhieuColumn8.Visible = true;
         dgvPhieuColumn8.ReadOnly = true;
-        dgvPhieuColumn8.Width = 89;
-        dgvPhieuColumn8.MinimumWidth = 6;
-        dgvPhieuColumn8.FillWeight = 100F;
-        dgvPhieuColumn8.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvPhieuColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvPhieuColumn8.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvPhieuColumn8.DataPropertyName = "ThanhTien";
@@ -1981,7 +1965,6 @@ partial class frmNhapKho
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         posLayout.RowCount=2;posLayout.SetRow(tableLayoutPanel1,1);
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnXoaDong.BackColor=Color.FromArgb(225, 29, 72);btnXoaDong.ForeColor=Color.White;btnXoaDong.UseVisualStyleBackColor=false;
@@ -1999,7 +1982,65 @@ partial class frmNhapKho
         dgvPhieu.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
         btnLuu.BackColor=Color.FromArgb(204,251,241);btnLuu.ForeColor=Color.FromArgb(15,23,42);
         btnThemThuoc.BackColor=Color.FromArgb(204,251,241);btnThemThuoc.ForeColor=Color.FromArgb(15,23,42);
-ResumeLayout(false);
+        dgvPhieu.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvPhieu.MultiSelect=false;
+        dgvPhieu.AllowUserToResizeColumns=false;
+        dgvPhieu.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvPhieu.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvPhieu.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvPhieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvPhieu.ColumnHeadersHeight=38;
+        dgvPhieuColumn1.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn2.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn3.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn4.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn5.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn6.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn7.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieuColumn8.Resizable=DataGridViewTriState.False;
+        dgvPhieuColumn8.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                dgvPhieuColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn1.MinimumWidth=65;
+        dgvPhieuColumn1.Width=65;
+        dgvPhieuColumn1.FillWeight=48F;
+        dgvPhieuColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvPhieuColumn2.MinimumWidth=180;
+        dgvPhieuColumn2.Width=180;
+        dgvPhieuColumn2.FillWeight=220F;
+        dgvPhieuColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn3.MinimumWidth=70;
+        dgvPhieuColumn3.Width=70;
+        dgvPhieuColumn3.FillWeight=48F;
+        dgvPhieuColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn4.MinimumWidth=140;
+        dgvPhieuColumn4.Width=140;
+        dgvPhieuColumn4.FillWeight=64F;
+        dgvPhieuColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn5.MinimumWidth=112;
+        dgvPhieuColumn5.Width=112;
+        dgvPhieuColumn5.FillWeight=88F;
+        dgvPhieuColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn6.MinimumWidth=98;
+        dgvPhieuColumn6.Width=98;
+        dgvPhieuColumn6.FillWeight=88F;
+        dgvPhieuColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn7.MinimumWidth=115;
+        dgvPhieuColumn7.Width=115;
+        dgvPhieuColumn7.FillWeight=88F;
+        dgvPhieuColumn8.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvPhieuColumn8.MinimumWidth=115;
+        dgvPhieuColumn8.Width=115;
+        dgvPhieuColumn8.FillWeight=104F;
+        ResumeLayout(false);
         PerformLayout();
     }
 

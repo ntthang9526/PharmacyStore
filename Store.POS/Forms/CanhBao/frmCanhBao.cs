@@ -11,17 +11,46 @@ namespace Store.POS
         {
             InitializeComponent();
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
+            nudNguongTon.KeyDown += nudNguongTon_KeyDown;
+            dgvSapHetHan.CellFormatting += (_, e) =>
+            {
+                if (e.RowIndex >= 0 && dgvSapHetHan.Columns[e.ColumnIndex].Name == "SoNgayConLai"
+                    && e.Value is int days && days < 0)
+                {
+                    e.Value = "Hết hạn";
+                    e.FormattingApplied = true;
+                }
+            };
         }
 
         private void frmCanhBao_Load(object sender, EventArgs e)
         {
             if (PosFormStyle.IsInDesigner(this)) return;
+            nudNguongTon.Value = CanhBaoSettings.NguongTon;
             LocCanhBao();
         }
 
         private void btnLoc_Click(object sender, EventArgs e)
         {
             LocCanhBao();
+        }
+
+        private void nudNguongTon_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+            e.SuppressKeyPress = true;
+            if (!int.TryParse(nudNguongTon.Text, out int value) || value < nudNguongTon.Minimum || value > nudNguongTon.Maximum)
+            {
+                MessageBox.Show(this, "Ngưỡng tồn phải là số nguyên từ 1 đến 100.000.", "Ngưỡng tồn");
+                return;
+            }
+            try
+            {
+                CanhBaoSettings.Luu(value);
+                nudNguongTon.Value = value;
+                LocCanhBao();
+            }
+            catch (Exception ex) { MessageBox.Show(this, "Không lưu được ngưỡng tồn: " + ex.Message, "Lỗi"); }
         }
 
         private void LocCanhBao()
@@ -35,9 +64,9 @@ namespace Store.POS
                 dgvSapHet.DataSource = dtHet;
                 grpSapHet.Text = $"Thuốc sắp hết hàng (tồn < {nguongTon}): {dtHet.Rows.Count} thuốc";
 
-                DataTable dtHan = bll.LayLoSapHetHan(soNgay);
+                DataTable dtHan = bll.LayLoSapHetHan(soNgay, true);
                 dgvSapHetHan.DataSource = dtHan;
-                grpSapHetHan.Text = $"Lô sắp hết hạn (còn dưới {soNgay} ngày) hoặc đã hết hạn: {dtHan.Rows.Count} lô";
+                grpSapHetHan.Text = $"Lô sắp / đã hết hạn (dưới {soNgay} ngày): {dtHan.Rows.Count} lô";
 
             }
             catch (Exception ex)
@@ -47,7 +76,7 @@ namespace Store.POS
             }
         }
 
-        // Tô màu: đỏ nhạt = hết hàng / đã hết hạn; vàng nhạt = cảnh báo
+        // Tô màu: đỏ nhạt = hết hàng; vàng nhạt = cảnh báo sắp hết hàng/hạn.
         private void dgvSapHet_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             foreach (DataGridViewRow r in dgvSapHet.Rows)
@@ -61,8 +90,7 @@ namespace Store.POS
         {
             foreach (DataGridViewRow r in dgvSapHetHan.Rows)
             {
-                bool daHetHan = Convert.ToInt32(r.Cells["SoNgayConLai"].Value) < 0;
-                r.DefaultCellStyle.BackColor = daHetHan ? Color.LightCoral : Color.LemonChiffon;
+                r.DefaultCellStyle.BackColor = Convert.ToInt32(r.Cells["SoNgayConLai"].Value) < 0 ? Color.LightCoral : Color.LemonChiffon;
             }
         }
     }

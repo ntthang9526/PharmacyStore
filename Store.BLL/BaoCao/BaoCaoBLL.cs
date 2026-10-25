@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.DAL;
 
 namespace Store.BLL
@@ -26,17 +26,30 @@ namespace Store.BLL
                 return false;
             }
 
+            if (denNgay.Date == DateTime.MaxValue.Date)
+            {
+                error = "Đến ngày phải nhỏ hơn 31/12/9999.";
+                return false;
+            }
+
             try
             {
-                theoNgay = dal.LayDoanhThuTheoNgay(tuNgay, denNgay);
                 hoaDon = dal.LayDanhSachHoaDon(tuNgay, denNgay);
-
-                foreach (DataRow r in theoNgay.Rows)
+                theoNgay.Columns.Add("Ngay", typeof(DateTime));
+                theoNgay.Columns.Add("SoHoaDon", typeof(int));
+                theoNgay.Columns.Add("TongTien", typeof(decimal));
+                theoNgay.Columns.Add("GiamGia", typeof(decimal));
+                theoNgay.Columns.Add("DoanhThu", typeof(decimal));
+                foreach (var ngay in hoaDon.AsEnumerable().GroupBy(r => r.Field<DateTime>("NgayLap").Date).OrderBy(g => g.Key))
                 {
-                    soHoaDon += Convert.ToInt32(r["SoHoaDon"]);
-                    tongTien += Convert.ToDecimal(r["TongTien"]);
-                    giamGia += Convert.ToDecimal(r["GiamGia"]);
-                    doanhThu += Convert.ToDecimal(r["DoanhThu"]);
+                    decimal tien = ngay.Sum(r => r.Field<decimal>("TongTien"));
+                    decimal giam = ngay.Sum(r => r.Field<decimal>("GiamGia"));
+                    decimal thu = ngay.Sum(r => r.Field<decimal>("ThucThu"));
+                    theoNgay.Rows.Add(ngay.Key, ngay.Count(), tien, giam, thu);
+                    soHoaDon += ngay.Count();
+                    tongTien += tien;
+                    giamGia += giam;
+                    doanhThu += thu;
                 }
                 return true;
             }

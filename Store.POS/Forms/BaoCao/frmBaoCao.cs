@@ -30,7 +30,7 @@ namespace Store.POS
             XemBaoCao();
         }
 
-        private void XemBaoCao(bool notifyEmpty=true)
+        private bool XemBaoCao(bool notifyEmpty=true)
         {
             if (bll.LayBaoCao(dtpTuNgay.Value, dtpDenNgay.Value,
                     out DataTable theoNgay, out DataTable hoaDon,
@@ -48,10 +48,15 @@ namespace Store.POS
                 if (notifyEmpty && soHD == 0)
                     MessageBox.Show("Không có hóa đơn nào trong khoảng ngày đã chọn.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
             else
             {
+                dgvTheoNgay.DataSource = null;
+                dgvHoaDon.DataSource = null;
+                lblSoHD.Text = lblTongTien.Text = lblGiamGia.Text = lblDoanhThu.Text = "—";
                 MessageBox.Show(error, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
         }
 

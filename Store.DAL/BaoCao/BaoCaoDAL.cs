@@ -26,12 +26,14 @@ namespace Store.DAL
         {
             const string sql = @"
                 SELECT o.PaymentMethod AS HinhThucThanhToan, o.Id AS MaHD, COALESCE(o.PaidAt,o.OrderDate) AS NgayLap, e.FullName AS NhanVien,
+                       COALESCE(c.FullName, N'Khách lẻ') AS KhachHang,
                        ISNULL(v.Code, '') AS Voucher,
                        o.TotalAmount AS TongTien, o.DiscountAmount AS GiamGia,
                        o.TotalAmount - o.DiscountAmount AS ThucThu
                 FROM Orders o
                 JOIN Employees e ON e.Id = o.EmployeeId
                 LEFT JOIN Vouchers v ON v.Id = o.VoucherId
+                LEFT JOIN Customers c ON c.Id = o.CustomerId
                 WHERE o.PaymentStatus='PAID' AND COALESCE(o.PaidAt,o.OrderDate) >= @tu AND COALESCE(o.PaidAt,o.OrderDate) < DATEADD(DAY, 1, @den)
                 ORDER BY COALESCE(o.PaidAt,o.OrderDate) DESC";
             return Lay(sql, tuNgay, denNgay);

@@ -36,8 +36,9 @@ public partial class frmMain
         try
         {
             var bills=new HoaDonBLL();var alerts=new CanhBaoBLL();
-            var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet();var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
+            var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet(CanhBaoSettings.NguongTon);var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
             lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
+            label13.Text=$"Tồn còn hạn dưới {CanhBaoSettings.NguongTon}";
             lblSapHet.Text=low.Rows.Count.ToString();lblSapHetHan.Text=expiry.Rows.Count.ToString();
             dgvSapHet.DataSource=low;dgvSapHetHan.DataSource=expiry;dgvGanNhat.DataSource=recent;
             dgvSapHet.Visible=low.Rows.Count>0;lblKhongSapHet.Visible=!dgvSapHet.Visible;

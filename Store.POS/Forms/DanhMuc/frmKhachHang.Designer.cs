@@ -233,10 +233,10 @@ partial class frmKhachHang
         dgvKhachHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
         dgvKhachHang.AutoGenerateColumns = false;
         dgvKhachHang.Columns.AddRange(new DataGridViewColumn[] { MaKH, TenKH, DienThoai, Diem });
-        MaKH.Name="MaKH";MaKH.DataPropertyName="MaKH";MaKH.HeaderText="Mã khách hàng";MaKH.ReadOnly=true;MaKH.FillWeight=80F;
-        TenKH.Name="TenKH";TenKH.DataPropertyName="TenKH";TenKH.HeaderText="Tên khách hàng";TenKH.ReadOnly=true;TenKH.FillWeight=180F;
-        DienThoai.Name="DienThoai";DienThoai.DataPropertyName="DienThoai";DienThoai.HeaderText="Điện thoại";DienThoai.ReadOnly=true;DienThoai.FillWeight=120F;
-        Diem.Name="Diem";Diem.DataPropertyName="Diem";Diem.HeaderText="Điểm";Diem.ReadOnly=true;Diem.FillWeight=65F;
+        MaKH.Name="MaKH";MaKH.DataPropertyName="MaKH";MaKH.HeaderText="Mã";MaKH.ReadOnly=true;
+        TenKH.Name="TenKH";TenKH.DataPropertyName="TenKH";TenKH.HeaderText="Tên khách hàng";TenKH.ReadOnly=true;
+        DienThoai.Name="DienThoai";DienThoai.DataPropertyName="DienThoai";DienThoai.HeaderText="Điện thoại";DienThoai.ReadOnly=true;
+        Diem.Name="Diem";Diem.DataPropertyName="Diem";Diem.HeaderText="Điểm";Diem.ReadOnly=true;
         dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         dgvKhachHang.BackgroundColor = SystemColors.ScrollBar;
         dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -635,7 +635,6 @@ partial class frmKhachHang
         tableLayoutPanel15.ResumeLayout(false);
         tableLayoutPanel15.PerformLayout();
         tableLayoutPanel17.ResumeLayout(false);
-        
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
         btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
@@ -648,7 +647,41 @@ partial class frmKhachHang
         dgvKhachHang.DefaultCellStyle.BackColor=Color.White;dgvKhachHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvKhachHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvKhachHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvKhachHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvKhachHang.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvKhachHang.MultiSelect=false;
+        dgvKhachHang.AllowUserToResizeColumns=false;
+        dgvKhachHang.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvKhachHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvKhachHang.ColumnHeadersHeight=38;
+        MaKH.Resizable=DataGridViewTriState.False;
+        MaKH.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        TenKH.Resizable=DataGridViewTriState.False;
+        TenKH.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        DienThoai.Resizable=DataGridViewTriState.False;
+        DienThoai.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        Diem.Resizable=DataGridViewTriState.False;
+        Diem.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                MaKH.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        MaKH.MinimumWidth=65;
+        MaKH.Width=65;
+        MaKH.FillWeight=128F;
+        TenKH.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        TenKH.MinimumWidth=150;
+        TenKH.Width=150;
+        TenKH.FillWeight=220F;
+        DienThoai.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        DienThoai.MinimumWidth=120;
+        DienThoai.Width=120;
+        DienThoai.FillWeight=104F;
+        Diem.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        Diem.MinimumWidth=70;
+        Diem.Width=70;
+        Diem.FillWeight=56F;
+        ResumeLayout(false);
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;

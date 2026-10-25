@@ -398,13 +398,11 @@ partial class frmNhaCungCap
         dgvNhaCungCap.RowHeadersDefaultCellStyle = dgvNhaCungCapRowHeadersDefaultCellStyle;
         dgvNhaCungCap.RowTemplate.Height = 34;
         dgvNhaCungCapColumn1.Name = "MaNCC";
-        dgvNhaCungCapColumn1.HeaderText = "Mã NCC";
+        dgvNhaCungCapColumn1.HeaderText="Mã";
         dgvNhaCungCapColumn1.Visible = true;
         dgvNhaCungCapColumn1.ReadOnly = true;
-        dgvNhaCungCapColumn1.Width = 94;
-        dgvNhaCungCapColumn1.MinimumWidth = 6;
-        dgvNhaCungCapColumn1.FillWeight = 80F;
-        dgvNhaCungCapColumn1.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhaCungCapColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhaCungCapColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhaCungCapColumn1.DataPropertyName = "MaNCC";
@@ -424,10 +422,8 @@ partial class frmNhaCungCap
         dgvNhaCungCapColumn2.HeaderText = "Tên nhà cung cấp";
         dgvNhaCungCapColumn2.Visible = true;
         dgvNhaCungCapColumn2.ReadOnly = true;
-        dgvNhaCungCapColumn2.Width = 260;
-        dgvNhaCungCapColumn2.MinimumWidth = 6;
-        dgvNhaCungCapColumn2.FillWeight = 220F;
-        dgvNhaCungCapColumn2.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhaCungCapColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhaCungCapColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhaCungCapColumn2.DataPropertyName = "TenNCC";
@@ -447,10 +443,8 @@ partial class frmNhaCungCap
         dgvNhaCungCapColumn3.HeaderText = "Điện thoại";
         dgvNhaCungCapColumn3.Visible = true;
         dgvNhaCungCapColumn3.ReadOnly = true;
-        dgvNhaCungCapColumn3.Width = 153;
-        dgvNhaCungCapColumn3.MinimumWidth = 6;
-        dgvNhaCungCapColumn3.FillWeight = 130F;
-        dgvNhaCungCapColumn3.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhaCungCapColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhaCungCapColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhaCungCapColumn3.DataPropertyName = "DienThoai";
@@ -470,10 +464,8 @@ partial class frmNhaCungCap
         dgvNhaCungCapColumn4.HeaderText = "Địa chỉ";
         dgvNhaCungCapColumn4.Visible = true;
         dgvNhaCungCapColumn4.ReadOnly = true;
-        dgvNhaCungCapColumn4.Width = 259;
-        dgvNhaCungCapColumn4.MinimumWidth = 6;
-        dgvNhaCungCapColumn4.FillWeight = 220F;
-        dgvNhaCungCapColumn4.AutoSizeMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
+        
+        
         dgvNhaCungCapColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
         dgvNhaCungCapColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhaCungCapColumn4.DataPropertyName = "DiaChi";
@@ -1088,7 +1080,6 @@ partial class frmNhaCungCap
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
         btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
@@ -1101,7 +1092,41 @@ partial class frmNhaCungCap
         dgvNhaCungCap.DefaultCellStyle.BackColor=Color.White;dgvNhaCungCap.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvNhaCungCap.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhaCungCap.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvNhaCungCap.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-ResumeLayout(false);
+        dgvNhaCungCap.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvNhaCungCap.MultiSelect=false;
+        dgvNhaCungCap.AllowUserToResizeColumns=false;
+        dgvNhaCungCap.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
+        dgvNhaCungCap.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhaCungCap.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhaCungCap.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvNhaCungCap.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvNhaCungCap.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvNhaCungCap.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvNhaCungCap.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvNhaCungCap.ColumnHeadersHeight=38;
+        dgvNhaCungCapColumn1.Resizable=DataGridViewTriState.False;
+        dgvNhaCungCapColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhaCungCapColumn2.Resizable=DataGridViewTriState.False;
+        dgvNhaCungCapColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhaCungCapColumn3.Resizable=DataGridViewTriState.False;
+        dgvNhaCungCapColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhaCungCapColumn4.Resizable=DataGridViewTriState.False;
+        dgvNhaCungCapColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+                dgvNhaCungCapColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvNhaCungCapColumn1.MinimumWidth=65;
+        dgvNhaCungCapColumn1.Width=65;
+        dgvNhaCungCapColumn1.FillWeight=72F;
+        dgvNhaCungCapColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvNhaCungCapColumn2.MinimumWidth=165;
+        dgvNhaCungCapColumn2.Width=165;
+        dgvNhaCungCapColumn2.FillWeight=220F;
+        dgvNhaCungCapColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        dgvNhaCungCapColumn3.MinimumWidth=120;
+        dgvNhaCungCapColumn3.Width=120;
+        dgvNhaCungCapColumn3.FillWeight=104F;
+        dgvNhaCungCapColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
+        dgvNhaCungCapColumn4.MinimumWidth=130;
+        dgvNhaCungCapColumn4.Width=130;
+        dgvNhaCungCapColumn4.FillWeight=180F;
+        ResumeLayout(false);
         PerformLayout();
     }
 

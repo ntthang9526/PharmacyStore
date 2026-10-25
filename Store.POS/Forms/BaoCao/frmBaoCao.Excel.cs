@@ -7,9 +7,13 @@ public partial class frmBaoCao
     {
         try
         {
-            if(dgvTheoNgay.DataSource is not DataTable daily || dgvHoaDon.DataSource is not DataTable orders) return;
-            if(!bll.LayBaoCao(dtpTuNgay.Value,dtpDenNgay.Value,out daily,out orders,out int count,out decimal total,out decimal discount,out decimal revenue,out string error))
-                throw new InvalidOperationException(error);
+            if(!XemBaoCao(false)) return;
+            var daily=(DataTable)dgvTheoNgay.DataSource!;
+            var orders=(DataTable)dgvHoaDon.DataSource!;
+            int count=orders.Rows.Count;
+            decimal total=orders.AsEnumerable().Sum(r=>r.Field<decimal>("TongTien"));
+            decimal discount=orders.AsEnumerable().Sum(r=>r.Field<decimal>("GiamGia"));
+            decimal revenue=orders.AsEnumerable().Sum(r=>r.Field<decimal>("ThucThu"));
             ExcelHelper.XuatBaoCaoDoanhThu(dtpTuNgay.Value,dtpDenNgay.Value,count,total,discount,revenue,daily,orders);
         }
         catch(Exception ex){MessageBox.Show(this,ex.Message,"Xuất Excel");}
