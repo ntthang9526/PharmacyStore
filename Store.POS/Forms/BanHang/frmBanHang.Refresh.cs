@@ -39,6 +39,6 @@ public partial class frmBanHang
             }
         }
         lblTinhTrangGioHang.Text=string.Join("; ",errors);
-        btnThanhToan.Enabled=gioHang.Count>0 && errors.Count==0;
+        btnThanhToan.Enabled=btnLuuCho.Enabled=gioHang.Count>0 && errors.Count==0;
     }
 }

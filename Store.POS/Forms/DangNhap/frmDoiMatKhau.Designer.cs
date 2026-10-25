@@ -35,7 +35,9 @@ partial class frmDoiMatKhau
         lblTrangThai.Name="lblTrangThai";lblTrangThai.Dock=DockStyle.Fill;
         posLayout.Controls.Add(posHeading,0,0);posLayout.Controls.Add(editor,0,1);posLayout.Controls.Add(lblTrangThai,0,2);
         AutoScaleDimensions=new SizeF(8,20);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
-        ClientSize=new Size(1182,653);MinimumSize=new Size(900,570);Name="frmDoiMatKhau";Text="Đổi mật khẩu";Controls.Add(posLayout);ResumeLayout(false);
+        ClientSize=new Size(1182,653);MinimumSize=new Size(900,570);Name="frmDoiMatKhau";Text="Đổi mật khẩu";Controls.Add(posLayout);
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+ResumeLayout(false);
     }
     private TableLayoutPanel posLayout,editor;
     private Label posHeading,lblTaiKhoan,lblCu,lblMoi,lblXacNhan,lblTrangThai;

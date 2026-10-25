@@ -39,6 +39,11 @@ internal static partial class Program
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
         if(!args.Contains("--designer-offline")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(args.Contains("--excel-payments"))
+        {
+            try {TestExcelPayments();Console.WriteLine($"ALL {checks} EXCEL/PAYMENT CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--layout-audit"))
         {
             try {AuditEmbeddedLayouts();return 0;} catch(Exception ex){Console.WriteLine(ex);return 1;}

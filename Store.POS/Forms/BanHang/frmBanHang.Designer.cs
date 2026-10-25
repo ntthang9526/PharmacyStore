@@ -362,10 +362,10 @@
             tableGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tableGioHang.BackgroundColor = SystemColors.ScrollBar;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(248,250,252);
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(248,250,252);
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.WindowText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             tableGioHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
@@ -914,7 +914,7 @@
             // 
             // labelTienTongTien
             // 
-            labelTienTongTien.BackColor = SystemColors.Control;
+            labelTienTongTien.BackColor = Color.FromArgb(248,250,252);
             labelTienTongTien.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTienTongTien.ForeColor = SystemColors.ControlText;
             labelTienTongTien.Location = new Point(200, 11);
@@ -943,7 +943,9 @@
             panel9.Location = new Point(0, 528);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(336, 63);
+            panel9.Size = new Size(336, 110);
+            btnLuuCho=new Button();btnLuuCho.Name="btnLuuCho";btnLuuCho.Text="Lưu chờ thanh toán";
+            btnLuuCho.Dock=DockStyle.Bottom;btnLuuCho.Height=40;btnLuuCho.Enabled=false;panel9.Controls.Add(btnLuuCho);
             panel9.TabIndex = 6;
             // 
             // btnHuyHoaDon
@@ -1097,7 +1099,30 @@
             panelAction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericSoLuong).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
-            ResumeLayout(false);
+            
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnNhapSanPham.BackColor=Color.FromArgb(15, 118, 110);btnNhapSanPham.ForeColor=Color.White;btnNhapSanPham.UseVisualStyleBackColor=false;
+        btnXoaTimKiem.BackColor=Color.FromArgb(225, 29, 72);btnXoaTimKiem.ForeColor=Color.White;btnXoaTimKiem.UseVisualStyleBackColor=false;
+        btnHuyVoucher.BackColor=Color.FromArgb(100, 116, 139);btnHuyVoucher.ForeColor=Color.White;btnHuyVoucher.UseVisualStyleBackColor=false;
+        btnNhapMaVoucher.BackColor=Color.FromArgb(15, 118, 110);btnNhapMaVoucher.ForeColor=Color.White;btnNhapMaVoucher.UseVisualStyleBackColor=false;
+        btnHuyKhachHang.BackColor=Color.FromArgb(100, 116, 139);btnHuyKhachHang.ForeColor=Color.White;btnHuyKhachHang.UseVisualStyleBackColor=false;
+        btnNhapKhachHang.BackColor=Color.FromArgb(15, 118, 110);btnNhapKhachHang.ForeColor=Color.White;btnNhapKhachHang.UseVisualStyleBackColor=false;
+        btnHuyHoaDon.BackColor=Color.FromArgb(225, 29, 72);btnHuyHoaDon.ForeColor=Color.White;btnHuyHoaDon.UseVisualStyleBackColor=false;
+        btnThanhToan.BackColor=Color.FromArgb(22, 101, 52);btnThanhToan.ForeColor=Color.White;btnThanhToan.UseVisualStyleBackColor=false;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
+        btnLuuCho.BackColor=Color.FromArgb(204,251,241);btnLuuCho.ForeColor=Color.FromArgb(15,23,42);btnLuuCho.UseVisualStyleBackColor=false;
+        tableTimKiem.BackgroundColor=Color.White;tableTimKiem.EnableHeadersVisualStyles=false;
+        tableTimKiem.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);tableTimKiem.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        tableTimKiem.DefaultCellStyle.BackColor=Color.White;tableTimKiem.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        tableTimKiem.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);tableTimKiem.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        tableTimKiem.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+        tableGioHang.BackgroundColor=Color.White;tableGioHang.EnableHeadersVisualStyles=false;
+        tableGioHang.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);tableGioHang.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        tableGioHang.DefaultCellStyle.BackColor=Color.White;tableGioHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        tableGioHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);tableGioHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        tableGioHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
         }
 
         #endregion
@@ -1158,6 +1183,7 @@
         private Panel panel9;
         private Button btnHuyHoaDon;
         private Button btnThanhToan;
+        private Button btnLuuCho;
         private Panel panelTienMat;
         private Label label1;
         private Panel panel11;

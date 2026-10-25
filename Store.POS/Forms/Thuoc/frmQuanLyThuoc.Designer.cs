@@ -91,11 +91,20 @@ partial class frmQuanLyThuoc
         // 
         // posLayout
         // 
-        posLayout.BackColor = SystemColors.Control;
+        posLayout.BackColor = Color.FromArgb(248,250,252);
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        excelActions=new FlowLayoutPanel();excelActions.Name="excelActions";excelActions.Dock=DockStyle.Fill;excelActions.Margin=Padding.Empty;excelActions.WrapContents=false;
+
+
         posLayout.Controls.Add(posHeading, 0, 0);
-        posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
+        btnNhapExcel=new Button();btnNhapExcel.Name="btnNhapExcel";btnNhapExcel.Text="Nhập Excel";btnNhapExcel.Size=new Size(120,38);btnNhapExcel.Margin=new Padding(3);excelActions.Controls.Add(btnNhapExcel);
+        btnXuatExcel=new Button();btnXuatExcel.Name="btnXuatExcel";btnXuatExcel.Text="Xuất Excel";btnXuatExcel.Size=new Size(120,38);btnXuatExcel.Margin=new Padding(3);excelActions.Controls.Add(btnXuatExcel);
+        btnMauExcel=new Button();btnMauExcel.Name="btnMauExcel";btnMauExcel.Text="File mẫu";btnMauExcel.Size=new Size(110,38);btnMauExcel.Margin=new Padding(3);excelActions.Controls.Add(btnMauExcel);
+
+        posLayout.Controls.Add(excelActions,0,1);
+
+        posLayout.Controls.Add(tableLayoutPanel1, 0, 2);
         posLayout.Dock = DockStyle.Fill;
         posLayout.Font = new Font("Segoe UI", 10.2F);
         posLayout.ForeColor = SystemColors.ControlText;
@@ -111,7 +120,7 @@ partial class frmQuanLyThuoc
         // 
         // posHeading
         // 
-        posHeading.BackColor = SystemColors.Control;
+        posHeading.BackColor = Color.FromArgb(248,250,252);
         posHeading.Dock = DockStyle.Fill;
         posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
         posHeading.ForeColor = SystemColors.ControlText;
@@ -124,7 +133,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel1
         // 
-        tableLayoutPanel1.BackColor = SystemColors.Control;
+        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel1.ColumnCount = 2;
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
@@ -143,7 +152,7 @@ partial class frmQuanLyThuoc
         // 
         // groupBox2
         // 
-        groupBox2.BackColor = SystemColors.Control;
+        groupBox2.BackColor = Color.FromArgb(248,250,252);
         groupBox2.Controls.Add(tableLayoutPanel3);
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -159,7 +168,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel3
         // 
-        tableLayoutPanel3.BackColor = SystemColors.Control;
+        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel3.ColumnCount = 1;
         tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
@@ -178,7 +187,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel4
         // 
-        tableLayoutPanel4.BackColor = SystemColors.Control;
+        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel4.ColumnCount = 3;
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -199,7 +208,7 @@ partial class frmQuanLyThuoc
         // 
         // label5
         // 
-        label5.BackColor = SystemColors.Control;
+        label5.BackColor = Color.FromArgb(248,250,252);
         label5.Dock = DockStyle.Fill;
         label5.Font = new Font("Segoe UI", 10.2F);
         label5.ForeColor = SystemColors.ControlText;
@@ -262,7 +271,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         dgvThuoc.BackgroundColor = SystemColors.ScrollBar;
         dgvThuoc.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-        dataGridViewCellStyle2.BackColor = SystemColors.Control;
+        dataGridViewCellStyle2.BackColor = Color.FromArgb(248,250,252);
         dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.2F);
         dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
         dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
@@ -287,7 +296,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.Name = "dgvThuoc";
         dgvThuoc.ReadOnly = true;
         dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        dataGridViewCellStyle4.BackColor = SystemColors.Control;
+        dataGridViewCellStyle4.BackColor = Color.FromArgb(248,250,252);
         dataGridViewCellStyle4.Font = new Font("Segoe UI", 10.2F);
         dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
@@ -376,7 +385,7 @@ partial class frmQuanLyThuoc
         SoLuongTon.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         // groupBox6
         // 
-        groupBox6.BackColor = SystemColors.Control;
+        groupBox6.BackColor = Color.FromArgb(248,250,252);
         groupBox6.Controls.Add(tableLayoutPanel7);
         groupBox6.Dock = DockStyle.Fill;
         groupBox6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -392,7 +401,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel7
         // 
-        tableLayoutPanel7.BackColor = SystemColors.Control;
+        tableLayoutPanel7.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel7.ColumnCount = 1;
         tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
@@ -414,7 +423,7 @@ partial class frmQuanLyThuoc
         // 
         tableLayoutPanel8.AutoSize = true;
         tableLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        tableLayoutPanel8.BackColor = SystemColors.Control;
+        tableLayoutPanel8.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel8.ColumnCount = 1;
         tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
@@ -447,7 +456,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel11
         // 
-        tableLayoutPanel11.BackColor = SystemColors.Control;
+        tableLayoutPanel11.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel11.ColumnCount = 1;
         tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
@@ -466,7 +475,7 @@ partial class frmQuanLyThuoc
         // 
         // label12
         // 
-        label12.BackColor = SystemColors.Control;
+        label12.BackColor = Color.FromArgb(248,250,252);
         label12.Dock = DockStyle.Fill;
         label12.Font = new Font("Segoe UI", 10.2F);
         label12.ForeColor = SystemColors.ControlText;
@@ -494,7 +503,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel13
         // 
-        tableLayoutPanel13.BackColor = SystemColors.Control;
+        tableLayoutPanel13.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel13.ColumnCount = 1;
         tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel13.Controls.Add(label14, 0, 0);
@@ -513,7 +522,7 @@ partial class frmQuanLyThuoc
         // 
         // label14
         // 
-        label14.BackColor = SystemColors.Control;
+        label14.BackColor = Color.FromArgb(248,250,252);
         label14.Dock = DockStyle.Fill;
         label14.Font = new Font("Segoe UI", 10.2F);
         label14.ForeColor = SystemColors.ControlText;
@@ -526,7 +535,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel15
         // 
-        tableLayoutPanel15.BackColor = SystemColors.Control;
+        tableLayoutPanel15.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel15.ColumnCount = 2;
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -578,7 +587,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel16
         // 
-        tableLayoutPanel16.BackColor = SystemColors.Control;
+        tableLayoutPanel16.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel16.ColumnCount = 1;
         tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel16.Controls.Add(label17, 0, 0);
@@ -597,7 +606,7 @@ partial class frmQuanLyThuoc
         // 
         // label17
         // 
-        label17.BackColor = SystemColors.Control;
+        label17.BackColor = Color.FromArgb(248,250,252);
         label17.Dock = DockStyle.Fill;
         label17.Font = new Font("Segoe UI", 10.2F);
         label17.ForeColor = SystemColors.ControlText;
@@ -610,7 +619,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel18
         // 
-        tableLayoutPanel18.BackColor = SystemColors.Control;
+        tableLayoutPanel18.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel18.ColumnCount = 2;
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -663,7 +672,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel19
         // 
-        tableLayoutPanel19.BackColor = SystemColors.Control;
+        tableLayoutPanel19.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel19.ColumnCount = 1;
         tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel19.Controls.Add(label20, 0, 0);
@@ -682,7 +691,7 @@ partial class frmQuanLyThuoc
         // 
         // label20
         // 
-        label20.BackColor = SystemColors.Control;
+        label20.BackColor = Color.FromArgb(248,250,252);
         label20.Dock = DockStyle.Fill;
         label20.Font = new Font("Segoe UI", 10.2F);
         label20.ForeColor = SystemColors.ControlText;
@@ -709,7 +718,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel21
         // 
-        tableLayoutPanel21.BackColor = SystemColors.Control;
+        tableLayoutPanel21.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel21.ColumnCount = 1;
         tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel21.Controls.Add(label22, 0, 0);
@@ -728,7 +737,7 @@ partial class frmQuanLyThuoc
         // 
         // label22
         // 
-        label22.BackColor = SystemColors.Control;
+        label22.BackColor = Color.FromArgb(248,250,252);
         label22.Dock = DockStyle.Fill;
         label22.Font = new Font("Segoe UI", 10.2F);
         label22.ForeColor = SystemColors.ControlText;
@@ -756,7 +765,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel23
         // 
-        tableLayoutPanel23.BackColor = SystemColors.Control;
+        tableLayoutPanel23.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel23.ColumnCount = 1;
         tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel23.Controls.Add(label24, 0, 0);
@@ -775,7 +784,7 @@ partial class frmQuanLyThuoc
         // 
         // label24
         // 
-        label24.BackColor = SystemColors.Control;
+        label24.BackColor = Color.FromArgb(248,250,252);
         label24.Dock = DockStyle.Fill;
         label24.Font = new Font("Segoe UI", 10.2F);
         label24.ForeColor = SystemColors.ControlText;
@@ -804,7 +813,7 @@ partial class frmQuanLyThuoc
         // tableLayoutPanel25
         // 
         tableLayoutPanel25.AutoSize = true;
-        tableLayoutPanel25.BackColor = SystemColors.Control;
+        tableLayoutPanel25.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel25.ColumnCount = 2;
         tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -941,7 +950,7 @@ partial class frmQuanLyThuoc
         // 
         AutoScaleDimensions = new SizeF(120F, 120F);
         AutoScaleMode = AutoScaleMode.Dpi;
-        BackColor = SystemColors.Control;
+        BackColor = Color.FromArgb(248,250,252);
         ClientSize = new Size(1182, 653);
         Controls.Add(posLayout);
         Font = new Font("Segoe UI", 10.2F);
@@ -974,7 +983,27 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23.ResumeLayout(false);
         tableLayoutPanel23.PerformLayout();
         tableLayoutPanel25.ResumeLayout(false);
-        ResumeLayout(false);
+        
+        posLayout.RowStyles.Insert(1,new RowStyle(SizeType.Absolute,46F));posLayout.RowCount=3;posLayout.SetRow(tableLayoutPanel1,2);
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnThemNhom.BackColor=Color.FromArgb(22, 101, 52);btnThemNhom.ForeColor=Color.White;btnThemNhom.UseVisualStyleBackColor=false;
+        btnThemNCC.BackColor=Color.FromArgb(22, 101, 52);btnThemNCC.ForeColor=Color.White;btnThemNCC.UseVisualStyleBackColor=false;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
+        btnBoQua.BackColor=Color.FromArgb(100, 116, 139);btnBoQua.ForeColor=Color.White;btnBoQua.UseVisualStyleBackColor=false;
+        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
+        btnNhapExcel.BackColor=Color.FromArgb(22, 101, 52);btnNhapExcel.ForeColor=Color.White;btnNhapExcel.UseVisualStyleBackColor=false;
+        btnXuatExcel.BackColor=Color.FromArgb(15, 118, 110);btnXuatExcel.ForeColor=Color.White;btnXuatExcel.UseVisualStyleBackColor=false;
+        btnMauExcel.BackColor=Color.FromArgb(15, 118, 110);btnMauExcel.ForeColor=Color.White;btnMauExcel.UseVisualStyleBackColor=false;
+        dgvThuoc.BackgroundColor=Color.White;dgvThuoc.EnableHeadersVisualStyles=false;
+        dgvThuoc.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvThuoc.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvThuoc.DefaultCellStyle.BackColor=Color.White;dgvThuoc.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvThuoc.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvThuoc.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvThuoc.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;
@@ -1029,4 +1058,6 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.Button btnBoQua;
     private global::System.Windows.Forms.Button btnThoat;
     private DataGridViewTextBoxColumn colGiaNhap;
+    private FlowLayoutPanel excelActions;
+    private Button btnNhapExcel,btnXuatExcel,btnMauExcel;
 }

@@ -17,7 +17,7 @@ public partial class frmHoaDon
     }
     public void MoHoaDon(int id)
     {
-        txtTimKiem.Text="HD"+id.ToString("D5");dtpTuNgay.Checked=dtpDenNgay.Checked=false;TimKiem();
+        chkChiCho.Checked=false;txtTimKiem.Text="HD"+id.ToString("D5");dtpTuNgay.Checked=dtpDenNgay.Checked=false;TimKiem();
         var row=dgvHoaDon.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>(int)r.Cells["MaHD"].Value==id);
         if(row!=null) HienChiTiet(row);
     }

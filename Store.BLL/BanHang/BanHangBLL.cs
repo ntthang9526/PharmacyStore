@@ -16,7 +16,7 @@ namespace Store.BLL
 
         // Thanh toán: lấy giá từ DB (không tin giá phía client) -> tính tổng -> áp voucher -> lưu hóa đơn + trừ tồn kho
         public bool ThanhToan(int maNhanVien, List<CartItem> gioHang, string? maVoucher, int? customerId, decimal expectedPayable,
-                              out int maHoaDon, out decimal tongTien, out decimal giamGia, out string error)
+                              out int maHoaDon, out decimal tongTien, out decimal giamGia, out string error,string paymentMethod="Tiền mặt",bool choThanhToan=false)
         {
             maHoaDon = 0;
             tongTien = 0;
@@ -82,7 +82,7 @@ namespace Store.BLL
                     error = "Giá thuốc hoặc voucher đã thay đổi. Vui lòng tải lại giỏ và áp dụng lại voucher.";
                     return false;
                 }
-                return dal.TaoHoaDon(maNhanVien, customerId, voucherId, tongTien, giamGia, items, out maHoaDon, out error);
+                return dal.TaoHoaDon(maNhanVien, customerId, voucherId, tongTien, giamGia, items, out maHoaDon, out error,paymentMethod,choThanhToan);
             }
             catch (Exception ex)
             {

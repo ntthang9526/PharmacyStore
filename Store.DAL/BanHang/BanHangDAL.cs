@@ -62,156 +62,152 @@ namespace Store.DAL
             return dt;
         }
 
-        // 3. Tạo hóa đơn + chi tiết + TRỪ TỒN KHO (+ trừ lượt voucher) trong MỘT transaction.
-        //    Trừ kho theo nguyên tắc FEFO: lô hết hạn sớm nhất được bán trước; một thuốc có thể tách ra nhiều lô.
-        public bool TaoHoaDon(int employeeId, int? customerId, int? voucherId, decimal tongTien, decimal giamGia,
-                              List<CartItem> items, out int orderId, out string error)
+        public bool TaoHoaDon(int employeeId,int? customerId,int? voucherId,decimal tongTien,decimal giamGia,
+            List<CartItem> items,out int orderId,out string error,string paymentMethod="Tiền mặt",bool choThanhToan=false)
         {
-            orderId = 0;
-            error = "";
-
-            using var conn = new SqlConnection(DBConnection.connectionString);
+            orderId=0;error="";
             try
             {
-                conn.Open();
-                using var tran = conn.BeginTransaction(IsolationLevel.Serializable);
-                try
+                KiemTraPhuongThuc(paymentMethod,choThanhToan);
+                using var conn=DBConnection.GetDbConnection();using var tran=conn.BeginTransaction(IsolationLevel.Serializable);
+                PhanQuyenDAL.YeuCau(Quyen.BanHang,conn,tran,employeeId);
+                KiemTraThuoc(conn,tran,items,tongTien,true);
+                KiemTraVoucher(conn,tran,voucherId,tongTien,giamGia,!choThanhToan);
+                using(var cmd=new SqlCommand(@"
+                    INSERT INTO Orders(EmployeeId,CustomerId,VoucherId,TotalAmount,DiscountAmount,Channel,PaymentMethod,PaymentStatus,PaidAt,PaidEmployeeId)
+                    OUTPUT INSERTED.Id VALUES(@emp,@customer,@voucher,@total,@discount,N'POS',@method,@status,
+                        CASE WHEN @status='PAID' THEN SYSDATETIME() ELSE NULL END,
+                        CASE WHEN @status='PAID' THEN @emp ELSE NULL END)",conn,tran))
                 {
-                    PhanQuyenDAL.YeuCau(Quyen.BanHang,conn,tran,employeeId);
-                    decimal verifiedTotal = 0;
-                    foreach (var item in items.OrderBy(x => x.MaThuoc))
-                    {
-                        using var priceCommand = new SqlCommand("SELECT Price FROM Medicines WITH (UPDLOCK, HOLDLOCK) WHERE Id=@id AND IsActive=1", conn, tran);
-                        priceCommand.Parameters.Add("@id", SqlDbType.Int).Value = item.MaThuoc;
-                        var value = priceCommand.ExecuteScalar();
-                        if (value == null || value == DBNull.Value || TienTe.LamTron(Convert.ToDecimal(value)) != item.DonGia || item.SoLuong <= 0)
-                            throw new InvalidOperationException("Giá hoặc trạng thái thuốc đã đổi. Vui lòng tải lại giỏ hàng.");
-                        verifiedTotal += item.DonGia * item.SoLuong;
-                    }
-                    if (items.Count == 0 || verifiedTotal != tongTien || giamGia < 0 || giamGia > tongTien)
-                        throw new InvalidOperationException("Tổng tiền không hợp lệ.");
-                    decimal verifiedDiscount = 0;
-                    if (voucherId.HasValue)
-                    {
-                        using var voucherCommand = new SqlCommand("SELECT DiscountType, DiscountValue FROM Vouchers WITH (UPDLOCK, HOLDLOCK) WHERE Id=@id AND IsActive=1 AND Quantity>0", conn, tran);
-                        voucherCommand.Parameters.Add("@id", SqlDbType.Int).Value = voucherId.Value;
-                        using var reader = voucherCommand.ExecuteReader();
-                        if (!reader.Read()) throw new InvalidOperationException("Voucher đã hết lượt hoặc bị khóa.");
-                        decimal value = reader.GetDecimal(1);
-                        verifiedDiscount = reader.GetString(0).Trim().ToUpperInvariant() == "PERCENT"
-                            ? TienTe.LamTron(tongTien * value / 100m) : TienTe.LamTron(value);
-                        verifiedDiscount = Math.Clamp(verifiedDiscount, 0, tongTien);
-                    }
-                    if (verifiedDiscount != giamGia)
-                        throw new InvalidOperationException("Giá trị voucher đã đổi. Vui lòng áp dụng lại.");
-
-                    // 3.1 Trừ lượt voucher (điều kiện Quantity > 0 chống 2 máy dùng cùng lúc)
-                    if (voucherId.HasValue)
-                    {
-                        using var cmdV = new SqlCommand(
-                            "UPDATE Vouchers SET Quantity = Quantity - 1 WHERE Id = @id AND IsActive = 1 AND Quantity > 0",
-                            conn, tran);
-                        cmdV.Parameters.Add("@id", SqlDbType.Int).Value = voucherId.Value;
-                        if (cmdV.ExecuteNonQuery() == 0)
-                        {
-                            tran.Rollback();
-                            error = "Voucher đã hết lượt hoặc đang bị khóa!";
-                            return false;
-                        }
-                    }
-
-                    // 3.2 Tạo hóa đơn
-                    using (var cmdO = new SqlCommand(@"
-                        INSERT INTO Orders(EmployeeId, CustomerId, VoucherId, TotalAmount, DiscountAmount, Channel)
-                        VALUES(@emp, @customer, @vid, @tong, @giam, N'POS');
-                        SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tran))
-                    {
-                        cmdO.Parameters.Add("@customer", SqlDbType.Int).Value = (object?)customerId ?? DBNull.Value;
-                        cmdO.Parameters.Add("@emp", SqlDbType.Int).Value = employeeId;
-                        cmdO.Parameters.Add("@vid", SqlDbType.Int).Value =
-                            voucherId.HasValue ? (object)voucherId.Value : DBNull.Value;
-                        cmdO.Parameters.Add(TienParam("@tong", tongTien));
-                        cmdO.Parameters.Add(TienParam("@giam", giamGia));
-                        orderId = Convert.ToInt32(cmdO.ExecuteScalar());
-                    }
-
-                    // 3.3 Với từng thuốc: khóa các lô còn hạn, trừ dần tồn kho, ghi chi tiết đơn
-                    foreach (CartItem item in items)
-                    {
-                        int canLay = item.SoLuong;
-                        var cacLo = new List<(int Id, int Stock)>();
-
-                        using (var cmdB = new SqlCommand(@"
-                            SELECT Id, Stock
-                            FROM Batches WITH (UPDLOCK, ROWLOCK)
-                            WHERE MedicineId = @m AND Stock > 0
-                              AND ExpiryDate >= CAST(GETDATE() AS DATE)
-                            ORDER BY ExpiryDate, Id", conn, tran))
-                        {
-                            cmdB.Parameters.Add("@m", SqlDbType.Int).Value = item.MaThuoc;
-                            using var rd = cmdB.ExecuteReader();
-                            while (rd.Read())
-                                cacLo.Add((rd.GetInt32(0), rd.GetInt32(1)));
-                        }
-
-                        foreach (var lo in cacLo)
-                        {
-                            if (canLay <= 0) break;
-                            int lay = Math.Min(canLay, lo.Stock);
-
-                            using (var cmdU = new SqlCommand(
-                                "UPDATE Batches SET Stock = Stock - @q WHERE Id = @b AND Stock >= @q", conn, tran))
-                            {
-                                cmdU.Parameters.Add("@q", SqlDbType.Int).Value = lay;
-                                cmdU.Parameters.Add("@b", SqlDbType.Int).Value = lo.Id;
-                                if (cmdU.ExecuteNonQuery() == 0)
-                                {
-                                    tran.Rollback();
-                                    error = $"Tồn kho của thuốc \"{item.TenThuoc}\" vừa thay đổi, vui lòng thử lại!";
-                                    orderId = 0;
-                                    return false;
-                                }
-                            }
-
-                            using (var cmdD = new SqlCommand(@"
-                                INSERT INTO OrderDetails(OrderId, BatchId, Quantity, UnitPrice)
-                                VALUES(@o, @b, @q, @p)", conn, tran))
-                            {
-                                cmdD.Parameters.Add("@o", SqlDbType.Int).Value = orderId;
-                                cmdD.Parameters.Add("@b", SqlDbType.Int).Value = lo.Id;
-                                cmdD.Parameters.Add("@q", SqlDbType.Int).Value = lay;
-                                cmdD.Parameters.Add(TienParam("@p", item.DonGia));
-                                cmdD.ExecuteNonQuery();
-                            }
-
-                            canLay -= lay;
-                        }
-
-                        if (canLay > 0)
-                        {
-                            tran.Rollback();
-                            error = $"Không đủ tồn kho (còn hạn) cho thuốc \"{item.TenThuoc}\"!";
-                            orderId = 0;
-                            return false;
-                        }
-                    }
-
-                    tran.Commit();
-
-                    DBConnection.NotifyDataChanged();
-                    return true;
+                    cmd.Parameters.Add("@emp",SqlDbType.Int).Value=employeeId;
+                    cmd.Parameters.Add("@customer",SqlDbType.Int).Value=(object?)customerId??DBNull.Value;
+                    cmd.Parameters.Add("@voucher",SqlDbType.Int).Value=(object?)voucherId??DBNull.Value;
+                    cmd.Parameters.Add(TienParam("@total",tongTien));cmd.Parameters.Add(TienParam("@discount",giamGia));
+                    cmd.Parameters.Add("@method",SqlDbType.NVarChar,50).Value=paymentMethod;
+                    cmd.Parameters.Add("@status",SqlDbType.VarChar,10).Value=choThanhToan?"PENDING":"PAID";
+                    orderId=Convert.ToInt32(cmd.ExecuteScalar());
                 }
-                catch
+                if(choThanhToan)
                 {
-                    try { tran.Rollback(); } catch { }
-                    throw;
+                    foreach(var item in items)
+                    {
+                        using var cmd=new SqlCommand("INSERT INTO OrderPendingItems(OrderId,MedicineId,Quantity,UnitPrice) VALUES(@o,@m,@q,@p)",conn,tran);
+                        cmd.Parameters.Add("@o",SqlDbType.Int).Value=orderId;cmd.Parameters.Add("@m",SqlDbType.Int).Value=item.MaThuoc;
+                        cmd.Parameters.Add("@q",SqlDbType.Int).Value=item.SoLuong;cmd.Parameters.Add(TienParam("@p",item.DonGia));cmd.ExecuteNonQuery();
+                    }
+                }
+                else TruKho(conn,tran,orderId,items);
+                tran.Commit();DBConnection.NotifyDataChanged();return true;
+            }
+            catch(Exception ex) {orderId=0;error=ex.Message;return false;}
+        }
+
+        public bool ThanhToanCho(int orderId,string paymentMethod,decimal expectedPayable,out string error)
+        {
+            error="";
+            try
+            {
+                KiemTraPhuongThuc(paymentMethod,false);
+                using var conn=DBConnection.GetDbConnection();using var tran=conn.BeginTransaction(IsolationLevel.Serializable);
+                PhanQuyenDAL.YeuCau(Quyen.BanHang,conn,tran);
+                int? voucherId;decimal total,discount;
+                using(var cmd=new SqlCommand("SELECT PaymentStatus,VoucherId,TotalAmount,DiscountAmount FROM Orders WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id",conn,tran))
+                {
+                    cmd.Parameters.Add("@id",SqlDbType.Int).Value=orderId;using var reader=cmd.ExecuteReader();
+                    if(!reader.Read()) throw new InvalidOperationException("Hóa đơn không còn tồn tại.");
+                    if(reader.GetString(0)!="PENDING") throw new InvalidOperationException("Hóa đơn đã thanh toán. Không thể thanh toán lần nữa.");
+                    voucherId=reader.IsDBNull(1)?null:reader.GetInt32(1);total=reader.GetDecimal(2);discount=reader.GetDecimal(3);
+                }
+                if(total-discount!=expectedPayable) throw new InvalidOperationException("Số tiền hóa đơn đã đổi. Hãy tải lại trước khi xác nhận.");
+                var items=new List<CartItem>();
+                using(var cmd=new SqlCommand(@"SELECT d.MedicineId,m.Name,d.Quantity,d.UnitPrice FROM OrderPendingItems d
+                    JOIN Medicines m ON m.Id=d.MedicineId WHERE d.OrderId=@id ORDER BY d.MedicineId",conn,tran))
+                {
+                    cmd.Parameters.Add("@id",SqlDbType.Int).Value=orderId;using var reader=cmd.ExecuteReader();
+                    while(reader.Read()) items.Add(new CartItem{MaThuoc=reader.GetInt32(0),TenThuoc=reader.GetString(1),SoLuong=reader.GetInt32(2),DonGia=reader.GetDecimal(3)});
+                }
+                // Giá đã chốt khi lập hóa đơn chờ, không sửa lại theo giá danh mục mới.
+                KiemTraThuoc(conn,tran,items,total,false);
+                KiemTraVoucher(conn,tran,voucherId,total,discount,true);
+                TruKho(conn,tran,orderId,items);
+                using(var cmd=new SqlCommand(@"UPDATE Orders SET PaymentStatus='PAID',PaymentMethod=@method,PaidAt=SYSDATETIME(),PaidEmployeeId=@emp WHERE Id=@id;
+                    DELETE FROM OrderPendingItems WHERE OrderId=@id",conn,tran))
+                {
+                    cmd.Parameters.Add("@id",SqlDbType.Int).Value=orderId;cmd.Parameters.Add("@emp",SqlDbType.Int).Value=PhanQuyenDAL.NhanVienId;
+                    cmd.Parameters.Add("@method",SqlDbType.NVarChar,50).Value=paymentMethod;cmd.ExecuteNonQuery();
+                }
+                tran.Commit();DBConnection.NotifyDataChanged();return true;
+            }
+            catch(Exception ex) {error=ex.Message;return false;}
+        }
+        private static void KiemTraPhuongThuc(string method,bool pending)
+        {
+            if(method is not ("Tiền mặt" or "Chuyển khoản QR") && !(pending && method=="Chưa xác định"))
+                throw new ArgumentException("Hình thức thanh toán không hợp lệ.");
+        }
+        private static void KiemTraThuoc(SqlConnection conn,SqlTransaction tran,List<CartItem> items,decimal total,bool currentPrice)
+        {
+            if(items.Count==0 || items.Select(x=>x.MaThuoc).Distinct().Count()!=items.Count)
+                throw new InvalidOperationException("Chi tiết hóa đơn trống hoặc trùng thuốc.");
+            decimal sum=0;
+            foreach(var item in items.OrderBy(x=>x.MaThuoc))
+            {
+                using var cmd=new SqlCommand("SELECT Price FROM Medicines WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND IsActive=1",conn,tran);
+                cmd.Parameters.Add("@id",SqlDbType.Int).Value=item.MaThuoc;object? value=cmd.ExecuteScalar();
+                if(value==null || item.SoLuong<=0 || item.DonGia<0 || item.DonGia!=TienTe.LamTron(item.DonGia) || currentPrice && TienTe.LamTron(Convert.ToDecimal(value))!=item.DonGia)
+                    throw new InvalidOperationException("Giá hoặc trạng thái thuốc đã đổi. Vui lòng kiểm tra lại hóa đơn.");
+                sum+=item.DonGia*item.SoLuong;
+            }
+            if(sum!=total) throw new InvalidOperationException("Tổng tiền không khớp chi tiết hóa đơn.");
+        }
+        private static void KiemTraVoucher(SqlConnection conn,SqlTransaction tran,int? voucherId,decimal total,decimal discount,bool consume)
+        {
+            decimal verified=0;
+            if(voucherId.HasValue)
+            {
+                using(var cmd=new SqlCommand("SELECT DiscountType,DiscountValue FROM Vouchers WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND IsActive=1 AND Quantity>0",conn,tran))
+                {
+                    cmd.Parameters.Add("@id",SqlDbType.Int).Value=voucherId.Value;using var reader=cmd.ExecuteReader();
+                    if(!reader.Read()) throw new InvalidOperationException("Voucher đã hết lượt hoặc bị khóa. Chưa thể thanh toán hóa đơn này.");
+                    verified=reader.GetString(0).Trim().ToUpperInvariant()=="PERCENT"?TienTe.LamTron(total*reader.GetDecimal(1)/100m):TienTe.LamTron(reader.GetDecimal(1));
+                    verified=Math.Clamp(verified,0,total);
                 }
             }
-            catch (Exception ex)
+            if(discount!=verified || discount<0 || discount>total) throw new InvalidOperationException("Giá trị voucher đã đổi. Hãy kiểm tra lại hóa đơn.");
+            if(consume && voucherId.HasValue)
             {
-                orderId = 0;
-                error = ex.Message;
-                return false;
+                using var cmd=new SqlCommand("UPDATE Vouchers SET Quantity=Quantity-1 WHERE Id=@id AND IsActive=1 AND Quantity>0",conn,tran);
+                cmd.Parameters.Add("@id",SqlDbType.Int).Value=voucherId.Value;
+                if(cmd.ExecuteNonQuery()!=1) throw new InvalidOperationException("Voucher vừa hết lượt. Vui lòng thử lại.");
+            }
+        }
+        private static void TruKho(SqlConnection conn,SqlTransaction tran,int orderId,List<CartItem> items)
+        {
+            foreach(var item in items.OrderBy(x=>x.MaThuoc))
+            {
+                int remaining=item.SoLuong;var batches=new List<(int Id,int Stock)>();
+                using(var cmd=new SqlCommand(@"SELECT Id,Stock FROM Batches WITH (UPDLOCK,HOLDLOCK) WHERE MedicineId=@m AND Stock>0
+                    AND ExpiryDate>=CAST(GETDATE() AS date) ORDER BY ExpiryDate,Id",conn,tran))
+                {
+                    cmd.Parameters.Add("@m",SqlDbType.Int).Value=item.MaThuoc;using var reader=cmd.ExecuteReader();
+                    while(reader.Read()) batches.Add((reader.GetInt32(0),reader.GetInt32(1)));
+                }
+                foreach(var batch in batches)
+                {
+                    if(remaining<=0) break;int quantity=Math.Min(remaining,batch.Stock);
+                    using(var cmd=new SqlCommand("UPDATE Batches SET Stock=Stock-@q WHERE Id=@id AND Stock>=@q",conn,tran))
+                    {
+                        cmd.Parameters.Add("@id",SqlDbType.Int).Value=batch.Id;cmd.Parameters.Add("@q",SqlDbType.Int).Value=quantity;
+                        if(cmd.ExecuteNonQuery()!=1) throw new InvalidOperationException("Tồn kho vừa thay đổi. Vui lòng thử lại.");
+                    }
+                    using(var cmd=new SqlCommand("INSERT INTO OrderDetails(OrderId,BatchId,Quantity,UnitPrice) VALUES(@o,@b,@q,@p)",conn,tran))
+                    {
+                        cmd.Parameters.Add("@o",SqlDbType.Int).Value=orderId;cmd.Parameters.Add("@b",SqlDbType.Int).Value=batch.Id;
+                        cmd.Parameters.Add("@q",SqlDbType.Int).Value=quantity;cmd.Parameters.Add(TienParam("@p",item.DonGia));cmd.ExecuteNonQuery();
+                    }
+                    remaining-=quantity;
+                }
+                if(remaining>0) throw new InvalidOperationException($"Không đủ tồn kho còn hạn cho thuốc {item.TenThuoc}. Hóa đơn vẫn chờ thanh toán.");
             }
         }
     }

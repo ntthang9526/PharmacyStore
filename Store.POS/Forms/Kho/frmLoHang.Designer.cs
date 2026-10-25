@@ -61,7 +61,7 @@ partial class frmLoHang
         posLayout.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         posLayout.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         posLayout.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posLayout.BackColor = global::System.Drawing.SystemColors.Control;
+        posLayout.BackColor = Color.FromArgb(248,250,252);
         posLayout.Cursor = global::System.Windows.Forms.Cursors.Default;
         posLayout.TabIndex = 0;
         posLayout.TabStop = false;
@@ -90,7 +90,7 @@ partial class frmLoHang
         posHeading.AutoSize = false;
         posHeading.Font = new global::System.Drawing.Font("Segoe UI Semibold", 18F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         posHeading.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posHeading.BackColor = global::System.Drawing.SystemColors.Control;
+        posHeading.BackColor = Color.FromArgb(248,250,252);
         posHeading.Cursor = global::System.Windows.Forms.Cursors.Default;
         posHeading.TabIndex = 0;
         posHeading.TabStop = false;
@@ -115,7 +115,7 @@ partial class frmLoHang
         tableLayoutPanel1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel1.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel1.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel1.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel1.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel1.TabIndex = 1;
         tableLayoutPanel1.TabStop = false;
@@ -146,7 +146,7 @@ partial class frmLoHang
         groupBox2.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox2.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         groupBox2.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox2.BackColor = global::System.Drawing.SystemColors.Control;
+        groupBox2.BackColor = Color.FromArgb(248,250,252);
         groupBox2.Cursor = global::System.Windows.Forms.Cursors.Default;
         groupBox2.TabIndex = 0;
         groupBox2.TabStop = false;
@@ -168,7 +168,7 @@ partial class frmLoHang
         tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel3.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel3.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel3.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel3.TabIndex = 0;
         tableLayoutPanel3.TabStop = false;
@@ -198,7 +198,7 @@ partial class frmLoHang
         label4.AutoSize = false;
         label4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label4.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label4.BackColor = global::System.Drawing.SystemColors.Control;
+        label4.BackColor = Color.FromArgb(248,250,252);
         label4.Cursor = global::System.Windows.Forms.Cursors.Default;
         label4.TabIndex = 0;
         label4.TabStop = false;
@@ -281,7 +281,7 @@ partial class frmLoHang
         groupBox5.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox5.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         groupBox5.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox5.BackColor = global::System.Drawing.SystemColors.Control;
+        groupBox5.BackColor = Color.FromArgb(248,250,252);
         groupBox5.Cursor = global::System.Windows.Forms.Cursors.Default;
         groupBox5.TabIndex = 1;
         groupBox5.TabStop = false;
@@ -302,7 +302,7 @@ partial class frmLoHang
         dgvLoHang.AutoSize = false;
         dgvLoHang.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         dgvLoHang.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvLoHang.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvLoHang.BackColor = Color.FromArgb(248,250,252);
         dgvLoHang.Cursor = global::System.Windows.Forms.Cursors.Default;
         dgvLoHang.TabIndex = 0;
         dgvLoHang.TabStop = true;
@@ -342,7 +342,7 @@ partial class frmLoHang
         dgvLoHang.DefaultCellStyle = dgvLoHangDefaultCellStyle;
         global::System.Windows.Forms.DataGridViewCellStyle dgvLoHangColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvLoHangColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvLoHangColumnHeadersDefaultCellStyle.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvLoHangColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
         dgvLoHangColumnHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
         dgvLoHangColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
         dgvLoHangColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
@@ -366,7 +366,7 @@ partial class frmLoHang
         dgvLoHang.AlternatingRowsDefaultCellStyle = dgvLoHangAlternatingRowsDefaultCellStyle;
         global::System.Windows.Forms.DataGridViewCellStyle dgvLoHangRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvLoHangRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvLoHangRowHeadersDefaultCellStyle.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvLoHangRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
         dgvLoHangRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
         dgvLoHangRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
         dgvLoHangRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
@@ -605,7 +605,7 @@ partial class frmLoHang
         tableLayoutPanel6.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel6.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel6.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel6.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel6.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel6.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel6.TabIndex = 2;
         tableLayoutPanel6.TabStop = false;
@@ -634,7 +634,7 @@ partial class frmLoHang
         lblKetQua.AutoSize = false;
         lblKetQua.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         lblKetQua.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblKetQua.BackColor = global::System.Drawing.SystemColors.Control;
+        lblKetQua.BackColor = Color.FromArgb(248,250,252);
         lblKetQua.Cursor = global::System.Windows.Forms.Cursors.Default;
         lblKetQua.TabIndex = 0;
         lblKetQua.TabStop = false;
@@ -659,7 +659,7 @@ partial class frmLoHang
         tableLayoutPanel7.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel7.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel7.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel7.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel7.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel7.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel7.TabIndex = 1;
         tableLayoutPanel7.TabStop = false;
@@ -752,7 +752,7 @@ partial class frmLoHang
         tableLayoutPanel7.Controls.Add(btnDong, 1, 0);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
-        BackColor = global::System.Drawing.SystemColors.Control;
+        BackColor = Color.FromArgb(248,250,252);
         ForeColor = global::System.Drawing.SystemColors.ControlText;
         Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         ClientSize = new global::System.Drawing.Size(1182, 653);
@@ -782,7 +782,17 @@ partial class frmLoHang
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        ResumeLayout(false);
+        
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
+        btnDong.BackColor=Color.FromArgb(100, 116, 139);btnDong.ForeColor=Color.White;btnDong.UseVisualStyleBackColor=false;
+        dgvLoHang.BackgroundColor=Color.White;dgvLoHang.EnableHeadersVisualStyles=false;
+        dgvLoHang.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvLoHang.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvLoHang.DefaultCellStyle.BackColor=Color.White;dgvLoHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvLoHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvLoHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvLoHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
         PerformLayout();
     }
 

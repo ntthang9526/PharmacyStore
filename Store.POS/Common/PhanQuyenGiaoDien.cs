@@ -32,7 +32,7 @@ internal static class PhanQuyenGiaoDien
         if(form is frmNhapKho) return c.Name is "btnThemNCC" or "btnTaoThuoc";
         if(form is frmKhachHang) return c.Name is "btnXoa" or "txtDiem";
         if(form is frmQuanLyThuoc or frmNhomThuoc or frmNhaCungCap or frmVoucher)
-            return c.Name is "btnThem" or "btnSua" or "btnXoa" or "btnLuu" or "btnThemNhom" or "btnThemNCC" or "btnBoQua" or "btnHuy";
+            return c.Name is "btnThem" or "btnSua" or "btnXoa" or "btnLuu" or "btnThemNhom" or "btnThemNCC" or "btnBoQua" or "btnHuy" or "btnNhapExcel";
         return false;
     }
     public static void ApDung(Form form)

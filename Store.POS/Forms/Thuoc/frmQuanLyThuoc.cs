@@ -12,6 +12,8 @@ namespace Store.POS
         public frmQuanLyThuoc()
         {
             InitializeComponent();
+            btnNhapExcel.Click+=(_,_)=>NhapExcel();btnXuatExcel.Click+=(_,_)=>XuatExcel();
+            btnMauExcel.Click+=(_,_)=> {try {Store.POS.Common.ExcelHelper.XuatFileMauNhapThuoc();}catch(Exception ex){MessageBox.Show(ex.Message);}};
             PhanQuyenGiaoDien.Gan(this);
             var quickAddHints = new ToolTip(components ??= new System.ComponentModel.Container());
             quickAddHints.SetToolTip(btnThemNhom, "Thêm nhóm thuốc mới");

@@ -86,7 +86,21 @@ partial class frmPhieuNhap
         posLayout.Controls.Add(details,0,3);posLayout.Controls.Add(lblTrangThai,0,4);
         AutoScaleDimensions=new SizeF(8,20);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
         ClientSize=new Size(1182,653);MinimumSize=new Size(1000,620);Name="frmPhieuNhap";Text="Phiếu nhập hàng";Controls.Add(posLayout);
-        ((System.ComponentModel.ISupportInitialize)dgvPhieuNhap).EndInit();((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvPhieuNhap).EndInit();((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
+        dgvPhieuNhap.BackgroundColor=Color.White;dgvPhieuNhap.EnableHeadersVisualStyles=false;
+        dgvPhieuNhap.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvPhieuNhap.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvPhieuNhap.DefaultCellStyle.BackColor=Color.White;dgvPhieuNhap.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvPhieuNhap.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvPhieuNhap.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvPhieuNhap.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+        dgvChiTiet.BackgroundColor=Color.White;dgvChiTiet.EnableHeadersVisualStyles=false;
+        dgvChiTiet.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvChiTiet.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvChiTiet.DefaultCellStyle.BackColor=Color.White;dgvChiTiet.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvChiTiet.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvChiTiet.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvChiTiet.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
     }
     private TableLayoutPanel posLayout,search,details;
     private Label posHeading,lblTu,lblDen,lblChiTiet,lblTrangThai;

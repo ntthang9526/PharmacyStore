@@ -17,6 +17,7 @@ namespace Store.POS
         public frmNhapKho()
         {
             InitializeComponent();
+            btnNhapExcel.Click+=(_,_)=>NhapExcelPhieuNhap();btnMauExcel.Click+=(_,_)=>TaiFileMauNhapKho();
             PhanQuyenGiaoDien.Gan(this);
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
             txtSoLo.MaxLength=50;

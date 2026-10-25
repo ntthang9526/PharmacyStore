@@ -74,7 +74,7 @@ partial class frmNhaCungCap
         posLayout.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         posLayout.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         posLayout.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posLayout.BackColor = global::System.Drawing.SystemColors.Control;
+        posLayout.BackColor = Color.FromArgb(248,250,252);
         posLayout.Cursor = global::System.Windows.Forms.Cursors.Default;
         posLayout.TabIndex = 0;
         posLayout.TabStop = false;
@@ -103,7 +103,7 @@ partial class frmNhaCungCap
         posHeading.AutoSize = false;
         posHeading.Font = new global::System.Drawing.Font("Segoe UI Semibold", 18F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         posHeading.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posHeading.BackColor = global::System.Drawing.SystemColors.Control;
+        posHeading.BackColor = Color.FromArgb(248,250,252);
         posHeading.Cursor = global::System.Windows.Forms.Cursors.Default;
         posHeading.TabIndex = 0;
         posHeading.TabStop = false;
@@ -128,7 +128,7 @@ partial class frmNhaCungCap
         tableLayoutPanel1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel1.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel1.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel1.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel1.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel1.TabIndex = 1;
         tableLayoutPanel1.TabStop = false;
@@ -158,7 +158,7 @@ partial class frmNhaCungCap
         groupBox2.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox2.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         groupBox2.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox2.BackColor = global::System.Drawing.SystemColors.Control;
+        groupBox2.BackColor = Color.FromArgb(248,250,252);
         groupBox2.Cursor = global::System.Windows.Forms.Cursors.Default;
         groupBox2.TabIndex = 0;
         groupBox2.TabStop = false;
@@ -180,7 +180,7 @@ partial class frmNhaCungCap
         tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel3.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel3.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel3.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel3.TabIndex = 0;
         tableLayoutPanel3.TabStop = false;
@@ -210,7 +210,7 @@ partial class frmNhaCungCap
         tableLayoutPanel4.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel4.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel4.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel4.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel4.TabIndex = 0;
         tableLayoutPanel4.TabStop = false;
@@ -240,7 +240,7 @@ partial class frmNhaCungCap
         label5.AutoSize = false;
         label5.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label5.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label5.BackColor = global::System.Drawing.SystemColors.Control;
+        label5.BackColor = Color.FromArgb(248,250,252);
         label5.Cursor = global::System.Windows.Forms.Cursors.Default;
         label5.TabIndex = 0;
         label5.TabStop = false;
@@ -322,7 +322,7 @@ partial class frmNhaCungCap
         dgvNhaCungCap.AutoSize = false;
         dgvNhaCungCap.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         dgvNhaCungCap.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvNhaCungCap.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvNhaCungCap.BackColor = Color.FromArgb(248,250,252);
         dgvNhaCungCap.Cursor = global::System.Windows.Forms.Cursors.Default;
         dgvNhaCungCap.TabIndex = 9;
         dgvNhaCungCap.TabStop = true;
@@ -362,7 +362,7 @@ partial class frmNhaCungCap
         dgvNhaCungCap.DefaultCellStyle = dgvNhaCungCapDefaultCellStyle;
         global::System.Windows.Forms.DataGridViewCellStyle dgvNhaCungCapColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvNhaCungCapColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvNhaCungCapColumnHeadersDefaultCellStyle.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvNhaCungCapColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
         dgvNhaCungCapColumnHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
         dgvNhaCungCapColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
         dgvNhaCungCapColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
@@ -386,7 +386,7 @@ partial class frmNhaCungCap
         dgvNhaCungCap.AlternatingRowsDefaultCellStyle = dgvNhaCungCapAlternatingRowsDefaultCellStyle;
         global::System.Windows.Forms.DataGridViewCellStyle dgvNhaCungCapRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvNhaCungCapRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvNhaCungCapRowHeadersDefaultCellStyle.BackColor = global::System.Drawing.SystemColors.Control;
+        dgvNhaCungCapRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
         dgvNhaCungCapRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
         dgvNhaCungCapRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
         dgvNhaCungCapRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
@@ -505,7 +505,7 @@ partial class frmNhaCungCap
         groupBox6.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox6.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         groupBox6.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox6.BackColor = global::System.Drawing.SystemColors.Control;
+        groupBox6.BackColor = Color.FromArgb(248,250,252);
         groupBox6.Cursor = global::System.Windows.Forms.Cursors.Default;
         groupBox6.TabIndex = 1;
         groupBox6.TabStop = false;
@@ -527,7 +527,7 @@ partial class frmNhaCungCap
         tableLayoutPanel7.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel7.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel7.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel7.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel7.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel7.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel7.TabIndex = 0;
         tableLayoutPanel7.TabStop = false;
@@ -558,7 +558,7 @@ partial class frmNhaCungCap
         tableLayoutPanel8.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         tableLayoutPanel8.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel8.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel8.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel8.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel8.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel8.TabIndex = 0;
         tableLayoutPanel8.TabStop = false;
@@ -595,7 +595,7 @@ partial class frmNhaCungCap
         tableLayoutPanel11.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel11.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel11.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel11.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel11.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel11.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel11.TabIndex = 1;
         tableLayoutPanel11.TabStop = false;
@@ -624,7 +624,7 @@ partial class frmNhaCungCap
         label12.AutoSize = false;
         label12.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label12.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label12.BackColor = global::System.Drawing.SystemColors.Control;
+        label12.BackColor = Color.FromArgb(248,250,252);
         label12.Cursor = global::System.Windows.Forms.Cursors.Default;
         label12.TabIndex = 0;
         label12.TabStop = false;
@@ -677,7 +677,7 @@ partial class frmNhaCungCap
         tableLayoutPanel13.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel13.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel13.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel13.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel13.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel13.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel13.TabIndex = 2;
         tableLayoutPanel13.TabStop = false;
@@ -706,7 +706,7 @@ partial class frmNhaCungCap
         label14.AutoSize = false;
         label14.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label14.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label14.BackColor = global::System.Drawing.SystemColors.Control;
+        label14.BackColor = Color.FromArgb(248,250,252);
         label14.Cursor = global::System.Windows.Forms.Cursors.Default;
         label14.TabIndex = 0;
         label14.TabStop = false;
@@ -759,7 +759,7 @@ partial class frmNhaCungCap
         tableLayoutPanel15.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel15.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel15.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel15.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel15.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel15.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel15.TabIndex = 3;
         tableLayoutPanel15.TabStop = false;
@@ -788,7 +788,7 @@ partial class frmNhaCungCap
         label16.AutoSize = false;
         label16.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         label16.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label16.BackColor = global::System.Drawing.SystemColors.Control;
+        label16.BackColor = Color.FromArgb(248,250,252);
         label16.Cursor = global::System.Windows.Forms.Cursors.Default;
         label16.TabIndex = 0;
         label16.TabStop = false;
@@ -841,7 +841,7 @@ partial class frmNhaCungCap
         tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel17.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel17.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel17.BackColor = global::System.Drawing.SystemColors.Control;
+        tableLayoutPanel17.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel17.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel17.TabIndex = 1;
         tableLayoutPanel17.TabStop = false;
@@ -1040,7 +1040,7 @@ partial class frmNhaCungCap
         tableLayoutPanel17.SetColumnSpan(btnThoat, 2);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
-        BackColor = global::System.Drawing.SystemColors.Control;
+        BackColor = Color.FromArgb(248,250,252);
         ForeColor = global::System.Drawing.SystemColors.ControlText;
         Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         ClientSize = new global::System.Drawing.Size(1182, 653);
@@ -1088,7 +1088,20 @@ partial class frmNhaCungCap
         tableLayoutPanel1.PerformLayout();
         posLayout.ResumeLayout(false);
         posLayout.PerformLayout();
-        ResumeLayout(false);
+        
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
+        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
+        dgvNhaCungCap.BackgroundColor=Color.White;dgvNhaCungCap.EnableHeadersVisualStyles=false;
+        dgvNhaCungCap.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvNhaCungCap.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvNhaCungCap.DefaultCellStyle.BackColor=Color.White;dgvNhaCungCap.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvNhaCungCap.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhaCungCap.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvNhaCungCap.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
         PerformLayout();
     }
 

@@ -142,7 +142,21 @@ partial class frmNhanVien
         AutoScaleDimensions=new SizeF(8F,20F);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
         ClientSize=new Size(1182,700);MinimumSize=new Size(1150,739);StartPosition=FormStartPosition.CenterScreen;
         Name="frmNhanVien";Text="Quản lý nhân viên | Hiệu thuốc ABC";Controls.Add(posLayout);
-        ((System.ComponentModel.ISupportInitialize)dgvNhanVien).EndInit();ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvNhanVien).EndInit();
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
+        btnHuy.BackColor=Color.FromArgb(100, 116, 139);btnHuy.ForeColor=Color.White;btnHuy.UseVisualStyleBackColor=false;
+        btnKhoa.BackColor=Color.FromArgb(225, 29, 72);btnKhoa.ForeColor=Color.White;btnKhoa.UseVisualStyleBackColor=false;
+        dgvNhanVien.BackgroundColor=Color.White;dgvNhanVien.EnableHeadersVisualStyles=false;
+        dgvNhanVien.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvNhanVien.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvNhanVien.DefaultCellStyle.BackColor=Color.White;dgvNhanVien.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvNhanVien.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhanVien.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
     }
     private TableLayoutPanel posLayout;
     private Label posHeading;

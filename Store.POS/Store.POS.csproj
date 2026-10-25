@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
     <PackageReference Include="Svg" Version="3.4.8" />
   </ItemGroup>
 
@@ -87,5 +88,13 @@
     <Compile Update="Forms/NhapKho/frmPhieuNhap.Designer.cs"><DependentUpon>frmPhieuNhap.cs</DependentUpon></Compile>
     <Compile Update="Forms/DangNhap/frmDoiMatKhau.cs"><SubType>Form</SubType></Compile>
     <Compile Update="Forms/DangNhap/frmDoiMatKhau.Designer.cs"><DependentUpon>frmDoiMatKhau.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms/Thuoc/frmQuanLyThuoc.Excel.cs"><SubType>Code</SubType><DependentUpon>frmQuanLyThuoc.cs</DependentUpon></Compile>
+    <Compile Update="Forms/NhapKho/frmNhapKho.Excel.cs"><SubType>Code</SubType><DependentUpon>frmNhapKho.cs</DependentUpon></Compile>
+    <Compile Update="Forms/BaoCao/frmBaoCao.Excel.cs"><SubType>Code</SubType><DependentUpon>frmBaoCao.cs</DependentUpon></Compile>
+    <Compile Update="Forms/HoaDon/frmHoaDon.Excel.cs"><SubType>Code</SubType><DependentUpon>frmHoaDon.cs</DependentUpon></Compile>
+    <Compile Update="Forms/DanhMuc/frmXemTruocExcel.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/DanhMuc/frmXemTruocExcel.Designer.cs"><DependentUpon>frmXemTruocExcel.cs</DependentUpon></Compile>
   </ItemGroup>
 </Project>

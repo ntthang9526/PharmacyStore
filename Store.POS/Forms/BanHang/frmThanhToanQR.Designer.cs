@@ -97,7 +97,11 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmThanhToanQR";
             ((System.ComponentModel.ISupportInitialize)picQR).EndInit();
-            ResumeLayout(false);
+            
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnHoanTat.BackColor=Color.FromArgb(15, 118, 110);btnHoanTat.ForeColor=Color.White;btnHoanTat.UseVisualStyleBackColor=false;
+        btnHuy.BackColor=Color.FromArgb(100, 116, 139);btnHuy.ForeColor=Color.White;btnHuy.UseVisualStyleBackColor=false;
+ResumeLayout(false);
             PerformLayout();
         }
 

@@ -12,12 +12,14 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
     {
         maMoSan=id;
         InitializeComponent();
+        btnXuatExcel.Click+=(_,_)=>XuatDanhSachExcel();btnXuatChiTietExcel.Click+=(_,_)=>XuatChiTietExcel();
+        btnThanhToanCho.Click+=(_,_)=>ThanhToanCho();chkChiCho.CheckedChanged+=(_,_)=>TimKiem();
         PosFormStyle.ConfigureGridSelection(this, posLayout, XoaChiTiet);
         dgvHoaDon.CellClick+=(_,e)=> {if(e.RowIndex>=0) HienChiTiet(dgvHoaDon.Rows[e.RowIndex]);};
         dgvHoaDon.KeyUp+=(_,e)=> {if(e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End && dgvHoaDon.CurrentRow!=null) HienChiTiet(dgvHoaDon.CurrentRow);};
         btnTimKiem.Click+=(_,_)=>TimKiem();
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
-        btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();dtpTuNgay.Checked=dtpDenNgay.Checked=false;TimKiem();};
+        btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();dtpTuNgay.Checked=dtpDenNgay.Checked=chkChiCho.Checked=false;TimKiem();};
         Load+=(_,_)=>
         {
             if (PosFormStyle.IsInDesigner(this)) return;
@@ -33,7 +35,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
     }
     private void XoaChiTiet()
     {
-        hoaDonDangXem=null;
+        hoaDonDangXem=null;btnXuatChiTietExcel.Enabled=false;btnThanhToanCho.Visible=cboHinhThuc.Visible=false;
         dgvChiTiet.DataSource=null;
         lblChiTiet.Text="Chọn hóa đơn trong bảng để xem các thuốc đã bán.";
     }
@@ -42,7 +44,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         if (PosFormStyle.IsInDesigner(this)) return;
         try
         {
-            var rows=bll.TimKiem(txtTimKiem.Text,dtpTuNgay.Checked?dtpTuNgay.Value:null,dtpDenNgay.Checked?dtpDenNgay.Value:null);
+            var rows=bll.TimKiem(txtTimKiem.Text,dtpTuNgay.Checked?dtpTuNgay.Value:null,dtpDenNgay.Checked?dtpDenNgay.Value:null,chkChiCho.Checked);
             XoaChiTiet();dgvHoaDon.DataSource=rows;
             decimal total=rows.Rows.Cast<DataRow>().Sum(row=>(decimal)row["ThucThu"]);
             lblTrangThai.Text=$"{rows.Rows.Count} hóa đơn · Tổng thực thu: {total:N0} đ";
@@ -56,8 +58,9 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         try
         {
             hoaDonDangXem=(int)data["MaHD"];
+            btnXuatChiTietExcel.Enabled=true;btnThanhToanCho.Visible=cboHinhThuc.Visible=(string)data["PaymentStatus"]=="PENDING";
             dgvChiTiet.DataSource=bll.ChiTiet((int)data["MaHD"]);
-            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["KhachHang"]} · NV: {data["NhanVien"]}\nTiền hàng: {data["TongTien"]:N0} đ    Giảm: {data["GiamGia"]:N0} đ    Thực thu: {data["ThucThu"]:N0} đ";
+            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["TrangThai"]} · {data["HinhThucThanhToan"]}\nNV lập: {data["NhanVien"]} · NV thu: {data["NhanVienThuTien"]}\nTiền hàng: {data["TongTien"]:N0} đ · Giảm: {data["GiamGia"]:N0} đ · Cần trả: {data["CanThanhToan"]:N0} đ · Đã thu: {data["ThucThu"]:N0} đ";
         }
         catch(Exception ex) {XoaChiTiet();lblTrangThai.Text="Không tải được chi tiết: "+ex.Message;}
     }

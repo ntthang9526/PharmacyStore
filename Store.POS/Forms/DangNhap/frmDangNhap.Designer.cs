@@ -118,7 +118,10 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hiệu thuốc ABC";
-            ResumeLayout(false);
+            
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnDangNhap.BackColor=Color.FromArgb(15, 118, 110);btnDangNhap.ForeColor=Color.White;btnDangNhap.UseVisualStyleBackColor=false;
+ResumeLayout(false);
             PerformLayout();
         }
 

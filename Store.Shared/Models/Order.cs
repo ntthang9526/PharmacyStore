@@ -16,5 +16,7 @@ namespace Store.Shared.Models
         public decimal TotalAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public string Channel { get; set; } = string.Empty;
+        public string PaymentMethod {get;set;}="Chưa xác định";
+        public string PaymentStatus {get;set;}="PAID";
     }
 }

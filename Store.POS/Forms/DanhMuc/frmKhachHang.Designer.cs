@@ -69,7 +69,7 @@ partial class frmKhachHang
         // 
         // posHeading
         // 
-        posHeading.BackColor = SystemColors.Control;
+        posHeading.BackColor = Color.FromArgb(248,250,252);
         posHeading.Dock = DockStyle.Fill;
         posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
         posHeading.ForeColor = SystemColors.ControlText;
@@ -84,7 +84,7 @@ partial class frmKhachHang
         // 
         // posLayout
         // 
-        posLayout.BackColor = SystemColors.Control;
+        posLayout.BackColor = Color.FromArgb(248,250,252);
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         posLayout.Controls.Add(posHeading, 0, 0);
@@ -104,7 +104,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel1
         // 
-        tableLayoutPanel1.BackColor = SystemColors.Control;
+        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel1.ColumnCount = 2;
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
@@ -123,7 +123,7 @@ partial class frmKhachHang
         // 
         // groupBox2
         // 
-        groupBox2.BackColor = SystemColors.Control;
+        groupBox2.BackColor = Color.FromArgb(248,250,252);
         groupBox2.Controls.Add(tableLayoutPanel3);
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -139,7 +139,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel3
         // 
-        tableLayoutPanel3.BackColor = SystemColors.Control;
+        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel3.ColumnCount = 1;
         tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
@@ -158,7 +158,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel4
         // 
-        tableLayoutPanel4.BackColor = SystemColors.Control;
+        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel4.ColumnCount = 3;
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -179,7 +179,7 @@ partial class frmKhachHang
         // 
         // label5
         // 
-        label5.BackColor = SystemColors.Control;
+        label5.BackColor = Color.FromArgb(248,250,252);
         label5.Dock = DockStyle.Fill;
         label5.Font = new Font("Segoe UI", 10.2F);
         label5.ForeColor = SystemColors.ControlText;
@@ -240,7 +240,7 @@ partial class frmKhachHang
         dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         dgvKhachHang.BackgroundColor = SystemColors.ScrollBar;
         dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-        dataGridViewCellStyle2.BackColor = SystemColors.Control;
+        dataGridViewCellStyle2.BackColor = Color.FromArgb(248,250,252);
         dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.2F);
         dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
         dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
@@ -265,7 +265,7 @@ partial class frmKhachHang
         dgvKhachHang.Name = "dgvKhachHang";
         dgvKhachHang.ReadOnly = true;
         dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        dataGridViewCellStyle4.BackColor = SystemColors.Control;
+        dataGridViewCellStyle4.BackColor = Color.FromArgb(248,250,252);
         dataGridViewCellStyle4.Font = new Font("Segoe UI", 10.2F);
         dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
@@ -282,7 +282,7 @@ partial class frmKhachHang
         // 
         // groupBox6
         // 
-        groupBox6.BackColor = SystemColors.Control;
+        groupBox6.BackColor = Color.FromArgb(248,250,252);
         groupBox6.Controls.Add(tableLayoutPanel7);
         groupBox6.Dock = DockStyle.Fill;
         groupBox6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -298,7 +298,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel7
         // 
-        tableLayoutPanel7.BackColor = SystemColors.Control;
+        tableLayoutPanel7.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel7.ColumnCount = 1;
         tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
@@ -320,7 +320,7 @@ partial class frmKhachHang
         // 
         tableLayoutPanel8.AutoSize = true;
         tableLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        tableLayoutPanel8.BackColor = SystemColors.Control;
+        tableLayoutPanel8.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel8.ColumnCount = 1;
         tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
@@ -347,7 +347,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel11
         // 
-        tableLayoutPanel11.BackColor = SystemColors.Control;
+        tableLayoutPanel11.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel11.ColumnCount = 1;
         tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
@@ -366,7 +366,7 @@ partial class frmKhachHang
         // 
         // label12
         // 
-        label12.BackColor = SystemColors.Control;
+        label12.BackColor = Color.FromArgb(248,250,252);
         label12.Dock = DockStyle.Fill;
         label12.Font = new Font("Segoe UI", 10.2F);
         label12.ForeColor = SystemColors.ControlText;
@@ -394,7 +394,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel13
         // 
-        tableLayoutPanel13.BackColor = SystemColors.Control;
+        tableLayoutPanel13.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel13.ColumnCount = 1;
         tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel13.Controls.Add(label14, 0, 0);
@@ -413,7 +413,7 @@ partial class frmKhachHang
         // 
         // label14
         // 
-        label14.BackColor = SystemColors.Control;
+        label14.BackColor = Color.FromArgb(248,250,252);
         label14.Dock = DockStyle.Fill;
         label14.Font = new Font("Segoe UI", 10.2F);
         label14.ForeColor = SystemColors.ControlText;
@@ -442,7 +442,7 @@ partial class frmKhachHang
         // 
         // tableLayoutPanel15
         // 
-        tableLayoutPanel15.BackColor = SystemColors.Control;
+        tableLayoutPanel15.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel15.ColumnCount = 1;
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel15.Controls.Add(label16, 0, 0);
@@ -461,7 +461,7 @@ partial class frmKhachHang
         // 
         // label16
         // 
-        label16.BackColor = SystemColors.Control;
+        label16.BackColor = Color.FromArgb(248,250,252);
         label16.Dock = DockStyle.Fill;
         label16.Font = new Font("Segoe UI", 10.2F);
         label16.ForeColor = SystemColors.ControlText;
@@ -490,7 +490,7 @@ partial class frmKhachHang
         // tableLayoutPanel17
         // 
         tableLayoutPanel17.AutoSize = true;
-        tableLayoutPanel17.BackColor = SystemColors.Control;
+        tableLayoutPanel17.BackColor = Color.FromArgb(248,250,252);
         tableLayoutPanel17.ColumnCount = 2;
         tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -607,7 +607,7 @@ partial class frmKhachHang
         // 
         AutoScaleDimensions = new SizeF(120F, 120F);
         AutoScaleMode = AutoScaleMode.Dpi;
-        BackColor = SystemColors.Control;
+        BackColor = Color.FromArgb(248,250,252);
         ClientSize = new Size(1182, 653);
         Controls.Add(posLayout);
         Font = new Font("Segoe UI", 10.2F);
@@ -635,7 +635,20 @@ partial class frmKhachHang
         tableLayoutPanel15.ResumeLayout(false);
         tableLayoutPanel15.PerformLayout();
         tableLayoutPanel17.ResumeLayout(false);
-        ResumeLayout(false);
+        
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
+        btnLamLai.BackColor=Color.FromArgb(15, 118, 110);btnLamLai.ForeColor=Color.White;btnLamLai.UseVisualStyleBackColor=false;
+        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
+        dgvKhachHang.BackgroundColor=Color.White;dgvKhachHang.EnableHeadersVisualStyles=false;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvKhachHang.DefaultCellStyle.BackColor=Color.White;dgvKhachHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvKhachHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvKhachHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvKhachHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+ResumeLayout(false);
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;

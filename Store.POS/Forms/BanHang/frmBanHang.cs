@@ -38,6 +38,7 @@ namespace Store.POS
         public frmBanHang()
         {
             InitializeComponent();
+            btnLuuCho.Click+=(_,_)=>LuuHoaDon("Chưa xác định",true);
             timerAnPanelAction=new System.Windows.Forms.Timer(components ??= new Container()) {Interval=180};
             timerAnPanelAction.Tick+=(_,_)=> {timerAnPanelAction.Stop();KiemTraAnPanelAction(Cursor.Position);};
             void WireActionHover(Control control)
@@ -510,7 +511,7 @@ namespace Store.POS
                 }
                 else
                 {
-                    LuuHoaDon();
+                    LuuHoaDon("Tiền mặt");
                 }
             }
             if (radioChuyenKhoan.Checked == true)
@@ -519,7 +520,7 @@ namespace Store.POS
                 {
                     if (frmQR.ShowDialog(this) == DialogResult.OK)
                     {
-                        LuuHoaDon();
+                        LuuHoaDon("Chuyển khoản QR");
                     }
                     else
                     {
@@ -529,16 +530,16 @@ namespace Store.POS
             }
 
         }
-        private void LuuHoaDon()
+        private void LuuHoaDon(string method="Tiền mặt",bool pending=false)
         {
             var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price }).ToList();
             if (!banHangBLL.ThanhToan(PhienDangNhap.NhanVienId, items, voucherApDung?.Code, khachHang?.Id, tongTien,
-                    out int orderId, out decimal subtotal, out decimal discount, out string error))
+                    out int orderId, out decimal subtotal, out decimal discount, out string error,method,pending))
             {
                 MessageBox.Show("Chưa lưu hóa đơn: " + error, "Thanh toán");
                 return;
             }
-            MessageBox.Show($"Đã lưu hóa đơn HD{orderId:D5}. Thực thu: {subtotal - discount:N0} đ", "Thành công");
+            MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán. Chưa trừ kho và chưa tính doanh thu.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
             LamMoiHoaDon();
         }
 
