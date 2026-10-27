@@ -13,77 +13,70 @@ partial class frmMain
 
     private void InitializeComponent()
     {
-        shellLayout = new System.Windows.Forms.TableLayoutPanel();
-        contentHost = new System.Windows.Forms.Panel();
-        sideButtons = new System.Windows.Forms.TableLayoutPanel();
-
-        components = new global::System.ComponentModel.Container();
-        panelChucNang = new global::System.Windows.Forms.Panel();
-        btnBaoCao = new global::System.Windows.Forms.Button();
-        btnCanhBao = new global::System.Windows.Forms.Button();
-        btnNhapKho = new global::System.Windows.Forms.Button();
-        btnQuanLyKhac = new global::System.Windows.Forms.Button();
-        btnQuanLyThuoc = new global::System.Windows.Forms.Button();
-        btnBanHang = new global::System.Windows.Forms.Button();
-        lblTitle = new global::System.Windows.Forms.Label();
-        btnTrangChu = new global::System.Windows.Forms.Button();
-        dashboard = new global::System.Windows.Forms.TableLayoutPanel();
-        tableLayoutPanel1 = new global::System.Windows.Forms.TableLayoutPanel();
-        lblTieuDeTongQuan = new global::System.Windows.Forms.Label();
-        tableLayoutPanel3 = new global::System.Windows.Forms.TableLayoutPanel();
-        btnLamMoiTongQuan = new global::System.Windows.Forms.Button();
-        tableLayoutPanel4 = new global::System.Windows.Forms.TableLayoutPanel();
-        tableLayoutPanel5 = new global::System.Windows.Forms.TableLayoutPanel();
-        label6 = new global::System.Windows.Forms.Label();
-        lblDoanhThu = new global::System.Windows.Forms.Label();
-        label7 = new global::System.Windows.Forms.Label();
-        tableLayoutPanel8 = new global::System.Windows.Forms.TableLayoutPanel();
-        label9 = new global::System.Windows.Forms.Label();
-        lblSoHoaDon = new global::System.Windows.Forms.Label();
-        label10 = new global::System.Windows.Forms.Label();
-        tableLayoutPanel11 = new global::System.Windows.Forms.TableLayoutPanel();
-        label12 = new global::System.Windows.Forms.Label();
-        lblSapHet = new global::System.Windows.Forms.Label();
-        label13 = new global::System.Windows.Forms.Label();
-        tableLayoutPanel14 = new global::System.Windows.Forms.TableLayoutPanel();
-        label15 = new global::System.Windows.Forms.Label();
-        lblSapHetHan = new global::System.Windows.Forms.Label();
-        label16 = new global::System.Windows.Forms.Label();
-        tableLayoutPanel17 = new global::System.Windows.Forms.TableLayoutPanel();
-        groupBox18 = new global::System.Windows.Forms.GroupBox();
-        panel19 = new global::System.Windows.Forms.Panel();
-        dgvSapHet = new global::System.Windows.Forms.DataGridView();
-        dgvSapHetColumn1 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetColumn2 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetColumn3 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetColumn4 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetColumn5 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        lblKhongSapHet = new global::System.Windows.Forms.Label();
-        groupBox20 = new global::System.Windows.Forms.GroupBox();
-        panel21 = new global::System.Windows.Forms.Panel();
-        dgvSapHetHan = new global::System.Windows.Forms.DataGridView();
-        dgvSapHetHanColumn1 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn2 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn3 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn4 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn5 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn6 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvSapHetHanColumn7 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        lblKhongSapHetHan = new global::System.Windows.Forms.Label();
-        groupBox22 = new global::System.Windows.Forms.GroupBox();
-        panel23 = new global::System.Windows.Forms.Panel();
-        dgvGanNhat = new global::System.Windows.Forms.DataGridView();
-        dgvGanNhatColumn1 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn2 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn3 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn4 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn5 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn6 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn7 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvGanNhatColumn8 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        lblKhongHoaDon = new global::System.Windows.Forms.Label();
-        lblTongQuan = new global::System.Windows.Forms.Label();
+        DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
+        shellLayout = new TableLayoutPanel();
+        panelChucNang = new Panel();
+        sideButtons = new TableLayoutPanel();
+        btnTrangChu = new Button();
+        btnBanHang = new Button();
+        btnQuanLyThuoc = new Button();
+        btnQuanLyKhac = new Button();
+        btnNhapKho = new Button();
+        btnCanhBao = new Button();
+        btnBaoCao = new Button();
+        lblTitle = new Label();
+        contentHost = new Panel();
+        dashboard = new TableLayoutPanel();
+        tableLayoutPanel1 = new TableLayoutPanel();
+        lblTieuDeTongQuan = new Label();
+        tableLayoutPanel3 = new TableLayoutPanel();
+        btnLamMoiTongQuan = new Button();
+        tableLayoutPanel4 = new TableLayoutPanel();
+        tableLayoutPanel5 = new TableLayoutPanel();
+        label6 = new Label();
+        lblDoanhThu = new Label();
+        label7 = new Label();
+        tableLayoutPanel8 = new TableLayoutPanel();
+        label9 = new Label();
+        lblSoHoaDon = new Label();
+        label10 = new Label();
+        tableLayoutPanel11 = new TableLayoutPanel();
+        label12 = new Label();
+        lblSapHet = new Label();
+        label13 = new Label();
+        tableLayoutPanel14 = new TableLayoutPanel();
+        label15 = new Label();
+        lblSapHetHan = new Label();
+        label16 = new Label();
+        tableLayoutPanel17 = new TableLayoutPanel();
+        groupBox18 = new GroupBox();
+        panel19 = new Panel();
+        dgvSapHet = new DataGridView();
+        lblKhongSapHet = new Label();
+        groupBox20 = new GroupBox();
+        panel21 = new Panel();
+        dgvSapHetHan = new DataGridView();
+        lblKhongSapHetHan = new Label();
+        groupBox22 = new GroupBox();
+        panel23 = new Panel();
+        dgvGanNhat = new DataGridView();
+        lblKhongHoaDon = new Label();
+        lblTongQuan = new Label();
+        shellLayout.SuspendLayout();
         panelChucNang.SuspendLayout();
+        sideButtons.SuspendLayout();
+        contentHost.SuspendLayout();
         dashboard.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         tableLayoutPanel3.SuspendLayout();
@@ -95,2187 +88,968 @@ partial class frmMain
         tableLayoutPanel17.SuspendLayout();
         groupBox18.SuspendLayout();
         panel19.SuspendLayout();
-        ((global::System.ComponentModel.ISupportInitialize)dgvSapHet).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dgvSapHet).BeginInit();
         groupBox20.SuspendLayout();
         panel21.SuspendLayout();
-        ((global::System.ComponentModel.ISupportInitialize)dgvSapHetHan).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dgvSapHetHan).BeginInit();
         groupBox22.SuspendLayout();
         panel23.SuspendLayout();
-        ((global::System.ComponentModel.ISupportInitialize)dgvGanNhat).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dgvGanNhat).BeginInit();
         SuspendLayout();
-
+        // 
+        // shellLayout
+        // 
+        shellLayout.ColumnCount = 2;
+        shellLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 275F));
+        shellLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        shellLayout.Controls.Add(panelChucNang, 0, 0);
+        shellLayout.Controls.Add(lblTitle, 1, 0);
+        shellLayout.Controls.Add(contentHost, 1, 1);
+        shellLayout.Dock = DockStyle.Fill;
+        shellLayout.Location = new Point(0, 0);
+        shellLayout.Margin = new Padding(0);
+        shellLayout.Name = "shellLayout";
+        shellLayout.RowCount = 2;
+        shellLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
+        shellLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        shellLayout.Size = new Size(1875, 1025);
+        shellLayout.TabIndex = 0;
+        // 
         // panelChucNang
+        // 
+        panelChucNang.BackColor = Color.FromArgb(15, 23, 42);
+        panelChucNang.Controls.Add(sideButtons);
+        panelChucNang.Dock = DockStyle.Fill;
+        panelChucNang.Font = new Font("Segoe UI", 9F);
+        panelChucNang.ForeColor = SystemColors.ControlText;
+        panelChucNang.Location = new Point(0, 0);
+        panelChucNang.Margin = new Padding(0);
         panelChucNang.Name = "panelChucNang";
-        panelChucNang.Text = "";
-        panelChucNang.Location = new global::System.Drawing.Point(0, 95);
-        panelChucNang.Size = new global::System.Drawing.Size(220, 660);
-        panelChucNang.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        panelChucNang.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        panelChucNang.Dock = System.Windows.Forms.DockStyle.Fill;
-
-        panelChucNang.AutoSize = false;
-        panelChucNang.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        panelChucNang.Font = new global::System.Drawing.Font("Segoe UI", 9F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        panelChucNang.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        panelChucNang.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        panelChucNang.Cursor = global::System.Windows.Forms.Cursors.Default;
+        shellLayout.SetRowSpan(panelChucNang, 2);
+        panelChucNang.Size = new Size(275, 1025);
         panelChucNang.TabIndex = 3;
-        panelChucNang.TabStop = false;
-        panelChucNang.AccessibleName = null;
-        panelChucNang.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        panelChucNang.AutoScroll = false;
-        panelChucNang.Visible = true;
-        panelChucNang.Enabled = true;
-
-        // btnBaoCao
-        btnBaoCao.Name = "btnBaoCao";
-        btnBaoCao.Text = "Báo cáo (F6)";
-        btnBaoCao.Location = new global::System.Drawing.Point(20, 370);
-        btnBaoCao.Size = new global::System.Drawing.Size(180, 50);
-        btnBaoCao.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnBaoCao.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnBaoCao.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnBaoCao.AutoSize = false;
-        btnBaoCao.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnBaoCao.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnBaoCao.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnBaoCao.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnBaoCao.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnBaoCao.TabIndex = 7;
-        btnBaoCao.TabStop = true;
-        btnBaoCao.AccessibleName = null;
-        btnBaoCao.AutoEllipsis = false;
-        btnBaoCao.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnBaoCao.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnBaoCao.UseVisualStyleBackColor = true;
-        btnBaoCao.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnBaoCao.Visible = true;
-        btnBaoCao.Enabled = true;
-        btnBaoCao.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnBaoCao.FlatAppearance.BorderSize = 1;
-        btnBaoCao.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnBaoCao.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // btnCanhBao
-        btnCanhBao.Name = "btnCanhBao";
-        btnCanhBao.Text = "Cảnh báo (F5)";
-        btnCanhBao.Location = new global::System.Drawing.Point(20, 300);
-        btnCanhBao.Size = new global::System.Drawing.Size(180, 50);
-        btnCanhBao.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnCanhBao.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnCanhBao.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnCanhBao.AutoSize = false;
-        btnCanhBao.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnCanhBao.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnCanhBao.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnCanhBao.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnCanhBao.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnCanhBao.TabIndex = 6;
-        btnCanhBao.TabStop = true;
-        btnCanhBao.AccessibleName = null;
-        btnCanhBao.AutoEllipsis = false;
-        btnCanhBao.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnCanhBao.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnCanhBao.UseVisualStyleBackColor = true;
-        btnCanhBao.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnCanhBao.Visible = true;
-        btnCanhBao.Enabled = true;
-        btnCanhBao.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnCanhBao.FlatAppearance.BorderSize = 1;
-        btnCanhBao.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnCanhBao.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // btnNhapKho
-        btnNhapKho.Name = "btnNhapKho";
-        btnNhapKho.Text = "Nhập kho (F4)";
-        btnNhapKho.Location = new global::System.Drawing.Point(20, 230);
-        btnNhapKho.Size = new global::System.Drawing.Size(180, 50);
-        btnNhapKho.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnNhapKho.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnNhapKho.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnNhapKho.AutoSize = false;
-        btnNhapKho.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnNhapKho.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnNhapKho.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnNhapKho.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnNhapKho.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnNhapKho.TabIndex = 5;
-        btnNhapKho.TabStop = true;
-        btnNhapKho.AccessibleName = null;
-        btnNhapKho.AutoEllipsis = false;
-        btnNhapKho.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnNhapKho.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnNhapKho.UseVisualStyleBackColor = true;
-        btnNhapKho.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnNhapKho.Visible = true;
-        btnNhapKho.Enabled = true;
-        btnNhapKho.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnNhapKho.FlatAppearance.BorderSize = 1;
-        btnNhapKho.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnNhapKho.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // btnQuanLyKhac
-        btnQuanLyKhac.Name = "btnQuanLyKhac";
-        btnQuanLyKhac.Text = "Quản lý khác (F3)";
-        btnQuanLyKhac.Location = new global::System.Drawing.Point(20, 160);
-        btnQuanLyKhac.Size = new global::System.Drawing.Size(180, 50);
-        btnQuanLyKhac.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnQuanLyKhac.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnQuanLyKhac.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnQuanLyKhac.AutoSize = false;
-        btnQuanLyKhac.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnQuanLyKhac.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnQuanLyKhac.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnQuanLyKhac.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnQuanLyKhac.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnQuanLyKhac.TabIndex = 4;
-        btnQuanLyKhac.TabStop = true;
-        btnQuanLyKhac.AccessibleName = null;
-        btnQuanLyKhac.AutoEllipsis = false;
-        btnQuanLyKhac.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnQuanLyKhac.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnQuanLyKhac.UseVisualStyleBackColor = true;
-        btnQuanLyKhac.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnQuanLyKhac.Visible = true;
-        btnQuanLyKhac.Enabled = true;
-        btnQuanLyKhac.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnQuanLyKhac.FlatAppearance.BorderSize = 1;
-        btnQuanLyKhac.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnQuanLyKhac.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // btnQuanLyThuoc
-        btnQuanLyThuoc.Name = "btnQuanLyThuoc";
-        btnQuanLyThuoc.Text = "Quản lý thuốc (F2)";
-        btnQuanLyThuoc.Location = new global::System.Drawing.Point(20, 90);
-        btnQuanLyThuoc.Size = new global::System.Drawing.Size(180, 50);
-        btnQuanLyThuoc.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnQuanLyThuoc.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnQuanLyThuoc.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnQuanLyThuoc.AutoSize = false;
-        btnQuanLyThuoc.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnQuanLyThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnQuanLyThuoc.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnQuanLyThuoc.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnQuanLyThuoc.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnQuanLyThuoc.TabIndex = 1;
-        btnQuanLyThuoc.TabStop = true;
-        btnQuanLyThuoc.AccessibleName = null;
-        btnQuanLyThuoc.AutoEllipsis = false;
-        btnQuanLyThuoc.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnQuanLyThuoc.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnQuanLyThuoc.UseVisualStyleBackColor = true;
-        btnQuanLyThuoc.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnQuanLyThuoc.Visible = true;
-        btnQuanLyThuoc.Enabled = true;
-        btnQuanLyThuoc.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnQuanLyThuoc.FlatAppearance.BorderSize = 1;
-        btnQuanLyThuoc.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnQuanLyThuoc.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // btnBanHang
-        btnBanHang.Name = "btnBanHang";
-        btnBanHang.Text = "Bán hàng (F1)";
-        btnBanHang.Location = new global::System.Drawing.Point(20, 20);
-        btnBanHang.Size = new global::System.Drawing.Size(180, 50);
-        btnBanHang.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        btnBanHang.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnBanHang.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnBanHang.AutoSize = false;
-        btnBanHang.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnBanHang.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnBanHang.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnBanHang.BackColor = global::System.Drawing.SystemColors.HotTrack;
-        btnBanHang.Cursor = global::System.Windows.Forms.Cursors.Default;
-        btnBanHang.TabIndex = 0;
-        btnBanHang.TabStop = true;
-        btnBanHang.AccessibleName = null;
-        btnBanHang.AutoEllipsis = false;
-        btnBanHang.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnBanHang.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        btnBanHang.UseVisualStyleBackColor = true;
-        btnBanHang.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnBanHang.Visible = true;
-        btnBanHang.Enabled = true;
-        btnBanHang.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
-        btnBanHang.FlatAppearance.BorderSize = 1;
-        btnBanHang.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnBanHang.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-
-
-        // lblTitle
-        lblTitle.Name = "lblTitle";
-        lblTitle.Text = "HỆ THỐNG QUẢN LÍ NHÀ THUỐC";
-        lblTitle.Location = new global::System.Drawing.Point(441, 5);
-        lblTitle.Size = new global::System.Drawing.Size(500, 50);
-        lblTitle.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblTitle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-        lblTitle.Margin = new System.Windows.Forms.Padding(0);
-        lblTitle.UseCompatibleTextRendering = true;
-
-        lblTitle.AutoSize = false;
-        lblTitle.Font = new global::System.Drawing.Font("Segoe UI", 16.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblTitle.ForeColor = global::System.Drawing.Color.White;
-        lblTitle.BackColor = global::System.Drawing.SystemColors.MenuHighlight;
-        lblTitle.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblTitle.TabIndex = 0;
-        lblTitle.TabStop = false;
-        lblTitle.AccessibleName = null;
-        lblTitle.AutoEllipsis = false;
-        lblTitle.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        lblTitle.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblTitle.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblTitle.Visible = true;
-        lblTitle.Enabled = true;
-
-
+        // 
+        // sideButtons
+        // 
+        sideButtons.BackColor = Color.FromArgb(15, 23, 42);
+        sideButtons.ColumnCount = 1;
+        sideButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        sideButtons.Controls.Add(btnTrangChu, 0, 0);
+        sideButtons.Controls.Add(btnBanHang, 0, 1);
+        sideButtons.Controls.Add(btnQuanLyThuoc, 0, 2);
+        sideButtons.Controls.Add(btnQuanLyKhac, 0, 3);
+        sideButtons.Controls.Add(btnNhapKho, 0, 4);
+        sideButtons.Controls.Add(btnCanhBao, 0, 5);
+        sideButtons.Controls.Add(btnBaoCao, 0, 6);
+        sideButtons.Dock = DockStyle.Fill;
+        sideButtons.Location = new Point(0, 0);
+        sideButtons.Margin = new Padding(4);
+        sideButtons.Name = "sideButtons";
+        sideButtons.Padding = new Padding(15, 18, 15, 0);
+        sideButtons.RowCount = 8;
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        sideButtons.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        sideButtons.Size = new Size(275, 1025);
+        sideButtons.TabIndex = 0;
+        // 
         // btnTrangChu
-        btnTrangChu.Name = "btnTrangChu";
-        btnTrangChu.Text = "Trang Chủ";
-        btnTrangChu.Location = new global::System.Drawing.Point(0, 0);
-        btnTrangChu.Size = new global::System.Drawing.Size(107, 35);
-        btnTrangChu.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnTrangChu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnTrangChu.Dock = global::System.Windows.Forms.DockStyle.None;
-
-        btnTrangChu.AutoSize = false;
-        btnTrangChu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnTrangChu.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        btnTrangChu.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnTrangChu.BackColor = global::System.Drawing.SystemColors.ControlLight;
-        btnTrangChu.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        btnTrangChu.TabIndex = 0;
-        btnTrangChu.TabStop = true;
-        btnTrangChu.AccessibleName = null;
-        btnTrangChu.AutoEllipsis = false;
-        btnTrangChu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnTrangChu.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnTrangChu.UseVisualStyleBackColor = false;
-        btnTrangChu.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnTrangChu.Visible = true;
-        btnTrangChu.Enabled = true;
-        btnTrangChu.FlatAppearance.BorderColor = global::System.Drawing.Color.Empty;
+        // 
+        btnTrangChu.BackColor = Color.FromArgb(30, 41, 59);
+        btnTrangChu.Cursor = Cursors.Hand;
+        btnTrangChu.Dock = DockStyle.Fill;
         btnTrangChu.FlatAppearance.BorderSize = 0;
-        btnTrangChu.FlatAppearance.MouseDownBackColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnTrangChu.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // dashboard
-        dashboard.Name = "dashboard";
-        dashboard.Text = "";
-        dashboard.Location = new global::System.Drawing.Point(220, 95);
-        dashboard.Size = new global::System.Drawing.Size(1162, 658);
-        dashboard.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dashboard.Padding = new global::System.Windows.Forms.Padding(16, 8, 16, 10);
-        dashboard.Dock = System.Windows.Forms.DockStyle.Fill;
-
-        dashboard.AutoSize = false;
-        dashboard.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        dashboard.Font = new global::System.Drawing.Font("Segoe UI", 9F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dashboard.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dashboard.BackColor = Color.FromArgb(248,250,252);
-        dashboard.Cursor = global::System.Windows.Forms.Cursors.Default;
-        dashboard.TabIndex = 4;
-        dashboard.TabStop = false;
-        dashboard.AccessibleName = null;
-        dashboard.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        dashboard.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        dashboard.RowCount = 5;
-        dashboard.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        dashboard.AutoScroll = false;
-        dashboard.Visible = true;
-        dashboard.ColumnCount = 1;
-        dashboard.Enabled = true;
-        dashboard.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        dashboard.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 48F));
-        dashboard.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 118F));
-        dashboard.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        dashboard.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        dashboard.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 30F));
-
-        // tableLayoutPanel1
-        tableLayoutPanel1.Name = "tableLayoutPanel1";
-        tableLayoutPanel1.Text = "";
-        tableLayoutPanel1.Location = new global::System.Drawing.Point(16, 8);
-        tableLayoutPanel1.Size = new global::System.Drawing.Size(1130, 48);
-        tableLayoutPanel1.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel1.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel1.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel1.AutoSize = false;
-        tableLayoutPanel1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel1.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel1.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
-        tableLayoutPanel1.Cursor = global::System.Windows.Forms.Cursors.Default;
-        tableLayoutPanel1.TabIndex = 0;
-        tableLayoutPanel1.TabStop = false;
-        tableLayoutPanel1.AccessibleName = null;
-        tableLayoutPanel1.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel1.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel1.RowCount = 1;
-        tableLayoutPanel1.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel1.AutoScroll = false;
-        tableLayoutPanel1.Visible = true;
-        tableLayoutPanel1.ColumnCount = 2;
-        tableLayoutPanel1.Enabled = true;
-        tableLayoutPanel1.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel1.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 140F));
-        tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-
-        // lblTieuDeTongQuan
-        lblTieuDeTongQuan.Name = "lblTieuDeTongQuan";
-        lblTieuDeTongQuan.Text = "Tổng quan";
-        lblTieuDeTongQuan.Location = new global::System.Drawing.Point(0, 0);
-        lblTieuDeTongQuan.Size = new global::System.Drawing.Size(978, 48);
-        lblTieuDeTongQuan.Margin = new global::System.Windows.Forms.Padding(0, 0, 12, 0);
-        lblTieuDeTongQuan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblTieuDeTongQuan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblTieuDeTongQuan.AutoSize = false;
-        lblTieuDeTongQuan.Font = new global::System.Drawing.Font("Segoe UI Semibold", 14F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblTieuDeTongQuan.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblTieuDeTongQuan.BackColor = Color.FromArgb(248,250,252);
-        lblTieuDeTongQuan.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblTieuDeTongQuan.TabIndex = 0;
-        lblTieuDeTongQuan.TabStop = false;
-        lblTieuDeTongQuan.AccessibleName = null;
-        lblTieuDeTongQuan.AutoEllipsis = false;
-        lblTieuDeTongQuan.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
-        lblTieuDeTongQuan.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblTieuDeTongQuan.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblTieuDeTongQuan.Visible = true;
-        lblTieuDeTongQuan.Enabled = true;
-
-        // tableLayoutPanel3
-        tableLayoutPanel3.Name = "tableLayoutPanel3";
-        tableLayoutPanel3.Text = "";
-        tableLayoutPanel3.Location = new global::System.Drawing.Point(990, 0);
-        tableLayoutPanel3.Size = new global::System.Drawing.Size(140, 48);
-        tableLayoutPanel3.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel3.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel3.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel3.AutoSize = true;
-        tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel3.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
-        tableLayoutPanel3.Cursor = global::System.Windows.Forms.Cursors.Default;
-        tableLayoutPanel3.TabIndex = 1;
-        tableLayoutPanel3.TabStop = false;
-        tableLayoutPanel3.AccessibleName = null;
-        tableLayoutPanel3.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel3.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel3.RowCount = 1;
-        tableLayoutPanel3.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel3.AutoScroll = false;
-        tableLayoutPanel3.Visible = true;
-        tableLayoutPanel3.ColumnCount = 2;
-        tableLayoutPanel3.Enabled = true;
-        tableLayoutPanel3.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel3.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel3.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
-
-        // btnLamMoiTongQuan
-        btnLamMoiTongQuan.Name = "btnLamMoiTongQuan";
-        btnLamMoiTongQuan.Text = "Làm mới";
-        btnLamMoiTongQuan.Location = new global::System.Drawing.Point(0, 4);
-        btnLamMoiTongQuan.Size = new global::System.Drawing.Size(136, 44);
-        btnLamMoiTongQuan.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
-        btnLamMoiTongQuan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnLamMoiTongQuan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        btnLamMoiTongQuan.AutoSize = false;
-        btnLamMoiTongQuan.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnLamMoiTongQuan.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnLamMoiTongQuan.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnLamMoiTongQuan.BackColor = global::System.Drawing.SystemColors.ControlLight;
-        btnLamMoiTongQuan.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        btnLamMoiTongQuan.TabIndex = 0;
-        btnLamMoiTongQuan.TabStop = true;
-        btnLamMoiTongQuan.AccessibleName = null;
-        btnLamMoiTongQuan.AutoEllipsis = false;
-        btnLamMoiTongQuan.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnLamMoiTongQuan.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnLamMoiTongQuan.UseVisualStyleBackColor = false;
-        btnLamMoiTongQuan.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnLamMoiTongQuan.Visible = true;
-        btnLamMoiTongQuan.Enabled = true;
-        btnLamMoiTongQuan.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnLamMoiTongQuan.FlatAppearance.BorderSize = 1;
-        btnLamMoiTongQuan.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnLamMoiTongQuan.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
-
-        // tableLayoutPanel4
-        tableLayoutPanel4.Name = "tableLayoutPanel4";
-        tableLayoutPanel4.Text = "";
-        tableLayoutPanel4.Location = new global::System.Drawing.Point(16, 56);
-        tableLayoutPanel4.Size = new global::System.Drawing.Size(1130, 118);
-        tableLayoutPanel4.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel4.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel4.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel4.AutoSize = false;
-        tableLayoutPanel4.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel4.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
-        tableLayoutPanel4.Cursor = global::System.Windows.Forms.Cursors.Default;
-        tableLayoutPanel4.TabIndex = 1;
-        tableLayoutPanel4.TabStop = false;
-        tableLayoutPanel4.AccessibleName = null;
-        tableLayoutPanel4.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel4.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel4.RowCount = 1;
-        tableLayoutPanel4.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel4.AutoScroll = false;
-        tableLayoutPanel4.Visible = true;
-        tableLayoutPanel4.ColumnCount = 4;
-        tableLayoutPanel4.Enabled = true;
-        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 25F));
-        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 25F));
-        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 25F));
-        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 25F));
-        tableLayoutPanel4.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-
-        // tableLayoutPanel5
-        tableLayoutPanel5.Name = "tableLayoutPanel5";
-        tableLayoutPanel5.Text = "";
-        tableLayoutPanel5.Location = new global::System.Drawing.Point(0, 6);
-        tableLayoutPanel5.Size = new global::System.Drawing.Size(274, 104);
-        tableLayoutPanel5.Margin = new global::System.Windows.Forms.Padding(0, 6, 8, 8);
-        tableLayoutPanel5.Padding = new global::System.Windows.Forms.Padding(12, 6, 10, 6);
-        tableLayoutPanel5.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel5.AutoSize = false;
-        tableLayoutPanel5.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel5.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel5.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel5.BackColor = global::System.Drawing.Color.White;
-        tableLayoutPanel5.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        tableLayoutPanel5.TabIndex = 0;
-        tableLayoutPanel5.TabStop = false;
-        tableLayoutPanel5.AccessibleName = null;
-        tableLayoutPanel5.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel5.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel5.RowCount = 3;
-        tableLayoutPanel5.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel5.AutoScroll = false;
-        tableLayoutPanel5.Visible = true;
-        tableLayoutPanel5.ColumnCount = 1;
-        tableLayoutPanel5.Enabled = true;
-        tableLayoutPanel5.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 26F));
-        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 23F));
-
-        // label6
-        label6.Name = "label6";
-        label6.Text = "Doanh thu hôm nay";
-        label6.Location = new global::System.Drawing.Point(15, 6);
-        label6.Size = new global::System.Drawing.Size(246, 26);
-        label6.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label6.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label6.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label6.AutoSize = false;
-        label6.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label6.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label6.BackColor = global::System.Drawing.Color.White;
-        label6.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label6.TabIndex = 0;
-        label6.TabStop = false;
-        label6.AccessibleName = null;
-        label6.AutoEllipsis = false;
-        label6.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label6.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label6.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label6.Visible = true;
-        label6.Enabled = true;
-
-        // lblDoanhThu
-        lblDoanhThu.Name = "lblDoanhThu";
-        lblDoanhThu.Text = "—";
-        lblDoanhThu.Location = new global::System.Drawing.Point(15, 32);
-        lblDoanhThu.Size = new global::System.Drawing.Size(246, 43);
-        lblDoanhThu.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblDoanhThu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblDoanhThu.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblDoanhThu.AutoSize = false;
-        lblDoanhThu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 20F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblDoanhThu.ForeColor = global::System.Drawing.SystemColors.HotTrack;
-        lblDoanhThu.BackColor = global::System.Drawing.Color.White;
-        lblDoanhThu.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        lblDoanhThu.TabIndex = 1;
-        lblDoanhThu.TabStop = false;
-        lblDoanhThu.AccessibleName = null;
-        lblDoanhThu.AutoEllipsis = false;
-        lblDoanhThu.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        lblDoanhThu.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblDoanhThu.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblDoanhThu.Visible = true;
-        lblDoanhThu.Enabled = true;
-
-        // label7
-        label7.Name = "label7";
-        label7.Text = "Tiền hàng trừ giảm giá";
-        label7.Location = new global::System.Drawing.Point(15, 75);
-        label7.Size = new global::System.Drawing.Size(246, 23);
-        label7.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label7.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label7.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label7.AutoSize = false;
-        label7.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label7.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label7.BackColor = global::System.Drawing.Color.White;
-        label7.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label7.TabIndex = 2;
-        label7.TabStop = false;
-        label7.AccessibleName = null;
-        label7.AutoEllipsis = false;
-        label7.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label7.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label7.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label7.Visible = true;
-        label7.Enabled = true;
-
-        // tableLayoutPanel8
-        tableLayoutPanel8.Name = "tableLayoutPanel8";
-        tableLayoutPanel8.Text = "";
-        tableLayoutPanel8.Location = new global::System.Drawing.Point(282, 6);
-        tableLayoutPanel8.Size = new global::System.Drawing.Size(274, 104);
-        tableLayoutPanel8.Margin = new global::System.Windows.Forms.Padding(0, 6, 8, 8);
-        tableLayoutPanel8.Padding = new global::System.Windows.Forms.Padding(12, 6, 10, 6);
-        tableLayoutPanel8.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel8.AutoSize = false;
-        tableLayoutPanel8.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel8.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel8.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel8.BackColor = global::System.Drawing.Color.White;
-        tableLayoutPanel8.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        tableLayoutPanel8.TabIndex = 1;
-        tableLayoutPanel8.TabStop = false;
-        tableLayoutPanel8.AccessibleName = null;
-        tableLayoutPanel8.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel8.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel8.RowCount = 3;
-        tableLayoutPanel8.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel8.AutoScroll = false;
-        tableLayoutPanel8.Visible = true;
-        tableLayoutPanel8.ColumnCount = 1;
-        tableLayoutPanel8.Enabled = true;
-        tableLayoutPanel8.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 26F));
-        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 23F));
-
-        // label9
-        label9.Name = "label9";
-        label9.Text = "Đã thanh toán hôm nay";
-        label9.Location = new global::System.Drawing.Point(15, 6);
-        label9.Size = new global::System.Drawing.Size(246, 26);
-        label9.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label9.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label9.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label9.AutoSize = false;
-        label9.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label9.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label9.BackColor = global::System.Drawing.Color.White;
-        label9.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label9.TabIndex = 0;
-        label9.TabStop = false;
-        label9.AccessibleName = null;
-        label9.AutoEllipsis = false;
-        label9.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label9.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label9.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label9.Visible = true;
-        label9.Enabled = true;
-
-        // lblSoHoaDon
-        lblSoHoaDon.Name = "lblSoHoaDon";
-        lblSoHoaDon.Text = "—";
-        lblSoHoaDon.Location = new global::System.Drawing.Point(15, 32);
-        lblSoHoaDon.Size = new global::System.Drawing.Size(246, 43);
-        lblSoHoaDon.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblSoHoaDon.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblSoHoaDon.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblSoHoaDon.AutoSize = false;
-        lblSoHoaDon.Font = new global::System.Drawing.Font("Segoe UI Semibold", 20F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblSoHoaDon.ForeColor = global::System.Drawing.SystemColors.HotTrack;
-        lblSoHoaDon.BackColor = global::System.Drawing.Color.White;
-        lblSoHoaDon.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        lblSoHoaDon.TabIndex = 1;
-        lblSoHoaDon.TabStop = false;
-        lblSoHoaDon.AccessibleName = null;
-        lblSoHoaDon.AutoEllipsis = false;
-        lblSoHoaDon.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        lblSoHoaDon.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblSoHoaDon.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblSoHoaDon.Visible = true;
-        lblSoHoaDon.Enabled = true;
-
-        // label10
-        label10.Name = "label10";
-        label10.Text = "Số hóa đơn đã thu tiền";
-        label10.Location = new global::System.Drawing.Point(15, 75);
-        label10.Size = new global::System.Drawing.Size(246, 23);
-        label10.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label10.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label10.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label10.AutoSize = false;
-        label10.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label10.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label10.BackColor = global::System.Drawing.Color.White;
-        label10.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label10.TabIndex = 2;
-        label10.TabStop = false;
-        label10.AccessibleName = null;
-        label10.AutoEllipsis = false;
-        label10.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label10.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label10.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label10.Visible = true;
-        label10.Enabled = true;
-
-        // tableLayoutPanel11
-        tableLayoutPanel11.Name = "tableLayoutPanel11";
-        tableLayoutPanel11.Text = "";
-        tableLayoutPanel11.Location = new global::System.Drawing.Point(564, 6);
-        tableLayoutPanel11.Size = new global::System.Drawing.Size(274, 104);
-        tableLayoutPanel11.Margin = new global::System.Windows.Forms.Padding(0, 6, 8, 8);
-        tableLayoutPanel11.Padding = new global::System.Windows.Forms.Padding(12, 6, 10, 6);
-        tableLayoutPanel11.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel11.AutoSize = false;
-        tableLayoutPanel11.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel11.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel11.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel11.BackColor = global::System.Drawing.Color.White;
-        tableLayoutPanel11.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        tableLayoutPanel11.TabIndex = 2;
-        tableLayoutPanel11.TabStop = false;
-        tableLayoutPanel11.AccessibleName = null;
-        tableLayoutPanel11.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel11.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel11.RowCount = 3;
-        tableLayoutPanel11.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel11.AutoScroll = false;
-        tableLayoutPanel11.Visible = true;
-        tableLayoutPanel11.ColumnCount = 1;
-        tableLayoutPanel11.Enabled = true;
-        tableLayoutPanel11.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel11.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 26F));
-        tableLayoutPanel11.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel11.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 23F));
-
-        // label12
-        label12.Name = "label12";
-        label12.Text = "Thuốc sắp hết";
-        label12.Location = new global::System.Drawing.Point(15, 6);
-        label12.Size = new global::System.Drawing.Size(246, 26);
-        label12.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label12.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label12.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label12.AutoSize = false;
-        label12.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label12.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label12.BackColor = global::System.Drawing.Color.White;
-        label12.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label12.TabIndex = 0;
-        label12.TabStop = false;
-        label12.AccessibleName = null;
-        label12.AutoEllipsis = false;
-        label12.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label12.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label12.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label12.Visible = true;
-        label12.Enabled = true;
-
-        // lblSapHet
-        lblSapHet.Name = "lblSapHet";
-        lblSapHet.Text = "—";
-        lblSapHet.Location = new global::System.Drawing.Point(15, 32);
-        lblSapHet.Size = new global::System.Drawing.Size(246, 43);
-        lblSapHet.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblSapHet.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblSapHet.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblSapHet.AutoSize = false;
-        lblSapHet.Font = new global::System.Drawing.Font("Segoe UI Semibold", 20F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblSapHet.ForeColor = global::System.Drawing.SystemColors.HotTrack;
-        lblSapHet.BackColor = global::System.Drawing.Color.White;
-        lblSapHet.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        lblSapHet.TabIndex = 1;
-        lblSapHet.TabStop = false;
-        lblSapHet.AccessibleName = null;
-        lblSapHet.AutoEllipsis = false;
-        lblSapHet.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        lblSapHet.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblSapHet.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblSapHet.Visible = true;
-        lblSapHet.Enabled = true;
-
-        // label13
-        label13.Name = "label13";
-        label13.Text = "Tồn còn hạn dưới 10";
-        label13.Location = new global::System.Drawing.Point(15, 75);
-        label13.Size = new global::System.Drawing.Size(246, 23);
-        label13.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label13.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label13.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label13.AutoSize = false;
-        label13.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label13.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label13.BackColor = global::System.Drawing.Color.White;
-        label13.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label13.TabIndex = 2;
-        label13.TabStop = false;
-        label13.AccessibleName = null;
-        label13.AutoEllipsis = false;
-        label13.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label13.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label13.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label13.Visible = true;
-        label13.Enabled = true;
-
-        // tableLayoutPanel14
-        tableLayoutPanel14.Name = "tableLayoutPanel14";
-        tableLayoutPanel14.Text = "";
-        tableLayoutPanel14.Location = new global::System.Drawing.Point(846, 6);
-        tableLayoutPanel14.Size = new global::System.Drawing.Size(276, 104);
-        tableLayoutPanel14.Margin = new global::System.Windows.Forms.Padding(0, 6, 8, 8);
-        tableLayoutPanel14.Padding = new global::System.Windows.Forms.Padding(12, 6, 10, 6);
-        tableLayoutPanel14.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel14.AutoSize = false;
-        tableLayoutPanel14.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel14.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel14.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel14.BackColor = global::System.Drawing.Color.White;
-        tableLayoutPanel14.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        tableLayoutPanel14.TabIndex = 3;
-        tableLayoutPanel14.TabStop = false;
-        tableLayoutPanel14.AccessibleName = null;
-        tableLayoutPanel14.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel14.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel14.RowCount = 3;
-        tableLayoutPanel14.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel14.AutoScroll = false;
-        tableLayoutPanel14.Visible = true;
-        tableLayoutPanel14.ColumnCount = 1;
-        tableLayoutPanel14.Enabled = true;
-        tableLayoutPanel14.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 26F));
-        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 23F));
-
-        // label15
-        label15.Name = "label15";
-        label15.Text = "Lô sắp hết hạn";
-        label15.Location = new global::System.Drawing.Point(15, 6);
-        label15.Size = new global::System.Drawing.Size(248, 26);
-        label15.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label15.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label15.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label15.AutoSize = false;
-        label15.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label15.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label15.BackColor = global::System.Drawing.Color.White;
-        label15.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label15.TabIndex = 0;
-        label15.TabStop = false;
-        label15.AccessibleName = null;
-        label15.AutoEllipsis = false;
-        label15.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label15.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label15.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label15.Visible = true;
-        label15.Enabled = true;
-
-        // lblSapHetHan
-        lblSapHetHan.Name = "lblSapHetHan";
-        lblSapHetHan.Text = "—";
-        lblSapHetHan.Location = new global::System.Drawing.Point(15, 32);
-        lblSapHetHan.Size = new global::System.Drawing.Size(248, 43);
-        lblSapHetHan.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblSapHetHan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblSapHetHan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblSapHetHan.AutoSize = false;
-        lblSapHetHan.Font = new global::System.Drawing.Font("Segoe UI Semibold", 20F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        lblSapHetHan.ForeColor = global::System.Drawing.SystemColors.HotTrack;
-        lblSapHetHan.BackColor = global::System.Drawing.Color.White;
-        lblSapHetHan.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        lblSapHetHan.TabIndex = 1;
-        lblSapHetHan.TabStop = false;
-        lblSapHetHan.AccessibleName = null;
-        lblSapHetHan.AutoEllipsis = false;
-        lblSapHetHan.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        lblSapHetHan.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblSapHetHan.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblSapHetHan.Visible = true;
-        lblSapHetHan.Enabled = true;
-
-        // label16
-        label16.Name = "label16";
-        label16.Text = "Còn hàng, dưới 30 ngày";
-        label16.Location = new global::System.Drawing.Point(15, 75);
-        label16.Size = new global::System.Drawing.Size(248, 23);
-        label16.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        label16.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        label16.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        label16.AutoSize = false;
-        label16.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label16.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label16.BackColor = global::System.Drawing.Color.White;
-        label16.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        label16.TabIndex = 2;
-        label16.TabStop = false;
-        label16.AccessibleName = null;
-        label16.AutoEllipsis = false;
-        label16.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        label16.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        label16.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        label16.Visible = true;
-        label16.Enabled = true;
-
-        // tableLayoutPanel17
-        tableLayoutPanel17.Name = "tableLayoutPanel17";
-        tableLayoutPanel17.Text = "";
-        tableLayoutPanel17.Location = new global::System.Drawing.Point(16, 174);
-        tableLayoutPanel17.Size = new global::System.Drawing.Size(1130, 214);
-        tableLayoutPanel17.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 8);
-        tableLayoutPanel17.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel17.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        tableLayoutPanel17.AutoSize = false;
-        tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        tableLayoutPanel17.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel17.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel17.BackColor = Color.FromArgb(248,250,252);
-        tableLayoutPanel17.Cursor = global::System.Windows.Forms.Cursors.Default;
-        tableLayoutPanel17.TabIndex = 2;
-        tableLayoutPanel17.TabStop = false;
-        tableLayoutPanel17.AccessibleName = null;
-        tableLayoutPanel17.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel17.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel17.RowCount = 1;
-        tableLayoutPanel17.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
-        tableLayoutPanel17.AutoScroll = false;
-        tableLayoutPanel17.Visible = true;
-        tableLayoutPanel17.ColumnCount = 2;
-        tableLayoutPanel17.Enabled = true;
-        tableLayoutPanel17.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel17.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel17.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-
-        // groupBox18
-        groupBox18.Name = "groupBox18";
-        groupBox18.Text = "Thuốc cần nhập thêm";
-        groupBox18.Location = new global::System.Drawing.Point(0, 0);
-        groupBox18.Size = new global::System.Drawing.Size(557, 214);
-        groupBox18.Margin = new global::System.Windows.Forms.Padding(0, 0, 8, 0);
-        groupBox18.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
-        groupBox18.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        groupBox18.AutoSize = false;
-        groupBox18.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        groupBox18.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        groupBox18.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox18.BackColor = Color.FromArgb(248,250,252);
-        groupBox18.Cursor = global::System.Windows.Forms.Cursors.Default;
-        groupBox18.TabIndex = 0;
-        groupBox18.TabStop = false;
-        groupBox18.AccessibleName = null;
-        groupBox18.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        groupBox18.Visible = true;
-        groupBox18.Enabled = true;
-
-        // panel19
-        panel19.Name = "panel19";
-        panel19.Text = "";
-        panel19.Location = new global::System.Drawing.Point(12, 25);
-        panel19.Size = new global::System.Drawing.Size(533, 177);
-        panel19.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        panel19.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        panel19.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        panel19.AutoSize = false;
-        panel19.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        panel19.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        panel19.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        panel19.BackColor = Color.FromArgb(248,250,252);
-        panel19.Cursor = global::System.Windows.Forms.Cursors.Default;
-        panel19.TabIndex = 0;
-        panel19.TabStop = false;
-        panel19.AccessibleName = null;
-        panel19.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        panel19.AutoScroll = false;
-        panel19.Visible = true;
-        panel19.Enabled = true;
-
-        // dgvSapHet
-        dgvSapHet.Name = "dgvSapHet";
-        dgvSapHet.Text = "";
-        dgvSapHet.Location = new global::System.Drawing.Point(0, 0);
-        dgvSapHet.Size = new global::System.Drawing.Size(533, 177);
-        dgvSapHet.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        dgvSapHet.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHet.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        dgvSapHet.AutoSize = false;
-        dgvSapHet.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHet.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHet.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHet.Cursor = global::System.Windows.Forms.Cursors.Default;
-        dgvSapHet.TabIndex = 0;
-        dgvSapHet.TabStop = true;
-        dgvSapHet.AccessibleName = null;
-        dgvSapHet.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-        dgvSapHet.ReadOnly = true;
-        dgvSapHet.ScrollBars = global::System.Windows.Forms.ScrollBars.Both;
-        dgvSapHet.AllowUserToAddRows = false;
-        dgvSapHet.AllowUserToDeleteRows = false;
-        dgvSapHet.AllowUserToResizeRows = false;
-        dgvSapHet.AllowUserToResizeColumns = true;
-        dgvSapHet.RowHeadersVisible = false;
-        dgvSapHet.MultiSelect = false;
-        dgvSapHet.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        dgvSapHet.AutoSizeColumnsMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-        dgvSapHet.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-        dgvSapHet.BackgroundColor = global::System.Drawing.SystemColors.ScrollBar;
-        dgvSapHet.GridColor = global::System.Drawing.SystemColors.ControlLight;
-        dgvSapHet.CellBorderStyle = global::System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-        dgvSapHet.EnableHeadersVisualStyles = false;
-        dgvSapHet.ColumnHeadersHeight = 36;
-        dgvSapHet.ColumnHeadersHeightSizeMode = global::System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgvSapHet.ColumnHeadersVisible = true;
-        dgvSapHet.Visible = true;
-        dgvSapHet.Enabled = true;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvSapHetDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvSapHetDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.GradientActiveCaption;
-        dgvSapHetDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetDefaultCellStyle.Format = "";
-        dgvSapHetDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(4, 4, 4, 4);
-        dgvSapHetDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.False;
-        dgvSapHetDefaultCellStyle.NullValue = "";
-        dgvSapHet.DefaultCellStyle = dgvSapHetDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHetColumnHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumnHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetColumnHeadersDefaultCellStyle.Format = "";
-        dgvSapHetColumnHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumnHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumnHeadersDefaultCellStyle.NullValue = "";
-        dgvSapHet.ColumnHeadersDefaultCellStyle = dgvSapHetColumnHeadersDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetAlternatingRowsDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetAlternatingRowsDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetAlternatingRowsDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvSapHetAlternatingRowsDefaultCellStyle.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetAlternatingRowsDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetAlternatingRowsDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetAlternatingRowsDefaultCellStyle.Font = null;
-        dgvSapHetAlternatingRowsDefaultCellStyle.Format = "";
-        dgvSapHetAlternatingRowsDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetAlternatingRowsDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetAlternatingRowsDefaultCellStyle.NullValue = "";
-        dgvSapHet.AlternatingRowsDefaultCellStyle = dgvSapHetAlternatingRowsDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvSapHetRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHetRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
-        dgvSapHetRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
-        dgvSapHetRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
-        dgvSapHetRowHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetRowHeadersDefaultCellStyle.Format = "";
-        dgvSapHetRowHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetRowHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetRowHeadersDefaultCellStyle.NullValue = "";
-        dgvSapHet.RowHeadersDefaultCellStyle = dgvSapHetRowHeadersDefaultCellStyle;
-        dgvSapHet.RowTemplate.Height = 34;
-        dgvSapHetColumn1.Name = "TenThuoc";
-        dgvSapHetColumn1.HeaderText = "Tên thuốc";
-        dgvSapHetColumn1.Visible = true;
-        dgvSapHetColumn1.ReadOnly = true;
-        
-        
-        dgvSapHetColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn1.DataPropertyName = "TenThuoc";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumn1Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn1Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn1Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn1Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn1Style.Font = null;
-        dgvSapHetColumn1Style.Format = "";
-        dgvSapHetColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn1Style.NullValue = "";
-        dgvSapHetColumn1.DefaultCellStyle = dgvSapHetColumn1Style;
-        dgvSapHetColumn2.Name = "TonKho";
-        dgvSapHetColumn2.HeaderText = "Tồn";
-        dgvSapHetColumn2.Visible = true;
-        dgvSapHetColumn2.ReadOnly = true;
-        
-        
-        dgvSapHetColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn2.DataPropertyName = "TonKho";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumn2Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn2Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn2Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn2Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn2Style.Font = null;
-        dgvSapHetColumn2Style.Format = "";
-        dgvSapHetColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetColumn2Style.NullValue = "";
-        dgvSapHetColumn2.DefaultCellStyle = dgvSapHetColumn2Style;
-        dgvSapHetColumn3.Name = "DonViTinh";
-        dgvSapHetColumn3.HeaderText = "ĐVT";
-        dgvSapHetColumn3.Visible = true;
-        dgvSapHetColumn3.ReadOnly = true;
-        
-        
-        dgvSapHetColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn3.DataPropertyName = "DonViTinh";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumn3Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumn3Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumn3Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn3Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn3Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn3Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn3Style.Font = null;
-        dgvSapHetColumn3Style.Format = "";
-        dgvSapHetColumn3Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumn3Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetColumn3Style.NullValue = "";
-        dgvSapHetColumn3.DefaultCellStyle = dgvSapHetColumn3Style;
-        dgvSapHetColumn4.Name = "MaThuoc";
-        dgvSapHetColumn4.HeaderText="Mã";
-        dgvSapHetColumn4.Visible = false;
-        dgvSapHetColumn4.ReadOnly = true;
-        
-        
-        dgvSapHetColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn4.DataPropertyName = "MaThuoc";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumn4Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumn4Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumn4Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn4Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn4Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn4Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn4Style.Font = null;
-        dgvSapHetColumn4Style.Format = "";
-        dgvSapHetColumn4Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumn4Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetColumn4Style.NullValue = "";
-        dgvSapHetColumn4.DefaultCellStyle = dgvSapHetColumn4Style;
-        dgvSapHetColumn5.Name = "NhaCungCap";
-        dgvSapHetColumn5.HeaderText = "NhaCungCap";
-        dgvSapHetColumn5.Visible = false;
-        dgvSapHetColumn5.ReadOnly = true;
-        
-        
-        dgvSapHetColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetColumn5.DataPropertyName = "NhaCungCap";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetColumn5Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetColumn5Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetColumn5Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn5Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn5Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn5Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetColumn5Style.Font = null;
-        dgvSapHetColumn5Style.Format = "";
-        dgvSapHetColumn5Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetColumn5Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetColumn5Style.NullValue = "";
-        dgvSapHetColumn5.DefaultCellStyle = dgvSapHetColumn5Style;
-        dgvSapHet.AutoGenerateColumns = false;
-        dgvSapHet.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvSapHetColumn1, dgvSapHetColumn2, dgvSapHetColumn3, dgvSapHetColumn4, dgvSapHetColumn5 });
-
-        // lblKhongSapHet
-        lblKhongSapHet.Name = "lblKhongSapHet";
-        lblKhongSapHet.Text = "Chưa có thuốc dưới ngưỡng tồn.";
-        lblKhongSapHet.Location = new global::System.Drawing.Point(0, 0);
-        lblKhongSapHet.Size = new global::System.Drawing.Size(533, 177);
-        lblKhongSapHet.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblKhongSapHet.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblKhongSapHet.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblKhongSapHet.AutoSize = false;
-        lblKhongSapHet.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        lblKhongSapHet.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblKhongSapHet.BackColor = Color.FromArgb(248,250,252);
-        lblKhongSapHet.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblKhongSapHet.TabIndex = 1;
-        lblKhongSapHet.TabStop = false;
-        lblKhongSapHet.AccessibleName = null;
-        lblKhongSapHet.AutoEllipsis = false;
-        lblKhongSapHet.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        lblKhongSapHet.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblKhongSapHet.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblKhongSapHet.Visible = true;
-        lblKhongSapHet.Enabled = true;
-
-        // groupBox20
-        groupBox20.Name = "groupBox20";
-        groupBox20.Text = "Lô sắp hết hạn";
-        groupBox20.Location = new global::System.Drawing.Point(565, 0);
-        groupBox20.Size = new global::System.Drawing.Size(565, 214);
-        groupBox20.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        groupBox20.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
-        groupBox20.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        groupBox20.AutoSize = false;
-        groupBox20.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        groupBox20.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        groupBox20.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox20.BackColor = Color.FromArgb(248,250,252);
-        groupBox20.Cursor = global::System.Windows.Forms.Cursors.Default;
-        groupBox20.TabIndex = 1;
-        groupBox20.TabStop = false;
-        groupBox20.AccessibleName = null;
-        groupBox20.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        groupBox20.Visible = true;
-        groupBox20.Enabled = true;
-
-        // panel21
-        panel21.Name = "panel21";
-        panel21.Text = "";
-        panel21.Location = new global::System.Drawing.Point(12, 25);
-        panel21.Size = new global::System.Drawing.Size(541, 177);
-        panel21.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        panel21.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        panel21.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        panel21.AutoSize = false;
-        panel21.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        panel21.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        panel21.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        panel21.BackColor = Color.FromArgb(248,250,252);
-        panel21.Cursor = global::System.Windows.Forms.Cursors.Default;
-        panel21.TabIndex = 0;
-        panel21.TabStop = false;
-        panel21.AccessibleName = null;
-        panel21.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        panel21.AutoScroll = false;
-        panel21.Visible = true;
-        panel21.Enabled = true;
-
-        // dgvSapHetHan
-        dgvSapHetHan.Name = "dgvSapHetHan";
-        dgvSapHetHan.Text = "";
-        dgvSapHetHan.Location = new global::System.Drawing.Point(0, 0);
-        dgvSapHetHan.Size = new global::System.Drawing.Size(541, 177);
-        dgvSapHetHan.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        dgvSapHetHan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        dgvSapHetHan.AutoSize = false;
-        dgvSapHetHan.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetHan.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetHan.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHetHan.Cursor = global::System.Windows.Forms.Cursors.Default;
-        dgvSapHetHan.TabIndex = 0;
-        dgvSapHetHan.TabStop = true;
-        dgvSapHetHan.AccessibleName = null;
-        dgvSapHetHan.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-        dgvSapHetHan.ReadOnly = true;
-        dgvSapHetHan.ScrollBars = global::System.Windows.Forms.ScrollBars.Both;
-        dgvSapHetHan.AllowUserToAddRows = false;
-        dgvSapHetHan.AllowUserToDeleteRows = false;
-        dgvSapHetHan.AllowUserToResizeRows = false;
-        dgvSapHetHan.AllowUserToResizeColumns = true;
-        dgvSapHetHan.RowHeadersVisible = false;
-        dgvSapHetHan.MultiSelect = false;
-        dgvSapHetHan.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        dgvSapHetHan.AutoSizeColumnsMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-        dgvSapHetHan.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-        dgvSapHetHan.BackgroundColor = global::System.Drawing.SystemColors.ScrollBar;
-        dgvSapHetHan.GridColor = global::System.Drawing.SystemColors.ControlLight;
-        dgvSapHetHan.CellBorderStyle = global::System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-        dgvSapHetHan.EnableHeadersVisualStyles = false;
-        dgvSapHetHan.ColumnHeadersHeight = 36;
-        dgvSapHetHan.ColumnHeadersHeightSizeMode = global::System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgvSapHetHan.ColumnHeadersVisible = true;
-        dgvSapHetHan.Visible = true;
-        dgvSapHetHan.Enabled = true;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvSapHetHanDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvSapHetHanDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetHanDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.GradientActiveCaption;
-        dgvSapHetHanDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetHanDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetHanDefaultCellStyle.Format = "";
-        dgvSapHetHanDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(4, 4, 4, 4);
-        dgvSapHetHanDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.False;
-        dgvSapHetHanDefaultCellStyle.NullValue = "";
-        dgvSapHetHan.DefaultCellStyle = dgvSapHetHanDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHetHanColumnHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvSapHetHanColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumnHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetHanColumnHeadersDefaultCellStyle.Format = "";
-        dgvSapHetHanColumnHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumnHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumnHeadersDefaultCellStyle.NullValue = "";
-        dgvSapHetHan.ColumnHeadersDefaultCellStyle = dgvSapHetHanColumnHeadersDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanAlternatingRowsDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.Font = null;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.Format = "";
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanAlternatingRowsDefaultCellStyle.NullValue = "";
-        dgvSapHetHan.AlternatingRowsDefaultCellStyle = dgvSapHetHanAlternatingRowsDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvSapHetHanRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvSapHetHanRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
-        dgvSapHetHanRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
-        dgvSapHetHanRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
-        dgvSapHetHanRowHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvSapHetHanRowHeadersDefaultCellStyle.Format = "";
-        dgvSapHetHanRowHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanRowHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanRowHeadersDefaultCellStyle.NullValue = "";
-        dgvSapHetHan.RowHeadersDefaultCellStyle = dgvSapHetHanRowHeadersDefaultCellStyle;
-        dgvSapHetHan.RowTemplate.Height = 34;
-        dgvSapHetHanColumn1.Name = "TenThuoc";
-        dgvSapHetHanColumn1.HeaderText = "Tên thuốc";
-        dgvSapHetHanColumn1.Visible = true;
-        dgvSapHetHanColumn1.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn1.DataPropertyName = "TenThuoc";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn1Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn1Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn1Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn1Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn1Style.Font = null;
-        dgvSapHetHanColumn1Style.Format = "";
-        dgvSapHetHanColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn1Style.NullValue = "";
-        dgvSapHetHanColumn1.DefaultCellStyle = dgvSapHetHanColumn1Style;
-        dgvSapHetHanColumn2.Name = "SoLo";
-        dgvSapHetHanColumn2.HeaderText = "Số lô";
-        dgvSapHetHanColumn2.Visible = true;
-        dgvSapHetHanColumn2.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn2.DataPropertyName = "SoLo";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn2Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn2Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn2Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn2Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn2Style.Font = null;
-        dgvSapHetHanColumn2Style.Format = "";
-        dgvSapHetHanColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn2Style.NullValue = "";
-        dgvSapHetHanColumn2.DefaultCellStyle = dgvSapHetHanColumn2Style;
-        dgvSapHetHanColumn3.Name = "HanDung";
-        dgvSapHetHanColumn3.HeaderText = "Hạn dùng";
-        dgvSapHetHanColumn3.Visible = true;
-        dgvSapHetHanColumn3.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn3.DataPropertyName = "HanDung";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn3Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn3Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn3Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn3Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn3Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn3Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn3Style.Font = null;
-        dgvSapHetHanColumn3Style.Format = "dd/MM/yyyy";
-        dgvSapHetHanColumn3Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn3Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanColumn3Style.NullValue = "";
-        dgvSapHetHanColumn3.DefaultCellStyle = dgvSapHetHanColumn3Style;
-        dgvSapHetHanColumn4.Name = "TonLo";
-        dgvSapHetHanColumn4.HeaderText = "Tồn";
-        dgvSapHetHanColumn4.Visible = true;
-        dgvSapHetHanColumn4.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn4.DataPropertyName = "TonLo";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn4Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn4Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn4Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn4Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn4Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn4Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn4Style.Font = null;
-        dgvSapHetHanColumn4Style.Format = "";
-        dgvSapHetHanColumn4Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn4Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanColumn4Style.NullValue = "";
-        dgvSapHetHanColumn4.DefaultCellStyle = dgvSapHetHanColumn4Style;
-        dgvSapHetHanColumn5.Name = "MaThuoc";
-        dgvSapHetHanColumn5.HeaderText="Mã";
-        dgvSapHetHanColumn5.Visible = false;
-        dgvSapHetHanColumn5.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn5.DataPropertyName = "MaThuoc";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn5Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn5Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn5Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn5Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn5Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn5Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn5Style.Font = null;
-        dgvSapHetHanColumn5Style.Format = "";
-        dgvSapHetHanColumn5Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn5Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanColumn5Style.NullValue = "";
-        dgvSapHetHanColumn5.DefaultCellStyle = dgvSapHetHanColumn5Style;
-        dgvSapHetHanColumn6.Name = "SoNgayConLai";
-        dgvSapHetHanColumn6.HeaderText = "SoNgayConLai";
-        dgvSapHetHanColumn6.Visible = false;
-        dgvSapHetHanColumn6.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn6.DataPropertyName = "SoNgayConLai";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn6Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn6Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn6Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn6Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn6Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn6Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn6Style.Font = null;
-        dgvSapHetHanColumn6Style.Format = "";
-        dgvSapHetHanColumn6Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn6Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanColumn6Style.NullValue = "";
-        dgvSapHetHanColumn6.DefaultCellStyle = dgvSapHetHanColumn6Style;
-        dgvSapHetHanColumn7.Name = "TrangThai";
-        dgvSapHetHanColumn7.HeaderText = "TrangThai";
-        dgvSapHetHanColumn7.Visible = false;
-        dgvSapHetHanColumn7.ReadOnly = true;
-        
-        
-        dgvSapHetHanColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvSapHetHanColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvSapHetHanColumn7.DataPropertyName = "TrangThai";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvSapHetHanColumn7Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvSapHetHanColumn7Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvSapHetHanColumn7Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn7Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn7Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn7Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvSapHetHanColumn7Style.Font = null;
-        dgvSapHetHanColumn7Style.Format = "";
-        dgvSapHetHanColumn7Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvSapHetHanColumn7Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvSapHetHanColumn7Style.NullValue = "";
-        dgvSapHetHanColumn7.DefaultCellStyle = dgvSapHetHanColumn7Style;
-        dgvSapHetHan.AutoGenerateColumns = false;
-        dgvSapHetHan.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvSapHetHanColumn1, dgvSapHetHanColumn2, dgvSapHetHanColumn3, dgvSapHetHanColumn4, dgvSapHetHanColumn5, dgvSapHetHanColumn6, dgvSapHetHanColumn7 });
-
-        // lblKhongSapHetHan
-        lblKhongSapHetHan.Name = "lblKhongSapHetHan";
-        lblKhongSapHetHan.Text = "Chưa có lô sắp hết hạn.";
-        lblKhongSapHetHan.Location = new global::System.Drawing.Point(0, 0);
-        lblKhongSapHetHan.Size = new global::System.Drawing.Size(541, 177);
-        lblKhongSapHetHan.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblKhongSapHetHan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblKhongSapHetHan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblKhongSapHetHan.AutoSize = false;
-        lblKhongSapHetHan.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        lblKhongSapHetHan.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblKhongSapHetHan.BackColor = Color.FromArgb(248,250,252);
-        lblKhongSapHetHan.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblKhongSapHetHan.TabIndex = 1;
-        lblKhongSapHetHan.TabStop = false;
-        lblKhongSapHetHan.AccessibleName = null;
-        lblKhongSapHetHan.AutoEllipsis = false;
-        lblKhongSapHetHan.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        lblKhongSapHetHan.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblKhongSapHetHan.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblKhongSapHetHan.Visible = true;
-        lblKhongSapHetHan.Enabled = true;
-
-        // groupBox22
-        groupBox22.Name = "groupBox22";
-        groupBox22.Text = "5 hóa đơn gần nhất — nhấp đúp để xem chi tiết";
-        groupBox22.Location = new global::System.Drawing.Point(16, 396);
-        groupBox22.Size = new global::System.Drawing.Size(1130, 222);
-        groupBox22.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        groupBox22.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
-        groupBox22.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        groupBox22.AutoSize = false;
-        groupBox22.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        groupBox22.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        groupBox22.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox22.BackColor = Color.FromArgb(248,250,252);
-        groupBox22.Cursor = global::System.Windows.Forms.Cursors.Default;
-        groupBox22.TabIndex = 3;
-        groupBox22.TabStop = false;
-        groupBox22.AccessibleName = null;
-        groupBox22.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        groupBox22.Visible = true;
-        groupBox22.Enabled = true;
-
-        // panel23
-        panel23.Name = "panel23";
-        panel23.Text = "";
-        panel23.Location = new global::System.Drawing.Point(12, 25);
-        panel23.Size = new global::System.Drawing.Size(1106, 185);
-        panel23.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        panel23.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        panel23.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        panel23.AutoSize = false;
-        panel23.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        panel23.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        panel23.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        panel23.BackColor = Color.FromArgb(248,250,252);
-        panel23.Cursor = global::System.Windows.Forms.Cursors.Default;
-        panel23.TabIndex = 0;
-        panel23.TabStop = false;
-        panel23.AccessibleName = null;
-        panel23.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        panel23.AutoScroll = false;
-        panel23.Visible = true;
-        panel23.Enabled = true;
-
-        // dgvGanNhat
-        dgvGanNhat.Name = "dgvGanNhat";
-        dgvGanNhat.Text = "";
-        dgvGanNhat.Location = new global::System.Drawing.Point(0, 0);
-        dgvGanNhat.Size = new global::System.Drawing.Size(1106, 185);
-        dgvGanNhat.Margin = new global::System.Windows.Forms.Padding(3, 3, 3, 3);
-        dgvGanNhat.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhat.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        dgvGanNhat.AutoSize = false;
-        dgvGanNhat.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvGanNhat.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvGanNhat.BackColor = Color.FromArgb(248,250,252);
-        dgvGanNhat.Cursor = global::System.Windows.Forms.Cursors.Default;
-        dgvGanNhat.TabIndex = 0;
-        dgvGanNhat.TabStop = true;
-        dgvGanNhat.AccessibleName = null;
-        dgvGanNhat.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-        dgvGanNhat.ReadOnly = true;
-        dgvGanNhat.ScrollBars = global::System.Windows.Forms.ScrollBars.Both;
-        dgvGanNhat.AllowUserToAddRows = false;
-        dgvGanNhat.AllowUserToDeleteRows = false;
-        dgvGanNhat.AllowUserToResizeRows = false;
-        dgvGanNhat.AllowUserToResizeColumns = true;
-        dgvGanNhat.RowHeadersVisible = false;
-        dgvGanNhat.MultiSelect = false;
-        dgvGanNhat.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        dgvGanNhat.AutoSizeColumnsMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-        dgvGanNhat.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
-        dgvGanNhat.BackgroundColor = global::System.Drawing.SystemColors.ScrollBar;
-        dgvGanNhat.GridColor = global::System.Drawing.SystemColors.ControlLight;
-        dgvGanNhat.CellBorderStyle = global::System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-        dgvGanNhat.EnableHeadersVisualStyles = false;
-        dgvGanNhat.ColumnHeadersHeight = 36;
-        dgvGanNhat.ColumnHeadersHeightSizeMode = global::System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgvGanNhat.ColumnHeadersVisible = true;
-        dgvGanNhat.Visible = true;
-        dgvGanNhat.Enabled = true;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvGanNhatDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvGanNhatDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvGanNhatDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.GradientActiveCaption;
-        dgvGanNhatDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvGanNhatDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvGanNhatDefaultCellStyle.Format = "";
-        dgvGanNhatDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(4, 4, 4, 4);
-        dgvGanNhatDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.False;
-        dgvGanNhatDefaultCellStyle.NullValue = "";
-        dgvGanNhat.DefaultCellStyle = dgvGanNhatDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvGanNhatColumnHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        dgvGanNhatColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumnHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvGanNhatColumnHeadersDefaultCellStyle.Format = "";
-        dgvGanNhatColumnHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumnHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumnHeadersDefaultCellStyle.NullValue = "";
-        dgvGanNhat.ColumnHeadersDefaultCellStyle = dgvGanNhatColumnHeadersDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatAlternatingRowsDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatAlternatingRowsDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.Font = null;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.Format = "";
-        dgvGanNhatAlternatingRowsDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatAlternatingRowsDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatAlternatingRowsDefaultCellStyle.NullValue = "";
-        dgvGanNhat.AlternatingRowsDefaultCellStyle = dgvGanNhatAlternatingRowsDefaultCellStyle;
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-        dgvGanNhatRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(248,250,252);
-        dgvGanNhatRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
-        dgvGanNhatRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
-        dgvGanNhatRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
-        dgvGanNhatRowHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dgvGanNhatRowHeadersDefaultCellStyle.Format = "";
-        dgvGanNhatRowHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatRowHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatRowHeadersDefaultCellStyle.NullValue = "";
-        dgvGanNhat.RowHeadersDefaultCellStyle = dgvGanNhatRowHeadersDefaultCellStyle;
-        dgvGanNhat.RowTemplate.Height = 34;
-        dgvGanNhatColumn1.Name = "MaHD";
-        dgvGanNhatColumn1.HeaderText="Mã HĐ";
-        dgvGanNhatColumn1.Visible = true;
-        dgvGanNhatColumn1.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn1.DataPropertyName = "MaHD";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn1Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn1Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn1Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn1Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn1Style.Font = null;
-        dgvGanNhatColumn1Style.Format = "HD00000";
-        dgvGanNhatColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn1Style.NullValue = "";
-        dgvGanNhatColumn1.DefaultCellStyle = dgvGanNhatColumn1Style;
-        dgvGanNhatColumn2.Name = "NgayLap";
-        dgvGanNhatColumn2.HeaderText = "Ngày lập";
-        dgvGanNhatColumn2.Visible = true;
-        dgvGanNhatColumn2.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn2.DataPropertyName = "NgayLap";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn2Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn2Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn2Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn2Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn2Style.Font = null;
-        dgvGanNhatColumn2Style.Format = "dd/MM/yyyy HH:mm";
-        dgvGanNhatColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn2Style.NullValue = "";
-        dgvGanNhatColumn2.DefaultCellStyle = dgvGanNhatColumn2Style;
-        dgvGanNhatColumn3.Name = "KhachHang";
-        dgvGanNhatColumn3.HeaderText = "Khách hàng";
-        dgvGanNhatColumn3.Visible = true;
-        dgvGanNhatColumn3.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn3.DataPropertyName = "KhachHang";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn3Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn3Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn3Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn3Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn3Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn3Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn3Style.Font = null;
-        dgvGanNhatColumn3Style.Format = "";
-        dgvGanNhatColumn3Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn3Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn3Style.NullValue = "";
-        dgvGanNhatColumn3.DefaultCellStyle = dgvGanNhatColumn3Style;
-        dgvGanNhatColumn4.Name = "NhanVien";
-        dgvGanNhatColumn4.HeaderText = "Nhân viên";
-        dgvGanNhatColumn4.Visible = true;
-        dgvGanNhatColumn4.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn4.DataPropertyName = "NhanVien";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn4Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn4Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn4Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn4Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn4Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn4Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn4Style.Font = null;
-        dgvGanNhatColumn4Style.Format = "";
-        dgvGanNhatColumn4Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn4Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn4Style.NullValue = "";
-        dgvGanNhatColumn4.DefaultCellStyle = dgvGanNhatColumn4Style;
-        dgvGanNhatColumn5.Name = "ThucThu";
-        dgvGanNhatColumn5.HeaderText = "Thực thu";
-        dgvGanNhatColumn5.Visible = true;
-        dgvGanNhatColumn5.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn5.DataPropertyName = "ThucThu";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn5Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn5Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn5Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn5Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn5Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn5Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn5Style.Font = null;
-        dgvGanNhatColumn5Style.Format = "N0";
-        dgvGanNhatColumn5Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn5Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn5Style.NullValue = "";
-        dgvGanNhatColumn5.DefaultCellStyle = dgvGanNhatColumn5Style;
-        dgvGanNhatColumn6.Name = "Voucher";
-        dgvGanNhatColumn6.HeaderText = "Voucher";
-        dgvGanNhatColumn6.Visible = false;
-        dgvGanNhatColumn6.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn6.DataPropertyName = "Voucher";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn6Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn6Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn6Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn6Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn6Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn6Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn6Style.Font = null;
-        dgvGanNhatColumn6Style.Format = "";
-        dgvGanNhatColumn6Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn6Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn6Style.NullValue = "";
-        dgvGanNhatColumn6.DefaultCellStyle = dgvGanNhatColumn6Style;
-        dgvGanNhatColumn7.Name = "TongTien";
-        dgvGanNhatColumn7.HeaderText = "TongTien";
-        dgvGanNhatColumn7.Visible = false;
-        dgvGanNhatColumn7.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn7.DataPropertyName = "TongTien";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn7Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn7Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn7Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn7Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn7Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn7Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn7Style.Font = null;
-        dgvGanNhatColumn7Style.Format = "N0";
-        dgvGanNhatColumn7Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn7Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn7Style.NullValue = "";
-        dgvGanNhatColumn7.DefaultCellStyle = dgvGanNhatColumn7Style;
-        dgvGanNhatColumn8.Name = "GiamGia";
-        dgvGanNhatColumn8.HeaderText = "GiamGia";
-        dgvGanNhatColumn8.Visible = false;
-        dgvGanNhatColumn8.ReadOnly = true;
-        
-        
-        dgvGanNhatColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvGanNhatColumn8.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvGanNhatColumn8.DataPropertyName = "GiamGia";
-        global::System.Windows.Forms.DataGridViewCellStyle dgvGanNhatColumn8Style = new global::System.Windows.Forms.DataGridViewCellStyle();
-        dgvGanNhatColumn8Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
-        dgvGanNhatColumn8Style.BackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn8Style.ForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn8Style.SelectionBackColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn8Style.SelectionForeColor = global::System.Drawing.Color.Empty;
-        dgvGanNhatColumn8Style.Font = null;
-        dgvGanNhatColumn8Style.Format = "N0";
-        dgvGanNhatColumn8Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        dgvGanNhatColumn8Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
-        dgvGanNhatColumn8Style.NullValue = "";
-        dgvGanNhatColumn8.DefaultCellStyle = dgvGanNhatColumn8Style;
-        dgvGanNhat.AutoGenerateColumns = false;
-        colRecentStatus=new DataGridViewTextBoxColumn();colRecentStatus.Name="TrangThai";colRecentStatus.DataPropertyName="TrangThai";
-        colRecentStatus.HeaderText="Trạng thái";colRecentStatus.ReadOnly=true;
-        dgvGanNhat.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvGanNhatColumn1, dgvGanNhatColumn2, dgvGanNhatColumn3, dgvGanNhatColumn4, dgvGanNhatColumn5, dgvGanNhatColumn6, dgvGanNhatColumn7, dgvGanNhatColumn8, colRecentStatus });
-
-        // lblKhongHoaDon
-        lblKhongHoaDon.Name = "lblKhongHoaDon";
-        lblKhongHoaDon.Text = "Chưa có hóa đơn bán hàng.";
-        lblKhongHoaDon.Location = new global::System.Drawing.Point(0, 0);
-        lblKhongHoaDon.Size = new global::System.Drawing.Size(1106, 185);
-        lblKhongHoaDon.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblKhongHoaDon.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblKhongHoaDon.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblKhongHoaDon.AutoSize = false;
-        lblKhongHoaDon.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        lblKhongHoaDon.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblKhongHoaDon.BackColor = Color.FromArgb(248,250,252);
-        lblKhongHoaDon.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblKhongHoaDon.TabIndex = 1;
-        lblKhongHoaDon.TabStop = false;
-        lblKhongHoaDon.AccessibleName = null;
-        lblKhongHoaDon.AutoEllipsis = false;
-        lblKhongHoaDon.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        lblKhongHoaDon.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblKhongHoaDon.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblKhongHoaDon.Visible = true;
-        lblKhongHoaDon.Enabled = true;
-
-        // lblTongQuan
-        lblTongQuan.Name = "lblTongQuan";
-        lblTongQuan.Text = "";
-        lblTongQuan.Location = new global::System.Drawing.Point(19, 618);
-        lblTongQuan.Size = new global::System.Drawing.Size(1124, 30);
-        lblTongQuan.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
-        lblTongQuan.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        lblTongQuan.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        lblTongQuan.AutoSize = false;
-        lblTongQuan.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        lblTongQuan.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        lblTongQuan.BackColor = Color.FromArgb(248,250,252);
-        lblTongQuan.Cursor = global::System.Windows.Forms.Cursors.Default;
-        lblTongQuan.TabIndex = 4;
-        lblTongQuan.TabStop = false;
-        lblTongQuan.AccessibleName = null;
-        lblTongQuan.AutoEllipsis = true;
-        lblTongQuan.TextAlign = global::System.Drawing.ContentAlignment.TopLeft;
-        lblTongQuan.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        lblTongQuan.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
-        lblTongQuan.Visible = true;
-        lblTongQuan.Enabled = true;
-        shellLayout.Controls.Add(panelChucNang,0,0);
-        shellLayout.SetRowSpan(panelChucNang,2);
-
-
-
-
-
-
-        shellLayout.Controls.Add(lblTitle,1,0);
+        btnTrangChu.FlatAppearance.MouseDownBackColor = SystemColors.ActiveBorder;
+        btnTrangChu.FlatStyle = FlatStyle.Flat;
+        btnTrangChu.Font = new Font("Segoe UI", 10.2F);
+        btnTrangChu.ForeColor = Color.FromArgb(241, 245, 249);
+        btnTrangChu.Location = new Point(15, 24);
+        btnTrangChu.Margin = new Padding(0, 6, 0, 6);
+        btnTrangChu.Name = "btnTrangChu";
+        btnTrangChu.Size = new Size(245, 60);
+        btnTrangChu.TabIndex = 0;
+        btnTrangChu.Text = "Trang Chủ";
+        btnTrangChu.UseVisualStyleBackColor = false;
+        btnTrangChu.Click += btnTrangChu_Click;
+        // 
+        // btnBanHang
+        // 
+        btnBanHang.BackColor = Color.FromArgb(30, 41, 59);
+        btnBanHang.Dock = DockStyle.Fill;
+        btnBanHang.FlatAppearance.BorderSize = 0;
+        btnBanHang.FlatStyle = FlatStyle.Flat;
+        btnBanHang.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnBanHang.ForeColor = Color.FromArgb(241, 245, 249);
+        btnBanHang.Location = new Point(15, 96);
+        btnBanHang.Margin = new Padding(0, 6, 0, 6);
+        btnBanHang.Name = "btnBanHang";
+        btnBanHang.Size = new Size(245, 60);
+        btnBanHang.TabIndex = 0;
+        btnBanHang.Text = "Bán hàng (F1)";
+        btnBanHang.UseVisualStyleBackColor = false;
+        btnBanHang.Click += btnBanHang_Click;
+        // 
+        // btnQuanLyThuoc
+        // 
+        btnQuanLyThuoc.BackColor = Color.FromArgb(30, 41, 59);
+        btnQuanLyThuoc.Dock = DockStyle.Fill;
+        btnQuanLyThuoc.FlatAppearance.BorderSize = 0;
+        btnQuanLyThuoc.FlatStyle = FlatStyle.Flat;
+        btnQuanLyThuoc.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnQuanLyThuoc.ForeColor = Color.FromArgb(241, 245, 249);
+        btnQuanLyThuoc.Location = new Point(15, 168);
+        btnQuanLyThuoc.Margin = new Padding(0, 6, 0, 6);
+        btnQuanLyThuoc.Name = "btnQuanLyThuoc";
+        btnQuanLyThuoc.Size = new Size(245, 60);
+        btnQuanLyThuoc.TabIndex = 1;
+        btnQuanLyThuoc.Text = "Quản lý thuốc (F2)";
+        btnQuanLyThuoc.UseVisualStyleBackColor = false;
+        btnQuanLyThuoc.Click += btnQuanLyThuoc_Click;
+        // 
+        // btnQuanLyKhac
+        // 
+        btnQuanLyKhac.BackColor = Color.FromArgb(30, 41, 59);
+        btnQuanLyKhac.Dock = DockStyle.Fill;
+        btnQuanLyKhac.FlatAppearance.BorderSize = 0;
+        btnQuanLyKhac.FlatStyle = FlatStyle.Flat;
+        btnQuanLyKhac.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnQuanLyKhac.ForeColor = Color.FromArgb(241, 245, 249);
+        btnQuanLyKhac.Location = new Point(15, 240);
+        btnQuanLyKhac.Margin = new Padding(0, 6, 0, 6);
+        btnQuanLyKhac.Name = "btnQuanLyKhac";
+        btnQuanLyKhac.Size = new Size(245, 60);
+        btnQuanLyKhac.TabIndex = 4;
+        btnQuanLyKhac.Text = "Quản lý khác (F3)";
+        btnQuanLyKhac.UseVisualStyleBackColor = false;
+        btnQuanLyKhac.Click += btnQuanLyKhac_Click;
+        // 
+        // btnNhapKho
+        // 
+        btnNhapKho.BackColor = Color.FromArgb(30, 41, 59);
+        btnNhapKho.Dock = DockStyle.Fill;
+        btnNhapKho.FlatAppearance.BorderSize = 0;
+        btnNhapKho.FlatStyle = FlatStyle.Flat;
+        btnNhapKho.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnNhapKho.ForeColor = Color.FromArgb(241, 245, 249);
+        btnNhapKho.Location = new Point(15, 312);
+        btnNhapKho.Margin = new Padding(0, 6, 0, 6);
+        btnNhapKho.Name = "btnNhapKho";
+        btnNhapKho.Size = new Size(245, 60);
+        btnNhapKho.TabIndex = 5;
+        btnNhapKho.Text = "Nhập kho (F4)";
+        btnNhapKho.UseVisualStyleBackColor = false;
+        btnNhapKho.Click += btnNhapKho_Click;
+        // 
+        // btnCanhBao
+        // 
+        btnCanhBao.BackColor = Color.FromArgb(30, 41, 59);
+        btnCanhBao.Dock = DockStyle.Fill;
+        btnCanhBao.FlatAppearance.BorderSize = 0;
+        btnCanhBao.FlatStyle = FlatStyle.Flat;
+        btnCanhBao.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnCanhBao.ForeColor = Color.FromArgb(241, 245, 249);
+        btnCanhBao.Location = new Point(15, 384);
+        btnCanhBao.Margin = new Padding(0, 6, 0, 6);
+        btnCanhBao.Name = "btnCanhBao";
+        btnCanhBao.Size = new Size(245, 60);
+        btnCanhBao.TabIndex = 6;
+        btnCanhBao.Text = "Cảnh báo (F5)";
+        btnCanhBao.UseVisualStyleBackColor = false;
+        btnCanhBao.Click += btnCanhBao_Click;
+        // 
+        // btnBaoCao
+        // 
+        btnBaoCao.BackColor = Color.FromArgb(30, 41, 59);
+        btnBaoCao.Dock = DockStyle.Fill;
+        btnBaoCao.FlatAppearance.BorderSize = 0;
+        btnBaoCao.FlatStyle = FlatStyle.Flat;
+        btnBaoCao.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnBaoCao.ForeColor = Color.FromArgb(241, 245, 249);
+        btnBaoCao.Location = new Point(15, 456);
+        btnBaoCao.Margin = new Padding(0, 6, 0, 6);
+        btnBaoCao.Name = "btnBaoCao";
+        btnBaoCao.Size = new Size(245, 60);
+        btnBaoCao.TabIndex = 7;
+        btnBaoCao.Text = "Báo cáo (F6)";
+        btnBaoCao.UseVisualStyleBackColor = false;
+        btnBaoCao.Click += btnBaoCao_Click;
+        // 
+        // lblTitle
+        // 
+        lblTitle.BackColor = Color.FromArgb(15, 118, 110);
+        lblTitle.Dock = DockStyle.Fill;
+        lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
+        lblTitle.ForeColor = Color.White;
+        lblTitle.Location = new Point(275, 0);
+        lblTitle.Margin = new Padding(0);
+        lblTitle.Name = "lblTitle";
+        lblTitle.Size = new Size(1600, 75);
+        lblTitle.TabIndex = 0;
+        lblTitle.Text = "HỆ THỐNG QUẢN LÍ NHÀ THUỐC";
+        lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+        lblTitle.UseCompatibleTextRendering = true;
+        // 
+        // contentHost
+        // 
+        contentHost.AutoScroll = true;
         contentHost.Controls.Add(dashboard);
+        contentHost.Dock = DockStyle.Fill;
+        contentHost.Location = new Point(275, 75);
+        contentHost.Margin = new Padding(0);
+        contentHost.Name = "contentHost";
+        contentHost.Size = new Size(1600, 950);
+        contentHost.TabIndex = 4;
+        // 
+        // dashboard
+        // 
+        dashboard.BackColor = Color.FromArgb(248, 250, 252);
+        dashboard.ColumnCount = 1;
+        dashboard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         dashboard.Controls.Add(tableLayoutPanel1, 0, 0);
+        dashboard.Controls.Add(tableLayoutPanel4, 0, 1);
+        dashboard.Controls.Add(tableLayoutPanel17, 0, 2);
+        dashboard.Controls.Add(groupBox22, 0, 3);
+        dashboard.Controls.Add(lblTongQuan, 0, 4);
+        dashboard.Dock = DockStyle.Fill;
+        dashboard.Font = new Font("Segoe UI", 9F);
+        dashboard.ForeColor = SystemColors.ControlText;
+        dashboard.Location = new Point(0, 0);
+        dashboard.Margin = new Padding(0);
+        dashboard.Name = "dashboard";
+        dashboard.Padding = new Padding(20, 10, 20, 12);
+        dashboard.RowCount = 5;
+        dashboard.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+        dashboard.RowStyles.Add(new RowStyle(SizeType.Absolute, 148F));
+        dashboard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+        dashboard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+        dashboard.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+        dashboard.Size = new Size(1600, 950);
+        dashboard.TabIndex = 4;
+        // 
+        // tableLayoutPanel1
+        // 
+        tableLayoutPanel1.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel1.ColumnCount = 2;
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 175F));
         tableLayoutPanel1.Controls.Add(lblTieuDeTongQuan, 0, 0);
         tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
+        tableLayoutPanel1.Dock = DockStyle.Fill;
+        tableLayoutPanel1.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel1.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel1.Location = new Point(20, 10);
+        tableLayoutPanel1.Margin = new Padding(0);
+        tableLayoutPanel1.Name = "tableLayoutPanel1";
+        tableLayoutPanel1.RowCount = 1;
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel1.Size = new Size(1560, 60);
+        tableLayoutPanel1.TabIndex = 0;
+        // 
+        // lblTieuDeTongQuan
+        // 
+        lblTieuDeTongQuan.BackColor = Color.FromArgb(248, 250, 252);
+        lblTieuDeTongQuan.Dock = DockStyle.Fill;
+        lblTieuDeTongQuan.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+        lblTieuDeTongQuan.ForeColor = SystemColors.ControlText;
+        lblTieuDeTongQuan.Location = new Point(0, 0);
+        lblTieuDeTongQuan.Margin = new Padding(0, 0, 15, 0);
+        lblTieuDeTongQuan.Name = "lblTieuDeTongQuan";
+        lblTieuDeTongQuan.Size = new Size(1370, 60);
+        lblTieuDeTongQuan.TabIndex = 0;
+        lblTieuDeTongQuan.Text = "Tổng quan";
+        lblTieuDeTongQuan.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // tableLayoutPanel3
+        // 
+        tableLayoutPanel3.AutoSize = true;
+        tableLayoutPanel3.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel3.ColumnCount = 2;
+        tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+        tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         tableLayoutPanel3.Controls.Add(btnLamMoiTongQuan, 0, 0);
+        tableLayoutPanel3.Dock = DockStyle.Fill;
+        tableLayoutPanel3.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel3.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel3.Location = new Point(1385, 0);
+        tableLayoutPanel3.Margin = new Padding(0);
+        tableLayoutPanel3.Name = "tableLayoutPanel3";
+        tableLayoutPanel3.RowCount = 1;
+        tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+        tableLayoutPanel3.Size = new Size(175, 60);
+        tableLayoutPanel3.TabIndex = 1;
+        // 
+        // btnLamMoiTongQuan
+        // 
+        btnLamMoiTongQuan.BackColor = Color.FromArgb(15, 118, 110);
         tableLayoutPanel3.SetColumnSpan(btnLamMoiTongQuan, 2);
-        dashboard.Controls.Add(tableLayoutPanel4, 0, 1);
+        btnLamMoiTongQuan.Cursor = Cursors.Hand;
+        btnLamMoiTongQuan.Dock = DockStyle.Fill;
+        btnLamMoiTongQuan.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnLamMoiTongQuan.FlatStyle = FlatStyle.Flat;
+        btnLamMoiTongQuan.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnLamMoiTongQuan.ForeColor = Color.White;
+        btnLamMoiTongQuan.Location = new Point(0, 5);
+        btnLamMoiTongQuan.Margin = new Padding(0, 5, 5, 0);
+        btnLamMoiTongQuan.Name = "btnLamMoiTongQuan";
+        btnLamMoiTongQuan.Size = new Size(170, 55);
+        btnLamMoiTongQuan.TabIndex = 0;
+        btnLamMoiTongQuan.Text = "Làm mới";
+        btnLamMoiTongQuan.UseVisualStyleBackColor = false;
+        // 
+        // tableLayoutPanel4
+        // 
+        tableLayoutPanel4.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel4.ColumnCount = 4;
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
         tableLayoutPanel4.Controls.Add(tableLayoutPanel5, 0, 0);
+        tableLayoutPanel4.Controls.Add(tableLayoutPanel8, 1, 0);
+        tableLayoutPanel4.Controls.Add(tableLayoutPanel11, 2, 0);
+        tableLayoutPanel4.Controls.Add(tableLayoutPanel14, 3, 0);
+        tableLayoutPanel4.Dock = DockStyle.Fill;
+        tableLayoutPanel4.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel4.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel4.Location = new Point(20, 70);
+        tableLayoutPanel4.Margin = new Padding(0);
+        tableLayoutPanel4.Name = "tableLayoutPanel4";
+        tableLayoutPanel4.RowCount = 1;
+        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel4.Size = new Size(1560, 148);
+        tableLayoutPanel4.TabIndex = 1;
+        // 
+        // tableLayoutPanel5
+        // 
+        tableLayoutPanel5.BackColor = Color.FromArgb(240, 253, 244);
+        tableLayoutPanel5.ColumnCount = 1;
+        tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel5.Controls.Add(label6, 0, 0);
         tableLayoutPanel5.Controls.Add(lblDoanhThu, 0, 1);
         tableLayoutPanel5.Controls.Add(label7, 0, 2);
-        tableLayoutPanel4.Controls.Add(tableLayoutPanel8, 1, 0);
+        tableLayoutPanel5.Cursor = Cursors.Hand;
+        tableLayoutPanel5.Dock = DockStyle.Fill;
+        tableLayoutPanel5.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel5.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel5.Location = new Point(0, 8);
+        tableLayoutPanel5.Margin = new Padding(0, 8, 10, 10);
+        tableLayoutPanel5.Name = "tableLayoutPanel5";
+        tableLayoutPanel5.Padding = new Padding(15, 8, 12, 8);
+        tableLayoutPanel5.RowCount = 3;
+        tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
+        tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+        tableLayoutPanel5.Size = new Size(380, 130);
+        tableLayoutPanel5.TabIndex = 0;
+        // 
+        // label6
+        // 
+        label6.BackColor = Color.Transparent;
+        label6.Cursor = Cursors.Hand;
+        label6.Dock = DockStyle.Fill;
+        label6.Font = new Font("Segoe UI", 10.2F);
+        label6.ForeColor = Color.FromArgb(21, 128, 61);
+        label6.Location = new Point(19, 8);
+        label6.Margin = new Padding(4, 0, 4, 0);
+        label6.Name = "label6";
+        label6.Size = new Size(345, 32);
+        label6.TabIndex = 0;
+        label6.Text = "Doanh thu hôm nay";
+        // 
+        // lblDoanhThu
+        // 
+        lblDoanhThu.BackColor = Color.Transparent;
+        lblDoanhThu.Cursor = Cursors.Hand;
+        lblDoanhThu.Dock = DockStyle.Fill;
+        lblDoanhThu.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+        lblDoanhThu.ForeColor = Color.FromArgb(4, 120, 87);
+        lblDoanhThu.Location = new Point(19, 40);
+        lblDoanhThu.Margin = new Padding(4, 0, 4, 0);
+        lblDoanhThu.Name = "lblDoanhThu";
+        lblDoanhThu.Size = new Size(345, 53);
+        lblDoanhThu.TabIndex = 1;
+        lblDoanhThu.Text = "—";
+        // 
+        // label7
+        // 
+        label7.BackColor = Color.Transparent;
+        label7.Cursor = Cursors.Hand;
+        label7.Dock = DockStyle.Fill;
+        label7.Font = new Font("Segoe UI", 10.2F);
+        label7.ForeColor = SystemColors.ControlText;
+        label7.Location = new Point(19, 93);
+        label7.Margin = new Padding(4, 0, 4, 0);
+        label7.Name = "label7";
+        label7.Size = new Size(345, 29);
+        label7.TabIndex = 2;
+        label7.Text = "Tiền hàng trừ giảm giá";
+        // 
+        // tableLayoutPanel8
+        // 
+        tableLayoutPanel8.BackColor = Color.FromArgb(239, 246, 255);
+        tableLayoutPanel8.ColumnCount = 1;
+        tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel8.Controls.Add(label9, 0, 0);
         tableLayoutPanel8.Controls.Add(lblSoHoaDon, 0, 1);
         tableLayoutPanel8.Controls.Add(label10, 0, 2);
-        tableLayoutPanel4.Controls.Add(tableLayoutPanel11, 2, 0);
+        tableLayoutPanel8.Cursor = Cursors.Hand;
+        tableLayoutPanel8.Dock = DockStyle.Fill;
+        tableLayoutPanel8.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel8.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel8.Location = new Point(390, 8);
+        tableLayoutPanel8.Margin = new Padding(0, 8, 10, 10);
+        tableLayoutPanel8.Name = "tableLayoutPanel8";
+        tableLayoutPanel8.Padding = new Padding(15, 8, 12, 8);
+        tableLayoutPanel8.RowCount = 3;
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+        tableLayoutPanel8.Size = new Size(380, 130);
+        tableLayoutPanel8.TabIndex = 1;
+        // 
+        // label9
+        // 
+        label9.BackColor = Color.Transparent;
+        label9.Cursor = Cursors.Hand;
+        label9.Dock = DockStyle.Fill;
+        label9.Font = new Font("Segoe UI", 10.2F);
+        label9.ForeColor = Color.FromArgb(29, 78, 216);
+        label9.Location = new Point(19, 8);
+        label9.Margin = new Padding(4, 0, 4, 0);
+        label9.Name = "label9";
+        label9.Size = new Size(345, 32);
+        label9.TabIndex = 0;
+        label9.Text = "Đã thanh toán hôm nay";
+        // 
+        // lblSoHoaDon
+        // 
+        lblSoHoaDon.BackColor = Color.Transparent;
+        lblSoHoaDon.Cursor = Cursors.Hand;
+        lblSoHoaDon.Dock = DockStyle.Fill;
+        lblSoHoaDon.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+        lblSoHoaDon.ForeColor = Color.FromArgb(30, 64, 175);
+        lblSoHoaDon.Location = new Point(19, 40);
+        lblSoHoaDon.Margin = new Padding(4, 0, 4, 0);
+        lblSoHoaDon.Name = "lblSoHoaDon";
+        lblSoHoaDon.Size = new Size(345, 53);
+        lblSoHoaDon.TabIndex = 1;
+        lblSoHoaDon.Text = "—";
+        // 
+        // label10
+        // 
+        label10.BackColor = Color.Transparent;
+        label10.Cursor = Cursors.Hand;
+        label10.Dock = DockStyle.Fill;
+        label10.Font = new Font("Segoe UI", 10.2F);
+        label10.ForeColor = SystemColors.ControlText;
+        label10.Location = new Point(19, 93);
+        label10.Margin = new Padding(4, 0, 4, 0);
+        label10.Name = "label10";
+        label10.Size = new Size(345, 29);
+        label10.TabIndex = 2;
+        label10.Text = "Số hóa đơn đã thu tiền";
+        // 
+        // tableLayoutPanel11
+        // 
+        tableLayoutPanel11.BackColor = Color.FromArgb(254, 243, 199);
+        tableLayoutPanel11.ColumnCount = 1;
+        tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
         tableLayoutPanel11.Controls.Add(lblSapHet, 0, 1);
         tableLayoutPanel11.Controls.Add(label13, 0, 2);
-        tableLayoutPanel4.Controls.Add(tableLayoutPanel14, 3, 0);
+        tableLayoutPanel11.Cursor = Cursors.Hand;
+        tableLayoutPanel11.Dock = DockStyle.Fill;
+        tableLayoutPanel11.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel11.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel11.Location = new Point(780, 8);
+        tableLayoutPanel11.Margin = new Padding(0, 8, 10, 10);
+        tableLayoutPanel11.Name = "tableLayoutPanel11";
+        tableLayoutPanel11.Padding = new Padding(15, 8, 12, 8);
+        tableLayoutPanel11.RowCount = 3;
+        tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
+        tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+        tableLayoutPanel11.Size = new Size(380, 130);
+        tableLayoutPanel11.TabIndex = 2;
+        // 
+        // label12
+        // 
+        label12.BackColor = Color.Transparent;
+        label12.Cursor = Cursors.Hand;
+        label12.Dock = DockStyle.Fill;
+        label12.Font = new Font("Segoe UI", 10.2F);
+        label12.ForeColor = Color.FromArgb(180, 83, 9);
+        label12.Location = new Point(19, 8);
+        label12.Margin = new Padding(4, 0, 4, 0);
+        label12.Name = "label12";
+        label12.Size = new Size(345, 32);
+        label12.TabIndex = 0;
+        label12.Text = "Thuốc sắp hết";
+        // 
+        // lblSapHet
+        // 
+        lblSapHet.BackColor = Color.Transparent;
+        lblSapHet.Cursor = Cursors.Hand;
+        lblSapHet.Dock = DockStyle.Fill;
+        lblSapHet.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+        lblSapHet.ForeColor = Color.FromArgb(180, 83, 9);
+        lblSapHet.Location = new Point(19, 40);
+        lblSapHet.Margin = new Padding(4, 0, 4, 0);
+        lblSapHet.Name = "lblSapHet";
+        lblSapHet.Size = new Size(345, 53);
+        lblSapHet.TabIndex = 1;
+        lblSapHet.Text = "—";
+        // 
+        // label13
+        // 
+        label13.BackColor = Color.Transparent;
+        label13.Cursor = Cursors.Hand;
+        label13.Dock = DockStyle.Fill;
+        label13.Font = new Font("Segoe UI", 10.2F);
+        label13.ForeColor = SystemColors.ControlText;
+        label13.Location = new Point(19, 93);
+        label13.Margin = new Padding(4, 0, 4, 0);
+        label13.Name = "label13";
+        label13.Size = new Size(345, 29);
+        label13.TabIndex = 2;
+        label13.Text = "Tồn còn hạn dưới 10";
+        // 
+        // tableLayoutPanel14
+        // 
+        tableLayoutPanel14.BackColor = Color.FromArgb(255, 241, 242);
+        tableLayoutPanel14.ColumnCount = 1;
+        tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel14.Controls.Add(label15, 0, 0);
         tableLayoutPanel14.Controls.Add(lblSapHetHan, 0, 1);
         tableLayoutPanel14.Controls.Add(label16, 0, 2);
-        dashboard.Controls.Add(tableLayoutPanel17, 0, 2);
+        tableLayoutPanel14.Cursor = Cursors.Hand;
+        tableLayoutPanel14.Dock = DockStyle.Fill;
+        tableLayoutPanel14.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel14.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel14.Location = new Point(1170, 8);
+        tableLayoutPanel14.Margin = new Padding(0, 8, 10, 10);
+        tableLayoutPanel14.Name = "tableLayoutPanel14";
+        tableLayoutPanel14.Padding = new Padding(15, 8, 12, 8);
+        tableLayoutPanel14.RowCount = 3;
+        tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
+        tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+        tableLayoutPanel14.Size = new Size(380, 130);
+        tableLayoutPanel14.TabIndex = 3;
+        // 
+        // label15
+        // 
+        label15.BackColor = Color.Transparent;
+        label15.Cursor = Cursors.Hand;
+        label15.Dock = DockStyle.Fill;
+        label15.Font = new Font("Segoe UI", 10.2F);
+        label15.ForeColor = Color.FromArgb(190, 18, 60);
+        label15.Location = new Point(19, 8);
+        label15.Margin = new Padding(4, 0, 4, 0);
+        label15.Name = "label15";
+        label15.Size = new Size(345, 32);
+        label15.TabIndex = 0;
+        label15.Text = "Lô sắp hết hạn";
+        // 
+        // lblSapHetHan
+        // 
+        lblSapHetHan.BackColor = Color.Transparent;
+        lblSapHetHan.Cursor = Cursors.Hand;
+        lblSapHetHan.Dock = DockStyle.Fill;
+        lblSapHetHan.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+        lblSapHetHan.ForeColor = Color.FromArgb(190, 18, 60);
+        lblSapHetHan.Location = new Point(19, 40);
+        lblSapHetHan.Margin = new Padding(4, 0, 4, 0);
+        lblSapHetHan.Name = "lblSapHetHan";
+        lblSapHetHan.Size = new Size(345, 53);
+        lblSapHetHan.TabIndex = 1;
+        lblSapHetHan.Text = "—";
+        // 
+        // label16
+        // 
+        label16.BackColor = Color.Transparent;
+        label16.Cursor = Cursors.Hand;
+        label16.Dock = DockStyle.Fill;
+        label16.Font = new Font("Segoe UI", 10.2F);
+        label16.ForeColor = SystemColors.ControlText;
+        label16.Location = new Point(19, 93);
+        label16.Margin = new Padding(4, 0, 4, 0);
+        label16.Name = "label16";
+        label16.Size = new Size(345, 29);
+        label16.TabIndex = 2;
+        label16.Text = "Còn hàng, dưới 30 ngày";
+        // 
+        // tableLayoutPanel17
+        // 
+        tableLayoutPanel17.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel17.ColumnCount = 2;
+        tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+        tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         tableLayoutPanel17.Controls.Add(groupBox18, 0, 0);
+        tableLayoutPanel17.Controls.Add(groupBox20, 1, 0);
+        tableLayoutPanel17.Dock = DockStyle.Fill;
+        tableLayoutPanel17.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel17.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel17.Location = new Point(20, 218);
+        tableLayoutPanel17.Margin = new Padding(0, 0, 0, 10);
+        tableLayoutPanel17.Name = "tableLayoutPanel17";
+        tableLayoutPanel17.RowCount = 1;
+        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel17.Size = new Size(1560, 331);
+        tableLayoutPanel17.TabIndex = 2;
+        // 
+        // groupBox18
+        // 
+        groupBox18.BackColor = Color.FromArgb(248, 250, 252);
         groupBox18.Controls.Add(panel19);
+        groupBox18.Dock = DockStyle.Fill;
+        groupBox18.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        groupBox18.ForeColor = SystemColors.ControlText;
+        groupBox18.Location = new Point(0, 0);
+        groupBox18.Margin = new Padding(0, 0, 10, 0);
+        groupBox18.Name = "groupBox18";
+        groupBox18.Padding = new Padding(15, 2, 15, 15);
+        groupBox18.Size = new Size(770, 331);
+        groupBox18.TabIndex = 0;
+        groupBox18.TabStop = false;
+        groupBox18.Text = "Thuốc cần nhập thêm";
+        // 
+        // panel19
+        // 
+        panel19.BackColor = Color.FromArgb(248, 250, 252);
         panel19.Controls.Add(dgvSapHet);
         panel19.Controls.Add(lblKhongSapHet);
-        tableLayoutPanel17.Controls.Add(groupBox20, 1, 0);
+        panel19.Dock = DockStyle.Fill;
+        panel19.Font = new Font("Segoe UI", 10.2F);
+        panel19.ForeColor = SystemColors.ControlText;
+        panel19.Location = new Point(15, 30);
+        panel19.Margin = new Padding(4);
+        panel19.Name = "panel19";
+        panel19.Size = new Size(740, 286);
+        panel19.TabIndex = 0;
+        // 
+        // dgvSapHet
+        // 
+        dgvSapHet.AllowUserToAddRows = false;
+        dgvSapHet.AllowUserToDeleteRows = false;
+        dgvSapHet.AllowUserToResizeColumns = false;
+        dgvSapHet.AllowUserToResizeRows = false;
+        dataGridViewCellStyle13.BackColor = Color.FromArgb(248, 250, 252);
+        dgvSapHet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+        dgvSapHet.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        dgvSapHet.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        dgvSapHet.BackgroundColor = Color.White;
+        dgvSapHet.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        dataGridViewCellStyle14.BackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle14.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle14.ForeColor = Color.White;
+        dataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle14.SelectionForeColor = Color.White;
+        dataGridViewCellStyle14.WrapMode = DataGridViewTriState.False;
+        dgvSapHet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+        dgvSapHet.ColumnHeadersHeight = 38;
+        dgvSapHet.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle15.BackColor = Color.White;
+        dataGridViewCellStyle15.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle15.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle15.Padding = new Padding(4);
+        dataGridViewCellStyle15.SelectionBackColor = Color.FromArgb(204, 251, 241);
+        dataGridViewCellStyle15.SelectionForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
+        dgvSapHet.DefaultCellStyle = dataGridViewCellStyle15;
+        dgvSapHet.Dock = DockStyle.Fill;
+        dgvSapHet.EnableHeadersVisualStyles = false;
+        dgvSapHet.Font = new Font("Segoe UI", 10.2F);
+        dgvSapHet.GridColor = SystemColors.ControlLight;
+        dgvSapHet.Location = new Point(0, 0);
+        dgvSapHet.Margin = new Padding(4);
+        dgvSapHet.MultiSelect = false;
+        dgvSapHet.Name = "dgvSapHet";
+        dgvSapHet.ReadOnly = true;
+        dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle16.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle16.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle16.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle16.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+        dgvSapHet.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
+        dgvSapHet.RowHeadersVisible = false;
+        dgvSapHet.RowHeadersWidth = 62;
+        dgvSapHet.RowTemplate.Height = 34;
+        dgvSapHet.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvSapHet.Size = new Size(740, 286);
+        dgvSapHet.TabIndex = 0;
+        // 
+        // lblKhongSapHet
+        // 
+        lblKhongSapHet.BackColor = Color.FromArgb(248, 250, 252);
+        lblKhongSapHet.Dock = DockStyle.Fill;
+        lblKhongSapHet.Font = new Font("Segoe UI", 10.2F);
+        lblKhongSapHet.ForeColor = SystemColors.ControlText;
+        lblKhongSapHet.Location = new Point(0, 0);
+        lblKhongSapHet.Margin = new Padding(4, 0, 4, 0);
+        lblKhongSapHet.Name = "lblKhongSapHet";
+        lblKhongSapHet.Size = new Size(740, 286);
+        lblKhongSapHet.TabIndex = 1;
+        lblKhongSapHet.Text = "Chưa có thuốc dưới ngưỡng tồn.";
+        lblKhongSapHet.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // groupBox20
+        // 
+        groupBox20.BackColor = Color.FromArgb(248, 250, 252);
         groupBox20.Controls.Add(panel21);
+        groupBox20.Dock = DockStyle.Fill;
+        groupBox20.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        groupBox20.ForeColor = SystemColors.ControlText;
+        groupBox20.Location = new Point(780, 0);
+        groupBox20.Margin = new Padding(0);
+        groupBox20.Name = "groupBox20";
+        groupBox20.Padding = new Padding(15, 2, 15, 15);
+        groupBox20.Size = new Size(780, 331);
+        groupBox20.TabIndex = 1;
+        groupBox20.TabStop = false;
+        groupBox20.Text = "Lô sắp hết hạn";
+        // 
+        // panel21
+        // 
+        panel21.BackColor = Color.FromArgb(248, 250, 252);
         panel21.Controls.Add(dgvSapHetHan);
         panel21.Controls.Add(lblKhongSapHetHan);
-        dashboard.Controls.Add(groupBox22, 0, 3);
+        panel21.Dock = DockStyle.Fill;
+        panel21.Font = new Font("Segoe UI", 10.2F);
+        panel21.ForeColor = SystemColors.ControlText;
+        panel21.Location = new Point(15, 30);
+        panel21.Margin = new Padding(4);
+        panel21.Name = "panel21";
+        panel21.Size = new Size(750, 286);
+        panel21.TabIndex = 0;
+        // 
+        // dgvSapHetHan
+        // 
+        dgvSapHetHan.AllowUserToAddRows = false;
+        dgvSapHetHan.AllowUserToDeleteRows = false;
+        dgvSapHetHan.AllowUserToResizeColumns = false;
+        dgvSapHetHan.AllowUserToResizeRows = false;
+        dataGridViewCellStyle17.BackColor = Color.FromArgb(248, 250, 252);
+        dgvSapHetHan.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+        dgvSapHetHan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        dgvSapHetHan.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        dgvSapHetHan.BackgroundColor = Color.White;
+        dgvSapHetHan.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        dataGridViewCellStyle18.BackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle18.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle18.ForeColor = Color.White;
+        dataGridViewCellStyle18.SelectionBackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle18.SelectionForeColor = Color.White;
+        dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
+        dgvSapHetHan.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+        dgvSapHetHan.ColumnHeadersHeight = 38;
+        dgvSapHetHan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle19.BackColor = Color.White;
+        dataGridViewCellStyle19.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle19.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle19.Padding = new Padding(4);
+        dataGridViewCellStyle19.SelectionBackColor = Color.FromArgb(204, 251, 241);
+        dataGridViewCellStyle19.SelectionForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle19.WrapMode = DataGridViewTriState.False;
+        dgvSapHetHan.DefaultCellStyle = dataGridViewCellStyle19;
+        dgvSapHetHan.Dock = DockStyle.Fill;
+        dgvSapHetHan.EnableHeadersVisualStyles = false;
+        dgvSapHetHan.Font = new Font("Segoe UI", 10.2F);
+        dgvSapHetHan.GridColor = SystemColors.ControlLight;
+        dgvSapHetHan.Location = new Point(0, 0);
+        dgvSapHetHan.Margin = new Padding(4);
+        dgvSapHetHan.MultiSelect = false;
+        dgvSapHetHan.Name = "dgvSapHetHan";
+        dgvSapHetHan.ReadOnly = true;
+        dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle20.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle20.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle20.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle20.WrapMode = DataGridViewTriState.True;
+        dgvSapHetHan.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
+        dgvSapHetHan.RowHeadersVisible = false;
+        dgvSapHetHan.RowHeadersWidth = 62;
+        dgvSapHetHan.RowTemplate.Height = 34;
+        dgvSapHetHan.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvSapHetHan.Size = new Size(750, 286);
+        dgvSapHetHan.TabIndex = 0;
+        // 
+        // lblKhongSapHetHan
+        // 
+        lblKhongSapHetHan.BackColor = Color.FromArgb(248, 250, 252);
+        lblKhongSapHetHan.Dock = DockStyle.Fill;
+        lblKhongSapHetHan.Font = new Font("Segoe UI", 10.2F);
+        lblKhongSapHetHan.ForeColor = SystemColors.ControlText;
+        lblKhongSapHetHan.Location = new Point(0, 0);
+        lblKhongSapHetHan.Margin = new Padding(4, 0, 4, 0);
+        lblKhongSapHetHan.Name = "lblKhongSapHetHan";
+        lblKhongSapHetHan.Size = new Size(750, 286);
+        lblKhongSapHetHan.TabIndex = 1;
+        lblKhongSapHetHan.Text = "Chưa có lô sắp hết hạn.";
+        lblKhongSapHetHan.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // groupBox22
+        // 
+        groupBox22.BackColor = Color.FromArgb(248, 250, 252);
         groupBox22.Controls.Add(panel23);
+        groupBox22.Dock = DockStyle.Fill;
+        groupBox22.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        groupBox22.ForeColor = SystemColors.ControlText;
+        groupBox22.Location = new Point(20, 559);
+        groupBox22.Margin = new Padding(0);
+        groupBox22.Name = "groupBox22";
+        groupBox22.Padding = new Padding(15, 2, 15, 15);
+        groupBox22.Size = new Size(1560, 341);
+        groupBox22.TabIndex = 3;
+        groupBox22.TabStop = false;
+        groupBox22.Text = "5 hóa đơn gần nhất — nhấp đúp để xem chi tiết";
+        // 
+        // panel23
+        // 
+        panel23.BackColor = Color.FromArgb(248, 250, 252);
         panel23.Controls.Add(dgvGanNhat);
         panel23.Controls.Add(lblKhongHoaDon);
-        dashboard.Controls.Add(lblTongQuan, 0, 4);
-        shellLayout.Name="shellLayout";shellLayout.Dock=System.Windows.Forms.DockStyle.Fill;
-        shellLayout.Margin=new System.Windows.Forms.Padding(0);shellLayout.ColumnCount=2;shellLayout.RowCount=2;
-        shellLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute,220F));
-        shellLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent,100F));
-        shellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,60F));
-        shellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent,100F));
-        contentHost.Name="contentHost";contentHost.Dock=System.Windows.Forms.DockStyle.Fill;
-        contentHost.Margin=new System.Windows.Forms.Padding(0);contentHost.AutoScroll=true;
-        shellLayout.Controls.Add(contentHost,1,1);Controls.Add(shellLayout);
-        panelChucNang.Margin=new System.Windows.Forms.Padding(0);
-        sideButtons.Name="sideButtons";sideButtons.Dock=System.Windows.Forms.DockStyle.Fill;
-        sideButtons.ColumnCount=1;sideButtons.RowCount=8;sideButtons.Padding=new System.Windows.Forms.Padding(12,14,12,0);
-        sideButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent,100F));
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnTrangChu.Dock=System.Windows.Forms.DockStyle.Fill;btnTrangChu.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnTrangChu.BackColor=System.Drawing.Color.White;btnTrangChu.ForeColor=System.Drawing.Color.Black;
-        btnTrangChu.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnTrangChu.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnTrangChu,0,0);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnBanHang.Dock=System.Windows.Forms.DockStyle.Fill;btnBanHang.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnBanHang.BackColor=System.Drawing.Color.White;btnBanHang.ForeColor=System.Drawing.Color.Black;
-        btnBanHang.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnBanHang.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnBanHang,0,1);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnQuanLyThuoc.Dock=System.Windows.Forms.DockStyle.Fill;btnQuanLyThuoc.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnQuanLyThuoc.BackColor=System.Drawing.Color.White;btnQuanLyThuoc.ForeColor=System.Drawing.Color.Black;
-        btnQuanLyThuoc.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnQuanLyThuoc.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnQuanLyThuoc,0,2);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnQuanLyKhac.Dock=System.Windows.Forms.DockStyle.Fill;btnQuanLyKhac.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnQuanLyKhac.BackColor=System.Drawing.Color.White;btnQuanLyKhac.ForeColor=System.Drawing.Color.Black;
-        btnQuanLyKhac.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnQuanLyKhac.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnQuanLyKhac,0,3);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnNhapKho.Dock=System.Windows.Forms.DockStyle.Fill;btnNhapKho.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnNhapKho.BackColor=System.Drawing.Color.White;btnNhapKho.ForeColor=System.Drawing.Color.Black;
-        btnNhapKho.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnNhapKho.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnNhapKho,0,4);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnCanhBao.Dock=System.Windows.Forms.DockStyle.Fill;btnCanhBao.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnCanhBao.BackColor=System.Drawing.Color.White;btnCanhBao.ForeColor=System.Drawing.Color.Black;
-        btnCanhBao.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnCanhBao.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnCanhBao,0,5);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute,58F));
-        btnBaoCao.Dock=System.Windows.Forms.DockStyle.Fill;btnBaoCao.Margin=new System.Windows.Forms.Padding(0,5,0,5);
-        btnBaoCao.BackColor=System.Drawing.Color.White;btnBaoCao.ForeColor=System.Drawing.Color.Black;
-        btnBaoCao.FlatStyle=System.Windows.Forms.FlatStyle.Flat;btnBaoCao.FlatAppearance.BorderSize=0;
-        sideButtons.Controls.Add(btnBaoCao,0,6);
-        sideButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent,100F));
-        panelChucNang.Controls.Add(sideButtons);
-        AutoScaleDimensions = new global::System.Drawing.SizeF(8F, 20F);
-        AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
-        BackColor = Color.FromArgb(248,250,252);
-        ForeColor = global::System.Drawing.SystemColors.ControlText;
-        Font = new global::System.Drawing.Font("Segoe UI", 9F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        ClientSize = new global::System.Drawing.Size(1500, 820);
-        MinimumSize = new global::System.Drawing.Size(1100, 700);
-        MaximumSize = new global::System.Drawing.Size(0, 0);
-        FormBorderStyle = global::System.Windows.Forms.FormBorderStyle.Sizable;
-        MaximizeBox = true;
-        WindowState = System.Windows.Forms.FormWindowState.Normal;
-        MinimizeBox = true;
-        StartPosition = global::System.Windows.Forms.FormStartPosition.CenterScreen;
-        Text = "QUẢN LÝ HIỆU THUỐC";
+        panel23.Dock = DockStyle.Fill;
+        panel23.Font = new Font("Segoe UI", 10.2F);
+        panel23.ForeColor = SystemColors.ControlText;
+        panel23.Location = new Point(15, 30);
+        panel23.Margin = new Padding(4);
+        panel23.Name = "panel23";
+        panel23.Size = new Size(1530, 296);
+        panel23.TabIndex = 0;
+        // 
+        // dgvGanNhat
+        // 
+        dgvGanNhat.AllowUserToAddRows = false;
+        dgvGanNhat.AllowUserToDeleteRows = false;
+        dgvGanNhat.AllowUserToResizeColumns = false;
+        dgvGanNhat.AllowUserToResizeRows = false;
+        dataGridViewCellStyle21.BackColor = Color.FromArgb(248, 250, 252);
+        dgvGanNhat.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+        dgvGanNhat.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        dgvGanNhat.BackgroundColor = Color.White;
+        dgvGanNhat.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        dataGridViewCellStyle22.BackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle22.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle22.ForeColor = Color.White;
+        dataGridViewCellStyle22.SelectionBackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle22.SelectionForeColor = Color.White;
+        dataGridViewCellStyle22.WrapMode = DataGridViewTriState.False;
+        dgvGanNhat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+        dgvGanNhat.ColumnHeadersHeight = 38;
+        dgvGanNhat.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle23.BackColor = Color.White;
+        dataGridViewCellStyle23.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle23.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle23.Padding = new Padding(4);
+        dataGridViewCellStyle23.SelectionBackColor = Color.FromArgb(204, 251, 241);
+        dataGridViewCellStyle23.SelectionForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle23.WrapMode = DataGridViewTriState.False;
+        dgvGanNhat.DefaultCellStyle = dataGridViewCellStyle23;
+        dgvGanNhat.Dock = DockStyle.Fill;
+        dgvGanNhat.EnableHeadersVisualStyles = false;
+        dgvGanNhat.Font = new Font("Segoe UI", 10.2F);
+        dgvGanNhat.GridColor = SystemColors.ControlLight;
+        dgvGanNhat.Location = new Point(0, 0);
+        dgvGanNhat.Margin = new Padding(4);
+        dgvGanNhat.MultiSelect = false;
+        dgvGanNhat.Name = "dgvGanNhat";
+        dgvGanNhat.ReadOnly = true;
+        dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle24.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle24.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle24.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle24.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle24.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle24.WrapMode = DataGridViewTriState.True;
+        dgvGanNhat.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+        dgvGanNhat.RowHeadersVisible = false;
+        dgvGanNhat.RowHeadersWidth = 62;
+        dgvGanNhat.RowTemplate.Height = 34;
+        dgvGanNhat.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvGanNhat.Size = new Size(1530, 296);
+        dgvGanNhat.TabIndex = 0;
+        dgvGanNhat.CellContentClick += dgvGanNhat_CellContentClick;
+        // 
+        // lblKhongHoaDon
+        // 
+        lblKhongHoaDon.BackColor = Color.FromArgb(248, 250, 252);
+        lblKhongHoaDon.Dock = DockStyle.Fill;
+        lblKhongHoaDon.Font = new Font("Segoe UI", 10.2F);
+        lblKhongHoaDon.ForeColor = SystemColors.ControlText;
+        lblKhongHoaDon.Location = new Point(0, 0);
+        lblKhongHoaDon.Margin = new Padding(4, 0, 4, 0);
+        lblKhongHoaDon.Name = "lblKhongHoaDon";
+        lblKhongHoaDon.Size = new Size(1530, 296);
+        lblKhongHoaDon.TabIndex = 1;
+        lblKhongHoaDon.Text = "Chưa có hóa đơn bán hàng.";
+        lblKhongHoaDon.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // lblTongQuan
+        // 
+        lblTongQuan.AutoEllipsis = true;
+        lblTongQuan.BackColor = Color.FromArgb(248, 250, 252);
+        lblTongQuan.Dock = DockStyle.Fill;
+        lblTongQuan.Font = new Font("Segoe UI", 10.2F);
+        lblTongQuan.ForeColor = SystemColors.ControlText;
+        lblTongQuan.Location = new Point(24, 900);
+        lblTongQuan.Margin = new Padding(4, 0, 4, 0);
+        lblTongQuan.Name = "lblTongQuan";
+        lblTongQuan.Size = new Size(1552, 38);
+        lblTongQuan.TabIndex = 4;
+        // 
+        // frmMain
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleMode = AutoScaleMode.Font;
+        BackColor = Color.FromArgb(248, 250, 252);
+        ClientSize = new Size(1875, 1025);
+        Controls.Add(shellLayout);
+        Font = new Font("Segoe UI", 9F);
+        ForeColor = Color.FromArgb(15, 23, 42);
         KeyPreview = true;
-        ShowIcon = true;
-        ShowInTaskbar = true;
+        Margin = new Padding(4);
+        MinimumSize = new Size(1370, 861);
         Name = "frmMain";
-        btnTrangChu.Click += btnTrangChu_Click;
-        btnBaoCao.Click += btnBaoCao_Click;
-        btnCanhBao.Click += btnCanhBao_Click;
-        btnNhapKho.Click += btnNhapKho_Click;
-        btnQuanLyKhac.Click += btnQuanLyKhac_Click;
-        btnQuanLyThuoc.Click += btnQuanLyThuoc_Click;
-        btnBanHang.Click += btnBanHang_Click;
+        StartPosition = FormStartPosition.CenterScreen;
+        Text = "QUẢN LÝ HIỆU THUỐC";
         KeyDown += frmMain_KeyDown;
-        ((global::System.ComponentModel.ISupportInitialize)dgvGanNhat).EndInit();
-        panel23.ResumeLayout(false);
-        panel23.PerformLayout();
-        groupBox22.ResumeLayout(false);
-        groupBox22.PerformLayout();
-        ((global::System.ComponentModel.ISupportInitialize)dgvSapHetHan).EndInit();
-        panel21.ResumeLayout(false);
-        panel21.PerformLayout();
-        groupBox20.ResumeLayout(false);
-        groupBox20.PerformLayout();
-        ((global::System.ComponentModel.ISupportInitialize)dgvSapHet).EndInit();
-        panel19.ResumeLayout(false);
-        panel19.PerformLayout();
-        groupBox18.ResumeLayout(false);
-        groupBox18.PerformLayout();
-        tableLayoutPanel17.ResumeLayout(false);
-        tableLayoutPanel17.PerformLayout();
-        tableLayoutPanel14.ResumeLayout(false);
-        tableLayoutPanel14.PerformLayout();
-        tableLayoutPanel11.ResumeLayout(false);
-        tableLayoutPanel11.PerformLayout();
-        tableLayoutPanel8.ResumeLayout(false);
-        tableLayoutPanel8.PerformLayout();
-        tableLayoutPanel5.ResumeLayout(false);
-        tableLayoutPanel5.PerformLayout();
-        tableLayoutPanel4.ResumeLayout(false);
-        tableLayoutPanel4.PerformLayout();
-        tableLayoutPanel3.ResumeLayout(false);
-        tableLayoutPanel3.PerformLayout();
+        shellLayout.ResumeLayout(false);
+        panelChucNang.ResumeLayout(false);
+        sideButtons.ResumeLayout(false);
+        contentHost.ResumeLayout(false);
+        dashboard.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);
         tableLayoutPanel1.PerformLayout();
-        dashboard.ResumeLayout(false);
-        dashboard.PerformLayout();
-        panelChucNang.ResumeLayout(false);
-        panelChucNang.PerformLayout();
-        colRecentStatus.DisplayIndex=1;
-        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnBaoCao.BackColor=Color.FromArgb(15, 118, 110);btnBaoCao.ForeColor=Color.White;btnBaoCao.UseVisualStyleBackColor=false;
-        btnCanhBao.BackColor=Color.FromArgb(15, 118, 110);btnCanhBao.ForeColor=Color.White;btnCanhBao.UseVisualStyleBackColor=false;
-        btnNhapKho.BackColor=Color.FromArgb(15, 118, 110);btnNhapKho.ForeColor=Color.White;btnNhapKho.UseVisualStyleBackColor=false;
-        btnQuanLyKhac.BackColor=Color.FromArgb(15, 118, 110);btnQuanLyKhac.ForeColor=Color.White;btnQuanLyKhac.UseVisualStyleBackColor=false;
-        btnQuanLyThuoc.BackColor=Color.FromArgb(15, 118, 110);btnQuanLyThuoc.ForeColor=Color.White;btnQuanLyThuoc.UseVisualStyleBackColor=false;
-        btnBanHang.BackColor=Color.FromArgb(15, 118, 110);btnBanHang.ForeColor=Color.White;btnBanHang.UseVisualStyleBackColor=false;
-        btnTrangChu.BackColor=Color.FromArgb(15, 118, 110);btnTrangChu.ForeColor=Color.White;btnTrangChu.UseVisualStyleBackColor=false;
-        btnLamMoiTongQuan.BackColor=Color.FromArgb(15, 118, 110);btnLamMoiTongQuan.ForeColor=Color.White;btnLamMoiTongQuan.UseVisualStyleBackColor=false;
-        dgvSapHet.BackgroundColor=Color.White;dgvSapHet.EnableHeadersVisualStyles=false;
-        dgvSapHet.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvSapHet.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
-        dgvSapHet.DefaultCellStyle.BackColor=Color.White;dgvSapHet.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
-        dgvSapHet.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvSapHet.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvSapHet.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-        dgvSapHetHan.BackgroundColor=Color.White;dgvSapHetHan.EnableHeadersVisualStyles=false;
-        dgvSapHetHan.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvSapHetHan.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
-        dgvSapHetHan.DefaultCellStyle.BackColor=Color.White;dgvSapHetHan.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
-        dgvSapHetHan.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvSapHetHan.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvSapHetHan.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-        dgvGanNhat.BackgroundColor=Color.White;dgvGanNhat.EnableHeadersVisualStyles=false;
-        dgvGanNhat.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvGanNhat.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
-        dgvGanNhat.DefaultCellStyle.BackColor=Color.White;dgvGanNhat.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
-        dgvGanNhat.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvGanNhat.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvGanNhat.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-        lblTitle.BackColor=Color.FromArgb(15,118,110);lblTitle.ForeColor=Color.White;
-        panelChucNang.BackColor=Color.FromArgb(15,23,42);sideButtons.BackColor=Color.FromArgb(15,23,42);
-        btnTrangChu.BackColor=Color.FromArgb(30,41,59);btnTrangChu.ForeColor=Color.FromArgb(241,245,249);
-        btnBanHang.BackColor=Color.FromArgb(30,41,59);btnBanHang.ForeColor=Color.FromArgb(241,245,249);
-        btnQuanLyThuoc.BackColor=Color.FromArgb(30,41,59);btnQuanLyThuoc.ForeColor=Color.FromArgb(241,245,249);
-        btnQuanLyKhac.BackColor=Color.FromArgb(30,41,59);btnQuanLyKhac.ForeColor=Color.FromArgb(241,245,249);
-        btnNhapKho.BackColor=Color.FromArgb(30,41,59);btnNhapKho.ForeColor=Color.FromArgb(241,245,249);
-        btnCanhBao.BackColor=Color.FromArgb(30,41,59);btnCanhBao.ForeColor=Color.FromArgb(241,245,249);
-        btnBaoCao.BackColor=Color.FromArgb(30,41,59);btnBaoCao.ForeColor=Color.FromArgb(241,245,249);
-        tableLayoutPanel5.BackColor=Color.FromArgb(240,253,244);lblDoanhThu.ForeColor=Color.FromArgb(4,120,87);
-        tableLayoutPanel8.BackColor=Color.FromArgb(239,246,255);lblSoHoaDon.ForeColor=Color.FromArgb(30,64,175);
-        tableLayoutPanel11.BackColor=Color.FromArgb(254,243,199);lblSapHet.ForeColor=Color.FromArgb(180,83,9);
-        tableLayoutPanel14.BackColor=Color.FromArgb(255,241,242);lblSapHetHan.ForeColor=Color.FromArgb(190,18,60);
-        label6.BackColor=Color.Transparent;
-        lblDoanhThu.BackColor=Color.Transparent;
-        label7.BackColor=Color.Transparent;
-        label9.BackColor=Color.Transparent;
-        lblSoHoaDon.BackColor=Color.Transparent;
-        label10.BackColor=Color.Transparent;
-        label12.BackColor=Color.Transparent;
-        lblSapHet.BackColor=Color.Transparent;
-        label13.BackColor=Color.Transparent;
-        label15.BackColor=Color.Transparent;
-        lblSapHetHan.BackColor=Color.Transparent;
-        label16.BackColor=Color.Transparent;
-        label6.ForeColor=Color.FromArgb(21,128,61);label9.ForeColor=Color.FromArgb(29,78,216);
-        label12.ForeColor=Color.FromArgb(180,83,9);label15.ForeColor=Color.FromArgb(190,18,60);
-        dgvSapHet.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
-        dgvSapHet.MultiSelect=false;
-        dgvSapHet.AllowUserToResizeColumns=false;
-        dgvSapHet.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-        dgvSapHet.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHet.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHet.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvSapHet.ColumnHeadersDefaultCellStyle.BackColor;
-        dgvSapHet.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvSapHet.ColumnHeadersDefaultCellStyle.ForeColor;
-        dgvSapHet.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvSapHet.ColumnHeadersHeight=38;
-        dgvSapHetColumn1.Resizable=DataGridViewTriState.False;
-        dgvSapHetColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetColumn2.Resizable=DataGridViewTriState.False;
-        dgvSapHetColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetColumn3.Resizable=DataGridViewTriState.False;
-        dgvSapHetColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetColumn4.Resizable=DataGridViewTriState.False;
-        dgvSapHetColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetColumn5.Resizable=DataGridViewTriState.False;
-        dgvSapHetColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn1.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn2.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn3.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn4.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn5.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn6.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHanColumn7.Resizable=DataGridViewTriState.False;
-        dgvSapHetHanColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn1.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn2.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn3.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn4.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn5.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn6.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn7.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhatColumn8.Resizable=DataGridViewTriState.False;
-        dgvGanNhatColumn8.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        colRecentStatus.Resizable=DataGridViewTriState.False;
-        colRecentStatus.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHan.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
-        dgvSapHetHan.MultiSelect=false;
-        dgvSapHetHan.AllowUserToResizeColumns=false;
-        dgvSapHetHan.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-        dgvSapHetHan.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHan.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvSapHetHan.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvSapHetHan.ColumnHeadersDefaultCellStyle.BackColor;
-        dgvSapHetHan.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvSapHetHan.ColumnHeadersDefaultCellStyle.ForeColor;
-        dgvSapHetHan.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvSapHetHan.ColumnHeadersHeight=38;
-        dgvGanNhat.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
-        dgvGanNhat.MultiSelect=false;
-        dgvGanNhat.AllowUserToResizeColumns=false;
-        dgvGanNhat.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-        dgvGanNhat.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhat.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvGanNhat.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvGanNhat.ColumnHeadersDefaultCellStyle.BackColor;
-        dgvGanNhat.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvGanNhat.ColumnHeadersDefaultCellStyle.ForeColor;
-        dgvGanNhat.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvGanNhat.ColumnHeadersHeight=38;
-                dgvSapHetColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvSapHetColumn1.MinimumWidth=180;
-        dgvSapHetColumn1.Width=180;
-        dgvSapHetColumn1.FillWeight=220F;
-        dgvSapHetColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetColumn2.MinimumWidth=59;
-        dgvSapHetColumn2.Width=59;
-        dgvSapHetColumn2.FillWeight=48F;
-        dgvSapHetColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetColumn3.MinimumWidth=70;
-        dgvSapHetColumn3.Width=70;
-        dgvSapHetColumn3.FillWeight=48F;
-        dgvSapHetColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetColumn4.MinimumWidth=65;
-        dgvSapHetColumn4.Width=65;
-        dgvSapHetColumn4.FillWeight=48F;
-        dgvSapHetColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetColumn5.MinimumWidth=150;
-        dgvSapHetColumn5.Width=150;
-        dgvSapHetColumn5.FillWeight=104F;
-        dgvSapHetHanColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvSapHetHanColumn1.MinimumWidth=180;
-        dgvSapHetHanColumn1.Width=180;
-        dgvSapHetHanColumn1.FillWeight=220F;
-        dgvSapHetHanColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn2.MinimumWidth=140;
-        dgvSapHetHanColumn2.Width=140;
-        dgvSapHetHanColumn2.FillWeight=64F;
-        dgvSapHetHanColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn3.MinimumWidth=112;
-        dgvSapHetHanColumn3.Width=112;
-        dgvSapHetHanColumn3.FillWeight=88F;
-        dgvSapHetHanColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn4.MinimumWidth=59;
-        dgvSapHetHanColumn4.Width=59;
-        dgvSapHetHanColumn4.FillWeight=48F;
-        dgvSapHetHanColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn5.MinimumWidth=65;
-        dgvSapHetHanColumn5.Width=65;
-        dgvSapHetHanColumn5.FillWeight=48F;
-        dgvSapHetHanColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn6.MinimumWidth=141;
-        dgvSapHetHanColumn6.Width=141;
-        dgvSapHetHanColumn6.FillWeight=120F;
-        dgvSapHetHanColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvSapHetHanColumn7.MinimumWidth=145;
-        dgvSapHetHanColumn7.Width=145;
-        dgvSapHetHanColumn7.FillWeight=96F;
-        dgvGanNhatColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn1.MinimumWidth=100;
-        dgvGanNhatColumn1.Width=100;
-        dgvGanNhatColumn1.FillWeight=64F;
-        dgvGanNhatColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn2.MinimumWidth=180;
-        dgvGanNhatColumn2.Width=180;
-        dgvGanNhatColumn2.FillWeight=88F;
-        dgvGanNhatColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvGanNhatColumn3.MinimumWidth=150;
-        dgvGanNhatColumn3.Width=150;
-        dgvGanNhatColumn3.FillWeight=220F;
-        dgvGanNhatColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvGanNhatColumn4.MinimumWidth=150;
-        dgvGanNhatColumn4.Width=150;
-        dgvGanNhatColumn4.FillWeight=220F;
-        dgvGanNhatColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn5.MinimumWidth=115;
-        dgvGanNhatColumn5.Width=115;
-        dgvGanNhatColumn5.FillWeight=88F;
-        dgvGanNhatColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn6.MinimumWidth=93;
-        dgvGanNhatColumn6.Width=93;
-        dgvGanNhatColumn6.FillWeight=80F;
-        dgvGanNhatColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn7.MinimumWidth=115;
-        dgvGanNhatColumn7.Width=115;
-        dgvGanNhatColumn7.FillWeight=88F;
-        dgvGanNhatColumn8.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvGanNhatColumn8.MinimumWidth=115;
-        dgvGanNhatColumn8.Width=115;
-        dgvGanNhatColumn8.FillWeight=80F;
-        colRecentStatus.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        colRecentStatus.MinimumWidth=145;
-        colRecentStatus.Width=145;
-        colRecentStatus.FillWeight=104F;
+        tableLayoutPanel3.ResumeLayout(false);
+        tableLayoutPanel4.ResumeLayout(false);
+        tableLayoutPanel5.ResumeLayout(false);
+        tableLayoutPanel8.ResumeLayout(false);
+        tableLayoutPanel11.ResumeLayout(false);
+        tableLayoutPanel14.ResumeLayout(false);
+        tableLayoutPanel17.ResumeLayout(false);
+        groupBox18.ResumeLayout(false);
+        panel19.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvSapHet).EndInit();
+        groupBox20.ResumeLayout(false);
+        panel21.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvSapHetHan).EndInit();
+        groupBox22.ResumeLayout(false);
+        panel23.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvGanNhat).EndInit();
         ResumeLayout(false);
-        PerformLayout();
     }
 
     private global::System.Windows.Forms.Panel panelChucNang;

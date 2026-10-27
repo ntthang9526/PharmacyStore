@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 using System.Data;
 
 namespace Store.POS
@@ -7,7 +7,10 @@ namespace Store.POS
     {
         private string maDangChon="";
         private KhachHangBLL bll = new KhachHangBLL();
-        public frmKhachHang()
+        public frmKhachHang() : this(null) { }
+
+        /// <summary>Mở form thêm mới và tự điền SĐT (dùng khi gọi từ màn hình bán hàng).</summary>
+        public frmKhachHang(string? sdtDienSan)
         {
             InitializeComponent();
             PhanQuyenGiaoDien.Gan(this);
@@ -18,6 +21,16 @@ namespace Store.POS
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
             PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
+            if (!string.IsNullOrWhiteSpace(sdtDienSan))
+            {
+                // Sau khi form load xong: mở chế độ thêm mới và điền SĐT
+                Load += (_, _) =>
+                {
+                    btnThem_Click(this, EventArgs.Empty); // mở khóa ô nhập liệu
+                    txtDienThoai.Text = sdtDienSan;
+                    txtTenKH.Focus();
+                };
+            }
         }
 
         private void ResetDetails()

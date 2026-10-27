@@ -1,4 +1,4 @@
-﻿using Store.Shared;
+using Store.Shared;
 using Store.BLL;
 using Store.DAL;
 using Store.POS.FormBanHang;
@@ -410,7 +410,8 @@ namespace Store.POS
                 khachHang = customerDAL.GetCustomerByPhone(phone);
                 if (khachHang == null && MessageBox.Show("Không tìm thấy khách hàng. Mở quản lý để thêm mới?", "Khách hàng", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    using var form = new frmKhachHang();
+                    // Truyền SĐT vào form quản lý khách hàng để tự điền
+                    using var form = new frmKhachHang(phone);
                     form.ShowDialog(this);
                     khachHang = customerDAL.GetCustomerByPhone(phone);
                 }
@@ -533,6 +534,12 @@ namespace Store.POS
         private void LuuHoaDon(string method="Tiền mặt",bool pending=false)
         {
             var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price }).ToList();
+            // Snapshot giỏ hàng trước khi làm mới
+            var snapshotGioHang = gioHang.ToList();
+            decimal snapshotTamTinh = gioHang.Sum(r => r.Total);
+            decimal snapshotGiam = voucherApDung == null ? 0 : snapshotTamTinh - tongTien;
+            string? snapshotVoucher = voucherApDung?.Code;
+            string snapshotKhach = khachHang?.FullName ?? "Khách lẻ";
             if (!banHangBLL.ThanhToan(PhienDangNhap.NhanVienId, items, voucherApDung?.Code, khachHang?.Id, tongTien,
                     out int orderId, out decimal subtotal, out decimal discount, out string error,method,pending))
             {
@@ -540,6 +547,17 @@ namespace Store.POS
                 return;
             }
             MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán. Chưa trừ kho và chưa tính doanh thu.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
+            // Hỏi xuất PDF hóa đơn (chỉ hỏi khi thanh toán thực sự, không hỏi khi lưu chờ)
+            if (!pending && MessageBox.Show("Bạn có muốn xuất hóa đơn PDF không?", "Xuất PDF", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    Store.POS.Common.PdfInvoiceHelper.XuatHoaDon(
+                        orderId, PhienDangNhap.HoTen, snapshotKhach, DateTime.Now,
+                        snapshotGioHang, snapshotTamTinh, snapshotGiam, tongTien, method, snapshotVoucher);
+                }
+                catch (Exception ex) { MessageBox.Show("Không xuất được PDF: " + ex.Message, "Lỗi PDF"); }
+            }
             LamMoiHoaDon();
         }
 

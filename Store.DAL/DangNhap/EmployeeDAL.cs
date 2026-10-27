@@ -36,8 +36,8 @@ namespace Store.DAL
                 Username = reader.GetString(reader.GetOrdinal("Username")),
                 PasswordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
                 Phone = reader.IsDBNull(reader.GetOrdinal("Phone")) ? null : reader.GetString(reader.GetOrdinal("Phone")),
+                IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                 Role = reader.GetString(reader.GetOrdinal("Role")),
-                IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
             };
         }
     }

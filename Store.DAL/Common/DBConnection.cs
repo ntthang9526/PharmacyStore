@@ -11,7 +11,7 @@ public class DBConnection
 
     public static string connectionString =>
         Environment.GetEnvironmentVariable("PHARMACY_TRIAL_CONNECTION_STRING")
-        ?? @"Server=.\SQLEXPRESS;Database=PharmacyStoreTrialDB;Trusted_Connection=True;TrustServerCertificate=True;Connect Timeout=5;";
+        ?? @"Server=LINHEHE;Database=PharmacyStoreTrialDB;Trusted_Connection=True;TrustServerCertificate=True;Connect Timeout=5;";
 
     public static SqlConnection GetDbConnection()
     {

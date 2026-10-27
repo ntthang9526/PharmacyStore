@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 using System.Data;
 namespace Store.POS;
 public partial class frmMain
@@ -39,9 +39,14 @@ public partial class frmMain
             var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet(CanhBaoSettings.NguongTon);var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
             lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
             label13.Text=$"Tồn còn hạn dưới {CanhBaoSettings.NguongTon}";
-            lblSapHet.Text=low.Rows.Count.ToString();lblSapHetHan.Text=expiry.Rows.Count.ToString();
+            lblSapHet.Text=low.Rows.Count.ToString();
+            // Lọc các lô đã được đánh dấu "Đã xử lý" khỏi hiển thị trang chủ
+            var chuaXuLy=expiry.Rows.Cast<System.Data.DataRow>().Where(r=>{int ma=Convert.ToInt32(r["MaThuoc"]);string lo=r["SoLo"]?.ToString()??"";return !frmCanhBao.LoXuLyDaXuLy.Contains(ma+"|"+lo);}).ToList();
+            lblSapHetHan.Text=chuaXuLy.Count.ToString();
             dgvSapHet.DataSource=low;dgvSapHetHan.DataSource=expiry;dgvGanNhat.DataSource=recent;
             dgvSapHet.Visible=low.Rows.Count>0;lblKhongSapHet.Visible=!dgvSapHet.Visible;
+            // Tô xám các hàng đã xử lý trong dgvSapHetHan trang chủ
+            foreach(DataGridViewRow r in dgvSapHetHan.Rows){if(r.IsNewRow)continue;int ma=Convert.ToInt32(r.Cells["MaThuoc"].Value);string lo=r.Cells["SoLo"].Value?.ToString()??"";bool dxl=frmCanhBao.LoXuLyDaXuLy.Contains(ma+"|"+lo);r.DefaultCellStyle.ForeColor=dxl?Color.Gray:Color.FromArgb(15,23,42);r.DefaultCellStyle.BackColor=dxl?Color.LightGray:(Convert.ToInt32(r.Cells["SoNgayConLai"].Value)<0?Color.LightCoral:Color.LemonChiffon);}
             dgvSapHetHan.Visible=expiry.Rows.Count>0;lblKhongSapHetHan.Visible=!dgvSapHetHan.Visible;
             dgvGanNhat.Visible=recent.Rows.Count>0;lblKhongHoaDon.Visible=!dgvGanNhat.Visible;
             lblTongQuan.ForeColor=Color.DimGray;
