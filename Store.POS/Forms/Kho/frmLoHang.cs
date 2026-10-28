@@ -10,8 +10,7 @@ public partial class frmLoHang : Form, ILamMoiDuLieu
         PosFormStyle.ConfigureGridSelection(this, posLayout, null);
         btnTimKiem.Click += (_, _) => TimKiem();
         btnLamMoi.Click += (_, _) => { txtTimKiem.Clear(); TimKiem(); };
-        btnDong.Click += (_, _) => Close();
-        txtTimKiem.KeyDown += (_, e) =>
+                txtTimKiem.KeyDown += (_, e) =>
         {
             if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; TimKiem(); }
         };

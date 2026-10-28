@@ -1,5 +1,10 @@
-﻿#nullable disable
-namespace Store.POS;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
+namespace Store.POS
+{
 
 partial class frmNhomThuoc
 {
@@ -13,6 +18,8 @@ partial class frmNhomThuoc
 
     private void InitializeComponent()
     {
+        this.dgvNhomThuocColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvNhomThuocColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -24,8 +31,7 @@ partial class frmNhomThuoc
         txtTimNhom = new global::System.Windows.Forms.TextBox();
         btnTimNhom = new global::System.Windows.Forms.Button();
         dgvNhomThuoc = new global::System.Windows.Forms.DataGridView();
-        dgvNhomThuocColumn1 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvNhomThuocColumn2 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
+        
         groupBox6 = new global::System.Windows.Forms.GroupBox();
         tableLayoutPanel7 = new global::System.Windows.Forms.TableLayoutPanel();
         tableLayoutPanel8 = new global::System.Windows.Forms.TableLayoutPanel();
@@ -37,7 +43,6 @@ partial class frmNhomThuoc
         btnSua = new global::System.Windows.Forms.Button();
         btnXoa = new global::System.Windows.Forms.Button();
         btnLamMoi = new global::System.Windows.Forms.Button();
-        btnThoat = new global::System.Windows.Forms.Button();
         posLayout.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         groupBox2.SuspendLayout();
@@ -327,7 +332,6 @@ partial class frmNhomThuoc
         dgvNhomThuoc.RowHeadersVisible = false;
         dgvNhomThuoc.MultiSelect = false;
         dgvNhomThuoc.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        dgvNhomThuoc.AutoSizeColumnsMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
         dgvNhomThuoc.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
         dgvNhomThuoc.BackgroundColor = global::System.Drawing.SystemColors.ScrollBar;
         dgvNhomThuoc.GridColor = global::System.Drawing.SystemColors.ControlLight;
@@ -387,15 +391,10 @@ partial class frmNhomThuoc
         dgvNhomThuocRowHeadersDefaultCellStyle.NullValue = "";
         dgvNhomThuoc.RowHeadersDefaultCellStyle = dgvNhomThuocRowHeadersDefaultCellStyle;
         dgvNhomThuoc.RowTemplate.Height = 34;
-        dgvNhomThuocColumn1.Name = "MaNhom";
-        dgvNhomThuocColumn1.HeaderText="Mã";
-        dgvNhomThuocColumn1.Visible = true;
-        dgvNhomThuocColumn1.ReadOnly = true;
         
         
-        dgvNhomThuocColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvNhomThuocColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvNhomThuocColumn1.DataPropertyName = "MaNhom";
+        
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvNhomThuocColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvNhomThuocColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvNhomThuocColumn1Style.BackColor = global::System.Drawing.Color.Empty;
@@ -407,16 +406,11 @@ partial class frmNhomThuoc
         dgvNhomThuocColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvNhomThuocColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvNhomThuocColumn1Style.NullValue = "";
-        dgvNhomThuocColumn1.DefaultCellStyle = dgvNhomThuocColumn1Style;
-        dgvNhomThuocColumn2.Name = "TenNhom";
-        dgvNhomThuocColumn2.HeaderText = "Tên nhóm thuốc";
-        dgvNhomThuocColumn2.Visible = true;
-        dgvNhomThuocColumn2.ReadOnly = true;
         
         
-        dgvNhomThuocColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvNhomThuocColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvNhomThuocColumn2.DataPropertyName = "TenNhom";
+        
+        
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvNhomThuocColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvNhomThuocColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvNhomThuocColumn2Style.BackColor = global::System.Drawing.Color.Empty;
@@ -428,9 +422,7 @@ partial class frmNhomThuoc
         dgvNhomThuocColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvNhomThuocColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
         dgvNhomThuocColumn2Style.NullValue = "";
-        dgvNhomThuocColumn2.DefaultCellStyle = dgvNhomThuocColumn2Style;
-        dgvNhomThuoc.AutoGenerateColumns = false;
-        dgvNhomThuoc.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvNhomThuocColumn1, dgvNhomThuocColumn2 });
+        
 
         // groupBox6
         groupBox6.Name = "groupBox6";
@@ -483,7 +475,7 @@ partial class frmNhomThuoc
         tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 132F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 88F));
 
         // tableLayoutPanel8
         tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -606,7 +598,7 @@ partial class frmNhomThuoc
         tableLayoutPanel13.Name = "tableLayoutPanel13";
         tableLayoutPanel13.Text = "";
         tableLayoutPanel13.Location = new global::System.Drawing.Point(0, 412);
-        tableLayoutPanel13.Size = new global::System.Drawing.Size(330, 132);
+        tableLayoutPanel13.Size = new global::System.Drawing.Size(330, 88);
         tableLayoutPanel13.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel13.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel13.Dock = global::System.Windows.Forms.DockStyle.Fill;
@@ -630,8 +622,8 @@ partial class frmNhomThuoc
         tableLayoutPanel13.Enabled = true;
         tableLayoutPanel13.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel13.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
-        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
+        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
 
         // btnThem
@@ -639,7 +631,7 @@ partial class frmNhomThuoc
         btnThem.Text = "Thêm";
         btnThem.Location = new global::System.Drawing.Point(0, 4);
         btnThem.Size = new global::System.Drawing.Size(161, 40);
-        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
         btnThem.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnThem.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
@@ -669,7 +661,7 @@ partial class frmNhomThuoc
         btnSua.Text = "Sửa";
         btnSua.Location = new global::System.Drawing.Point(169, 4);
         btnSua.Size = new global::System.Drawing.Size(161, 40);
-        btnSua.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 0);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
         btnSua.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnSua.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
@@ -699,7 +691,7 @@ partial class frmNhomThuoc
         btnXoa.Text = "Xóa";
         btnXoa.Location = new global::System.Drawing.Point(0, 48);
         btnXoa.Size = new global::System.Drawing.Size(161, 40);
-        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
         btnXoa.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnXoa.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
@@ -729,7 +721,7 @@ partial class frmNhomThuoc
         btnLamMoi.Text = "Làm mới";
         btnLamMoi.Location = new global::System.Drawing.Point(169, 48);
         btnLamMoi.Size = new global::System.Drawing.Size(161, 40);
-        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 0);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
         btnLamMoi.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
@@ -754,35 +746,6 @@ partial class frmNhomThuoc
         btnLamMoi.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
         btnLamMoi.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
-        // btnThoat
-        btnThoat.Name = "btnThoat";
-        btnThoat.Text = "Thoát";
-        btnThoat.Location = new global::System.Drawing.Point(0, 92);
-        btnThoat.Size = new global::System.Drawing.Size(326, 40);
-        btnThoat.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
-        btnThoat.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnThoat.Dock = global::System.Windows.Forms.DockStyle.Fill;
-
-        btnThoat.AutoSize = false;
-        btnThoat.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnThoat.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnThoat.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        btnThoat.BackColor = global::System.Drawing.SystemColors.ControlLight;
-        btnThoat.Cursor = global::System.Windows.Forms.Cursors.Hand;
-        btnThoat.TabIndex = 6;
-        btnThoat.TabStop = true;
-        btnThoat.AccessibleName = null;
-        btnThoat.AutoEllipsis = false;
-        btnThoat.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnThoat.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnThoat.UseVisualStyleBackColor = false;
-        btnThoat.DialogResult = global::System.Windows.Forms.DialogResult.None;
-        btnThoat.Visible = true;
-        btnThoat.Enabled = true;
-        btnThoat.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnThoat.FlatAppearance.BorderSize = 1;
-        btnThoat.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnThoat.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
         this.Controls.Add(posLayout);
         posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
@@ -804,8 +767,6 @@ partial class frmNhomThuoc
         tableLayoutPanel13.Controls.Add(btnSua, 1, 0);
         tableLayoutPanel13.Controls.Add(btnXoa, 0, 1);
         tableLayoutPanel13.Controls.Add(btnLamMoi, 1, 1);
-        tableLayoutPanel13.Controls.Add(btnThoat, 0, 2);
-        tableLayoutPanel13.SetColumnSpan(btnThoat, 2);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
         BackColor = Color.FromArgb(248,250,252);
@@ -827,7 +788,6 @@ partial class frmNhomThuoc
         btnSua.Click += btnSua_Click;
         btnXoa.Click += btnXoa_Click;
         btnLamMoi.Click += btnLamMoi_Click;
-        btnThoat.Click += btnThoat_Click;
         dgvNhomThuoc.CellClick += dgvNhomThuoc_CellClick;
         Load += frmNhomThuoc_Load;
         tableLayoutPanel13.ResumeLayout(false);
@@ -840,6 +800,41 @@ partial class frmNhomThuoc
         tableLayoutPanel7.PerformLayout();
         groupBox6.ResumeLayout(false);
         groupBox6.PerformLayout();
+                //
+        // dgvNhomThuocColumn1
+        //
+        this.dgvNhomThuocColumn1.Name = "MaNhom";
+        this.dgvNhomThuocColumn1.HeaderText = "Mã nhóm thuốc";
+        this.dgvNhomThuocColumn1.Visible = true;
+        this.dgvNhomThuocColumn1.ReadOnly = true;
+        this.dgvNhomThuocColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvNhomThuocColumn1.Resizable = DataGridViewTriState.False;
+        this.dgvNhomThuocColumn1.DataPropertyName = "MaNhom";
+        this.dgvNhomThuocColumn1.DefaultCellStyle = dgvNhomThuocColumn1Style;
+        this.dgvNhomThuocColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvNhomThuocColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvNhomThuocColumn1.MinimumWidth = 5;
+        this.dgvNhomThuocColumn1.Width = 74;
+        this.dgvNhomThuocColumn1.FillWeight = 80F;
+        //
+        // dgvNhomThuocColumn2
+        //
+        this.dgvNhomThuocColumn2.Name = "TenNhom";
+        this.dgvNhomThuocColumn2.HeaderText = "Nhóm thuốc";
+        this.dgvNhomThuocColumn2.Visible = true;
+        this.dgvNhomThuocColumn2.ReadOnly = true;
+        this.dgvNhomThuocColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvNhomThuocColumn2.Resizable = DataGridViewTriState.False;
+        this.dgvNhomThuocColumn2.DataPropertyName = "TenNhom";
+        this.dgvNhomThuocColumn2.DefaultCellStyle = dgvNhomThuocColumn2Style;
+        this.dgvNhomThuocColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvNhomThuocColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvNhomThuocColumn2.MinimumWidth = 5;
+        this.dgvNhomThuocColumn2.Width = 175;
+        this.dgvNhomThuocColumn2.FillWeight = 220F;
+
+        this.dgvNhomThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+        this.dgvNhomThuoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvNhomThuocColumn1, this.dgvNhomThuocColumn2 });
         ((global::System.ComponentModel.ISupportInitialize)dgvNhomThuoc).EndInit();
         tableLayoutPanel4.ResumeLayout(false);
         tableLayoutPanel4.PerformLayout();
@@ -857,7 +852,6 @@ partial class frmNhomThuoc
         btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
         btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
         btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);btnLamMoi.ForeColor=Color.White;btnLamMoi.UseVisualStyleBackColor=false;
-        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
         dgvNhomThuoc.BackgroundColor=Color.White;dgvNhomThuoc.EnableHeadersVisualStyles=false;
         dgvNhomThuoc.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvNhomThuoc.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvNhomThuoc.DefaultCellStyle.BackColor=Color.White;dgvNhomThuoc.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
@@ -866,25 +860,23 @@ partial class frmNhomThuoc
         dgvNhomThuoc.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvNhomThuoc.MultiSelect=false;
         dgvNhomThuoc.AllowUserToResizeColumns=false;
-        dgvNhomThuoc.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
         dgvNhomThuoc.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvNhomThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvNhomThuoc.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvNhomThuoc.ColumnHeadersDefaultCellStyle.BackColor;
         dgvNhomThuoc.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvNhomThuoc.ColumnHeadersDefaultCellStyle.ForeColor;
         dgvNhomThuoc.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         dgvNhomThuoc.ColumnHeadersHeight=38;
-        dgvNhomThuocColumn1.Resizable=DataGridViewTriState.False;
-        dgvNhomThuocColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvNhomThuocColumn2.Resizable=DataGridViewTriState.False;
-        dgvNhomThuocColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-                dgvNhomThuocColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvNhomThuocColumn1.MinimumWidth=65;
-        dgvNhomThuocColumn1.Width=65;
-        dgvNhomThuocColumn1.FillWeight=80F;
-        dgvNhomThuocColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvNhomThuocColumn2.MinimumWidth=155;
-        dgvNhomThuocColumn2.Width=155;
-        dgvNhomThuocColumn2.FillWeight=220F;
+        
+        
+        
+        
+        
+        
+                dgvNhomThuoc.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvNhomThuoc.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvNhomThuoc.ColumnHeadersHeight=43;
+        
+        
         ResumeLayout(false);
         PerformLayout();
     }
@@ -912,5 +904,6 @@ partial class frmNhomThuoc
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnXoa;
     private global::System.Windows.Forms.Button btnLamMoi;
-    private global::System.Windows.Forms.Button btnThoat;
+}
+
 }

@@ -1,5 +1,10 @@
-﻿#nullable disable
-namespace Store.POS;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
+namespace Store.POS
+{
 
 partial class frmKhachHang
 {
@@ -13,6 +18,10 @@ partial class frmKhachHang
 
     private void InitializeComponent()
     {
+        this.MaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.TenKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.DienThoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.Diem = new System.Windows.Forms.DataGridViewTextBoxColumn();
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -27,10 +36,8 @@ partial class frmKhachHang
         txtTimKiem = new TextBox();
         btnTimKiem = new Button();
         dgvKhachHang = new DataGridView();
-        MaKH = new DataGridViewTextBoxColumn();
-        TenKH = new DataGridViewTextBoxColumn();
-        DienThoai = new DataGridViewTextBoxColumn();
-        Diem = new DataGridViewTextBoxColumn();
+        
+        
 
         groupBox6 = new GroupBox();
         tableLayoutPanel7 = new TableLayoutPanel();
@@ -48,8 +55,7 @@ partial class frmKhachHang
         btnThem = new Button();
         btnSua = new Button();
         btnXoa = new Button();
-        btnLamLai = new Button();
-        btnThoat = new Button();
+        btnLamMoi = new Button();
         posLayout.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         groupBox2.SuspendLayout();
@@ -192,12 +198,12 @@ partial class frmKhachHang
         // 
         // txtTimKiem
         // 
-        txtTimKiem.BackColor = Color.White;
-        txtTimKiem.BorderStyle = BorderStyle.FixedSingle;
+        txtTimKiem.BackColor=Color.White;
+        txtTimKiem.BorderStyle=BorderStyle.FixedSingle;
         txtTimKiem.Cursor = Cursors.IBeam;
         txtTimKiem.Dock = DockStyle.Top;
-        txtTimKiem.Font = new Font("Segoe UI", 10.2F);
-        txtTimKiem.ForeColor = SystemColors.ControlText;
+        txtTimKiem.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTimKiem.ForeColor=Color.FromArgb(15,23,42);
         txtTimKiem.Location = new Point(120, 7);
         txtTimKiem.Margin = new Padding(0, 7, 12, 0);
         txtTimKiem.MaxLength = 200;
@@ -209,10 +215,8 @@ partial class frmKhachHang
         // btnTimKiem
         // 
         btnTimKiem.BackColor = SystemColors.ControlLight;
-        btnTimKiem.Cursor = Cursors.Hand;
         btnTimKiem.Dock = DockStyle.Fill;
         btnTimKiem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnTimKiem.FlatStyle = FlatStyle.Flat;
         btnTimKiem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnTimKiem.ForeColor = SystemColors.ControlText;
         btnTimKiem.Location = new Point(648, 2);
@@ -221,7 +225,6 @@ partial class frmKhachHang
         btnTimKiem.Size = new Size(120, 40);
         btnTimKiem.TabIndex = 0;
         btnTimKiem.Text = "Tìm kiếm";
-        btnTimKiem.UseVisualStyleBackColor = false;
         btnTimKiem.Click += btnTimKiem_Click;
         // 
         // dgvKhachHang
@@ -231,13 +234,11 @@ partial class frmKhachHang
         dgvKhachHang.AllowUserToResizeRows = false;
         dataGridViewCellStyle1.BackColor = Color.White;
         dgvKhachHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-        dgvKhachHang.AutoGenerateColumns = false;
-        dgvKhachHang.Columns.AddRange(new DataGridViewColumn[] { MaKH, TenKH, DienThoai, Diem });
-        MaKH.Name="MaKH";MaKH.DataPropertyName="MaKH";MaKH.HeaderText="Mã";MaKH.ReadOnly=true;
-        TenKH.Name="TenKH";TenKH.DataPropertyName="TenKH";TenKH.HeaderText="Tên khách hàng";TenKH.ReadOnly=true;
-        DienThoai.Name="DienThoai";DienThoai.DataPropertyName="DienThoai";DienThoai.HeaderText="Điện thoại";DienThoai.ReadOnly=true;
-        Diem.Name="Diem";Diem.DataPropertyName="Diem";Diem.HeaderText="Điểm";Diem.ReadOnly=true;
-        dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        
+        
+        
+        dgvKhachHang.ShowCellToolTips = true;
+        dgvKhachHang.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         dgvKhachHang.BackgroundColor = SystemColors.ScrollBar;
         dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
         dataGridViewCellStyle2.BackColor = Color.FromArgb(248,250,252);
@@ -312,7 +313,7 @@ partial class frmKhachHang
         tableLayoutPanel7.RowCount = 3;
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 168F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
+        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 88F));
         tableLayoutPanel7.Size = new Size(330, 544);
         tableLayoutPanel7.TabIndex = 0;
         // 
@@ -379,13 +380,13 @@ partial class frmKhachHang
         // 
         // txtTenKH
         // 
-        txtTenKH.BackColor = Color.White;
-        txtTenKH.BorderStyle = BorderStyle.FixedSingle;
+        txtTenKH.BackColor=Color.White;
+        txtTenKH.BorderStyle=BorderStyle.FixedSingle;
         txtTenKH.Cursor = Cursors.IBeam;
         txtTenKH.Dock = DockStyle.Top;
         txtTenKH.Enabled = false;
-        txtTenKH.Font = new Font("Segoe UI", 10.2F);
-        txtTenKH.ForeColor = SystemColors.ControlText;
+        txtTenKH.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTenKH.ForeColor=Color.FromArgb(15,23,42);
         txtTenKH.Location = new Point(0, 23);
         txtTenKH.Margin = new Padding(0, 1, 0, 5);
         txtTenKH.Name = "txtTenKH";
@@ -426,13 +427,13 @@ partial class frmKhachHang
         // 
         // txtDienThoai
         // 
-        txtDienThoai.BackColor = Color.White;
-        txtDienThoai.BorderStyle = BorderStyle.FixedSingle;
+        txtDienThoai.BackColor=Color.White;
+        txtDienThoai.BorderStyle=BorderStyle.FixedSingle;
         txtDienThoai.Cursor = Cursors.IBeam;
         txtDienThoai.Dock = DockStyle.Top;
         txtDienThoai.Enabled = false;
-        txtDienThoai.Font = new Font("Segoe UI", 10.2F);
-        txtDienThoai.ForeColor = SystemColors.ControlText;
+        txtDienThoai.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtDienThoai.ForeColor=Color.FromArgb(15,23,42);
         txtDienThoai.Location = new Point(0, 23);
         txtDienThoai.Margin = new Padding(0, 1, 0, 5);
         txtDienThoai.MaxLength = 10;
@@ -474,13 +475,13 @@ partial class frmKhachHang
         // 
         // txtDiem
         // 
-        txtDiem.BackColor = Color.White;
-        txtDiem.BorderStyle = BorderStyle.FixedSingle;
+        txtDiem.BackColor=Color.White;
+        txtDiem.BorderStyle=BorderStyle.FixedSingle;
         txtDiem.Cursor = Cursors.IBeam;
         txtDiem.Dock = DockStyle.Top;
         txtDiem.Enabled = false;
-        txtDiem.Font = new Font("Segoe UI", 10.2F);
-        txtDiem.ForeColor = SystemColors.ControlText;
+        txtDiem.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtDiem.ForeColor=Color.FromArgb(15,23,42);
         txtDiem.Location = new Point(0, 23);
         txtDiem.Margin = new Padding(0, 1, 0, 5);
         txtDiem.Name = "txtDiem";
@@ -497,111 +498,78 @@ partial class frmKhachHang
         tableLayoutPanel17.Controls.Add(btnThem, 0, 0);
         tableLayoutPanel17.Controls.Add(btnSua, 1, 0);
         tableLayoutPanel17.Controls.Add(btnXoa, 0, 1);
-        tableLayoutPanel17.Controls.Add(btnLamLai, 1, 1);
-        tableLayoutPanel17.Controls.Add(btnThoat, 0, 2);
+        tableLayoutPanel17.Controls.Add(btnLamMoi, 1, 1);
         tableLayoutPanel17.Dock = DockStyle.Fill;
         tableLayoutPanel17.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel17.ForeColor = SystemColors.ControlText;
         tableLayoutPanel17.Location = new Point(0, 412);
         tableLayoutPanel17.Margin = new Padding(0);
         tableLayoutPanel17.Name = "tableLayoutPanel17";
-        tableLayoutPanel17.RowCount = 3;
-        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-        tableLayoutPanel17.Size = new Size(330, 132);
+        tableLayoutPanel17.RowCount = 2;
+        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+        tableLayoutPanel17.Size = new Size(330, 88);
         tableLayoutPanel17.TabIndex = 1;
         // 
         // btnThem
         // 
         btnThem.BackColor = Color.FromArgb(192, 255, 192);
-        btnThem.Cursor = Cursors.Hand;
         btnThem.Dock = DockStyle.Fill;
         btnThem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnThem.FlatStyle = FlatStyle.Flat;
         btnThem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnThem.ForeColor = SystemColors.ControlText;
         btnThem.Location = new Point(0, 4);
-        btnThem.Margin = new Padding(0, 4, 4, 0);
+        btnThem.Margin = new Padding(0, 4, 4, 4);
         btnThem.Name = "btnThem";
         btnThem.Size = new Size(161, 40);
         btnThem.TabIndex = 10;
         btnThem.Text = "Thêm";
-        btnThem.UseVisualStyleBackColor = false;
         btnThem.Click += btnThem_Click;
         // 
         // btnSua
         // 
         btnSua.BackColor = SystemColors.ControlLight;
-        btnSua.Cursor = Cursors.Hand;
         btnSua.Dock = DockStyle.Fill;
         btnSua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnSua.FlatStyle = FlatStyle.Flat;
         btnSua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnSua.ForeColor = SystemColors.ControlText;
         btnSua.Location = new Point(169, 4);
-        btnSua.Margin = new Padding(4, 4, 0, 0);
+        btnSua.Margin = new Padding(4, 4, 0, 4);
         btnSua.Name = "btnSua";
         btnSua.Size = new Size(161, 40);
         btnSua.TabIndex = 11;
         btnSua.Text = "Sửa";
-        btnSua.UseVisualStyleBackColor = false;
         btnSua.Click += btnSua_Click;
         // 
         // btnXoa
         // 
         btnXoa.BackColor = Color.FromArgb(255, 192, 192);
-        btnXoa.Cursor = Cursors.Hand;
         btnXoa.Dock = DockStyle.Fill;
         btnXoa.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnXoa.FlatStyle = FlatStyle.Flat;
         btnXoa.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnXoa.ForeColor = SystemColors.ControlText;
         btnXoa.Location = new Point(0, 48);
-        btnXoa.Margin = new Padding(0, 4, 4, 0);
+        btnXoa.Margin = new Padding(0, 4, 4, 4);
         btnXoa.Name = "btnXoa";
         btnXoa.Size = new Size(161, 40);
         btnXoa.TabIndex = 12;
         btnXoa.Text = "Xóa";
-        btnXoa.UseVisualStyleBackColor = false;
         btnXoa.Click += btnXoa_Click;
         // 
-        // btnLamLai
+        // btnLamMoi
         // 
-        btnLamLai.BackColor = SystemColors.ControlLight;
-        btnLamLai.Cursor = Cursors.Hand;
-        btnLamLai.Dock = DockStyle.Fill;
-        btnLamLai.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnLamLai.FlatStyle = FlatStyle.Flat;
-        btnLamLai.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnLamLai.ForeColor = SystemColors.ControlText;
-        btnLamLai.Location = new Point(169, 48);
-        btnLamLai.Margin = new Padding(4, 4, 0, 0);
-        btnLamLai.Name = "btnLamLai";
-        btnLamLai.Size = new Size(161, 40);
-        btnLamLai.TabIndex = 13;
-        btnLamLai.Text = "Làm lại";
-        btnLamLai.UseVisualStyleBackColor = false;
-        btnLamLai.Click += btnLamLai_Click;
-        // 
-        // btnThoat
-        // 
-        btnThoat.BackColor = SystemColors.ControlLight;
-        tableLayoutPanel17.SetColumnSpan(btnThoat, 2);
-        btnThoat.Cursor = Cursors.Hand;
-        btnThoat.Dock = DockStyle.Fill;
-        btnThoat.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnThoat.FlatStyle = FlatStyle.Flat;
-        btnThoat.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnThoat.ForeColor = SystemColors.ControlText;
-        btnThoat.Location = new Point(0, 92);
-        btnThoat.Margin = new Padding(0, 4, 4, 0);
-        btnThoat.Name = "btnThoat";
-        btnThoat.Size = new Size(326, 40);
-        btnThoat.TabIndex = 14;
-        btnThoat.Text = "Thoát";
-        btnThoat.UseVisualStyleBackColor = false;
-        btnThoat.Click += btnThoat_Click;
+        btnLamMoi.BackColor = SystemColors.ControlLight;
+        btnLamMoi.Dock = DockStyle.Fill;
+        btnLamMoi.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnLamMoi.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnLamMoi.ForeColor = SystemColors.ControlText;
+        btnLamMoi.Location = new Point(169, 48);
+        btnLamMoi.Margin = new Padding(4, 4, 0, 4);
+        btnLamMoi.Name = "btnLamMoi";
+        btnLamMoi.Size = new Size(161, 40);
+        btnLamMoi.TabIndex = 13;
+        btnLamMoi.Text = "Làm mới";
+        btnLamMoi.Click += btnLamMoi_Click;
         // 
         // frmKhachHang
         // 
@@ -623,6 +591,61 @@ partial class frmKhachHang
         tableLayoutPanel3.ResumeLayout(false);
         tableLayoutPanel4.ResumeLayout(false);
         tableLayoutPanel4.PerformLayout();
+                //
+        // MaKH
+        //
+        this.MaKH.Name = "MaKH";
+        this.MaKH.DataPropertyName = "MaKH";
+        this.MaKH.HeaderText = "Mã khách hàng";
+        this.MaKH.ReadOnly = true;
+        this.MaKH.Resizable = DataGridViewTriState.False;
+        this.MaKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.MaKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.MaKH.MinimumWidth = 5;
+        this.MaKH.Width = 74;
+        this.MaKH.FillWeight = 128F;
+        //
+        // TenKH
+        //
+        this.TenKH.Name = "TenKH";
+        this.TenKH.DataPropertyName = "TenKH";
+        this.TenKH.HeaderText = "Tên khách hàng";
+        this.TenKH.ReadOnly = true;
+        this.TenKH.Resizable = DataGridViewTriState.False;
+        this.TenKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.TenKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.TenKH.MinimumWidth = 5;
+        this.TenKH.Width = 170;
+        this.TenKH.FillWeight = 220F;
+        //
+        // DienThoai
+        //
+        this.DienThoai.Name = "DienThoai";
+        this.DienThoai.DataPropertyName = "DienThoai";
+        this.DienThoai.HeaderText = "Số điện thoại";
+        this.DienThoai.ReadOnly = true;
+        this.DienThoai.Resizable = DataGridViewTriState.False;
+        this.DienThoai.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.DienThoai.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.DienThoai.MinimumWidth = 5;
+        this.DienThoai.Width = 129;
+        this.DienThoai.FillWeight = 104F;
+        //
+        // Diem
+        //
+        this.Diem.Name = "Diem";
+        this.Diem.DataPropertyName = "Diem";
+        this.Diem.HeaderText = "Điểm tích lũy";
+        this.Diem.ReadOnly = true;
+        this.Diem.Resizable = DataGridViewTriState.False;
+        this.Diem.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.Diem.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.Diem.MinimumWidth = 5;
+        this.Diem.Width = 90;
+        this.Diem.FillWeight = 56F;
+
+        this.dgvKhachHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+        this.dgvKhachHang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.MaKH, this.TenKH, this.DienThoai, this.Diem });
         ((System.ComponentModel.ISupportInitialize)dgvKhachHang).EndInit();
         groupBox6.ResumeLayout(false);
         tableLayoutPanel7.ResumeLayout(false);
@@ -636,12 +659,41 @@ partial class frmKhachHang
         tableLayoutPanel15.PerformLayout();
         tableLayoutPanel17.ResumeLayout(false);
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
-        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
-        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
-        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
-        btnLamLai.BackColor=Color.FromArgb(15, 118, 110);btnLamLai.ForeColor=Color.White;btnLamLai.UseVisualStyleBackColor=false;
-        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);
+        btnTimKiem.FlatStyle = FlatStyle.Flat;
+        btnTimKiem.FlatAppearance.BorderSize = 0;
+        btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnTimKiem.Cursor = Cursors.Hand;
+        btnTimKiem.UseVisualStyleBackColor = false;btnTimKiem.ForeColor=Color.White;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);
+        btnThem.FlatStyle = FlatStyle.Flat;
+        btnThem.FlatAppearance.BorderSize = 0;
+        btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnThem.Cursor = Cursors.Hand;
+        btnThem.UseVisualStyleBackColor = false;btnThem.ForeColor=Color.White;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);
+        btnSua.FlatStyle = FlatStyle.Flat;
+        btnSua.FlatAppearance.BorderSize = 0;
+        btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnSua.Cursor = Cursors.Hand;
+        btnSua.UseVisualStyleBackColor = false;btnSua.ForeColor=Color.White;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoa.FlatStyle = FlatStyle.Flat;
+        btnXoa.FlatAppearance.BorderSize = 0;
+        btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoa.Cursor = Cursors.Hand;
+        btnXoa.UseVisualStyleBackColor = false;btnXoa.ForeColor=Color.White;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);
+        btnLamMoi.FlatStyle = FlatStyle.Flat;
+        btnLamMoi.FlatAppearance.BorderSize = 0;
+        btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnLamMoi.Cursor = Cursors.Hand;
+        btnLamMoi.UseVisualStyleBackColor = false;btnLamMoi.ForeColor=Color.White;
         dgvKhachHang.BackgroundColor=Color.White;dgvKhachHang.EnableHeadersVisualStyles=false;
         dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvKhachHang.DefaultCellStyle.BackColor=Color.White;dgvKhachHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
@@ -650,37 +702,35 @@ partial class frmKhachHang
         dgvKhachHang.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvKhachHang.MultiSelect=false;
         dgvKhachHang.AllowUserToResizeColumns=false;
-        dgvKhachHang.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
         dgvKhachHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvKhachHang.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor;
         dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor;
         dgvKhachHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         dgvKhachHang.ColumnHeadersHeight=38;
-        MaKH.Resizable=DataGridViewTriState.False;
-        MaKH.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        TenKH.Resizable=DataGridViewTriState.False;
-        TenKH.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        DienThoai.Resizable=DataGridViewTriState.False;
-        DienThoai.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        Diem.Resizable=DataGridViewTriState.False;
-        Diem.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-                MaKH.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        MaKH.MinimumWidth=65;
-        MaKH.Width=65;
-        MaKH.FillWeight=128F;
-        TenKH.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        TenKH.MinimumWidth=150;
-        TenKH.Width=150;
-        TenKH.FillWeight=220F;
-        DienThoai.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        DienThoai.MinimumWidth=120;
-        DienThoai.Width=120;
-        DienThoai.FillWeight=104F;
-        Diem.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        Diem.MinimumWidth=70;
-        Diem.Width=70;
-        Diem.FillWeight=56F;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                txtTimKiem.AutoSize=false;
+        txtTenKH.AutoSize=false;
+        txtDienThoai.AutoSize=false;
+        txtDiem.AutoSize=false;
+                dgvKhachHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvKhachHang.ColumnHeadersHeight=43;
+        
+        
+        
+        
         ResumeLayout(false);
     }
 
@@ -714,6 +764,8 @@ partial class frmKhachHang
     private global::System.Windows.Forms.Button btnThem;
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnXoa;
-    private global::System.Windows.Forms.Button btnLamLai;
-    private global::System.Windows.Forms.Button btnThoat;
+    private global::System.Windows.Forms.Button btnLamMoi;
+    private global::System.Windows.Forms.Button btnLamLai => btnLamMoi;
+}
+
 }

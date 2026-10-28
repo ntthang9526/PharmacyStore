@@ -1,10 +1,11 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 
 namespace Store.POS
 {
     public partial class frmCanhBao : Form, ILamMoiDuLieu
     {
+        private bool dangNapCanhBao;
         private readonly CanhBaoBLL bll = new CanhBaoBLL();
 
         public frmCanhBao()
@@ -22,21 +23,6 @@ namespace Store.POS
                 }
             };
 
-            // Thêm cột checkbox "Đã xử lý"
-            var chkCol = new DataGridViewCheckBoxColumn
-            {
-                Name = "DaXuLy",
-                HeaderText = "Đã xử lý",
-                Width = 90,
-                MinimumWidth = 90,
-                FillWeight = 1,
-                ReadOnly = false,
-                FalseValue = false,
-                TrueValue = true,
-                ThreeState = false
-            };
-            dgvSapHetHan.Columns.Add(chkCol);
-            dgvSapHetHan.ReadOnly = false;
             dgvSapHetHan.CellValueChanged += dgvSapHetHan_CellValueChanged;
             dgvSapHetHan.CurrentCellDirtyStateChanged += (_, e) =>
             {
@@ -86,8 +72,9 @@ namespace Store.POS
                 grpSapHet.Text = $"Thuốc sắp hết hàng (tồn < {nguongTon}): {dtHet.Rows.Count} thuốc";
 
                 DataTable dtHan = bll.LayLoSapHetHan(soNgay, true);
-                dgvSapHetHan.DataSource = dtHan;
-                KhoiPhucCheckbox();
+                dangNapCanhBao = true;
+                try { dgvSapHetHan.DataSource = dtHan; KhoiPhucCheckbox(); }
+                finally { dangNapCanhBao = false; }
                 CapNhatTieuDeSapHetHan();
             }
             catch (Exception ex)
@@ -99,12 +86,18 @@ namespace Store.POS
 
         private void KhoiPhucCheckbox()
         {
+            bool previous = dangNapCanhBao;
+            dangNapCanhBao = true;
+            try
+            {
             foreach (DataGridViewRow r in dgvSapHetHan.Rows)
             {
                 if (r.IsNewRow) continue;
                 string key = LayKeyLo(r);
-                r.Cells["DaXuLy"].Value = LoXuLyDaXuLy.Contains(key);
+                r.Cells[colDaXuLy.Index].Value = LoXuLyDaXuLy.Contains(key);
             }
+            }
+            finally { dangNapCanhBao = previous; }
             TauMauSapHetHan();
         }
 
@@ -116,7 +109,7 @@ namespace Store.POS
             {
                 if (r.IsNewRow) continue;
                 total++;
-                if (r.Cells["DaXuLy"].Value is not true) chuaXuLy++;
+                if (r.Cells[colDaXuLy.Index].Value is not true) chuaXuLy++;
             }
             int soNgay = (int)nudSoNgay.Value;
             grpSapHetHan.Text = $"Lô sắp / đã hết hạn (dưới {soNgay} ngày): {chuaXuLy} lô" +
@@ -128,7 +121,7 @@ namespace Store.POS
             foreach (DataGridViewRow r in dgvSapHetHan.Rows)
             {
                 if (r.IsNewRow) continue;
-                bool daXuLy = r.Cells["DaXuLy"].Value is true;
+                bool daXuLy = r.Cells[colDaXuLy.Index].Value is true;
                 if (daXuLy)
                 {
                     r.DefaultCellStyle.BackColor = Color.LightGray;
@@ -159,14 +152,14 @@ namespace Store.POS
             CapNhatTieuDeSapHetHan();
         }
 
-        private void dgvSapHetHan_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dgvSapHetHan_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || dgvSapHetHan.Columns[e.ColumnIndex].Name != "DaXuLy") return;
+            if (dangNapCanhBao || e.RowIndex < 0 || e.ColumnIndex < 0 || dgvSapHetHan.Columns[e.ColumnIndex] != colDaXuLy) return;
             var row = dgvSapHetHan.Rows[e.RowIndex];
             string key = LayKeyLo(row);
-            bool daXuLy = row.Cells["DaXuLy"].Value is true;
-            if (daXuLy) LoXuLyDaXuLy.Add(key);
-            else LoXuLyDaXuLy.Remove(key);
+            bool daXuLy = row.Cells[colDaXuLy.Index].Value is true;
+            bool changed = daXuLy ? LoXuLyDaXuLy.Add(key) : LoXuLyDaXuLy.Remove(key);
+            if (!changed) return;
             TauMauSapHetHan();
             CapNhatTieuDeSapHetHan();
             // Thông báo thay đổi để trang chủ cập nhật

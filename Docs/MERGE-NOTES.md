@@ -248,3 +248,10 @@ Theo yêu cầu, LayLoSapHetHan chỉ trả về lô có tồn > 0, thuốc đan
 - ClientSize mặc định 1500 × 820, đặt trong frmMain.Designer.cs; cửa sổ mở giữa màn hình, vẫn kéo giãn được.
 - Kiểm tra bố cục form nhúng tại kích thước mới, kích thước cũ và khi thu nhỏ.
 - Bản chạy: artifacts/builds/main-size-1500x820/Store.POS.exe.
+
+
+## 26/10/2026 — Làm gọn ô nhập
+
+- Ô nhập dùng viền phẳng, nền trắng, chữ màu slate; ô chỉ đọc nền xám nhạt. ComboBox kiểu Flat, font các ô nhập thông thường thống nhất Segoe UI 10.5.
+- Ô nhập bố cục hẹp ở bán hàng giữ cỡ chữ vừa khung, ô chữ lớn giữ kích thước hiện có. Tất cả thuộc tính cố định nằm trong Designer.
+- Bản sao: Backups/BACKUP-before-input-polish.zip. Bản chạy: artifacts/builds/input-polish/Store.POS.exe.

@@ -1,4 +1,4 @@
-using Store.Shared;
+﻿using Store.Shared;
 using Store.BLL;
 using Store.DAL;
 using Store.POS.FormBanHang;
@@ -51,15 +51,47 @@ namespace Store.POS
             tableGioHang.MouseLeave+=AnActionNeuChuotRaNgoai;
             tableGioHang.CellMouseLeave+=(_,_)=>AnActionNeuChuotRaNgoai(tableGioHang,EventArgs.Empty);
             btnNhapMaVoucher.Click += (_, _) => ApDungVoucher();
-            btnHuyVoucher.Click += (_, _) => { voucherApDung = null; boxMaVoucher.Clear(); CapNhatGiaTien(); };
-            boxMaVoucher.TextChanged += (_, _) => { if (voucherApDung != null && !string.Equals(boxMaVoucher.Text.Trim(), voucherApDung.Code, StringComparison.OrdinalIgnoreCase)) { voucherApDung = null; CapNhatGiaTien(); } };
-            btnHuyKhachHang.Click += (_, _) => { khachHang = null; boxMaKhachHang.Clear(); labelMaKhachHang.Text = "SĐT khách hàng"; };
-            boxMaKhachHang.TextChanged += (_, _) => { khachHang = null; labelMaKhachHang.Text = "SĐT khách hàng"; };
+            btnHuyVoucher.Click += (_, _) => { voucherApDung = null; boxMaVoucher.Clear(); CapNhatThongTinVoucher(); CapNhatGiaTien(); };
+            boxMaVoucher.TextChanged += (_, _) => { if (voucherApDung != null && !string.Equals(boxMaVoucher.Text.Trim(), voucherApDung.Code, StringComparison.OrdinalIgnoreCase)) { voucherApDung = null; CapNhatThongTinVoucher(); CapNhatGiaTien(); } };
+            boxMaVoucher.KeyDown += (_, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    e.SuppressKeyPress = true;
+                    ApDungVoucher();
+                }
+            };
+            btnHuyKhachHang.Click += (_, _) => { khachHang = null; boxMaKhachHang.Clear(); CapNhatThongTinKhachHang(); };
+            boxMaKhachHang.TextChanged += (_, _) =>
+            {
+                if (khachHang != null && !string.Equals(boxMaKhachHang.Text.Trim(), khachHang.Phone, StringComparison.OrdinalIgnoreCase))
+                {
+                    khachHang = null;
+                    CapNhatThongTinKhachHang();
+                }
+            };
+            boxMaKhachHang.KeyDown += (_, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    e.SuppressKeyPress = true;
+                    ThemKhachHang();
+                }
+            };
             Load += frmBanHang_Load;
             groupThanhToan.LocationChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
             groupThanhToan.SizeChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
             VisibleChanged += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
             tableGioHang.Scroll += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
+            if (!PosFormStyle.IsInDesigner(this))
+            {
+                foreach (var b in new[] { btnThanhToan, btnLuuCho, btnHuyHoaDon, btnNhapSanPham, btnXoaTimKiem, btnNhapKhachHang, btnHuyKhachHang, btnNhapMaVoucher, btnHuyVoucher, btnSua, btnXoa })
+                    PosFormStyle.ApplyModernButton(b);
+                PosFormStyle.ApplyTableStyle(tableGioHang);
+                PosFormStyle.ApplyTableStyle(tableTimKiem);
+                CapNhatThongTinKhachHang();
+                CapNhatThongTinVoucher();
+            }
         }
         private void frmBanHang_Load(object? sender, EventArgs e)
         {
@@ -399,7 +431,42 @@ namespace Store.POS
             if (voucherBLL.KiemTra(boxMaVoucher.Text, out var voucher, out string error))
                 voucherApDung = voucher;
             else { voucherApDung = null; MessageBox.Show(error, "Voucher"); }
+            CapNhatThongTinVoucher();
             CapNhatGiaTien();
+        }
+        private void CapNhatThongTinVoucher()
+        {
+            if (voucherApDung != null)
+            {
+                cardVoucher.Visible = true;
+                panel3.Height = 140;
+                lblMaVoucherCard.Text = "Mã voucher: " + voucherApDung.Code;
+                string discountStr = voucherApDung.DiscountType == "PERCENT"
+                    ? $"Giảm {voucherApDung.DiscountValue:0.##}%"
+                    : $"Giảm {voucherApDung.DiscountValue:N0} đ";
+                lblThongTinVoucherCard.Text = "Thông tin: " + discountStr;
+            }
+            else
+            {
+                cardVoucher.Visible = false;
+                panel3.Height = 76;
+            }
+        }
+        private void CapNhatThongTinKhachHang()
+        {
+            if (khachHang != null)
+            {
+                cardKhachHang.Visible = true;
+                panel5.Height = 140;
+                lblTenKhachHang.Text = "Tên khách hàng: " + khachHang.FullName;
+                lblDiemKhachHang.Text = $"Điểm: {khachHang.Point:N0}";
+                lblSdtKhachHang.Text = "Số điện thoại: " + khachHang.Phone;
+            }
+            else
+            {
+                cardKhachHang.Visible = false;
+                panel5.Height = 76;
+            }
         }
         private void ThemKhachHang()
         {
@@ -410,12 +477,11 @@ namespace Store.POS
                 khachHang = customerDAL.GetCustomerByPhone(phone);
                 if (khachHang == null && MessageBox.Show("Không tìm thấy khách hàng. Mở quản lý để thêm mới?", "Khách hàng", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    // Truyền SĐT vào form quản lý khách hàng để tự điền
-                    using var form = new frmKhachHang(phone);
+                    using var form = new frmKhachHang();
                     form.ShowDialog(this);
                     khachHang = customerDAL.GetCustomerByPhone(phone);
                 }
-                labelMaKhachHang.Text = khachHang == null ? "SĐT khách hàng" : khachHang.FullName;
+                CapNhatThongTinKhachHang();
             }
             catch (Exception ex) { MessageBox.Show("Không tra cứu được khách hàng: " + ex.Message); }
         }
@@ -534,12 +600,6 @@ namespace Store.POS
         private void LuuHoaDon(string method="Tiền mặt",bool pending=false)
         {
             var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price }).ToList();
-            // Snapshot giỏ hàng trước khi làm mới
-            var snapshotGioHang = gioHang.ToList();
-            decimal snapshotTamTinh = gioHang.Sum(r => r.Total);
-            decimal snapshotGiam = voucherApDung == null ? 0 : snapshotTamTinh - tongTien;
-            string? snapshotVoucher = voucherApDung?.Code;
-            string snapshotKhach = khachHang?.FullName ?? "Khách lẻ";
             if (!banHangBLL.ThanhToan(PhienDangNhap.NhanVienId, items, voucherApDung?.Code, khachHang?.Id, tongTien,
                     out int orderId, out decimal subtotal, out decimal discount, out string error,method,pending))
             {
@@ -547,17 +607,6 @@ namespace Store.POS
                 return;
             }
             MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán. Chưa trừ kho và chưa tính doanh thu.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
-            // Hỏi xuất PDF hóa đơn (chỉ hỏi khi thanh toán thực sự, không hỏi khi lưu chờ)
-            if (!pending && MessageBox.Show("Bạn có muốn xuất hóa đơn PDF không?", "Xuất PDF", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                try
-                {
-                    Store.POS.Common.PdfInvoiceHelper.XuatHoaDon(
-                        orderId, PhienDangNhap.HoTen, snapshotKhach, DateTime.Now,
-                        snapshotGioHang, snapshotTamTinh, snapshotGiam, tongTien, method, snapshotVoucher);
-                }
-                catch (Exception ex) { MessageBox.Show("Không xuất được PDF: " + ex.Message, "Lỗi PDF"); }
-            }
             LamMoiHoaDon();
         }
 
@@ -568,11 +617,12 @@ namespace Store.POS
             gioHang.Clear();
             boxMaVoucher.Clear();
             boxMaKhachHang.Clear();
-            labelMaKhachHang.Text = "SĐT khách hàng";
             boxTienKhach.Clear();
             radioChuyenKhoan.Checked = false;
             radioTienMat.Checked = false;
             panelTienMat.Visible = false;
+            CapNhatThongTinKhachHang();
+            CapNhatThongTinVoucher();
             CapNhatGiaTien();
         }
 

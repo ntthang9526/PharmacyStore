@@ -227,16 +227,16 @@ partial class frmThemNhomThuoc
         txtTen.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         txtTen.Dock = global::System.Windows.Forms.DockStyle.Top;
 
-        txtTen.AutoSize = true;
-        txtTen.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        txtTen.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        txtTen.BackColor = global::System.Drawing.Color.White;
+        txtTen.AutoSize=false;
+        txtTen.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTen.ForeColor=Color.FromArgb(15,23,42);
+        txtTen.BackColor=Color.White;
         txtTen.Cursor = global::System.Windows.Forms.Cursors.IBeam;
         txtTen.TabIndex = 1;
         txtTen.TabStop = true;
         txtTen.AccessibleName = null;
         txtTen.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
-        txtTen.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
+        txtTen.BorderStyle=BorderStyle.FixedSingle;
         txtTen.Multiline = false;
         txtTen.ReadOnly = false;
         txtTen.MaxLength = 100;
@@ -314,21 +314,17 @@ partial class frmThemNhomThuoc
         btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnLuu.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnLuu.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
-        btnLuu.Cursor = global::System.Windows.Forms.Cursors.Hand;
+        
         btnLuu.TabIndex = 0;
         btnLuu.TabStop = true;
         btnLuu.AccessibleName = null;
         btnLuu.AutoEllipsis = false;
         btnLuu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnLuu.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnLuu.UseVisualStyleBackColor = false;
+
         btnLuu.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnLuu.Visible = true;
         btnLuu.Enabled = true;
         btnLuu.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnLuu.FlatAppearance.BorderSize = 1;
-        btnLuu.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnLuu.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // btnHuy
         btnHuy.Name = "btnHuy";
@@ -344,21 +340,18 @@ partial class frmThemNhomThuoc
         btnHuy.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnHuy.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnHuy.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
-        btnHuy.Cursor = global::System.Windows.Forms.Cursors.Hand;
+        
         btnHuy.TabIndex = 1;
         btnHuy.TabStop = true;
         btnHuy.AccessibleName = null;
         btnHuy.AutoEllipsis = false;
         btnHuy.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnHuy.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnHuy.UseVisualStyleBackColor = false;
+
         btnHuy.DialogResult = global::System.Windows.Forms.DialogResult.Cancel;
         btnHuy.Visible = true;
         btnHuy.Enabled = true;
         btnHuy.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnHuy.FlatAppearance.BorderSize = 1;
-        btnHuy.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnHuy.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
+
         this.Controls.Add(posLayout);
         posLayout.Controls.Add(posHeading, 0, 0);
         posLayout.Controls.Add(groupBox1, 0, 1);
@@ -404,8 +397,20 @@ partial class frmThemNhomThuoc
         posLayout.PerformLayout();
         
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
-        btnHuy.BackColor=Color.FromArgb(100, 116, 139);btnHuy.ForeColor=Color.White;btnHuy.UseVisualStyleBackColor=false;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);
+        btnLuu.FlatStyle = FlatStyle.Flat;
+        btnLuu.FlatAppearance.BorderSize = 0;
+        btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnLuu.Cursor = Cursors.Hand;
+        btnLuu.UseVisualStyleBackColor = false;btnLuu.ForeColor=Color.White;
+        btnHuy.BackColor=Color.FromArgb(100, 116, 139);
+        btnHuy.FlatStyle = FlatStyle.Flat;
+        btnHuy.FlatAppearance.BorderSize = 0;
+        btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(148, 163, 184);
+        btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(71, 85, 105);
+        btnHuy.Cursor = Cursors.Hand;
+        btnHuy.UseVisualStyleBackColor = false;btnHuy.ForeColor=Color.White;
 ResumeLayout(false);
         PerformLayout();
     }

@@ -26,7 +26,7 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
-            PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
+            PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         }
 
         private void ThemDanhMuc(bool supplier)
@@ -47,8 +47,9 @@ namespace Store.POS
             }
         }
 
-        private void ResetDetails()
+        private void ResetDetails(bool force = false)
         {
+            if (!force && btnLuu.Enabled) return;
             isThem = false;
             SetControlState(false);
             maDangChon=""; txtTenThuoc.Clear(); txtDonGia.Clear();
@@ -70,12 +71,17 @@ namespace Store.POS
             cboNhaCungCap.ValueMember = "MaNCC";
             LoadComboDonViTinh();
             SetControlState(false); // Ban đầu khóa các ô nhập liệu và nút Lưu/Bỏ qua
-            ResetDetails();
+            ResetDetails(true);
         }
         private void LoadDataToGrid()
         {
-            dgvThuoc.DataSource = bll.GetAllThuoc();
+            GanDuLieuThuoc(bll.GetAllThuoc());
         }
+        private void GanDuLieuThuoc(DataTable data)
+        {
+            dgvThuoc.DataSource = data;
+        }
+
         // Hàm nạp danh sách Nhóm thuốc vào cboNhomThuoc
         private void LoadComboNhomThuoc()
         {
@@ -134,17 +140,15 @@ namespace Store.POS
 
         private void dgvThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dgvThuoc.Rows[e.RowIndex];
-                maDangChon = row.Cells["MaThuoc"].Value.ToString()??"";
-                txtTenThuoc.Text = row.Cells["TenThuoc"].Value.ToString();
-                cboNhomThuoc.SelectedValue = row.Cells["MaNhom"].Value;
-                cboNhaCungCap.SelectedValue = row.Cells["MaNCC"].Value;
-                cboDonViTinh.Text = row.Cells["DonViTinh"].Value.ToString();
-                txtDonGia.Text = Store.Shared.TienTe.LamTron(Convert.ToDecimal(row.Cells["DonGia"].Value)).ToString("0");
-                txtSoLuongTon.Text = row.Cells["SoLuongTon"].Value.ToString();
-            }
+            if (e.RowIndex < 0 || e.RowIndex >= dgvThuoc.Rows.Count ||
+                dgvThuoc.Rows[e.RowIndex].DataBoundItem is not DataRowView data) return;
+            maDangChon = Convert.ToString(data["MaThuoc"]) ?? "";
+            txtTenThuoc.Text = Convert.ToString(data["TenThuoc"]);
+            cboNhomThuoc.SelectedValue = data["MaNhom"];
+            cboNhaCungCap.SelectedValue = data["MaNCC"];
+            cboDonViTinh.Text = Convert.ToString(data["DonViTinh"]);
+            txtDonGia.Text = Store.Shared.TienTe.LamTron(Convert.ToDecimal(data["DonGia"])).ToString("0");
+            txtSoLuongTon.Text = Convert.ToString(data["SoLuongTon"]);
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -268,19 +272,25 @@ namespace Store.POS
         {
             try
             {
-                ResetDetails();
-                dgvThuoc.DataSource = bll.TimKiemThuoc(txtTimKiem.Text.Trim());
+                ResetDetails(true);
+                    GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text.Trim()));
             }
             catch (Exception ex) { MessageBox.Show("Không tìm được dữ liệu: " + ex.Message, "Lỗi"); }
         }
 
-        private void btnThoat_Click(object sender, EventArgs e)
+        private void btnLamMoi_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Bạn có muốn thoát không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.Yes)
-            {
-                this.Close(); 
-            }
+            txtTimKiem.Clear();
+            maDangChon = "";
+            txtTenThuoc.Clear();
+            cboNhomThuoc.SelectedIndex = -1;
+            cboDonViTinh.SelectedIndex = -1;
+            cboNhaCungCap.SelectedIndex = -1;
+            txtDonGia.Clear();
+            txtSoLuongTon.Text = "0";
+            SetControlState(false);
+            LamMoiDuLieu();
+            dgvThuoc.ClearSelection();
         }
     }
 }

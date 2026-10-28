@@ -33,12 +33,12 @@
             lblMatKhau = new Label();
             txtBoxTaiKhoan = new TextBox();
             txtBoxMatKhau = new TextBox();
+            chkHienMatKhau = new CheckBox();
             btnDangNhap = new Button();
             SuspendLayout();
             // 
             // lblTieuDeDangNhap
             // 
-            lblTieuDeDangNhap.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblTieuDeDangNhap.AutoSize = true;
             lblTieuDeDangNhap.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTieuDeDangNhap.ForeColor = Color.Navy;
@@ -71,7 +71,7 @@
             // 
             // txtBoxTaiKhoan
             // 
-            txtBoxTaiKhoan.BorderStyle = BorderStyle.FixedSingle;
+            txtBoxTaiKhoan.BorderStyle=BorderStyle.FixedSingle;
             txtBoxTaiKhoan.Font = new Font("Segoe UI", 14F);
             txtBoxTaiKhoan.Location = new Point(95, 117);
             txtBoxTaiKhoan.Name = "txtBoxTaiKhoan";
@@ -80,7 +80,7 @@
             // 
             // txtBoxMatKhau
             // 
-            txtBoxMatKhau.BorderStyle = BorderStyle.FixedSingle;
+            txtBoxMatKhau.BorderStyle=BorderStyle.FixedSingle;
             txtBoxMatKhau.Font = new Font("Segoe UI", 14F);
             txtBoxMatKhau.Location = new Point(95, 209);
             txtBoxMatKhau.Name = "txtBoxMatKhau";
@@ -88,15 +88,29 @@
             txtBoxMatKhau.TabIndex = 4;
             txtBoxMatKhau.UseSystemPasswordChar = true;
             // 
+            // chkHienMatKhau
+            // 
+            chkHienMatKhau.AutoSize = true;
+            chkHienMatKhau.Cursor = Cursors.Hand;
+            chkHienMatKhau.Font = new Font("Segoe UI", 10F);
+            chkHienMatKhau.ForeColor = Color.FromArgb(71, 85, 105);
+            chkHienMatKhau.Location = new Point(95, 255);
+            chkHienMatKhau.Name = "chkHienMatKhau";
+            chkHienMatKhau.Size = new Size(147, 27);
+            chkHienMatKhau.TabIndex = 5;
+            chkHienMatKhau.Text = "Hiện mật khẩu";
+            chkHienMatKhau.UseVisualStyleBackColor = true;
+            chkHienMatKhau.CheckedChanged += chkHienMatKhau_CheckedChanged;
+            // 
             // btnDangNhap
             // 
             btnDangNhap.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDangNhap.Location = new Point(185, 271);
+            btnDangNhap.Location = new Point(185, 292);
             btnDangNhap.Name = "btnDangNhap";
-            btnDangNhap.Size = new Size(230, 55);
-            btnDangNhap.TabIndex = 5;
+            btnDangNhap.Size = new Size(230, 44);
+            btnDangNhap.TabIndex = 6;
             btnDangNhap.Text = "Đăng nhập";
-            btnDangNhap.UseVisualStyleBackColor = true;
+            
             btnDangNhap.Click += btnDangNhap_Click;
             // 
             // frmDangNhap
@@ -104,7 +118,8 @@
             AcceptButton = btnDangNhap;
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(582, 353);
+            ClientSize = new Size(582, 380);
+            Controls.Add(chkHienMatKhau);
             Controls.Add(btnDangNhap);
             Controls.Add(txtBoxMatKhau);
             Controls.Add(txtBoxTaiKhoan);
@@ -120,8 +135,18 @@
             Text = "Hiệu thuốc ABC";
             
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnDangNhap.BackColor=Color.FromArgb(15, 118, 110);btnDangNhap.ForeColor=Color.White;btnDangNhap.UseVisualStyleBackColor=false;
-ResumeLayout(false);
+        btnDangNhap.BackColor=Color.FromArgb(15, 118, 110);
+        btnDangNhap.FlatStyle = FlatStyle.Flat;
+        btnDangNhap.FlatAppearance.BorderSize = 0;
+        btnDangNhap.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnDangNhap.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnDangNhap.Cursor = Cursors.Hand;
+        btnDangNhap.UseVisualStyleBackColor = false;btnDangNhap.ForeColor=Color.White;
+        txtBoxTaiKhoan.ForeColor=Color.FromArgb(15,23,42);
+        txtBoxTaiKhoan.BackColor=Color.White;
+        txtBoxMatKhau.ForeColor=Color.FromArgb(15,23,42);
+        txtBoxMatKhau.BackColor=Color.White;
+                ResumeLayout(false);
             PerformLayout();
         }
 
@@ -132,6 +157,7 @@ ResumeLayout(false);
         private Label lblMatKhau;
         private TextBox txtBoxTaiKhoan;
         private TextBox txtBoxMatKhau;
+        private CheckBox chkHienMatKhau;
         private Button btnDangNhap;
     }
 }

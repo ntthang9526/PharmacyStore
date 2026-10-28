@@ -194,12 +194,12 @@ partial class frmThemThuoc
         // 
         // txtTen
         // 
-        txtTen.BackColor = Color.White;
-        txtTen.BorderStyle = BorderStyle.FixedSingle;
+        txtTen.BackColor=Color.White;
+        txtTen.BorderStyle=BorderStyle.FixedSingle;
         txtTen.Cursor = Cursors.IBeam;
         txtTen.Dock = DockStyle.Top;
-        txtTen.Font = new Font("Segoe UI", 10.2F);
-        txtTen.ForeColor = SystemColors.ControlText;
+        txtTen.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTen.ForeColor=Color.FromArgb(15,23,42);
         txtTen.Location = new Point(0, 23);
         txtTen.Margin = new Padding(0, 1, 0, 5);
         txtTen.MaxLength = 150;
@@ -260,12 +260,12 @@ partial class frmThemThuoc
         // 
         // cboNhom
         // 
-        cboNhom.BackColor = SystemColors.Window;
+        cboNhom.BackColor=Color.White;
         cboNhom.Dock = DockStyle.Fill;
         cboNhom.DropDownStyle = ComboBoxStyle.DropDownList;
         cboNhom.DropDownWidth = 428;
-        cboNhom.Font = new Font("Segoe UI", 10.2F);
-        cboNhom.ForeColor = SystemColors.ControlText;
+        cboNhom.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        cboNhom.ForeColor=Color.FromArgb(15,23,42);
         cboNhom.Location = new Point(0, 0);
         cboNhom.Margin = new Padding(0, 0, 6, 0);
         cboNhom.Name = "cboNhom";
@@ -276,10 +276,10 @@ partial class frmThemThuoc
         // 
         btnThemNhom.AccessibleName = "Thêm nhóm thuốc";
         btnThemNhom.BackColor = Color.FromArgb(192, 255, 192);
-        btnThemNhom.Cursor = Cursors.Hand;
+        
         btnThemNhom.Dock = DockStyle.Fill;
         btnThemNhom.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnThemNhom.FlatStyle = FlatStyle.Flat;
+        
         btnThemNhom.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnThemNhom.ForeColor = SystemColors.ControlText;
         btnThemNhom.Location = new Point(434, 0);
@@ -288,7 +288,7 @@ partial class frmThemThuoc
         btnThemNhom.Size = new Size(38, 32);
         btnThemNhom.TabIndex = 1;
         btnThemNhom.Text = "+";
-        btnThemNhom.UseVisualStyleBackColor = false;
+        
         // 
         // tableLayoutPanel10
         // 
@@ -324,12 +324,12 @@ partial class frmThemThuoc
         // 
         // txtDonVi
         // 
-        txtDonVi.BackColor = Color.White;
-        txtDonVi.BorderStyle = BorderStyle.FixedSingle;
+        txtDonVi.BackColor=Color.White;
+        txtDonVi.BorderStyle=BorderStyle.FixedSingle;
         txtDonVi.Cursor = Cursors.IBeam;
         txtDonVi.Dock = DockStyle.Top;
-        txtDonVi.Font = new Font("Segoe UI", 10.2F);
-        txtDonVi.ForeColor = SystemColors.ControlText;
+        txtDonVi.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtDonVi.ForeColor=Color.FromArgb(15,23,42);
         txtDonVi.Location = new Point(0, 23);
         txtDonVi.Margin = new Padding(0, 1, 0, 5);
         txtDonVi.MaxLength = 30;
@@ -371,10 +371,10 @@ partial class frmThemThuoc
         // 
         // nudGiaBan
         // 
-        nudGiaBan.BackColor = Color.White;
+        nudGiaBan.BackColor=Color.White;
         nudGiaBan.Dock = DockStyle.Top;
-        nudGiaBan.Font = new Font("Segoe UI", 10.2F);
-        nudGiaBan.ForeColor = SystemColors.ControlText;
+        nudGiaBan.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        nudGiaBan.ForeColor=Color.FromArgb(15,23,42);
         nudGiaBan.Location = new Point(0, 23);
         nudGiaBan.Margin = new Padding(0, 1, 0, 5);
         nudGiaBan.Maximum = new decimal(new int[] { -1486618625, 232830643, 0, 131072 });
@@ -417,10 +417,10 @@ partial class frmThemThuoc
         // btnLuu
         // 
         btnLuu.BackColor = Color.FromArgb(192, 255, 192);
-        btnLuu.Cursor = Cursors.Hand;
+        
         btnLuu.Dock = DockStyle.Fill;
         btnLuu.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnLuu.FlatStyle = FlatStyle.Flat;
+        
         btnLuu.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnLuu.ForeColor = SystemColors.ControlText;
         btnLuu.Location = new Point(0, 4);
@@ -429,16 +429,16 @@ partial class frmThemThuoc
         btnLuu.Size = new Size(232, 44);
         btnLuu.TabIndex = 0;
         btnLuu.Text = "Lưu";
-        btnLuu.UseVisualStyleBackColor = false;
+        
         // 
         // btnHuy
         // 
         btnHuy.BackColor = Color.FromArgb(255, 192, 192);
-        btnHuy.Cursor = Cursors.Hand;
+        
         btnHuy.DialogResult = DialogResult.Cancel;
         btnHuy.Dock = DockStyle.Fill;
         btnHuy.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnHuy.FlatStyle = FlatStyle.Flat;
+        
         btnHuy.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnHuy.ForeColor = SystemColors.ControlText;
         btnHuy.Location = new Point(240, 4);
@@ -447,7 +447,7 @@ partial class frmThemThuoc
         btnHuy.Size = new Size(232, 44);
         btnHuy.TabIndex = 1;
         btnHuy.Text = "Hủy";
-        btnHuy.UseVisualStyleBackColor = false;
+        
         // 
         // frmThemThuoc
         // 
@@ -482,10 +482,32 @@ partial class frmThemThuoc
         tableLayoutPanel14.ResumeLayout(false);
         
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnThemNhom.BackColor=Color.FromArgb(22, 101, 52);btnThemNhom.ForeColor=Color.White;btnThemNhom.UseVisualStyleBackColor=false;
-        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
-        btnHuy.BackColor=Color.FromArgb(100, 116, 139);btnHuy.ForeColor=Color.White;btnHuy.UseVisualStyleBackColor=false;
-ResumeLayout(false);
+        btnThemNhom.BackColor=Color.FromArgb(22, 101, 52);
+        btnThemNhom.FlatStyle = FlatStyle.Flat;
+        btnThemNhom.FlatAppearance.BorderSize = 0;
+        btnThemNhom.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnThemNhom.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnThemNhom.Cursor = Cursors.Hand;
+        btnThemNhom.UseVisualStyleBackColor = false;btnThemNhom.ForeColor=Color.White;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);
+        btnLuu.FlatStyle = FlatStyle.Flat;
+        btnLuu.FlatAppearance.BorderSize = 0;
+        btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnLuu.Cursor = Cursors.Hand;
+        btnLuu.UseVisualStyleBackColor = false;btnLuu.ForeColor=Color.White;
+        btnHuy.BackColor=Color.FromArgb(100, 116, 139);
+        btnHuy.FlatStyle = FlatStyle.Flat;
+        btnHuy.FlatAppearance.BorderSize = 0;
+        btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(148, 163, 184);
+        btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(71, 85, 105);
+        btnHuy.Cursor = Cursors.Hand;
+        btnHuy.UseVisualStyleBackColor = false;btnHuy.ForeColor=Color.White;
+        cboNhom.FlatStyle=FlatStyle.Standard;
+        nudGiaBan.BorderStyle=BorderStyle.FixedSingle;
+                txtTen.AutoSize=false;
+        txtDonVi.AutoSize=false;
+        ResumeLayout(false);
     }
 
     private global::System.Windows.Forms.TableLayoutPanel posLayout;

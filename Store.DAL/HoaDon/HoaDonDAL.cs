@@ -15,18 +15,18 @@ public class HoaDonDAL
 
     public DataTable TimKiem(string keyword, DateTime? from, DateTime? to,bool chiCho=false) => new DBConnection().DocBang(
         string.Format(SelectSql, "") + @"
-        WHERE (@pending=0 OR o.PaymentStatus='PENDING') AND (@from IS NULL OR o.OrderDate>=@from) AND (@to IS NULL OR o.OrderDate<DATEADD(day,1,@to))
+        WHERE (@pending=0 OR o.PaymentStatus='PENDING') AND (@from IS NULL OR COALESCE(o.PaidAt,o.OrderDate)>=@from) AND (@to IS NULL OR COALESCE(o.PaidAt,o.OrderDate)<DATEADD(day,1,@to))
           AND (CAST(o.Id AS NVARCHAR(20)) LIKE @kw OR
                ('HD'+CASE WHEN o.Id<100000 THEN RIGHT('00000'+CAST(o.Id AS VARCHAR(20)),5) ELSE CAST(o.Id AS VARCHAR(20)) END) LIKE @kw
                OR e.FullName LIKE @kw OR COALESCE(c.FullName,N'Khách lẻ') LIKE @kw OR c.Phone LIKE @kw OR v.Code LIKE @kw)
-        ORDER BY o.OrderDate DESC,o.Id DESC",
+        ORDER BY COALESCE(o.PaidAt,o.OrderDate) DESC,o.Id DESC",
         new SqlParameter("@pending",SqlDbType.Bit){Value=chiCho},
         new SqlParameter("@kw",SqlDbType.NVarChar,-1) {Value=DBConnection.LikePattern(keyword)},
         new SqlParameter("@from",SqlDbType.Date) {Value=(object?)from?.Date??DBNull.Value},
         new SqlParameter("@to",SqlDbType.Date) {Value=(object?)to?.Date??DBNull.Value});
 
     public DataTable LayGanNhat() => new DBConnection().DocBang(
-        string.Format(SelectSql,"TOP (5)")+" ORDER BY o.OrderDate DESC,o.Id DESC");
+        string.Format(SelectSql,"TOP (5)")+" ORDER BY COALESCE(o.PaidAt,o.OrderDate) DESC,o.Id DESC");
 
     public DataTable ThongKeHomNay() => new DBConnection().DocBang(@"
         SELECT COUNT(*) AS SoHoaDon, COALESCE(SUM(TotalAmount-DiscountAmount),0) AS DoanhThu

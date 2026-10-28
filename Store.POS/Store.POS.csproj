@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.1" />
-    <PackageReference Include="QuestPDF" Version="2024.12.4" />
+    <PackageReference Include="QuestPDF" Version="2025.1.0" />
     <PackageReference Include="Svg" Version="3.4.8" />
   </ItemGroup>
 
@@ -73,6 +73,7 @@
   <ItemGroup>
     <!-- Refresh partial classes share their form resources; compiling another resx duplicates the output name. -->
     <EmbeddedResource Remove="Forms/**/*.Refresh.resx" />
+    <EmbeddedResource Include="Forms\BanHang\frmBanHang.Refresh.resx" />
     <Compile Update="Forms/BanHang/frmBanHang.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBanHang.cs</DependentUpon></Compile>
     <Compile Update="Forms/BaoCao/frmBaoCao.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmBaoCao.cs</DependentUpon></Compile>
     <Compile Update="Forms/CanhBao/frmCanhBao.Refresh.cs"><SubType>Code</SubType><DependentUpon>frmCanhBao.cs</DependentUpon></Compile>
@@ -99,4 +100,13 @@
     <Compile Update="Forms/DanhMuc/frmXemTruocExcel.cs"><SubType>Form</SubType></Compile>
     <Compile Update="Forms/DanhMuc/frmXemTruocExcel.Designer.cs"><DependentUpon>frmXemTruocExcel.cs</DependentUpon></Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms/NhanVien/frmNhanVien.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/NhanVien/frmNhanVien.Designer.cs"><DependentUpon>frmNhanVien.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <Target Name="ExcludePartialFormResources" BeforeTargets="AssignTargetPaths">
+    <ItemGroup>
+      <EmbeddedResource Remove="@(EmbeddedResource)" Condition="$([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Refresh')) Or $([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Excel')) Or $([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Dashboard'))" />
+    </ItemGroup>
+  </Target>
 </Project>

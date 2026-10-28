@@ -16,12 +16,15 @@ public partial class frmBanHang
                 {row.Name=medicine.Name;row.Unit=medicine.Unit;row.Price=medicine.Price;gioHang.ResetItem(i);}
         }
         if(voucherApDung!=null)
+        {
             voucherApDung=voucherBLL.KiemTra(voucherApDung.Code,out var freshVoucher,out _)?freshVoucher:null;
+            CapNhatThongTinVoucher();
+        }
         if(khachHang!=null)
         {
             var customer=customerDAL.GetCustomerById(khachHang.Id);
             if(customer!=null) boxMaKhachHang.Text=customer.Phone;
-            khachHang=customer;labelMaKhachHang.Text=customer?.FullName??"SĐT khách hàng";
+            khachHang=customer;CapNhatThongTinKhachHang();
         }
         labelNhanVien.Text="Nhân viên: "+PhienDangNhap.HoTen;
         boxTimKiem_TextChanged(this,EventArgs.Empty);CapNhatGiaTien();

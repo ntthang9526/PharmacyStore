@@ -20,7 +20,7 @@ namespace Store.POS
         {
             if (PosFormStyle.IsInDesigner(this)) return;
             DateTime homNay = DateTime.Today;
-            dtpTuNgay.Value = new DateTime(homNay.Year, homNay.Month, 1);   // Mặc định: từ đầu tháng
+            dtpTuNgay.Value = homNay.AddDays(-30);   // Mặc định: 30 ngày gần nhất để luôn xem được các hóa đơn gần đây
             dtpDenNgay.Value = homNay;
             XemBaoCao(false);
         }

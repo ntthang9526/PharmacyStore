@@ -1,4 +1,4 @@
-using Store.BLL;
+﻿using Store.BLL;
 using System.Data;
 
 namespace Store.POS
@@ -7,10 +7,10 @@ namespace Store.POS
     {
         private string maDangChon="";
         private KhachHangBLL bll = new KhachHangBLL();
-        public frmKhachHang() : this(null) { }
-
-        /// <summary>Mở form thêm mới và tự điền SĐT (dùng khi gọi từ màn hình bán hàng).</summary>
-        public frmKhachHang(string? sdtDienSan)
+        private bool isThem = false;
+        private bool isSua = false;
+        public frmKhachHang() : this(null) {}
+        public frmKhachHang(string? sdt)
         {
             InitializeComponent();
             PhanQuyenGiaoDien.Gan(this);
@@ -20,21 +20,13 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
-            PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
-            if (!string.IsNullOrWhiteSpace(sdtDienSan))
-            {
-                // Sau khi form load xong: mở chế độ thêm mới và điền SĐT
-                Load += (_, _) =>
-                {
-                    btnThem_Click(this, EventArgs.Empty); // mở khóa ô nhập liệu
-                    txtDienThoai.Text = sdtDienSan;
-                    txtTenKH.Focus();
-                };
-            }
+            PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
+            if (!string.IsNullOrEmpty(sdt)) txtDienThoai.Text = sdt;
         }
 
-        private void ResetDetails()
+        private void ResetDetails(bool force = false)
         {
+            if (!force && txtTenKH.Enabled) return;
             SetControlState(false);
             maDangChon=""; txtTenKH.Clear(); txtDienThoai.Clear(); txtDiem.Text = "0";
         }
@@ -58,6 +50,21 @@ namespace Store.POS
             txtTenKH.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiem.Enabled = status;
+
+            if (!status)
+            {
+                isThem = false;
+                isSua = false;
+                btnThem.Enabled = true;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+            }
+            else
+            {
+                btnThem.Enabled = isThem;
+                btnSua.Enabled = isSua;
+                btnXoa.Enabled = false;
+            }
         }
         private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -77,7 +84,9 @@ namespace Store.POS
             // Trường hợp 1: Nếu các ô đang bị khóa (Bấm lần đầu để chuẩn bị thêm mới)
             if (!txtTenKH.Enabled)
             {
-                SetControlState(true); // Mở khóa tất cả các ô
+                isThem = true;
+                isSua = false;
+                SetControlState(true); // Mở khóa tất cả các ô, tắt sửa và xóa
                 maDangChon="";
                 txtTenKH.Clear();
                 txtDienThoai.Clear();
@@ -147,7 +156,9 @@ namespace Store.POS
                     return;
                 }
 
-                SetControlState(true);  // Mở khóa các ô để sửa thông tin
+                isThem = false;
+                isSua = true;
+                SetControlState(true);  // Mở khóa các ô để sửa thông tin, tắt thêm và xóa
                 txtTenKH.Focus();
                 return;
             }
@@ -207,7 +218,7 @@ namespace Store.POS
             }
         }
 
-        private void btnLamLai_Click(object sender, EventArgs e)
+        private void btnLamMoi_Click(object sender, EventArgs e)
         {
             maDangChon="";
             txtTenKH.Clear();
@@ -219,14 +230,7 @@ namespace Store.POS
             txtTenKH.Focus();
         }
 
-        private void btnThoat_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("Bạn có muốn thoát khỏi form này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
+        private void btnLamLai_Click(object sender, EventArgs e) => btnLamMoi_Click(sender, e);
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {

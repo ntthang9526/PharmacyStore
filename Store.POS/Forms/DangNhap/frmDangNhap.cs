@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 using Store.Shared.DTOs.Auth;
 namespace Store.POS;
 public partial class frmDangNhap : Form
@@ -25,6 +25,15 @@ public partial class frmDangNhap : Form
             Hide();
             using var main = new frmMain();
             main.ShowDialog();
+            if (main.DaDangXuat)
+            {
+                PhienDangNhap.Xoa();
+                txtBoxMatKhau.Clear();
+                chkHienMatKhau.Checked = false;
+                txtBoxTaiKhoan.Focus();
+                Show();
+                return;
+            }
             Close();
         }
         catch (Exception ex)
@@ -33,5 +42,10 @@ public partial class frmDangNhap : Form
             MessageBox.Show("Không đăng nhập được: " + ex.Message, "Lỗi");
         }
         finally { PhienDangNhap.Xoa(); btnDangNhap.Enabled = true; }
+    }
+
+    private void chkHienMatKhau_CheckedChanged(object sender, EventArgs e)
+    {
+        txtBoxMatKhau.UseSystemPasswordChar = !chkHienMatKhau.Checked;
     }
 }

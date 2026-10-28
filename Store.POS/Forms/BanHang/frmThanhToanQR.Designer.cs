@@ -57,28 +57,30 @@
             // 
             // btnHoanTat
             // 
-            btnHoanTat.BackColor = Color.FromArgb(192, 255, 192);
-            btnHoanTat.FlatStyle = FlatStyle.Popup;
-            btnHoanTat.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnHoanTat.BackColor = Color.FromArgb(15, 118, 110);
+            btnHoanTat.ForeColor = Color.White;
+            
+            btnHoanTat.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnHoanTat.Location = new Point(12, 458);
             btnHoanTat.Name = "btnHoanTat";
             btnHoanTat.Size = new Size(175, 47);
             btnHoanTat.TabIndex = 2;
             btnHoanTat.Text = "Hoàn tất";
-            btnHoanTat.UseVisualStyleBackColor = false;
+            
             btnHoanTat.Click += btnHoanTat_Click;
             // 
             // btnHuy
             // 
-            btnHuy.BackColor = Color.FromArgb(255, 192, 192);
-            btnHuy.FlatStyle = FlatStyle.Popup;
-            btnHuy.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnHuy.Location = new Point(195, 459);
+            btnHuy.BackColor = Color.FromArgb(100, 116, 139);
+            btnHuy.ForeColor = Color.White;
+            
+            btnHuy.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnHuy.Location = new Point(195, 458);
             btnHuy.Name = "btnHuy";
             btnHuy.Size = new Size(175, 47);
             btnHuy.TabIndex = 3;
             btnHuy.Text = "Hủy";
-            btnHuy.UseVisualStyleBackColor = false;
+            
             btnHuy.Click += btnHuy_Click;
             // 
             // frmThanhToanQR
@@ -99,8 +101,20 @@
             ((System.ComponentModel.ISupportInitialize)picQR).EndInit();
             
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnHoanTat.BackColor=Color.FromArgb(15, 118, 110);btnHoanTat.ForeColor=Color.White;btnHoanTat.UseVisualStyleBackColor=false;
-        btnHuy.BackColor=Color.FromArgb(100, 116, 139);btnHuy.ForeColor=Color.White;btnHuy.UseVisualStyleBackColor=false;
+        btnHoanTat.BackColor=Color.FromArgb(15, 118, 110);
+        btnHoanTat.FlatStyle = FlatStyle.Flat;
+        btnHoanTat.FlatAppearance.BorderSize = 0;
+        btnHoanTat.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnHoanTat.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnHoanTat.Cursor = Cursors.Hand;
+        btnHoanTat.UseVisualStyleBackColor = false;btnHoanTat.ForeColor=Color.White;
+        btnHuy.BackColor=Color.FromArgb(100, 116, 139);
+        btnHuy.FlatStyle = FlatStyle.Flat;
+        btnHuy.FlatAppearance.BorderSize = 0;
+        btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(148, 163, 184);
+        btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(71, 85, 105);
+        btnHuy.Cursor = Cursors.Hand;
+        btnHuy.UseVisualStyleBackColor = false;btnHuy.ForeColor=Color.White;
 ResumeLayout(false);
             PerformLayout();
         }

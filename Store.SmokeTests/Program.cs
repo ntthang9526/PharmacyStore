@@ -38,7 +38,28 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
-        if(!args.Contains("--designer-offline")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(args.Contains("--designed-columns"))
+        {
+            try {TestDesignedColumns();Console.WriteLine($"ALL {checks} DESIGNER COLUMN CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--medicine-list-live"))
+        {
+            try {TestMedicineListLive();Console.WriteLine($"ALL {checks} LIVE MEDICINE LIST CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--edit-columns"))
+        {
+            try {TestEditColumns();Console.WriteLine($"ALL {checks} EDIT-COLUMN CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--measure-headers")) { MeasureHeaders();return 0; }
+        if(args.Contains("--dashboard-headers"))
+        {
+            try {TestDashboardHeaders();Console.WriteLine($"ALL {checks} DASHBOARD/HEADER CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--fill-alert"))
         {
             try {TestFillAlert();Console.WriteLine($"ALL {checks} FILL/ALERT CHECKS PASSED");return 0;}

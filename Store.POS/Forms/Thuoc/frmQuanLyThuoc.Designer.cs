@@ -1,4 +1,8 @@
-﻿#nullable disable
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
 namespace Store.POS;
 
 partial class frmQuanLyThuoc
@@ -15,10 +19,16 @@ partial class frmQuanLyThuoc
     {
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
         posLayout = new TableLayoutPanel();
         posHeading = new Label();
+        excelActions = new FlowLayoutPanel();
+        btnNhapExcel = new Button();
+        btnXuatExcel = new Button();
+        btnMauExcel = new Button();
         tableLayoutPanel1 = new TableLayoutPanel();
         groupBox2 = new GroupBox();
         tableLayoutPanel3 = new TableLayoutPanel();
@@ -32,11 +42,11 @@ partial class frmQuanLyThuoc
         MaNhom = new DataGridViewTextBoxColumn();
         MaNCC = new DataGridViewTextBoxColumn();
         TenNhom = new DataGridViewTextBoxColumn();
-        TenNCC = new DataGridViewTextBoxColumn();
         DonViTinh = new DataGridViewTextBoxColumn();
         DonGia = new DataGridViewTextBoxColumn();
         SoLuongTon = new DataGridViewTextBoxColumn();
-
+        TenNCC = new DataGridViewTextBoxColumn();
+        colMaVach = new DataGridViewTextBoxColumn();
         groupBox6 = new GroupBox();
         tableLayoutPanel7 = new TableLayoutPanel();
         tableLayoutPanel8 = new TableLayoutPanel();
@@ -68,13 +78,14 @@ partial class frmQuanLyThuoc
         btnXoa = new Button();
         btnLuu = new Button();
         btnBoQua = new Button();
-        btnThoat = new Button();
+        btnLamMoi = new Button();
         posLayout.SuspendLayout();
+        excelActions.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         groupBox2.SuspendLayout();
         tableLayoutPanel3.SuspendLayout();
         tableLayoutPanel4.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)dgvThuoc).BeginInit();
+        ((ISupportInitialize)dgvThuoc).BeginInit();
         groupBox6.SuspendLayout();
         tableLayoutPanel7.SuspendLayout();
         tableLayoutPanel8.SuspendLayout();
@@ -91,19 +102,11 @@ partial class frmQuanLyThuoc
         // 
         // posLayout
         // 
-        posLayout.BackColor = Color.FromArgb(248,250,252);
+        posLayout.BackColor = Color.FromArgb(248, 250, 252);
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        excelActions=new FlowLayoutPanel();excelActions.Name="excelActions";excelActions.Dock=DockStyle.Fill;excelActions.Margin=Padding.Empty;excelActions.WrapContents=false;
-
-
         posLayout.Controls.Add(posHeading, 0, 0);
-        btnNhapExcel=new Button();btnNhapExcel.Name="btnNhapExcel";btnNhapExcel.Text="Nhập Excel";btnNhapExcel.Size=new Size(120,38);btnNhapExcel.Margin=new Padding(3);excelActions.Controls.Add(btnNhapExcel);
-        btnXuatExcel=new Button();btnXuatExcel.Name="btnXuatExcel";btnXuatExcel.Text="Xuất Excel";btnXuatExcel.Size=new Size(120,38);btnXuatExcel.Margin=new Padding(3);excelActions.Controls.Add(btnXuatExcel);
-        btnMauExcel=new Button();btnMauExcel.Name="btnMauExcel";btnMauExcel.Text="File mẫu";btnMauExcel.Size=new Size(110,38);btnMauExcel.Margin=new Padding(3);excelActions.Controls.Add(btnMauExcel);
-
-        posLayout.Controls.Add(excelActions,0,1);
-
+        posLayout.Controls.Add(excelActions, 0, 1);
         posLayout.Controls.Add(tableLayoutPanel1, 0, 2);
         posLayout.Dock = DockStyle.Fill;
         posLayout.Font = new Font("Segoe UI", 10.2F);
@@ -112,15 +115,16 @@ partial class frmQuanLyThuoc
         posLayout.Margin = new Padding(0);
         posLayout.Name = "posLayout";
         posLayout.Padding = new Padding(12);
-        posLayout.RowCount = 2;
+        posLayout.RowCount = 3;
         posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
+        posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46F));
         posLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         posLayout.Size = new Size(1182, 653);
         posLayout.TabIndex = 0;
         // 
         // posHeading
         // 
-        posHeading.BackColor = Color.FromArgb(248,250,252);
+        posHeading.BackColor = Color.FromArgb(248, 250, 252);
         posHeading.Dock = DockStyle.Fill;
         posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
         posHeading.ForeColor = SystemColors.ControlText;
@@ -131,9 +135,55 @@ partial class frmQuanLyThuoc
         posHeading.Text = "Quản lý thuốc";
         posHeading.TextAlign = ContentAlignment.MiddleLeft;
         // 
+        // excelActions
+        // 
+        excelActions.Controls.Add(btnNhapExcel);
+        excelActions.Controls.Add(btnXuatExcel);
+        excelActions.Controls.Add(btnMauExcel);
+        excelActions.Dock = DockStyle.Fill;
+        excelActions.Location = new Point(12, 60);
+        excelActions.Margin = new Padding(0);
+        excelActions.Name = "excelActions";
+        excelActions.Size = new Size(1158, 46);
+        excelActions.TabIndex = 1;
+        excelActions.WrapContents = false;
+        // 
+        // btnNhapExcel
+        // 
+        btnNhapExcel.BackColor = Color.FromArgb(22, 101, 52);
+        btnNhapExcel.ForeColor = Color.White;
+        btnNhapExcel.Location = new Point(3, 3);
+        btnNhapExcel.Name = "btnNhapExcel";
+        btnNhapExcel.Size = new Size(120, 38);
+        btnNhapExcel.TabIndex = 0;
+        btnNhapExcel.Text = "Nhập Excel";
+        btnNhapExcel.UseVisualStyleBackColor = false;
+        // 
+        // btnXuatExcel
+        // 
+        btnXuatExcel.BackColor = Color.FromArgb(15, 118, 110);
+        btnXuatExcel.ForeColor = Color.White;
+        btnXuatExcel.Location = new Point(129, 3);
+        btnXuatExcel.Name = "btnXuatExcel";
+        btnXuatExcel.Size = new Size(120, 38);
+        btnXuatExcel.TabIndex = 1;
+        btnXuatExcel.Text = "Xuất Excel";
+        btnXuatExcel.UseVisualStyleBackColor = false;
+        // 
+        // btnMauExcel
+        // 
+        btnMauExcel.BackColor = Color.FromArgb(15, 118, 110);
+        btnMauExcel.ForeColor = Color.White;
+        btnMauExcel.Location = new Point(255, 3);
+        btnMauExcel.Name = "btnMauExcel";
+        btnMauExcel.Size = new Size(110, 38);
+        btnMauExcel.TabIndex = 2;
+        btnMauExcel.Text = "File mẫu";
+        btnMauExcel.UseVisualStyleBackColor = false;
+        // 
         // tableLayoutPanel1
         // 
-        tableLayoutPanel1.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel1.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel1.ColumnCount = 2;
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
@@ -142,17 +192,17 @@ partial class frmQuanLyThuoc
         tableLayoutPanel1.Dock = DockStyle.Fill;
         tableLayoutPanel1.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel1.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel1.Location = new Point(12, 60);
+        tableLayoutPanel1.Location = new Point(12, 106);
         tableLayoutPanel1.Margin = new Padding(0);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 1;
         tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel1.Size = new Size(1158, 581);
+        tableLayoutPanel1.Size = new Size(1158, 535);
         tableLayoutPanel1.TabIndex = 1;
         // 
         // groupBox2
         // 
-        groupBox2.BackColor = Color.FromArgb(248,250,252);
+        groupBox2.BackColor = Color.FromArgb(248, 250, 252);
         groupBox2.Controls.Add(tableLayoutPanel3);
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -161,14 +211,14 @@ partial class frmQuanLyThuoc
         groupBox2.Margin = new Padding(0, 0, 12, 0);
         groupBox2.Name = "groupBox2";
         groupBox2.Padding = new Padding(12, 2, 12, 12);
-        groupBox2.Size = new Size(792, 581);
+        groupBox2.Size = new Size(792, 535);
         groupBox2.TabIndex = 0;
         groupBox2.TabStop = false;
         groupBox2.Text = "Tìm kiếm và Danh sách thuốc";
         // 
         // tableLayoutPanel3
         // 
-        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel3.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel3.ColumnCount = 1;
         tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
@@ -182,12 +232,12 @@ partial class frmQuanLyThuoc
         tableLayoutPanel3.RowCount = 2;
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel3.Size = new Size(768, 544);
+        tableLayoutPanel3.Size = new Size(768, 498);
         tableLayoutPanel3.TabIndex = 0;
         // 
         // tableLayoutPanel4
         // 
-        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel4.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel4.ColumnCount = 3;
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -208,7 +258,7 @@ partial class frmQuanLyThuoc
         // 
         // label5
         // 
-        label5.BackColor = Color.FromArgb(248,250,252);
+        label5.BackColor = Color.FromArgb(248, 250, 252);
         label5.Dock = DockStyle.Fill;
         label5.Font = new Font("Segoe UI", 10.2F);
         label5.ForeColor = SystemColors.ControlText;
@@ -237,13 +287,13 @@ partial class frmQuanLyThuoc
         // 
         // btnTimKiem
         // 
-        btnTimKiem.BackColor = SystemColors.ControlLight;
+        btnTimKiem.BackColor = Color.FromArgb(15, 118, 110);
         btnTimKiem.Cursor = Cursors.Hand;
         btnTimKiem.Dock = DockStyle.Fill;
         btnTimKiem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnTimKiem.FlatStyle = FlatStyle.Flat;
         btnTimKiem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnTimKiem.ForeColor = SystemColors.ControlText;
+        btnTimKiem.ForeColor = Color.White;
         btnTimKiem.Location = new Point(648, 2);
         btnTimKiem.Margin = new Padding(0, 2, 0, 2);
         btnTimKiem.Name = "btnTimKiem";
@@ -257,35 +307,32 @@ partial class frmQuanLyThuoc
         // 
         dgvThuoc.AllowUserToAddRows = false;
         dgvThuoc.AllowUserToDeleteRows = false;
+        dgvThuoc.AllowUserToResizeColumns = false;
         dgvThuoc.AllowUserToResizeRows = false;
-        dataGridViewCellStyle1.BackColor = Color.White;
+        dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 250, 252);
         dgvThuoc.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-        dgvThuoc.AutoGenerateColumns = false;
-        colGiaNhap = new DataGridViewTextBoxColumn();
-        colGiaNhap.Name="GiaNhapGanNhat";colGiaNhap.DataPropertyName="GiaNhapGanNhat";
-        colGiaNhap.HeaderText="Giá nhập gần nhất (đ)";colGiaNhap.ReadOnly=true;
-        colGiaNhap.DefaultCellStyle.Format="N0";colGiaNhap.DefaultCellStyle.NullValue="—";
-        colGiaNhap.DefaultCellStyle.Alignment=DataGridViewContentAlignment.MiddleRight;
-        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, MaNhom, MaNCC, TenNhom, TenNCC, DonViTinh, DonGia, SoLuongTon, colGiaNhap });
-        dgvThuoc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         dgvThuoc.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-        dgvThuoc.BackgroundColor = SystemColors.ScrollBar;
+        dgvThuoc.BackgroundColor = Color.White;
         dgvThuoc.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-        dataGridViewCellStyle2.BackColor = Color.FromArgb(248,250,252);
+        dataGridViewCellStyle2.BackColor = Color.FromArgb(15, 118, 110);
         dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.2F);
-        dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+        dataGridViewCellStyle2.ForeColor = Color.White;
+        dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(15, 118, 110);
+        dataGridViewCellStyle2.SelectionForeColor = Color.White;
+        dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
         dgvThuoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-        dgvThuoc.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        dataGridViewCellStyle3.BackColor = Color.White;
-        dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.2F);
-        dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle3.Padding = new Padding(4);
-        dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientActiveCaption;
-        dataGridViewCellStyle3.SelectionForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-        dgvThuoc.DefaultCellStyle = dataGridViewCellStyle3;
+        dgvThuoc.ColumnHeadersHeight = 43;
+        dgvThuoc.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, MaNhom, MaNCC, TenNhom, DonViTinh, DonGia, SoLuongTon, TenNCC, colMaVach });
+        dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle5.BackColor = Color.White;
+        dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle5.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle5.Padding = new Padding(4);
+        dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(204, 251, 241);
+        dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+        dgvThuoc.DefaultCellStyle = dataGridViewCellStyle5;
         dgvThuoc.Dock = DockStyle.Fill;
         dgvThuoc.EnableHeadersVisualStyles = false;
         dgvThuoc.Font = new Font("Segoe UI", 10.2F);
@@ -295,88 +342,142 @@ partial class frmQuanLyThuoc
         dgvThuoc.MultiSelect = false;
         dgvThuoc.Name = "dgvThuoc";
         dgvThuoc.ReadOnly = true;
-        dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        dataGridViewCellStyle4.BackColor = Color.FromArgb(248,250,252);
-        dataGridViewCellStyle4.Font = new Font("Segoe UI", 10.2F);
-        dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-        dgvThuoc.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+        dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle6.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle6.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+        dgvThuoc.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
         dgvThuoc.RowHeadersVisible = false;
         dgvThuoc.RowHeadersWidth = 51;
         dgvThuoc.RowTemplate.Height = 34;
         dgvThuoc.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dgvThuoc.Size = new Size(768, 488);
+        dgvThuoc.Size = new Size(768, 442);
         dgvThuoc.TabIndex = 18;
         dgvThuoc.CellClick += dgvThuoc_CellClick;
         // 
         // MaThuoc
+        // 
+        MaThuoc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         MaThuoc.DataPropertyName = "MaThuoc";
-        MaThuoc.HeaderText="Mã";
+        MaThuoc.HeaderText = "Mã thuốc";
+        MaThuoc.MinimumWidth = 6;
         MaThuoc.Name = "MaThuoc";
         MaThuoc.ReadOnly = true;
-        
+        MaThuoc.Resizable = DataGridViewTriState.False;
+        MaThuoc.Width = 125;
+        // 
         // TenThuoc
+        // 
+        TenThuoc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         TenThuoc.DataPropertyName = "TenThuoc";
         TenThuoc.HeaderText = "Tên thuốc";
+        TenThuoc.MinimumWidth = 6;
         TenThuoc.Name = "TenThuoc";
         TenThuoc.ReadOnly = true;
-        TenThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        
+        TenThuoc.Resizable = DataGridViewTriState.False;
+        TenThuoc.Width = 250;
+        // 
         // MaNhom
+        // 
+        MaNhom.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         MaNhom.DataPropertyName = "MaNhom";
-        MaNhom.HeaderText="Mã";
+        MaNhom.HeaderText = "Mã nhóm thuốc";
+        MaNhom.MinimumWidth = 6;
         MaNhom.Name = "MaNhom";
         MaNhom.ReadOnly = true;
-        
+        MaNhom.Resizable = DataGridViewTriState.False;
         MaNhom.Visible = false;
+        MaNhom.Width = 125;
+        // 
         // MaNCC
+        // 
+        MaNCC.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         MaNCC.DataPropertyName = "MaNCC";
-        MaNCC.HeaderText="Mã";
+        MaNCC.HeaderText = "Mã nhà cung cấp";
+        MaNCC.MinimumWidth = 6;
         MaNCC.Name = "MaNCC";
         MaNCC.ReadOnly = true;
-        
+        MaNCC.Resizable = DataGridViewTriState.False;
         MaNCC.Visible = false;
+        MaNCC.Width = 125;
+        // 
         // TenNhom
+        // 
+        TenNhom.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         TenNhom.DataPropertyName = "TenNhom";
         TenNhom.HeaderText = "Nhóm thuốc";
+        TenNhom.MinimumWidth = 6;
         TenNhom.Name = "TenNhom";
         TenNhom.ReadOnly = true;
-        TenNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        
-        // TenNCC
-        TenNCC.DataPropertyName = "TenNCC";
-        TenNCC.HeaderText = "Nhà cung cấp";
-        TenNCC.Name = "TenNCC";
-        TenNCC.ReadOnly = true;
-        TenNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.True;
-        
+        TenNhom.Resizable = DataGridViewTriState.False;
+        TenNhom.Width = 175;
+        // 
         // DonViTinh
+        // 
+        DonViTinh.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         DonViTinh.DataPropertyName = "DonViTinh";
         DonViTinh.HeaderText = "Đơn vị";
+        DonViTinh.MinimumWidth = 6;
         DonViTinh.Name = "DonViTinh";
         DonViTinh.ReadOnly = true;
-        
+        DonViTinh.Resizable = DataGridViewTriState.False;
+        DonViTinh.Width = 125;
+        // 
         // DonGia
+        // 
+        DonGia.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         DonGia.DataPropertyName = "DonGia";
-        DonGia.HeaderText = "Đơn giá (đ)";
+        dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+        dataGridViewCellStyle3.Format = "N0";
+        DonGia.DefaultCellStyle = dataGridViewCellStyle3;
+        DonGia.HeaderText = "Đơn giá";
+        DonGia.MinimumWidth = 6;
         DonGia.Name = "DonGia";
         DonGia.ReadOnly = true;
-        
-        DonGia.DefaultCellStyle.Format = "N0";
-        DonGia.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        DonGia.Resizable = DataGridViewTriState.False;
+        DonGia.Width = 125;
+        // 
         // SoLuongTon
+        // 
+        SoLuongTon.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         SoLuongTon.DataPropertyName = "SoLuongTon";
+        dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
+        dataGridViewCellStyle4.Format = "N0";
+        SoLuongTon.DefaultCellStyle = dataGridViewCellStyle4;
         SoLuongTon.HeaderText = "Tồn kho";
+        SoLuongTon.MinimumWidth = 6;
         SoLuongTon.Name = "SoLuongTon";
         SoLuongTon.ReadOnly = true;
-        
-        SoLuongTon.DefaultCellStyle.Format = "N0";
-        SoLuongTon.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        SoLuongTon.Resizable = DataGridViewTriState.False;
+        SoLuongTon.Width = 125;
+        // 
+        // TenNCC
+        // 
+        TenNCC.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        TenNCC.DataPropertyName = "TenNCC";
+        TenNCC.HeaderText = "Nhà cung cấp";
+        TenNCC.MinimumWidth = 6;
+        TenNCC.Name = "TenNCC";
+        TenNCC.ReadOnly = true;
+        TenNCC.Resizable = DataGridViewTriState.False;
+        TenNCC.Width = 150;
+        // 
+        // colMaVach
+        // 
+        colMaVach.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        colMaVach.DataPropertyName = "MaVach";
+        colMaVach.HeaderText = "Mã vạch";
+        colMaVach.MinimumWidth = 6;
+        colMaVach.Name = "colMaVach";
+        colMaVach.ReadOnly = true;
+        colMaVach.Width = 150;
+        // 
         // groupBox6
         // 
-        groupBox6.BackColor = Color.FromArgb(248,250,252);
+        groupBox6.BackColor = Color.FromArgb(248, 250, 252);
         groupBox6.Controls.Add(tableLayoutPanel7);
         groupBox6.Dock = DockStyle.Fill;
         groupBox6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
@@ -385,14 +486,14 @@ partial class frmQuanLyThuoc
         groupBox6.Margin = new Padding(0);
         groupBox6.Name = "groupBox6";
         groupBox6.Padding = new Padding(12, 2, 12, 12);
-        groupBox6.Size = new Size(354, 581);
+        groupBox6.Size = new Size(354, 535);
         groupBox6.TabIndex = 1;
         groupBox6.TabStop = false;
         groupBox6.Text = "Thông tin chi tiết";
         // 
         // tableLayoutPanel7
         // 
-        tableLayoutPanel7.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel7.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel7.ColumnCount = 1;
         tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
@@ -407,14 +508,14 @@ partial class frmQuanLyThuoc
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 336F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
-        tableLayoutPanel7.Size = new Size(330, 544);
+        tableLayoutPanel7.Size = new Size(330, 498);
         tableLayoutPanel7.TabIndex = 0;
         // 
         // tableLayoutPanel8
         // 
         tableLayoutPanel8.AutoSize = true;
         tableLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        tableLayoutPanel8.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel8.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel8.ColumnCount = 1;
         tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
@@ -436,18 +537,12 @@ partial class frmQuanLyThuoc
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
         tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
-        tableLayoutPanel8.Size = new Size(330, 392);
+        tableLayoutPanel8.Size = new Size(330, 336);
         tableLayoutPanel8.TabIndex = 0;
-        // 
-        // 
-        // 
-        // 
-        // 
-        // 
         // 
         // tableLayoutPanel11
         // 
-        tableLayoutPanel11.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel11.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel11.ColumnCount = 1;
         tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
@@ -455,7 +550,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel11.Dock = DockStyle.Fill;
         tableLayoutPanel11.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel11.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel11.Location = new Point(0, 56);
+        tableLayoutPanel11.Location = new Point(0, 0);
         tableLayoutPanel11.Margin = new Padding(0);
         tableLayoutPanel11.Name = "tableLayoutPanel11";
         tableLayoutPanel11.RowCount = 2;
@@ -466,7 +561,7 @@ partial class frmQuanLyThuoc
         // 
         // label12
         // 
-        label12.BackColor = Color.FromArgb(248,250,252);
+        label12.BackColor = Color.FromArgb(248, 250, 252);
         label12.Dock = DockStyle.Fill;
         label12.Font = new Font("Segoe UI", 10.2F);
         label12.ForeColor = SystemColors.ControlText;
@@ -494,7 +589,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel13
         // 
-        tableLayoutPanel13.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel13.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel13.ColumnCount = 1;
         tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel13.Controls.Add(label14, 0, 0);
@@ -502,7 +597,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel13.Dock = DockStyle.Fill;
         tableLayoutPanel13.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel13.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel13.Location = new Point(0, 112);
+        tableLayoutPanel13.Location = new Point(0, 56);
         tableLayoutPanel13.Margin = new Padding(0);
         tableLayoutPanel13.Name = "tableLayoutPanel13";
         tableLayoutPanel13.RowCount = 2;
@@ -513,7 +608,7 @@ partial class frmQuanLyThuoc
         // 
         // label14
         // 
-        label14.BackColor = Color.FromArgb(248,250,252);
+        label14.BackColor = Color.FromArgb(248, 250, 252);
         label14.Dock = DockStyle.Fill;
         label14.Font = new Font("Segoe UI", 10.2F);
         label14.ForeColor = SystemColors.ControlText;
@@ -526,7 +621,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel15
         // 
-        tableLayoutPanel15.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel15.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel15.ColumnCount = 2;
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -560,14 +655,14 @@ partial class frmQuanLyThuoc
         // btnThemNhom
         // 
         btnThemNhom.AccessibleName = "Thêm nhóm thuốc";
-        btnThemNhom.BackColor = Color.FromArgb(192, 255, 192);
+        btnThemNhom.BackColor = Color.FromArgb(22, 101, 52);
         btnThemNhom.Cursor = Cursors.Hand;
         btnThemNhom.Dock = DockStyle.Fill;
         btnThemNhom.Enabled = false;
         btnThemNhom.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnThemNhom.FlatStyle = FlatStyle.Flat;
         btnThemNhom.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnThemNhom.ForeColor = SystemColors.ControlText;
+        btnThemNhom.ForeColor = Color.White;
         btnThemNhom.Location = new Point(292, 0);
         btnThemNhom.Margin = new Padding(0);
         btnThemNhom.Name = "btnThemNhom";
@@ -578,7 +673,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel16
         // 
-        tableLayoutPanel16.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel16.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel16.ColumnCount = 1;
         tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel16.Controls.Add(label17, 0, 0);
@@ -586,7 +681,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel16.Dock = DockStyle.Fill;
         tableLayoutPanel16.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel16.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel16.Location = new Point(0, 168);
+        tableLayoutPanel16.Location = new Point(0, 112);
         tableLayoutPanel16.Margin = new Padding(0);
         tableLayoutPanel16.Name = "tableLayoutPanel16";
         tableLayoutPanel16.RowCount = 2;
@@ -597,7 +692,7 @@ partial class frmQuanLyThuoc
         // 
         // label17
         // 
-        label17.BackColor = Color.FromArgb(248,250,252);
+        label17.BackColor = Color.FromArgb(248, 250, 252);
         label17.Dock = DockStyle.Fill;
         label17.Font = new Font("Segoe UI", 10.2F);
         label17.ForeColor = SystemColors.ControlText;
@@ -610,7 +705,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel18
         // 
-        tableLayoutPanel18.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel18.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel18.ColumnCount = 2;
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -645,14 +740,14 @@ partial class frmQuanLyThuoc
         // btnThemNCC
         // 
         btnThemNCC.AccessibleName = "Thêm nhà cung cấp";
-        btnThemNCC.BackColor = Color.FromArgb(192, 255, 192);
+        btnThemNCC.BackColor = Color.FromArgb(22, 101, 52);
         btnThemNCC.Cursor = Cursors.Hand;
         btnThemNCC.Dock = DockStyle.Fill;
         btnThemNCC.Enabled = false;
         btnThemNCC.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnThemNCC.FlatStyle = FlatStyle.Flat;
         btnThemNCC.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnThemNCC.ForeColor = SystemColors.ControlText;
+        btnThemNCC.ForeColor = Color.White;
         btnThemNCC.Location = new Point(292, 0);
         btnThemNCC.Margin = new Padding(0);
         btnThemNCC.Name = "btnThemNCC";
@@ -663,7 +758,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel19
         // 
-        tableLayoutPanel19.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel19.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel19.ColumnCount = 1;
         tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel19.Controls.Add(label20, 0, 0);
@@ -671,7 +766,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel19.Dock = DockStyle.Fill;
         tableLayoutPanel19.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel19.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel19.Location = new Point(0, 224);
+        tableLayoutPanel19.Location = new Point(0, 168);
         tableLayoutPanel19.Margin = new Padding(0);
         tableLayoutPanel19.Name = "tableLayoutPanel19";
         tableLayoutPanel19.RowCount = 2;
@@ -682,7 +777,7 @@ partial class frmQuanLyThuoc
         // 
         // label20
         // 
-        label20.BackColor = Color.FromArgb(248,250,252);
+        label20.BackColor = Color.FromArgb(248, 250, 252);
         label20.Dock = DockStyle.Fill;
         label20.Font = new Font("Segoe UI", 10.2F);
         label20.ForeColor = SystemColors.ControlText;
@@ -709,7 +804,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel21
         // 
-        tableLayoutPanel21.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel21.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel21.ColumnCount = 1;
         tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel21.Controls.Add(label22, 0, 0);
@@ -717,7 +812,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel21.Dock = DockStyle.Fill;
         tableLayoutPanel21.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel21.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel21.Location = new Point(0, 280);
+        tableLayoutPanel21.Location = new Point(0, 224);
         tableLayoutPanel21.Margin = new Padding(0);
         tableLayoutPanel21.Name = "tableLayoutPanel21";
         tableLayoutPanel21.RowCount = 2;
@@ -728,7 +823,7 @@ partial class frmQuanLyThuoc
         // 
         // label22
         // 
-        label22.BackColor = Color.FromArgb(248,250,252);
+        label22.BackColor = Color.FromArgb(248, 250, 252);
         label22.Dock = DockStyle.Fill;
         label22.Font = new Font("Segoe UI", 10.2F);
         label22.ForeColor = SystemColors.ControlText;
@@ -756,7 +851,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel23
         // 
-        tableLayoutPanel23.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel23.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel23.ColumnCount = 1;
         tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel23.Controls.Add(label24, 0, 0);
@@ -764,7 +859,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23.Dock = DockStyle.Fill;
         tableLayoutPanel23.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel23.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel23.Location = new Point(0, 336);
+        tableLayoutPanel23.Location = new Point(0, 280);
         tableLayoutPanel23.Margin = new Padding(0);
         tableLayoutPanel23.Name = "tableLayoutPanel23";
         tableLayoutPanel23.RowCount = 2;
@@ -775,7 +870,7 @@ partial class frmQuanLyThuoc
         // 
         // label24
         // 
-        label24.BackColor = Color.FromArgb(248,250,252);
+        label24.BackColor = Color.FromArgb(248, 250, 252);
         label24.Dock = DockStyle.Fill;
         label24.Font = new Font("Segoe UI", 10.2F);
         label24.ForeColor = SystemColors.ControlText;
@@ -804,7 +899,7 @@ partial class frmQuanLyThuoc
         // tableLayoutPanel25
         // 
         tableLayoutPanel25.AutoSize = true;
-        tableLayoutPanel25.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel25.BackColor = Color.FromArgb(248, 250, 252);
         tableLayoutPanel25.ColumnCount = 2;
         tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -813,11 +908,11 @@ partial class frmQuanLyThuoc
         tableLayoutPanel25.Controls.Add(btnXoa, 0, 1);
         tableLayoutPanel25.Controls.Add(btnLuu, 1, 1);
         tableLayoutPanel25.Controls.Add(btnBoQua, 0, 2);
-        tableLayoutPanel25.Controls.Add(btnThoat, 1, 2);
+        tableLayoutPanel25.Controls.Add(btnLamMoi, 1, 2);
         tableLayoutPanel25.Dock = DockStyle.Fill;
         tableLayoutPanel25.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel25.ForeColor = SystemColors.ControlText;
-        tableLayoutPanel25.Location = new Point(0, 412);
+        tableLayoutPanel25.Location = new Point(0, 366);
         tableLayoutPanel25.Margin = new Padding(0);
         tableLayoutPanel25.Name = "tableLayoutPanel25";
         tableLayoutPanel25.RowCount = 3;
@@ -829,17 +924,17 @@ partial class frmQuanLyThuoc
         // 
         // btnThem
         // 
-        btnThem.BackColor = Color.FromArgb(192, 255, 192);
+        btnThem.BackColor = Color.FromArgb(22, 101, 52);
         btnThem.Cursor = Cursors.Hand;
         btnThem.Dock = DockStyle.Fill;
         btnThem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnThem.FlatStyle = FlatStyle.Flat;
         btnThem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnThem.ForeColor = SystemColors.ControlText;
+        btnThem.ForeColor = Color.White;
         btnThem.Location = new Point(0, 4);
-        btnThem.Margin = new Padding(0, 4, 4, 0);
+        btnThem.Margin = new Padding(0, 4, 4, 4);
         btnThem.Name = "btnThem";
-        btnThem.Size = new Size(161, 40);
+        btnThem.Size = new Size(161, 36);
         btnThem.TabIndex = 13;
         btnThem.Text = "Thêm";
         btnThem.UseVisualStyleBackColor = false;
@@ -847,17 +942,17 @@ partial class frmQuanLyThuoc
         // 
         // btnSua
         // 
-        btnSua.BackColor = SystemColors.ControlLight;
+        btnSua.BackColor = Color.FromArgb(15, 118, 110);
         btnSua.Cursor = Cursors.Hand;
         btnSua.Dock = DockStyle.Fill;
         btnSua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnSua.FlatStyle = FlatStyle.Flat;
         btnSua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnSua.ForeColor = SystemColors.ControlText;
+        btnSua.ForeColor = Color.White;
         btnSua.Location = new Point(169, 4);
-        btnSua.Margin = new Padding(4, 4, 0, 0);
+        btnSua.Margin = new Padding(4, 4, 0, 4);
         btnSua.Name = "btnSua";
-        btnSua.Size = new Size(161, 40);
+        btnSua.Size = new Size(161, 36);
         btnSua.TabIndex = 14;
         btnSua.Text = "Sửa";
         btnSua.UseVisualStyleBackColor = false;
@@ -865,17 +960,17 @@ partial class frmQuanLyThuoc
         // 
         // btnXoa
         // 
-        btnXoa.BackColor = Color.FromArgb(255, 192, 192);
+        btnXoa.BackColor = Color.FromArgb(225, 29, 72);
         btnXoa.Cursor = Cursors.Hand;
         btnXoa.Dock = DockStyle.Fill;
         btnXoa.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnXoa.FlatStyle = FlatStyle.Flat;
         btnXoa.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnXoa.ForeColor = SystemColors.ControlText;
+        btnXoa.ForeColor = Color.White;
         btnXoa.Location = new Point(0, 48);
-        btnXoa.Margin = new Padding(0, 4, 4, 0);
+        btnXoa.Margin = new Padding(0, 4, 4, 4);
         btnXoa.Name = "btnXoa";
-        btnXoa.Size = new Size(161, 40);
+        btnXoa.Size = new Size(161, 36);
         btnXoa.TabIndex = 15;
         btnXoa.Text = "Xóa";
         btnXoa.UseVisualStyleBackColor = false;
@@ -883,18 +978,18 @@ partial class frmQuanLyThuoc
         // 
         // btnLuu
         // 
-        btnLuu.BackColor = Color.FromArgb(192, 255, 192);
+        btnLuu.BackColor = Color.FromArgb(22, 101, 52);
         btnLuu.Cursor = Cursors.Hand;
         btnLuu.Dock = DockStyle.Fill;
         btnLuu.Enabled = false;
         btnLuu.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnLuu.FlatStyle = FlatStyle.Flat;
         btnLuu.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnLuu.ForeColor = SystemColors.ControlText;
+        btnLuu.ForeColor = Color.White;
         btnLuu.Location = new Point(169, 48);
-        btnLuu.Margin = new Padding(4, 4, 0, 0);
+        btnLuu.Margin = new Padding(4, 4, 0, 4);
         btnLuu.Name = "btnLuu";
-        btnLuu.Size = new Size(161, 40);
+        btnLuu.Size = new Size(161, 36);
         btnLuu.TabIndex = 16;
         btnLuu.Text = "Lưu";
         btnLuu.UseVisualStyleBackColor = false;
@@ -902,62 +997,65 @@ partial class frmQuanLyThuoc
         // 
         // btnBoQua
         // 
-        btnBoQua.BackColor = SystemColors.ControlLight;
+        btnBoQua.BackColor = Color.FromArgb(100, 116, 139);
         btnBoQua.Cursor = Cursors.Hand;
         btnBoQua.Dock = DockStyle.Fill;
         btnBoQua.Enabled = false;
         btnBoQua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnBoQua.FlatStyle = FlatStyle.Flat;
         btnBoQua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnBoQua.ForeColor = SystemColors.ControlText;
+        btnBoQua.ForeColor = Color.White;
         btnBoQua.Location = new Point(0, 92);
-        btnBoQua.Margin = new Padding(0, 4, 4, 0);
+        btnBoQua.Margin = new Padding(0, 4, 4, 4);
         btnBoQua.Name = "btnBoQua";
-        btnBoQua.Size = new Size(161, 40);
+        btnBoQua.Size = new Size(161, 36);
         btnBoQua.TabIndex = 17;
         btnBoQua.Text = "Bỏ qua";
         btnBoQua.UseVisualStyleBackColor = false;
         btnBoQua.Click += btnBoQua_Click;
         // 
-        // btnThoat
+        // btnLamMoi
         // 
-        btnThoat.BackColor = SystemColors.ControlLight;
-        btnThoat.Cursor = Cursors.Hand;
-        btnThoat.Dock = DockStyle.Fill;
-        btnThoat.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
-        btnThoat.FlatStyle = FlatStyle.Flat;
-        btnThoat.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        btnThoat.ForeColor = SystemColors.ControlText;
-        btnThoat.Location = new Point(169, 92);
-        btnThoat.Margin = new Padding(4, 4, 0, 0);
-        btnThoat.Name = "btnThoat";
-        btnThoat.Size = new Size(161, 40);
-        btnThoat.TabIndex = 21;
-        btnThoat.Text = "Thoát";
-        btnThoat.UseVisualStyleBackColor = false;
-        btnThoat.Click += btnThoat_Click;
+        btnLamMoi.BackColor = Color.FromArgb(15, 118, 110);
+        btnLamMoi.Cursor = Cursors.Hand;
+        btnLamMoi.Dock = DockStyle.Fill;
+        btnLamMoi.FlatAppearance.BorderSize = 0;
+        btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnLamMoi.FlatStyle = FlatStyle.Flat;
+        btnLamMoi.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnLamMoi.ForeColor = Color.White;
+        btnLamMoi.Location = new Point(169, 92);
+        btnLamMoi.Margin = new Padding(4, 4, 0, 4);
+        btnLamMoi.Name = "btnLamMoi";
+        btnLamMoi.Size = new Size(161, 36);
+        btnLamMoi.TabIndex = 21;
+        btnLamMoi.Text = "Làm mới";
+        btnLamMoi.UseVisualStyleBackColor = false;
+        btnLamMoi.Click += btnLamMoi_Click;
         // 
         // frmQuanLyThuoc
         // 
         AutoScaleDimensions = new SizeF(120F, 120F);
         AutoScaleMode = AutoScaleMode.Dpi;
-        BackColor = Color.FromArgb(248,250,252);
+        BackColor = Color.FromArgb(248, 250, 252);
         ClientSize = new Size(1182, 653);
         Controls.Add(posLayout);
         Font = new Font("Segoe UI", 10.2F);
-        ForeColor = SystemColors.ControlText;
+        ForeColor = Color.FromArgb(15, 23, 42);
         MinimumSize = new Size(1060, 700);
         Name = "frmQuanLyThuoc";
         StartPosition = FormStartPosition.CenterParent;
         Text = "Quản lý thuốc | Hiệu thuốc ABC";
         Load += frmQuanLyThuoc_Load;
         posLayout.ResumeLayout(false);
+        excelActions.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);
         groupBox2.ResumeLayout(false);
         tableLayoutPanel3.ResumeLayout(false);
         tableLayoutPanel4.ResumeLayout(false);
         tableLayoutPanel4.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)dgvThuoc).EndInit();
+        ((ISupportInitialize)dgvThuoc).EndInit();
         groupBox6.ResumeLayout(false);
         tableLayoutPanel7.ResumeLayout(false);
         tableLayoutPanel7.PerformLayout();
@@ -974,95 +1072,6 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23.ResumeLayout(false);
         tableLayoutPanel23.PerformLayout();
         tableLayoutPanel25.ResumeLayout(false);
-        posLayout.RowStyles.Insert(1,new RowStyle(SizeType.Absolute,46F));posLayout.RowCount=3;posLayout.SetRow(tableLayoutPanel1,2);
-        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);btnTimKiem.ForeColor=Color.White;btnTimKiem.UseVisualStyleBackColor=false;
-        btnThemNhom.BackColor=Color.FromArgb(22, 101, 52);btnThemNhom.ForeColor=Color.White;btnThemNhom.UseVisualStyleBackColor=false;
-        btnThemNCC.BackColor=Color.FromArgb(22, 101, 52);btnThemNCC.ForeColor=Color.White;btnThemNCC.UseVisualStyleBackColor=false;
-        btnThem.BackColor=Color.FromArgb(22, 101, 52);btnThem.ForeColor=Color.White;btnThem.UseVisualStyleBackColor=false;
-        btnSua.BackColor=Color.FromArgb(15, 118, 110);btnSua.ForeColor=Color.White;btnSua.UseVisualStyleBackColor=false;
-        btnXoa.BackColor=Color.FromArgb(225, 29, 72);btnXoa.ForeColor=Color.White;btnXoa.UseVisualStyleBackColor=false;
-        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
-        btnBoQua.BackColor=Color.FromArgb(100, 116, 139);btnBoQua.ForeColor=Color.White;btnBoQua.UseVisualStyleBackColor=false;
-        btnThoat.BackColor=Color.FromArgb(100, 116, 139);btnThoat.ForeColor=Color.White;btnThoat.UseVisualStyleBackColor=false;
-        btnNhapExcel.BackColor=Color.FromArgb(22, 101, 52);btnNhapExcel.ForeColor=Color.White;btnNhapExcel.UseVisualStyleBackColor=false;
-        btnXuatExcel.BackColor=Color.FromArgb(15, 118, 110);btnXuatExcel.ForeColor=Color.White;btnXuatExcel.UseVisualStyleBackColor=false;
-        btnMauExcel.BackColor=Color.FromArgb(15, 118, 110);btnMauExcel.ForeColor=Color.White;btnMauExcel.UseVisualStyleBackColor=false;
-        dgvThuoc.BackgroundColor=Color.White;dgvThuoc.EnableHeadersVisualStyles=false;
-        dgvThuoc.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvThuoc.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
-        dgvThuoc.DefaultCellStyle.BackColor=Color.White;dgvThuoc.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
-        dgvThuoc.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvThuoc.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvThuoc.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-        dgvThuoc.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
-        dgvThuoc.MultiSelect=false;
-        dgvThuoc.AllowUserToResizeColumns=false;
-        dgvThuoc.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-        dgvThuoc.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvThuoc.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvThuoc.ColumnHeadersDefaultCellStyle.BackColor;
-        dgvThuoc.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvThuoc.ColumnHeadersDefaultCellStyle.ForeColor;
-        dgvThuoc.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvThuoc.ColumnHeadersHeight=38;
-        MaThuoc.Resizable=DataGridViewTriState.False;
-        MaThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        TenThuoc.Resizable=DataGridViewTriState.False;
-        TenThuoc.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        MaNhom.Resizable=DataGridViewTriState.False;
-        MaNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        MaNCC.Resizable=DataGridViewTriState.False;
-        MaNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        TenNhom.Resizable=DataGridViewTriState.False;
-        TenNhom.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        TenNCC.Resizable=DataGridViewTriState.False;
-        TenNCC.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        DonViTinh.Resizable=DataGridViewTriState.False;
-        DonViTinh.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        DonGia.Resizable=DataGridViewTriState.False;
-        DonGia.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        SoLuongTon.Resizable=DataGridViewTriState.False;
-        SoLuongTon.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        colGiaNhap.Resizable=DataGridViewTriState.False;
-        colGiaNhap.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-                MaThuoc.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        MaThuoc.MinimumWidth=65;
-        MaThuoc.Width=65;
-        MaThuoc.FillWeight=88F;
-        TenThuoc.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        TenThuoc.MinimumWidth=180;
-        TenThuoc.Width=180;
-        TenThuoc.FillWeight=220F;
-        MaNhom.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        MaNhom.MinimumWidth=65;
-        MaNhom.Width=65;
-        MaNhom.FillWeight=80F;
-        MaNCC.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        MaNCC.MinimumWidth=65;
-        MaNCC.Width=65;
-        MaNCC.FillWeight=72F;
-        TenNhom.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        TenNhom.MinimumWidth=150;
-        TenNhom.Width=150;
-        TenNhom.FillWeight=220F;
-        TenNCC.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        TenNCC.MinimumWidth=150;
-        TenNCC.Width=150;
-        TenNCC.FillWeight=220F;
-        DonViTinh.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        DonViTinh.MinimumWidth=79;
-        DonViTinh.Width=79;
-        DonViTinh.FillWeight=72F;
-        DonGia.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        DonGia.MinimumWidth=115;
-        DonGia.Width=115;
-        DonGia.FillWeight=112F;
-        SoLuongTon.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        SoLuongTon.MinimumWidth=92;
-        SoLuongTon.Width=92;
-        SoLuongTon.FillWeight=80F;
-        colGiaNhap.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        colGiaNhap.MinimumWidth=198;
-        colGiaNhap.Width=198;
-        colGiaNhap.FillWeight=192F;
         ResumeLayout(false);
     }
 
@@ -1076,15 +1085,6 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.TextBox txtTimKiem;
     private global::System.Windows.Forms.Button btnTimKiem;
     private global::System.Windows.Forms.DataGridView dgvThuoc;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaThuoc;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenThuoc;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaNhom;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaNCC;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenNhom;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenNCC;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn DonViTinh;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn DonGia;
-    private global::System.Windows.Forms.DataGridViewTextBoxColumn SoLuongTon;
     private global::System.Windows.Forms.GroupBox groupBox6;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
@@ -1116,8 +1116,17 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.Button btnXoa;
     private global::System.Windows.Forms.Button btnLuu;
     private global::System.Windows.Forms.Button btnBoQua;
-    private global::System.Windows.Forms.Button btnThoat;
-    private DataGridViewTextBoxColumn colGiaNhap;
+    private global::System.Windows.Forms.Button btnLamMoi;
     private FlowLayoutPanel excelActions;
     private Button btnNhapExcel,btnXuatExcel,btnMauExcel;
+    private DataGridViewTextBoxColumn MaThuoc;
+    private DataGridViewTextBoxColumn TenThuoc;
+    private DataGridViewTextBoxColumn MaNhom;
+    private DataGridViewTextBoxColumn MaNCC;
+    private DataGridViewTextBoxColumn TenNhom;
+    private DataGridViewTextBoxColumn DonViTinh;
+    private DataGridViewTextBoxColumn DonGia;
+    private DataGridViewTextBoxColumn SoLuongTon;
+    private DataGridViewTextBoxColumn TenNCC;
+    private DataGridViewTextBoxColumn colMaVach;
 }

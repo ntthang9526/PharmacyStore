@@ -1,5 +1,10 @@
-﻿#nullable disable
-namespace Store.POS;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
+namespace Store.POS
+{
 
 partial class frmNhapKho
 {
@@ -13,6 +18,14 @@ partial class frmNhapKho
 
     private void InitializeComponent()
     {
+        this.dgvPhieuColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -20,14 +33,10 @@ partial class frmNhapKho
         groupBox2 = new global::System.Windows.Forms.GroupBox();
         tableLayoutPanel3 = new global::System.Windows.Forms.TableLayoutPanel();
         dgvPhieu = new global::System.Windows.Forms.DataGridView();
-        dgvPhieuColumn1 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn2 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn3 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn4 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn5 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn6 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn7 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
-        dgvPhieuColumn8 = new global::System.Windows.Forms.DataGridViewTextBoxColumn();
+        
+        
+        
+        
         tableLayoutPanel4 = new global::System.Windows.Forms.TableLayoutPanel();
         btnXoaDong = new global::System.Windows.Forms.Button();
         btnXoaPhieu = new global::System.Windows.Forms.Button();
@@ -271,7 +280,8 @@ partial class frmNhapKho
         dgvPhieu.RowHeadersVisible = false;
         dgvPhieu.MultiSelect = false;
         dgvPhieu.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        dgvPhieu.AutoSizeColumnsMode = global::System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+        dgvPhieu.ShowCellToolTips = true;
+        dgvPhieu.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         dgvPhieu.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
         dgvPhieu.BackgroundColor = global::System.Drawing.SystemColors.ScrollBar;
         dgvPhieu.GridColor = global::System.Drawing.SystemColors.ControlLight;
@@ -331,15 +341,10 @@ partial class frmNhapKho
         dgvPhieuRowHeadersDefaultCellStyle.NullValue = "";
         dgvPhieu.RowHeadersDefaultCellStyle = dgvPhieuRowHeadersDefaultCellStyle;
         dgvPhieu.RowTemplate.Height = 34;
-        dgvPhieuColumn1.Name = "MaThuoc";
-        dgvPhieuColumn1.HeaderText="Mã";
-        dgvPhieuColumn1.Visible = true;
-        dgvPhieuColumn1.ReadOnly = true;
         
         
-        dgvPhieuColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn1.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn1.DataPropertyName = "MaThuoc";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn1Style.BackColor = global::System.Drawing.Color.Empty;
@@ -351,16 +356,10 @@ partial class frmNhapKho
         dgvPhieuColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn1Style.NullValue = "";
-        dgvPhieuColumn1.DefaultCellStyle = dgvPhieuColumn1Style;
-        dgvPhieuColumn2.Name = "TenThuoc";
-        dgvPhieuColumn2.HeaderText = "Tên thuốc";
-        dgvPhieuColumn2.Visible = true;
-        dgvPhieuColumn2.ReadOnly = true;
         
         
-        dgvPhieuColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn2.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn2.DataPropertyName = "TenThuoc";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn2Style.BackColor = global::System.Drawing.Color.Empty;
@@ -372,16 +371,10 @@ partial class frmNhapKho
         dgvPhieuColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn2Style.NullValue = "";
-        dgvPhieuColumn2.DefaultCellStyle = dgvPhieuColumn2Style;
-        dgvPhieuColumn3.Name = "DonViTinh";
-        dgvPhieuColumn3.HeaderText = "ĐVT";
-        dgvPhieuColumn3.Visible = true;
-        dgvPhieuColumn3.ReadOnly = true;
         
         
-        dgvPhieuColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn3.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn3.DataPropertyName = "DonViTinh";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn3Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn3Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn3Style.BackColor = global::System.Drawing.Color.Empty;
@@ -393,16 +386,10 @@ partial class frmNhapKho
         dgvPhieuColumn3Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn3Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn3Style.NullValue = "";
-        dgvPhieuColumn3.DefaultCellStyle = dgvPhieuColumn3Style;
-        dgvPhieuColumn4.Name = "SoLo";
-        dgvPhieuColumn4.HeaderText = "Số lô";
-        dgvPhieuColumn4.Visible = true;
-        dgvPhieuColumn4.ReadOnly = true;
         
         
-        dgvPhieuColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn4.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn4.DataPropertyName = "SoLo";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn4Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn4Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn4Style.BackColor = global::System.Drawing.Color.Empty;
@@ -414,16 +401,10 @@ partial class frmNhapKho
         dgvPhieuColumn4Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn4Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn4Style.NullValue = "";
-        dgvPhieuColumn4.DefaultCellStyle = dgvPhieuColumn4Style;
-        dgvPhieuColumn5.Name = "HanDung";
-        dgvPhieuColumn5.HeaderText = "Hạn dùng";
-        dgvPhieuColumn5.Visible = true;
-        dgvPhieuColumn5.ReadOnly = true;
         
         
-        dgvPhieuColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn5.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn5.DataPropertyName = "HanDung";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn5Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn5Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn5Style.BackColor = global::System.Drawing.Color.Empty;
@@ -435,16 +416,10 @@ partial class frmNhapKho
         dgvPhieuColumn5Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn5Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn5Style.NullValue = "";
-        dgvPhieuColumn5.DefaultCellStyle = dgvPhieuColumn5Style;
-        dgvPhieuColumn6.Name = "SoLuong";
-        dgvPhieuColumn6.HeaderText = "Số lượng";
-        dgvPhieuColumn6.Visible = true;
-        dgvPhieuColumn6.ReadOnly = true;
         
         
-        dgvPhieuColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn6.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn6.DataPropertyName = "SoLuong";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn6Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn6Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn6Style.BackColor = global::System.Drawing.Color.Empty;
@@ -456,16 +431,10 @@ partial class frmNhapKho
         dgvPhieuColumn6Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn6Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn6Style.NullValue = "";
-        dgvPhieuColumn6.DefaultCellStyle = dgvPhieuColumn6Style;
-        dgvPhieuColumn7.Name = "GiaNhap";
-        dgvPhieuColumn7.HeaderText = "Giá nhập";
-        dgvPhieuColumn7.Visible = true;
-        dgvPhieuColumn7.ReadOnly = true;
         
         
-        dgvPhieuColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn7.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn7.DataPropertyName = "GiaNhap";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn7Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn7Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn7Style.BackColor = global::System.Drawing.Color.Empty;
@@ -477,16 +446,10 @@ partial class frmNhapKho
         dgvPhieuColumn7Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn7Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn7Style.NullValue = "";
-        dgvPhieuColumn7.DefaultCellStyle = dgvPhieuColumn7Style;
-        dgvPhieuColumn8.Name = "ThanhTien";
-        dgvPhieuColumn8.HeaderText = "Thành tiền";
-        dgvPhieuColumn8.Visible = true;
-        dgvPhieuColumn8.ReadOnly = true;
         
         
-        dgvPhieuColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-        dgvPhieuColumn8.Resizable = global::System.Windows.Forms.DataGridViewTriState.True;
-        dgvPhieuColumn8.DataPropertyName = "ThanhTien";
+
+        
         global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn8Style = new global::System.Windows.Forms.DataGridViewCellStyle();
         dgvPhieuColumn8Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
         dgvPhieuColumn8Style.BackColor = global::System.Drawing.Color.Empty;
@@ -498,9 +461,7 @@ partial class frmNhapKho
         dgvPhieuColumn8Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         dgvPhieuColumn8Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
         dgvPhieuColumn8Style.NullValue = "";
-        dgvPhieuColumn8.DefaultCellStyle = dgvPhieuColumn8Style;
-        dgvPhieu.AutoGenerateColumns = false;
-        dgvPhieu.Columns.AddRange(new global::System.Windows.Forms.DataGridViewColumn[] { dgvPhieuColumn1, dgvPhieuColumn2, dgvPhieuColumn3, dgvPhieuColumn4, dgvPhieuColumn5, dgvPhieuColumn6, dgvPhieuColumn7, dgvPhieuColumn8 });
+        
 
         // tableLayoutPanel4
         tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -546,21 +507,16 @@ partial class frmNhapKho
         btnXoaDong.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnXoaDong.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnXoaDong.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
-        btnXoaDong.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnXoaDong.TabIndex = 1;
         btnXoaDong.TabStop = true;
         btnXoaDong.AccessibleName = null;
         btnXoaDong.AutoEllipsis = false;
         btnXoaDong.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnXoaDong.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnXoaDong.UseVisualStyleBackColor = false;
+
         btnXoaDong.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnXoaDong.Visible = true;
         btnXoaDong.Enabled = true;
         btnXoaDong.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnXoaDong.FlatAppearance.BorderSize = 1;
-        btnXoaDong.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnXoaDong.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // btnXoaPhieu
         btnXoaPhieu.Name = "btnXoaPhieu";
@@ -576,21 +532,16 @@ partial class frmNhapKho
         btnXoaPhieu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnXoaPhieu.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnXoaPhieu.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
-        btnXoaPhieu.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnXoaPhieu.TabIndex = 2;
         btnXoaPhieu.TabStop = true;
         btnXoaPhieu.AccessibleName = null;
         btnXoaPhieu.AutoEllipsis = false;
         btnXoaPhieu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnXoaPhieu.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnXoaPhieu.UseVisualStyleBackColor = false;
+
         btnXoaPhieu.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnXoaPhieu.Visible = true;
         btnXoaPhieu.Enabled = true;
         btnXoaPhieu.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnXoaPhieu.FlatAppearance.BorderSize = 1;
-        btnXoaPhieu.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnXoaPhieu.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // tableLayoutPanel5
         tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -769,14 +720,14 @@ partial class frmNhapKho
         cboNhaCungCap.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         cboNhaCungCap.AutoSize = false;
-        cboNhaCungCap.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        cboNhaCungCap.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        cboNhaCungCap.BackColor = global::System.Drawing.SystemColors.Window;
+        cboNhaCungCap.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        cboNhaCungCap.ForeColor=Color.FromArgb(15,23,42);
+        cboNhaCungCap.BackColor=Color.White;
         cboNhaCungCap.Cursor = global::System.Windows.Forms.Cursors.Default;
         cboNhaCungCap.TabIndex = 1;
         cboNhaCungCap.TabStop = true;
         cboNhaCungCap.AccessibleName = null;
-        cboNhaCungCap.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        cboNhaCungCap.FlatStyle=FlatStyle.Standard;
         cboNhaCungCap.MaxLength = 0;
         cboNhaCungCap.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
         cboNhaCungCap.DropDownWidth = 302;
@@ -789,9 +740,9 @@ partial class frmNhapKho
         btnThemNCC.Name = "btnThemNCC";
         btnThemNCC.Text = "+";
         btnThemNCC.Location = new global::System.Drawing.Point(308, 0);
-        btnThemNCC.Size = new global::System.Drawing.Size(38, 32);
+        btnThemNCC.Size = new global::System.Drawing.Size(38, 31);
         btnThemNCC.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnThemNCC.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnThemNCC.Padding = new global::System.Windows.Forms.Padding(0, 1, 0, 0);
         btnThemNCC.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         btnThemNCC.AutoSize = false;
@@ -799,21 +750,16 @@ partial class frmNhapKho
         btnThemNCC.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnThemNCC.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnThemNCC.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
-        btnThemNCC.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnThemNCC.TabIndex = 2;
         btnThemNCC.TabStop = true;
         btnThemNCC.AccessibleName = "Thêm nhà cung cấp";
         btnThemNCC.AutoEllipsis = false;
         btnThemNCC.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnThemNCC.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnThemNCC.UseVisualStyleBackColor = false;
+
         btnThemNCC.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnThemNCC.Visible = true;
         btnThemNCC.Enabled = true;
         btnThemNCC.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnThemNCC.FlatAppearance.BorderSize = 1;
-        btnThemNCC.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnThemNCC.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // tableLayoutPanel11
         tableLayoutPanel11.Name = "tableLayoutPanel11";
@@ -878,16 +824,16 @@ partial class frmNhapKho
         txtGhiChu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         txtGhiChu.Dock = global::System.Windows.Forms.DockStyle.Top;
 
-        txtGhiChu.AutoSize = true;
-        txtGhiChu.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        txtGhiChu.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        txtGhiChu.BackColor = global::System.Drawing.Color.White;
+        txtGhiChu.AutoSize=false;
+        txtGhiChu.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtGhiChu.ForeColor=Color.FromArgb(15,23,42);
+        txtGhiChu.BackColor=Color.White;
         txtGhiChu.Cursor = global::System.Windows.Forms.Cursors.IBeam;
         txtGhiChu.TabIndex = 5;
         txtGhiChu.TabStop = true;
         txtGhiChu.AccessibleName = null;
         txtGhiChu.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
-        txtGhiChu.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
+        txtGhiChu.BorderStyle=BorderStyle.FixedSingle;
         txtGhiChu.Multiline = false;
         txtGhiChu.ReadOnly = false;
         txtGhiChu.MaxLength = 250;
@@ -1099,14 +1045,14 @@ partial class frmNhapKho
         cboThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         cboThuoc.AutoSize = false;
-        cboThuoc.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        cboThuoc.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        cboThuoc.BackColor = global::System.Drawing.SystemColors.Window;
+        cboThuoc.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        cboThuoc.ForeColor=Color.FromArgb(15,23,42);
+        cboThuoc.BackColor=Color.White;
         cboThuoc.Cursor = global::System.Windows.Forms.Cursors.Default;
         cboThuoc.TabIndex = 1;
         cboThuoc.TabStop = true;
         cboThuoc.AccessibleName = null;
-        cboThuoc.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        cboThuoc.FlatStyle=FlatStyle.Standard;
         cboThuoc.MaxLength = 0;
         cboThuoc.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
         cboThuoc.DropDownWidth = 302;
@@ -1119,9 +1065,9 @@ partial class frmNhapKho
         btnTaoThuoc.Name = "btnTaoThuoc";
         btnTaoThuoc.Text = "+";
         btnTaoThuoc.Location = new global::System.Drawing.Point(308, 0);
-        btnTaoThuoc.Size = new global::System.Drawing.Size(38, 32);
+        btnTaoThuoc.Size = new global::System.Drawing.Size(38, 31);
         btnTaoThuoc.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnTaoThuoc.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnTaoThuoc.Padding = new global::System.Windows.Forms.Padding(0, 1, 0, 0);
         btnTaoThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         btnTaoThuoc.AutoSize = false;
@@ -1129,21 +1075,16 @@ partial class frmNhapKho
         btnTaoThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
         btnTaoThuoc.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnTaoThuoc.BackColor = global::System.Drawing.SystemColors.ControlLight;
-        btnTaoThuoc.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnTaoThuoc.TabIndex = 2;
         btnTaoThuoc.TabStop = true;
         btnTaoThuoc.AccessibleName = "Thêm thuốc mới";
         btnTaoThuoc.AutoEllipsis = false;
         btnTaoThuoc.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnTaoThuoc.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnTaoThuoc.UseVisualStyleBackColor = false;
+
         btnTaoThuoc.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnTaoThuoc.Visible = true;
         btnTaoThuoc.Enabled = false;
         btnTaoThuoc.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnTaoThuoc.FlatAppearance.BorderSize = 1;
-        btnTaoThuoc.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnTaoThuoc.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // tableLayoutPanel19
         tableLayoutPanel19.Name = "tableLayoutPanel19";
@@ -1237,16 +1178,16 @@ partial class frmNhapKho
         txtSoLo.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         txtSoLo.Dock = global::System.Windows.Forms.DockStyle.Top;
 
-        txtSoLo.AutoSize = true;
-        txtSoLo.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        txtSoLo.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        txtSoLo.BackColor = global::System.Drawing.SystemColors.ControlLight;
+        txtSoLo.AutoSize=false;
+        txtSoLo.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtSoLo.ForeColor=Color.FromArgb(15,23,42);
+        txtSoLo.BackColor=Color.White;
         txtSoLo.Cursor = global::System.Windows.Forms.Cursors.IBeam;
         txtSoLo.TabIndex = 3;
         txtSoLo.TabStop = true;
         txtSoLo.AccessibleName = null;
         txtSoLo.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
-        txtSoLo.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
+        txtSoLo.BorderStyle=BorderStyle.FixedSingle;
         txtSoLo.Multiline = false;
         txtSoLo.ReadOnly = false;
         txtSoLo.MaxLength = 50;
@@ -1379,8 +1320,8 @@ partial class frmNhapKho
         dtpHanDung.Dock = global::System.Windows.Forms.DockStyle.Top;
 
         dtpHanDung.AutoSize = false;
-        dtpHanDung.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        dtpHanDung.ForeColor = global::System.Drawing.SystemColors.ControlText;
+        dtpHanDung.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        dtpHanDung.ForeColor=Color.FromArgb(15,23,42);
         dtpHanDung.BackColor = global::System.Drawing.SystemColors.Window;
         dtpHanDung.Cursor = global::System.Windows.Forms.Cursors.Default;
         dtpHanDung.TabIndex = 5;
@@ -1490,15 +1431,15 @@ partial class frmNhapKho
         nudSoLuong.Dock = global::System.Windows.Forms.DockStyle.Top;
 
         nudSoLuong.AutoSize = false;
-        nudSoLuong.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        nudSoLuong.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        nudSoLuong.BackColor = global::System.Drawing.Color.White;
+        nudSoLuong.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        nudSoLuong.ForeColor=Color.FromArgb(15,23,42);
+        nudSoLuong.BackColor=Color.White;
         nudSoLuong.Cursor = global::System.Windows.Forms.Cursors.Default;
         nudSoLuong.TabIndex = 7;
         nudSoLuong.TabStop = true;
         nudSoLuong.AccessibleName = null;
         nudSoLuong.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Right;
-        nudSoLuong.BorderStyle = global::System.Windows.Forms.BorderStyle.Fixed3D;
+        nudSoLuong.BorderStyle=BorderStyle.FixedSingle;
         nudSoLuong.ReadOnly = false;
         nudSoLuong.ThousandsSeparator = true;
         nudSoLuong.Increment = 1M;
@@ -1603,15 +1544,15 @@ partial class frmNhapKho
         nudGiaNhap.Dock = global::System.Windows.Forms.DockStyle.Top;
 
         nudGiaNhap.AutoSize = false;
-        nudGiaNhap.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        nudGiaNhap.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        nudGiaNhap.BackColor = global::System.Drawing.Color.White;
+        nudGiaNhap.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        nudGiaNhap.ForeColor=Color.FromArgb(15,23,42);
+        nudGiaNhap.BackColor=Color.White;
         nudGiaNhap.Cursor = global::System.Windows.Forms.Cursors.Default;
         nudGiaNhap.TabIndex = 9;
         nudGiaNhap.TabStop = true;
         nudGiaNhap.AccessibleName = null;
         nudGiaNhap.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Right;
-        nudGiaNhap.BorderStyle = global::System.Windows.Forms.BorderStyle.Fixed3D;
+        nudGiaNhap.BorderStyle=BorderStyle.FixedSingle;
         nudGiaNhap.ReadOnly = false;
         nudGiaNhap.ThousandsSeparator = true;
         nudGiaNhap.Increment = 1000M;
@@ -1655,30 +1596,25 @@ partial class frmNhapKho
         btnThemThuoc.Text = "Thêm vào phiếu";
         btnThemThuoc.Location = new global::System.Drawing.Point(0, 4);
         btnThemThuoc.Size = new global::System.Drawing.Size(342, 41);
-        btnThemThuoc.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
+        btnThemThuoc.Margin = new global::System.Windows.Forms.Padding(0, 4, 0, 0);
         btnThemThuoc.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         btnThemThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         btnThemThuoc.AutoSize = false;
         btnThemThuoc.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnThemThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnThemThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         btnThemThuoc.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnThemThuoc.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
-        btnThemThuoc.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnThemThuoc.TabIndex = 10;
         btnThemThuoc.TabStop = true;
         btnThemThuoc.AccessibleName = null;
         btnThemThuoc.AutoEllipsis = false;
         btnThemThuoc.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnThemThuoc.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnThemThuoc.UseVisualStyleBackColor = false;
+
         btnThemThuoc.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnThemThuoc.Visible = true;
         btnThemThuoc.Enabled = false;
         btnThemThuoc.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnThemThuoc.FlatAppearance.BorderSize = 1;
-        btnThemThuoc.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnThemThuoc.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
 
         // tableLayoutPanel33
         tableLayoutPanel33.Name = "tableLayoutPanel33";
@@ -1793,41 +1729,36 @@ partial class frmNhapKho
         btnLuu.Name = "btnLuu";
         btnLuu.Text = "LƯU PHIẾU";
         btnLuu.Location = new global::System.Drawing.Point(0, 4);
-        btnLuu.Size = new global::System.Drawing.Size(366, 61);
-        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
+        btnLuu.Size = new global::System.Drawing.Size(366, 44);
+        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 0, 0);
         btnLuu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnLuu.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnLuu.Dock = global::System.Windows.Forms.DockStyle.Top;
 
         btnLuu.AutoSize = false;
         btnLuu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
-        btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         btnLuu.ForeColor = global::System.Drawing.SystemColors.ControlText;
         btnLuu.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
-        btnLuu.Cursor = global::System.Windows.Forms.Cursors.Hand;
         btnLuu.TabIndex = 5;
         btnLuu.TabStop = true;
         btnLuu.AccessibleName = null;
         btnLuu.AutoEllipsis = false;
         btnLuu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
-        btnLuu.FlatStyle = global::System.Windows.Forms.FlatStyle.Flat;
-        btnLuu.UseVisualStyleBackColor = false;
+
         btnLuu.DialogResult = global::System.Windows.Forms.DialogResult.None;
         btnLuu.Visible = true;
         btnLuu.Enabled = false;
         btnLuu.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
-        btnLuu.FlatAppearance.BorderSize = 1;
-        btnLuu.FlatAppearance.MouseDownBackColor = global::System.Drawing.Color.Empty;
-        btnLuu.FlatAppearance.MouseOverBackColor = global::System.Drawing.Color.Empty;
+
         this.Controls.Add(posLayout);
         excelActions=new FlowLayoutPanel();excelActions.Name="excelActions";excelActions.Dock=DockStyle.Fill;excelActions.Margin=Padding.Empty;excelActions.WrapContents=false;
-
 
         stockHeader=new TableLayoutPanel();stockHeader.Name="stockHeader";stockHeader.Dock=DockStyle.Fill;stockHeader.Margin=Padding.Empty;
         stockHeader.ColumnCount=2;stockHeader.RowCount=1;stockHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
         stockHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,250F));stockHeader.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
         stockHeader.Controls.Add(posHeading,0,0);posLayout.Controls.Add(stockHeader,0,0);
         btnNhapExcel=new Button();btnNhapExcel.Name="btnNhapExcel";btnNhapExcel.Text="Nhập Excel";btnNhapExcel.Size=new Size(120,38);btnNhapExcel.Margin=new Padding(3);excelActions.Controls.Add(btnNhapExcel);
-        btnMauExcel=new Button();btnMauExcel.Name="btnMauExcel";btnMauExcel.Text="File mẫu";btnMauExcel.Size=new Size(110,38);btnMauExcel.Margin=new Padding(3);excelActions.Controls.Add(btnMauExcel);
+        btnMauExcel=new Button();btnMauExcel.Name="btnMauExcel";btnMauExcel.Text="File mẫu";btnMauExcel.Size=new Size(120,38);btnMauExcel.Margin=new Padding(3);excelActions.Controls.Add(btnMauExcel);
 
         stockHeader.Controls.Add(excelActions,1,0);
 
@@ -1956,6 +1887,137 @@ partial class frmNhapKho
         tableLayoutPanel5.PerformLayout();
         tableLayoutPanel4.ResumeLayout(false);
         tableLayoutPanel4.PerformLayout();
+                //
+        // dgvPhieuColumn1
+        //
+        this.dgvPhieuColumn1.Name = "MaThuoc";
+        this.dgvPhieuColumn1.HeaderText = "Mã thuốc";
+        this.dgvPhieuColumn1.Visible = true;
+        this.dgvPhieuColumn1.ReadOnly = true;
+        this.dgvPhieuColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn1.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn1.DataPropertyName = "MaThuoc";
+        this.dgvPhieuColumn1.DefaultCellStyle = dgvPhieuColumn1Style;
+        this.dgvPhieuColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn1.MinimumWidth = 5;
+        this.dgvPhieuColumn1.Width = 74;
+        this.dgvPhieuColumn1.FillWeight = 48F;
+        //
+        // dgvPhieuColumn2
+        //
+        this.dgvPhieuColumn2.Name = "TenThuoc";
+        this.dgvPhieuColumn2.HeaderText = "Tên thuốc";
+        this.dgvPhieuColumn2.Visible = true;
+        this.dgvPhieuColumn2.ReadOnly = true;
+        this.dgvPhieuColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn2.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn2.DataPropertyName = "TenThuoc";
+        this.dgvPhieuColumn2.DefaultCellStyle = dgvPhieuColumn2Style;
+        this.dgvPhieuColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn2.MinimumWidth = 5;
+        this.dgvPhieuColumn2.Width = 200;
+        this.dgvPhieuColumn2.FillWeight = 220F;
+        //
+        // dgvPhieuColumn3
+        //
+        this.dgvPhieuColumn3.Name = "DonViTinh";
+        this.dgvPhieuColumn3.HeaderText = "Đơn vị tính";
+        this.dgvPhieuColumn3.Visible = true;
+        this.dgvPhieuColumn3.ReadOnly = true;
+        this.dgvPhieuColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn3.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn3.DataPropertyName = "DonViTinh";
+        this.dgvPhieuColumn3.DefaultCellStyle = dgvPhieuColumn3Style;
+        this.dgvPhieuColumn3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn3.MinimumWidth = 5;
+        this.dgvPhieuColumn3.Width = 82;
+        this.dgvPhieuColumn3.FillWeight = 48F;
+        //
+        // dgvPhieuColumn4
+        //
+        this.dgvPhieuColumn4.Name = "SoLo";
+        this.dgvPhieuColumn4.HeaderText = "Số lô";
+        this.dgvPhieuColumn4.Visible = true;
+        this.dgvPhieuColumn4.ReadOnly = true;
+        this.dgvPhieuColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn4.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn4.DataPropertyName = "SoLo";
+        this.dgvPhieuColumn4.DefaultCellStyle = dgvPhieuColumn4Style;
+        this.dgvPhieuColumn4.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn4.MinimumWidth = 5;
+        this.dgvPhieuColumn4.Width = 115;
+        this.dgvPhieuColumn4.FillWeight = 64F;
+        //
+        // dgvPhieuColumn5
+        //
+        this.dgvPhieuColumn5.Name = "HanDung";
+        this.dgvPhieuColumn5.HeaderText = "Hạn sử dụng";
+        this.dgvPhieuColumn5.Visible = true;
+        this.dgvPhieuColumn5.ReadOnly = true;
+        this.dgvPhieuColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn5.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn5.DataPropertyName = "HanDung";
+        this.dgvPhieuColumn5.DefaultCellStyle = dgvPhieuColumn5Style;
+        this.dgvPhieuColumn5.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn5.MinimumWidth = 5;
+        this.dgvPhieuColumn5.Width = 126;
+        this.dgvPhieuColumn5.FillWeight = 88F;
+        //
+        // dgvPhieuColumn6
+        //
+        this.dgvPhieuColumn6.Name = "SoLuong";
+        this.dgvPhieuColumn6.HeaderText = "Số lượng";
+        this.dgvPhieuColumn6.Visible = true;
+        this.dgvPhieuColumn6.ReadOnly = true;
+        this.dgvPhieuColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn6.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn6.DataPropertyName = "SoLuong";
+        this.dgvPhieuColumn6.DefaultCellStyle = dgvPhieuColumn6Style;
+        this.dgvPhieuColumn6.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn6.MinimumWidth = 5;
+        this.dgvPhieuColumn6.Width = 118;
+        this.dgvPhieuColumn6.FillWeight = 88F;
+        //
+        // dgvPhieuColumn7
+        //
+        this.dgvPhieuColumn7.Name = "GiaNhap";
+        this.dgvPhieuColumn7.HeaderText = "Giá nhập";
+        this.dgvPhieuColumn7.Visible = true;
+        this.dgvPhieuColumn7.ReadOnly = true;
+        this.dgvPhieuColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn7.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn7.DataPropertyName = "GiaNhap";
+        this.dgvPhieuColumn7.DefaultCellStyle = dgvPhieuColumn7Style;
+        this.dgvPhieuColumn7.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn7.MinimumWidth = 5;
+        this.dgvPhieuColumn7.Width = 119;
+        this.dgvPhieuColumn7.FillWeight = 88F;
+        //
+        // dgvPhieuColumn8
+        //
+        this.dgvPhieuColumn8.Name = "ThanhTien";
+        this.dgvPhieuColumn8.HeaderText = "Thành tiền";
+        this.dgvPhieuColumn8.Visible = true;
+        this.dgvPhieuColumn8.ReadOnly = true;
+        this.dgvPhieuColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn8.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn8.DataPropertyName = "ThanhTien";
+        this.dgvPhieuColumn8.DefaultCellStyle = dgvPhieuColumn8Style;
+        this.dgvPhieuColumn8.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn8.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn8.MinimumWidth = 5;
+        this.dgvPhieuColumn8.Width = 132;
+        this.dgvPhieuColumn8.FillWeight = 104F;
+
+        this.dgvPhieu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+        this.dgvPhieu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvPhieuColumn1, this.dgvPhieuColumn2, this.dgvPhieuColumn3, this.dgvPhieuColumn4, this.dgvPhieuColumn5, this.dgvPhieuColumn6, this.dgvPhieuColumn7, this.dgvPhieuColumn8 });
         ((global::System.ComponentModel.ISupportInitialize)dgvPhieu).EndInit();
         tableLayoutPanel3.ResumeLayout(false);
         tableLayoutPanel3.PerformLayout();
@@ -1967,79 +2029,113 @@ partial class frmNhapKho
         posLayout.PerformLayout();
         posLayout.RowCount=2;posLayout.SetRow(tableLayoutPanel1,1);
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
-        btnXoaDong.BackColor=Color.FromArgb(225, 29, 72);btnXoaDong.ForeColor=Color.White;btnXoaDong.UseVisualStyleBackColor=false;
-        btnXoaPhieu.BackColor=Color.FromArgb(225, 29, 72);btnXoaPhieu.ForeColor=Color.White;btnXoaPhieu.UseVisualStyleBackColor=false;
-        btnThemNCC.BackColor=Color.FromArgb(22, 101, 52);btnThemNCC.ForeColor=Color.White;btnThemNCC.UseVisualStyleBackColor=false;
-        btnTaoThuoc.BackColor=Color.FromArgb(22, 101, 52);btnTaoThuoc.ForeColor=Color.White;btnTaoThuoc.UseVisualStyleBackColor=false;
-        btnThemThuoc.BackColor=Color.FromArgb(22, 101, 52);btnThemThuoc.ForeColor=Color.White;btnThemThuoc.UseVisualStyleBackColor=false;
-        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;btnLuu.UseVisualStyleBackColor=false;
-        btnNhapExcel.BackColor=Color.FromArgb(22, 101, 52);btnNhapExcel.ForeColor=Color.White;btnNhapExcel.UseVisualStyleBackColor=false;
-        btnMauExcel.BackColor=Color.FromArgb(15, 118, 110);btnMauExcel.ForeColor=Color.White;btnMauExcel.UseVisualStyleBackColor=false;
+        btnXoaDong.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoaDong.FlatStyle = FlatStyle.Flat;
+        btnXoaDong.FlatAppearance.BorderSize = 0;
+        btnXoaDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoaDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoaDong.Cursor = Cursors.Hand;
+        btnXoaDong.UseVisualStyleBackColor = false;btnXoaDong.ForeColor=Color.White;
+        btnXoaPhieu.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoaPhieu.FlatStyle = FlatStyle.Flat;
+        btnXoaPhieu.FlatAppearance.BorderSize = 0;
+        btnXoaPhieu.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoaPhieu.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoaPhieu.Cursor = Cursors.Hand;
+        btnXoaPhieu.UseVisualStyleBackColor = false;btnXoaPhieu.ForeColor=Color.White;
+        btnThemNCC.BackColor=Color.FromArgb(22, 101, 52);
+        btnThemNCC.FlatStyle = FlatStyle.Flat;
+        btnThemNCC.FlatAppearance.BorderSize = 0;
+        btnThemNCC.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnThemNCC.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnThemNCC.Cursor = Cursors.Hand;
+        btnThemNCC.UseVisualStyleBackColor = false;btnThemNCC.ForeColor=Color.White;
+        btnTaoThuoc.BackColor=Color.FromArgb(22, 101, 52);
+        btnTaoThuoc.FlatStyle = FlatStyle.Flat;
+        btnTaoThuoc.FlatAppearance.BorderSize = 0;
+        btnTaoThuoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnTaoThuoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnTaoThuoc.Cursor = Cursors.Hand;
+        btnTaoThuoc.UseVisualStyleBackColor = false;btnTaoThuoc.ForeColor=Color.White;
+        btnThemThuoc.BackColor=Color.FromArgb(22, 101, 52);btnThemThuoc.ForeColor=Color.White;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;
+        btnNhapExcel.BackColor=Color.FromArgb(22, 101, 52);
+        btnNhapExcel.FlatStyle = FlatStyle.Flat;
+        btnNhapExcel.FlatAppearance.BorderSize = 0;
+        btnNhapExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnNhapExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnNhapExcel.Cursor = Cursors.Hand;
+        btnNhapExcel.UseVisualStyleBackColor = false;btnNhapExcel.ForeColor=Color.White;
+        btnMauExcel.BackColor=Color.FromArgb(15, 118, 110);
+        btnMauExcel.FlatStyle = FlatStyle.Flat;
+        btnMauExcel.FlatAppearance.BorderSize = 0;
+        btnMauExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnMauExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnMauExcel.Cursor = Cursors.Hand;
+        btnMauExcel.UseVisualStyleBackColor = false;btnMauExcel.ForeColor=Color.White;
         dgvPhieu.BackgroundColor=Color.White;dgvPhieu.EnableHeadersVisualStyles=false;
         dgvPhieu.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvPhieu.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvPhieu.DefaultCellStyle.BackColor=Color.White;dgvPhieu.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvPhieu.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvPhieu.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
         dgvPhieu.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
-        btnLuu.BackColor=Color.FromArgb(204,251,241);btnLuu.ForeColor=Color.FromArgb(15,23,42);
-        btnThemThuoc.BackColor=Color.FromArgb(204,251,241);btnThemThuoc.ForeColor=Color.FromArgb(15,23,42);
+        btnLuu.BackColor=Color.FromArgb(204,251,241);
+        btnLuu.FlatStyle = FlatStyle.Flat;
+        btnLuu.FlatAppearance.BorderSize = 0;
+        btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 246, 228);
+        btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(94, 234, 212);
+        btnLuu.Cursor = Cursors.Hand;
+        btnLuu.UseVisualStyleBackColor = false;btnLuu.ForeColor=Color.FromArgb(19, 78, 74);
+        btnThemThuoc.BackColor=Color.FromArgb(204,251,241);
+        btnThemThuoc.FlatStyle = FlatStyle.Flat;
+        btnThemThuoc.FlatAppearance.BorderSize = 0;
+        btnThemThuoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 246, 228);
+        btnThemThuoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(94, 234, 212);
+        btnThemThuoc.Cursor = Cursors.Hand;
+        btnThemThuoc.UseVisualStyleBackColor = false;btnThemThuoc.ForeColor=Color.FromArgb(19, 78, 74);
         dgvPhieu.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvPhieu.MultiSelect=false;
         dgvPhieu.AllowUserToResizeColumns=false;
-        dgvPhieu.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
         dgvPhieu.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvPhieu.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
         dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvPhieu.ColumnHeadersDefaultCellStyle.BackColor;
         dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvPhieu.ColumnHeadersDefaultCellStyle.ForeColor;
         dgvPhieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         dgvPhieu.ColumnHeadersHeight=38;
-        dgvPhieuColumn1.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn1.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn2.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn2.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn3.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn3.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn4.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn4.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn5.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn5.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn6.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn6.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn7.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn7.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-        dgvPhieuColumn8.Resizable=DataGridViewTriState.False;
-        dgvPhieuColumn8.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
-                dgvPhieuColumn1.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn1.MinimumWidth=65;
-        dgvPhieuColumn1.Width=65;
-        dgvPhieuColumn1.FillWeight=48F;
-        dgvPhieuColumn2.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;
-        dgvPhieuColumn2.MinimumWidth=180;
-        dgvPhieuColumn2.Width=180;
-        dgvPhieuColumn2.FillWeight=220F;
-        dgvPhieuColumn3.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn3.MinimumWidth=70;
-        dgvPhieuColumn3.Width=70;
-        dgvPhieuColumn3.FillWeight=48F;
-        dgvPhieuColumn4.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn4.MinimumWidth=140;
-        dgvPhieuColumn4.Width=140;
-        dgvPhieuColumn4.FillWeight=64F;
-        dgvPhieuColumn5.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn5.MinimumWidth=112;
-        dgvPhieuColumn5.Width=112;
-        dgvPhieuColumn5.FillWeight=88F;
-        dgvPhieuColumn6.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn6.MinimumWidth=98;
-        dgvPhieuColumn6.Width=98;
-        dgvPhieuColumn6.FillWeight=88F;
-        dgvPhieuColumn7.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn7.MinimumWidth=115;
-        dgvPhieuColumn7.Width=115;
-        dgvPhieuColumn7.FillWeight=88F;
-        dgvPhieuColumn8.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
-        dgvPhieuColumn8.MinimumWidth=115;
-        dgvPhieuColumn8.Width=115;
-        dgvPhieuColumn8.FillWeight=104F;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                dgvPhieu.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvPhieu.ColumnHeadersHeight=43;
+        
+        
+        
+        
+        
+        
+        
+        
         ResumeLayout(false);
         PerformLayout();
     }
@@ -2108,4 +2204,6 @@ partial class frmNhapKho
     private FlowLayoutPanel excelActions;
     private Button btnNhapExcel,btnMauExcel;
     private TableLayoutPanel stockHeader;
+}
+
 }

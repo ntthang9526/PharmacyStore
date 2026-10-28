@@ -7,6 +7,8 @@ namespace Store.POS
     {
         private string maDangChon="";
         private NhomThuocBLL bll = new NhomThuocBLL();
+        private bool isThem = false;
+        private bool isSua = false;
 
         public frmNhomThuoc()
         {
@@ -17,7 +19,7 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; TimNhom(); }
             };
-            PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
+            PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         }
         // Sự kiện khi Form load lên
         private void TimNhom()
@@ -26,8 +28,9 @@ namespace Store.POS
             catch (Exception ex) { MessageBox.Show("Không tìm được nhóm thuốc: " + ex.Message, "Lỗi"); }
         }
 
-        private void ResetDetails()
+        private void ResetDetails(bool force = false)
         {
+            if (!force && txtTenNhom.Enabled) return;
             SetControlState(false);
             maDangChon=""; txtTenNhom.Clear();
         }
@@ -47,6 +50,21 @@ namespace Store.POS
         private void SetControlState(bool status)
         {
             txtTenNhom.Enabled = status;
+
+            if (!status)
+            {
+                isThem = false;
+                isSua = false;
+                btnThem.Enabled = true;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+            }
+            else
+            {
+                btnThem.Enabled = isThem;
+                btnSua.Enabled = isSua;
+                btnXoa.Enabled = false;
+            }
         }
         private void dgvNhomThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -63,7 +81,9 @@ namespace Store.POS
         {
             if (!txtTenNhom.Enabled)
             {
-                SetControlState(true); // Mở khóa các ô
+                isThem = true;
+                isSua = false;
+                SetControlState(true); // Mở khóa các ô, tắt sửa và xóa
                 maDangChon="";
                 txtTenNhom.Clear();
                 txtTenNhom.Focus();
@@ -137,7 +157,9 @@ namespace Store.POS
                     return;
                 }
 
-                SetControlState(true);  // Mở khóa các ô để sửa thông tin
+                isThem = false;
+                isSua = true;
+                SetControlState(true);  // Mở khóa các ô để sửa thông tin, tắt thêm và xóa
                 txtTenNhom.Focus();
                 return;
             }
@@ -165,13 +187,6 @@ namespace Store.POS
             }
         }
 
-        private void btnThoat_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("Bạn có muốn thoát không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.Yes)
-            {
-                this.Close(); // Đóng form quản lý nhóm thuốc
-            }
-        }
+
     }
 }

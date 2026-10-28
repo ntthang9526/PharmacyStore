@@ -27,14 +27,14 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
                 e.FormattingApplied = true;
             }
         };
-        PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
+        PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         btnTimKiem.Click+=(_,_)=>TimKiem();
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
         btnThem.Click+=(_,_)=> {ResetDetails();SetEditing(true);txtCode.Focus();};
         btnSua.Click+=(_,_)=> {if(selectedId.HasValue) SetEditing(true);else BaoLoi("Chọn voucher cần sửa trong bảng.");};
-        btnHuy.Click+=(_,_)=>ResetDetails();
+        btnHuy.Click+=(_,_)=>ResetDetails(true);
         btnLuu.Click+=(_,_)=>Luu();btnXoa.Click+=(_,_)=>Xoa();
-        btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();TimKiem();};btnDong.Click+=(_,_)=>Close();
+        btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();TimKiem();};
         dgvVoucher.CellClick+=(_,e)=> {if(e.RowIndex>=0) Chon(dgvVoucher.Rows[e.RowIndex]);};
         dgvVoucher.KeyUp+=(_,e)=> {if(e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End && dgvVoucher.CurrentRow!=null) Chon(dgvVoucher.CurrentRow);};
         ResetDetails();Load+=(_,_)=>TimKiem();
@@ -46,8 +46,9 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
         btnSua.Enabled=btnXoa.Enabled=!editing && selectedId.HasValue;
         btnThem.Enabled=!editing;
     }
-    private void ResetDetails()
+    private void ResetDetails(bool force = false)
     {
+        if (!force && txtCode.Enabled) return;
         selectedId=originalQuantity=null;
         txtCode.Clear();cboLoai.SelectedIndex=-1;nudGiaTri.Value=nudSoLuot.Value=0;chkHoatDong.Checked=true;
         lblTrangThai.Text="";SetEditing(false);

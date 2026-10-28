@@ -7,6 +7,8 @@ namespace Store.POS
     {
         private string maDangChon="";
         private NhaCungCapBLL bll = new NhaCungCapBLL();
+        private bool isThem = false;
+        private bool isSua = false;
         public frmNhaCungCap()
         {
             InitializeComponent();
@@ -17,11 +19,12 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
-            PosFormStyle.ConfigureGridSelection(this, posLayout, ResetDetails);
+            PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         }
 
-        private void ResetDetails()
+        private void ResetDetails(bool force = false)
         {
+            if (!force && txtTenNCC.Enabled) return;
             SetControlState(false);
             maDangChon=""; txtTenNCC.Clear(); txtDienThoai.Clear(); txtDiaChi.Clear();
         }
@@ -44,6 +47,21 @@ namespace Store.POS
             txtTenNCC.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiaChi.Enabled = status;
+
+            if (!status)
+            {
+                isThem = false;
+                isSua = false;
+                btnThem.Enabled = true;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+            }
+            else
+            {
+                btnThem.Enabled = isThem;
+                btnSua.Enabled = isSua;
+                btnXoa.Enabled = false;
+            }
         }
         private void dgvNhaCungCap_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -62,7 +80,9 @@ namespace Store.POS
         {
             if (!txtTenNCC.Enabled)
             {
-                SetControlState(true); // Mở khóa tất cả các ô
+                isThem = true;
+                isSua = false;
+                SetControlState(true); // Mở khóa tất cả các ô, tắt sửa và xóa
                 maDangChon="";
                 txtTenNCC.Clear();
                 txtDienThoai.Clear();
@@ -127,7 +147,9 @@ namespace Store.POS
                     return;
                 }
 
-                SetControlState(true);  // Mở khóa các ô để sửa thông tin
+                isThem = false;
+                isSua = true;
+                SetControlState(true);  // Mở khóa các ô để sửa thông tin, tắt thêm và xóa
                 txtTenNCC.Focus();
                 return;
             }
@@ -192,14 +214,7 @@ namespace Store.POS
             LoadData();
         }
 
-        private void btnThoat_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("Bạn có muốn thoát khỏi form này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
+
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
