@@ -26,6 +26,8 @@ partial class frmMain
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
@@ -36,8 +38,6 @@ partial class frmMain
             DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             shellLayout = new TableLayoutPanel();
             panelChucNang = new Panel();
             sideButtons = new TableLayoutPanel();
@@ -81,6 +81,13 @@ partial class frmMain
             groupBox20 = new GroupBox();
             panel21 = new Panel();
             dgvSapHetHan = new DataGridView();
+            dgvSapHetHanColumn1 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn2 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn3 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn4 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn5 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn6 = new DataGridViewTextBoxColumn();
+            dgvSapHetHanColumn7 = new DataGridViewTextBoxColumn();
             lblKhongSapHetHan = new Label();
             groupBox22 = new GroupBox();
             panel23 = new Panel();
@@ -101,13 +108,6 @@ partial class frmMain
             dgvSapHetColumn3 = new DataGridViewTextBoxColumn();
             dgvSapHetColumn5 = new DataGridViewTextBoxColumn();
             dgvSapHetColumn4 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn1 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn2 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn3 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn4 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn5 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn6 = new DataGridViewTextBoxColumn();
-            dgvSapHetHanColumn7 = new DataGridViewTextBoxColumn();
             shellLayout.SuspendLayout();
             panelChucNang.SuspendLayout();
             sideButtons.SuspendLayout();
@@ -937,6 +937,81 @@ partial class frmMain
             dgvSapHetHan.Size = new Size(600, 228);
             dgvSapHetHan.TabIndex = 0;
             // 
+            // dgvSapHetHanColumn1
+            // 
+            dgvSapHetHanColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn1.DataPropertyName = "MaThuoc";
+            dgvSapHetHanColumn1.HeaderText = "Mã thuốc";
+            dgvSapHetHanColumn1.MinimumWidth = 6;
+            dgvSapHetHanColumn1.Name = "dgvSapHetHanColumn1";
+            dgvSapHetHanColumn1.ReadOnly = true;
+            dgvSapHetHanColumn1.Width = 125;
+            // 
+            // dgvSapHetHanColumn2
+            // 
+            dgvSapHetHanColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn2.DataPropertyName = "TenThuoc";
+            dgvSapHetHanColumn2.HeaderText = "Tên thuốc";
+            dgvSapHetHanColumn2.MinimumWidth = 6;
+            dgvSapHetHanColumn2.Name = "dgvSapHetHanColumn2";
+            dgvSapHetHanColumn2.ReadOnly = true;
+            dgvSapHetHanColumn2.Width = 230;
+            // 
+            // dgvSapHetHanColumn3
+            // 
+            dgvSapHetHanColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn3.DataPropertyName = "SoLo";
+            dgvSapHetHanColumn3.HeaderText = "Số lô";
+            dgvSapHetHanColumn3.MinimumWidth = 6;
+            dgvSapHetHanColumn3.Name = "dgvSapHetHanColumn3";
+            dgvSapHetHanColumn3.ReadOnly = true;
+            dgvSapHetHanColumn3.Width = 170;
+            // 
+            // dgvSapHetHanColumn4
+            // 
+            dgvSapHetHanColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn4.DataPropertyName = "HanDung";
+            dataGridViewCellStyle8.Format = "dd/MM/yyyy";
+            dgvSapHetHanColumn4.DefaultCellStyle = dataGridViewCellStyle8;
+            dgvSapHetHanColumn4.HeaderText = "Hạn sử dụng";
+            dgvSapHetHanColumn4.MinimumWidth = 6;
+            dgvSapHetHanColumn4.Name = "dgvSapHetHanColumn4";
+            dgvSapHetHanColumn4.ReadOnly = true;
+            dgvSapHetHanColumn4.Width = 148;
+            // 
+            // dgvSapHetHanColumn5
+            // 
+            dgvSapHetHanColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn5.DataPropertyName = "SoNgayConLai";
+            dgvSapHetHanColumn5.HeaderText = "Số ngày còn lại";
+            dgvSapHetHanColumn5.MinimumWidth = 6;
+            dgvSapHetHanColumn5.Name = "dgvSapHetHanColumn5";
+            dgvSapHetHanColumn5.ReadOnly = true;
+            dgvSapHetHanColumn5.Width = 166;
+            // 
+            // dgvSapHetHanColumn6
+            // 
+            dgvSapHetHanColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn6.DataPropertyName = "TonLo";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N0";
+            dgvSapHetHanColumn6.DefaultCellStyle = dataGridViewCellStyle9;
+            dgvSapHetHanColumn6.HeaderText = "Tồn của lô";
+            dgvSapHetHanColumn6.MinimumWidth = 6;
+            dgvSapHetHanColumn6.Name = "dgvSapHetHanColumn6";
+            dgvSapHetHanColumn6.ReadOnly = true;
+            dgvSapHetHanColumn6.Width = 130;
+            // 
+            // dgvSapHetHanColumn7
+            // 
+            dgvSapHetHanColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvSapHetHanColumn7.DataPropertyName = "TrangThai";
+            dgvSapHetHanColumn7.HeaderText = "Trạng thái";
+            dgvSapHetHanColumn7.MinimumWidth = 6;
+            dgvSapHetHanColumn7.Name = "dgvSapHetHanColumn7";
+            dgvSapHetHanColumn7.ReadOnly = true;
+            dgvSapHetHanColumn7.Width = 127;
+            // 
             // lblKhongSapHetHan
             // 
             lblKhongSapHetHan.BackColor = Color.FromArgb(248, 250, 252);
@@ -1165,9 +1240,10 @@ partial class frmMain
             dgvSapHetColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvSapHetColumn1.DataPropertyName = "MaThuoc";
             dgvSapHetColumn1.HeaderText = "Mã thuốc";
+            dgvSapHetColumn1.MinimumWidth = 6;
             dgvSapHetColumn1.Name = "dgvSapHetColumn1";
-            dgvSapHetColumn1.Width = 125;
             dgvSapHetColumn1.ReadOnly = true;
+            dgvSapHetColumn1.Width = 125;
             // 
             // dgvSapHetColumn2
             // 
@@ -1193,7 +1269,7 @@ partial class frmMain
             // 
             dgvSapHetColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvSapHetColumn5.DataPropertyName = "TonKho";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.Format = "N0";
             dgvSapHetColumn5.DefaultCellStyle = dataGridViewCellStyle3;
             dgvSapHetColumn5.HeaderText = "Tồn có thể bán";
@@ -1211,80 +1287,6 @@ partial class frmMain
             dgvSapHetColumn4.Name = "dgvSapHetColumn4";
             dgvSapHetColumn4.ReadOnly = true;
             dgvSapHetColumn4.Width = 220;
-            // 
-            // dgvSapHetHanColumn1
-            // 
-            dgvSapHetHanColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn1.DataPropertyName = "MaThuoc";
-            dgvSapHetHanColumn1.HeaderText = "Mã thuốc";
-            dgvSapHetHanColumn1.Name = "dgvSapHetHanColumn1";
-            dgvSapHetHanColumn1.Width = 125;
-            dgvSapHetHanColumn1.ReadOnly = true;
-            // 
-            // dgvSapHetHanColumn2
-            // 
-            dgvSapHetHanColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn2.DataPropertyName = "TenThuoc";
-            dgvSapHetHanColumn2.HeaderText = "Tên thuốc";
-            dgvSapHetHanColumn2.MinimumWidth = 6;
-            dgvSapHetHanColumn2.Name = "dgvSapHetHanColumn2";
-            dgvSapHetHanColumn2.ReadOnly = true;
-            dgvSapHetHanColumn2.Width = 230;
-            // 
-            // dgvSapHetHanColumn3
-            // 
-            dgvSapHetHanColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn3.DataPropertyName = "SoLo";
-            dgvSapHetHanColumn3.HeaderText = "Số lô";
-            dgvSapHetHanColumn3.MinimumWidth = 6;
-            dgvSapHetHanColumn3.Name = "dgvSapHetHanColumn3";
-            dgvSapHetHanColumn3.ReadOnly = true;
-            dgvSapHetHanColumn3.Width = 170;
-            // 
-            // dgvSapHetHanColumn4
-            // 
-            dgvSapHetHanColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn4.DataPropertyName = "HanDung";
-            dataGridViewCellStyle8.Format = "dd/MM/yyyy";
-            dgvSapHetHanColumn4.DefaultCellStyle = dataGridViewCellStyle8;
-            dgvSapHetHanColumn4.HeaderText = "Hạn sử dụng";
-            dgvSapHetHanColumn4.MinimumWidth = 6;
-            dgvSapHetHanColumn4.Name = "dgvSapHetHanColumn4";
-            dgvSapHetHanColumn4.ReadOnly = true;
-            dgvSapHetHanColumn4.Width = 148;
-            // 
-            // dgvSapHetHanColumn5
-            // 
-            dgvSapHetHanColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn5.DataPropertyName = "SoNgayConLai";
-            dgvSapHetHanColumn5.HeaderText = "Số ngày còn lại";
-            dgvSapHetHanColumn5.MinimumWidth = 6;
-            dgvSapHetHanColumn5.Name = "dgvSapHetHanColumn5";
-            dgvSapHetHanColumn5.ReadOnly = true;
-            dgvSapHetHanColumn5.Width = 166;
-            // 
-            // dgvSapHetHanColumn6
-            // 
-            dgvSapHetHanColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn6.DataPropertyName = "TonLo";
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N0";
-            dgvSapHetHanColumn6.DefaultCellStyle = dataGridViewCellStyle9;
-            dgvSapHetHanColumn6.HeaderText = "Tồn của lô";
-            dgvSapHetHanColumn6.MinimumWidth = 6;
-            dgvSapHetHanColumn6.Name = "dgvSapHetHanColumn6";
-            dgvSapHetHanColumn6.ReadOnly = true;
-            dgvSapHetHanColumn6.Width = 130;
-            // 
-            // dgvSapHetHanColumn7
-            // 
-            dgvSapHetHanColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dgvSapHetHanColumn7.DataPropertyName = "TrangThai";
-            dgvSapHetHanColumn7.HeaderText = "Trạng thái";
-            dgvSapHetHanColumn7.MinimumWidth = 6;
-            dgvSapHetHanColumn7.Name = "dgvSapHetHanColumn7";
-            dgvSapHetHanColumn7.ReadOnly = true;
-            dgvSapHetHanColumn7.Width = 127;
             // 
             // frmMain
             // 
@@ -1385,11 +1387,6 @@ partial class frmMain
         private DataGridViewTextBoxColumn dgvGanNhatColumn7;
         private DataGridViewTextBoxColumn dgvGanNhatColumn8;
         private DataGridViewTextBoxColumn colRecentStatus;
-        private DataGridViewTextBoxColumn dgvSapHetColumn1;
-        private DataGridViewTextBoxColumn dgvSapHetColumn2;
-        private DataGridViewTextBoxColumn dgvSapHetColumn3;
-        private DataGridViewTextBoxColumn dgvSapHetColumn5;
-        private DataGridViewTextBoxColumn dgvSapHetColumn4;
         private DataGridViewTextBoxColumn dgvSapHetHanColumn1;
         private DataGridViewTextBoxColumn dgvSapHetHanColumn2;
         private DataGridViewTextBoxColumn dgvSapHetHanColumn3;
@@ -1397,6 +1394,11 @@ partial class frmMain
         private DataGridViewTextBoxColumn dgvSapHetHanColumn5;
         private DataGridViewTextBoxColumn dgvSapHetHanColumn6;
         private DataGridViewTextBoxColumn dgvSapHetHanColumn7;
+        private DataGridViewTextBoxColumn dgvSapHetColumn1;
+        private DataGridViewTextBoxColumn dgvSapHetColumn2;
+        private DataGridViewTextBoxColumn dgvSapHetColumn3;
+        private DataGridViewTextBoxColumn dgvSapHetColumn5;
+        private DataGridViewTextBoxColumn dgvSapHetColumn4;
     }
 
 }
