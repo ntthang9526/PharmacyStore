@@ -38,6 +38,7 @@ namespace Store.POS
         public frmBanHang()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnLuuCho.Click+=(_,_)=>LuuHoaDon("Chưa xác định",true);
             timerAnPanelAction=new System.Windows.Forms.Timer(components ??= new Container()) {Interval=180};
             timerAnPanelAction.Tick+=(_,_)=> {timerAnPanelAction.Stop();KiemTraAnPanelAction(Cursor.Position);};

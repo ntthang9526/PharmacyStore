@@ -18,31 +18,31 @@ partial class frmHoaDon
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle31 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle32 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle33 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle34 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle45 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle46 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle35 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle36 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle43 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle44 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle47 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle48 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle49 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle50 = new DataGridViewCellStyle();
             dgvChiTietColumn1 = new DataGridViewTextBoxColumn();
             dgvChiTietColumn2 = new DataGridViewTextBoxColumn();
             dgvChiTietColumn3 = new DataGridViewTextBoxColumn();
@@ -116,8 +116,8 @@ partial class frmHoaDon
             // 
             dgvChiTietColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn1.DataPropertyName = "TenThuoc";
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle26.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn1.DefaultCellStyle = dataGridViewCellStyle26;
             dgvChiTietColumn1.FillWeight = 220F;
             dgvChiTietColumn1.HeaderText = "Tên thuốc";
             dgvChiTietColumn1.MinimumWidth = 6;
@@ -130,22 +130,22 @@ partial class frmHoaDon
             // 
             dgvChiTietColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn2.DataPropertyName = "DonViTinh";
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn2.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle27.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn2.DefaultCellStyle = dataGridViewCellStyle27;
             dgvChiTietColumn2.FillWeight = 48F;
             dgvChiTietColumn2.HeaderText = "Đơn vị tính";
             dgvChiTietColumn2.MinimumWidth = 6;
             dgvChiTietColumn2.Name = "dgvChiTietColumn2";
             dgvChiTietColumn2.ReadOnly = true;
             dgvChiTietColumn2.Resizable = DataGridViewTriState.False;
-            dgvChiTietColumn2.Width = 82;
+            dgvChiTietColumn2.Width = 134;
             // 
             // dgvChiTietColumn3
             // 
             dgvChiTietColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn3.DataPropertyName = "SoLo";
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn3.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle28.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn3.DefaultCellStyle = dataGridViewCellStyle28;
             dgvChiTietColumn3.FillWeight = 64F;
             dgvChiTietColumn3.HeaderText = "Số lô";
             dgvChiTietColumn3.MinimumWidth = 6;
@@ -158,23 +158,23 @@ partial class frmHoaDon
             // 
             dgvChiTietColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn4.DataPropertyName = "SoLuong";
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn4.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle29.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn4.DefaultCellStyle = dataGridViewCellStyle29;
             dgvChiTietColumn4.FillWeight = 48F;
             dgvChiTietColumn4.HeaderText = "Số lượng";
             dgvChiTietColumn4.MinimumWidth = 6;
             dgvChiTietColumn4.Name = "dgvChiTietColumn4";
             dgvChiTietColumn4.ReadOnly = true;
             dgvChiTietColumn4.Resizable = DataGridViewTriState.False;
-            dgvChiTietColumn4.Width = 67;
+            dgvChiTietColumn4.Width = 118;
             // 
             // dgvChiTietColumn5
             // 
             dgvChiTietColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn5.DataPropertyName = "DonGia";
-            dataGridViewCellStyle5.Format = "N0";
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn5.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle30.Format = "N0";
+            dataGridViewCellStyle30.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn5.DefaultCellStyle = dataGridViewCellStyle30;
             dgvChiTietColumn5.FillWeight = 80F;
             dgvChiTietColumn5.HeaderText = "Đơn giá";
             dgvChiTietColumn5.MinimumWidth = 6;
@@ -187,9 +187,9 @@ partial class frmHoaDon
             // 
             dgvChiTietColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn6.DataPropertyName = "ThanhTien";
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn6.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle31.Format = "N0";
+            dataGridViewCellStyle31.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn6.DefaultCellStyle = dataGridViewCellStyle31;
             dgvChiTietColumn6.FillWeight = 104F;
             dgvChiTietColumn6.HeaderText = "Thành tiền";
             dgvChiTietColumn6.MinimumWidth = 6;
@@ -202,15 +202,15 @@ partial class frmHoaDon
             // 
             dgvChiTietColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvChiTietColumn7.DataPropertyName = "HuongDan";
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvChiTietColumn7.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle32.WrapMode = DataGridViewTriState.False;
+            dgvChiTietColumn7.DefaultCellStyle = dataGridViewCellStyle32;
             dgvChiTietColumn7.FillWeight = 96F;
             dgvChiTietColumn7.HeaderText = "Hướng dẫn sử dụng";
             dgvChiTietColumn7.MinimumWidth = 6;
             dgvChiTietColumn7.Name = "dgvChiTietColumn7";
             dgvChiTietColumn7.ReadOnly = true;
             dgvChiTietColumn7.Resizable = DataGridViewTriState.False;
-            dgvChiTietColumn7.Width = 136;
+            dgvChiTietColumn7.Width = 203;
             // 
             // posLayout
             // 
@@ -599,29 +599,29 @@ partial class frmHoaDon
             // 
             // tableLayoutPanel12
             // 
+            tableLayoutPanel12.Anchor = AnchorStyles.Left;
             tableLayoutPanel12.AutoSize = true;
             tableLayoutPanel12.BackColor = Color.FromArgb(248, 250, 252);
             tableLayoutPanel12.ColumnCount = 2;
             tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel12.Controls.Add(btnLamMoi, 0, 0);
-            tableLayoutPanel12.Dock = DockStyle.Fill;
             tableLayoutPanel12.Font = new Font("Segoe UI", 10.2F);
             tableLayoutPanel12.ForeColor = SystemColors.ControlText;
-            tableLayoutPanel12.Location = new Point(1038, 0);
+            tableLayoutPanel12.Location = new Point(1038, 7);
             tableLayoutPanel12.Margin = new Padding(0);
             tableLayoutPanel12.Name = "tableLayoutPanel12";
             tableLayoutPanel12.RowCount = 1;
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-            tableLayoutPanel12.Size = new Size(120, 58);
+            tableLayoutPanel12.Size = new Size(120, 44);
             tableLayoutPanel12.TabIndex = 1;
             // 
             // btnLamMoi
             // 
+            btnLamMoi.Anchor = AnchorStyles.Left;
             btnLamMoi.BackColor = Color.FromArgb(15, 118, 110);
             tableLayoutPanel12.SetColumnSpan(btnLamMoi, 2);
             btnLamMoi.Cursor = Cursors.Hand;
-            btnLamMoi.Dock = DockStyle.Top;
             btnLamMoi.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
             btnLamMoi.FlatAppearance.BorderSize = 0;
             btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
@@ -675,30 +675,30 @@ partial class frmHoaDon
             dgvHoaDon.AllowUserToDeleteRows = false;
             dgvHoaDon.AllowUserToResizeColumns = false;
             dgvHoaDon.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(248, 250, 252);
-            dgvHoaDon.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle33.BackColor = Color.FromArgb(248, 250, 252);
+            dgvHoaDon.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle33;
             dgvHoaDon.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvHoaDon.BackgroundColor = Color.White;
             dgvHoaDon.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(15, 118, 110);
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(15, 118, 110);
-            dataGridViewCellStyle9.SelectionForeColor = Color.White;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            dgvHoaDon.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle34.BackColor = Color.FromArgb(15, 118, 110);
+            dataGridViewCellStyle34.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle34.ForeColor = Color.White;
+            dataGridViewCellStyle34.SelectionBackColor = Color.FromArgb(15, 118, 110);
+            dataGridViewCellStyle34.SelectionForeColor = Color.White;
+            dataGridViewCellStyle34.WrapMode = DataGridViewTriState.False;
+            dgvHoaDon.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             dgvHoaDon.ColumnHeadersHeight = 43;
             dgvHoaDon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvHoaDon.Columns.AddRange(new DataGridViewColumn[] { dgvHoaDonColumn1, dgvHoaDonColumn2, dgvHoaDonColumn3, dgvHoaDonColumn4, dgvHoaDonColumn5, dgvHoaDonColumn6, dgvHoaDonColumn7, dgvHoaDonColumn8, colPaymentMethod, colPaymentStatus });
-            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = Color.White;
-            dataGridViewCellStyle20.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle20.ForeColor = Color.FromArgb(15, 23, 42);
-            dataGridViewCellStyle20.Padding = new Padding(4);
-            dataGridViewCellStyle20.SelectionBackColor = Color.FromArgb(204, 251, 241);
-            dataGridViewCellStyle20.SelectionForeColor = Color.FromArgb(15, 23, 42);
-            dataGridViewCellStyle20.WrapMode = DataGridViewTriState.False;
-            dgvHoaDon.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle45.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle45.BackColor = Color.White;
+            dataGridViewCellStyle45.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle45.ForeColor = Color.FromArgb(15, 23, 42);
+            dataGridViewCellStyle45.Padding = new Padding(4);
+            dataGridViewCellStyle45.SelectionBackColor = Color.FromArgb(204, 251, 241);
+            dataGridViewCellStyle45.SelectionForeColor = Color.FromArgb(15, 23, 42);
+            dataGridViewCellStyle45.WrapMode = DataGridViewTriState.False;
+            dgvHoaDon.DefaultCellStyle = dataGridViewCellStyle45;
             dgvHoaDon.Dock = DockStyle.Fill;
             dgvHoaDon.EnableHeadersVisualStyles = false;
             dgvHoaDon.Font = new Font("Segoe UI", 10.2F);
@@ -707,14 +707,14 @@ partial class frmHoaDon
             dgvHoaDon.MultiSelect = false;
             dgvHoaDon.Name = "dgvHoaDon";
             dgvHoaDon.ReadOnly = true;
-            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = Color.FromArgb(248, 250, 252);
-            dataGridViewCellStyle21.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle21.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle21.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = DataGridViewTriState.True;
-            dgvHoaDon.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle46.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle46.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle46.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle46.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle46.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle46.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle46.WrapMode = DataGridViewTriState.True;
+            dgvHoaDon.RowHeadersDefaultCellStyle = dataGridViewCellStyle46;
             dgvHoaDon.RowHeadersVisible = false;
             dgvHoaDon.RowHeadersWidth = 51;
             dgvHoaDon.RowTemplate.Height = 34;
@@ -726,9 +726,9 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn1.DataPropertyName = "MaHD";
-            dataGridViewCellStyle10.Format = "HD00000";
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn1.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle35.Format = "HD00000";
+            dataGridViewCellStyle35.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn1.DefaultCellStyle = dataGridViewCellStyle35;
             dgvHoaDonColumn1.FillWeight = 64F;
             dgvHoaDonColumn1.HeaderText = "Mã HĐ";
             dgvHoaDonColumn1.MinimumWidth = 6;
@@ -741,9 +741,9 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn2.DataPropertyName = "NgayLap";
-            dataGridViewCellStyle11.Format = "dd/MM/yyyy HH:mm";
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn2.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle36.Format = "dd/MM/yyyy HH:mm";
+            dataGridViewCellStyle36.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn2.DefaultCellStyle = dataGridViewCellStyle36;
             dgvHoaDonColumn2.FillWeight = 88F;
             dgvHoaDonColumn2.HeaderText = "Ngày lập";
             dgvHoaDonColumn2.MinimumWidth = 6;
@@ -756,8 +756,8 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn3.DataPropertyName = "NhanVien";
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn3.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn3.DefaultCellStyle = dataGridViewCellStyle37;
             dgvHoaDonColumn3.FillWeight = 220F;
             dgvHoaDonColumn3.HeaderText = "Nhân viên";
             dgvHoaDonColumn3.MinimumWidth = 6;
@@ -770,8 +770,8 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn4.DataPropertyName = "KhachHang";
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn4.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn4.DefaultCellStyle = dataGridViewCellStyle38;
             dgvHoaDonColumn4.FillWeight = 220F;
             dgvHoaDonColumn4.HeaderText = "Khách hàng";
             dgvHoaDonColumn4.MinimumWidth = 6;
@@ -784,23 +784,23 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn5.DataPropertyName = "Voucher";
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn5.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle39.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn5.DefaultCellStyle = dataGridViewCellStyle39;
             dgvHoaDonColumn5.FillWeight = 80F;
             dgvHoaDonColumn5.HeaderText = "Mã voucher";
             dgvHoaDonColumn5.MinimumWidth = 6;
             dgvHoaDonColumn5.Name = "dgvHoaDonColumn5";
             dgvHoaDonColumn5.ReadOnly = true;
             dgvHoaDonColumn5.Resizable = DataGridViewTriState.False;
-            dgvHoaDonColumn5.Width = 113;
+            dgvHoaDonColumn5.Width = 140;
             // 
             // dgvHoaDonColumn6
             // 
             dgvHoaDonColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn6.DataPropertyName = "TongTien";
-            dataGridViewCellStyle15.Format = "N0";
-            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn6.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle40.Format = "N0";
+            dataGridViewCellStyle40.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn6.DefaultCellStyle = dataGridViewCellStyle40;
             dgvHoaDonColumn6.FillWeight = 96F;
             dgvHoaDonColumn6.HeaderText = "Tổng tiền";
             dgvHoaDonColumn6.MinimumWidth = 6;
@@ -813,9 +813,9 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn7.DataPropertyName = "GiamGia";
-            dataGridViewCellStyle16.Format = "N0";
-            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn7.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle41.Format = "N0";
+            dataGridViewCellStyle41.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn7.DefaultCellStyle = dataGridViewCellStyle41;
             dgvHoaDonColumn7.FillWeight = 88F;
             dgvHoaDonColumn7.HeaderText = "Giảm giá";
             dgvHoaDonColumn7.MinimumWidth = 6;
@@ -828,9 +828,9 @@ partial class frmHoaDon
             // 
             dgvHoaDonColumn8.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvHoaDonColumn8.DataPropertyName = "ThucThu";
-            dataGridViewCellStyle17.Format = "N0";
-            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.False;
-            dgvHoaDonColumn8.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle42.Format = "N0";
+            dataGridViewCellStyle42.WrapMode = DataGridViewTriState.False;
+            dgvHoaDonColumn8.DefaultCellStyle = dataGridViewCellStyle42;
             dgvHoaDonColumn8.FillWeight = 88F;
             dgvHoaDonColumn8.HeaderText = "Thực thu";
             dgvHoaDonColumn8.MinimumWidth = 6;
@@ -843,22 +843,22 @@ partial class frmHoaDon
             // 
             colPaymentMethod.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             colPaymentMethod.DataPropertyName = "HinhThucThanhToan";
-            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
-            colPaymentMethod.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle43.WrapMode = DataGridViewTriState.False;
+            colPaymentMethod.DefaultCellStyle = dataGridViewCellStyle43;
             colPaymentMethod.FillWeight = 104F;
             colPaymentMethod.HeaderText = "Hình thức thanh toán";
             colPaymentMethod.MinimumWidth = 6;
             colPaymentMethod.Name = "colPaymentMethod";
             colPaymentMethod.ReadOnly = true;
             colPaymentMethod.Resizable = DataGridViewTriState.False;
-            colPaymentMethod.Width = 148;
+            colPaymentMethod.Width = 215;
             // 
             // colPaymentStatus
             // 
             colPaymentStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             colPaymentStatus.DataPropertyName = "TrangThai";
-            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.False;
-            colPaymentStatus.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle44.WrapMode = DataGridViewTriState.False;
+            colPaymentStatus.DefaultCellStyle = dataGridViewCellStyle44;
             colPaymentStatus.FillWeight = 104F;
             colPaymentStatus.HeaderText = "Trạng thái";
             colPaymentStatus.MinimumWidth = 6;
@@ -921,30 +921,30 @@ partial class frmHoaDon
             dgvChiTiet.AllowUserToDeleteRows = false;
             dgvChiTiet.AllowUserToResizeColumns = false;
             dgvChiTiet.AllowUserToResizeRows = false;
-            dataGridViewCellStyle22.BackColor = Color.FromArgb(248, 250, 252);
-            dgvChiTiet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle47.BackColor = Color.FromArgb(248, 250, 252);
+            dgvChiTiet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle47;
             dgvChiTiet.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvChiTiet.BackgroundColor = Color.White;
             dgvChiTiet.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle23.BackColor = Color.FromArgb(15, 118, 110);
-            dataGridViewCellStyle23.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle23.ForeColor = Color.White;
-            dataGridViewCellStyle23.SelectionBackColor = Color.FromArgb(15, 118, 110);
-            dataGridViewCellStyle23.SelectionForeColor = Color.White;
-            dataGridViewCellStyle23.WrapMode = DataGridViewTriState.False;
-            dgvChiTiet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle48.BackColor = Color.FromArgb(15, 118, 110);
+            dataGridViewCellStyle48.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle48.ForeColor = Color.White;
+            dataGridViewCellStyle48.SelectionBackColor = Color.FromArgb(15, 118, 110);
+            dataGridViewCellStyle48.SelectionForeColor = Color.White;
+            dataGridViewCellStyle48.WrapMode = DataGridViewTriState.False;
+            dgvChiTiet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle48;
             dgvChiTiet.ColumnHeadersHeight = 43;
             dgvChiTiet.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvChiTiet.Columns.AddRange(new DataGridViewColumn[] { dgvChiTietColumn1, dgvChiTietColumn2, dgvChiTietColumn3, dgvChiTietColumn4, dgvChiTietColumn5, dgvChiTietColumn6, dgvChiTietColumn7 });
-            dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = Color.White;
-            dataGridViewCellStyle24.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle24.ForeColor = Color.FromArgb(15, 23, 42);
-            dataGridViewCellStyle24.Padding = new Padding(4);
-            dataGridViewCellStyle24.SelectionBackColor = Color.FromArgb(204, 251, 241);
-            dataGridViewCellStyle24.SelectionForeColor = Color.FromArgb(15, 23, 42);
-            dataGridViewCellStyle24.WrapMode = DataGridViewTriState.False;
-            dgvChiTiet.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle49.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle49.BackColor = Color.White;
+            dataGridViewCellStyle49.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle49.ForeColor = Color.FromArgb(15, 23, 42);
+            dataGridViewCellStyle49.Padding = new Padding(4);
+            dataGridViewCellStyle49.SelectionBackColor = Color.FromArgb(204, 251, 241);
+            dataGridViewCellStyle49.SelectionForeColor = Color.FromArgb(15, 23, 42);
+            dataGridViewCellStyle49.WrapMode = DataGridViewTriState.False;
+            dgvChiTiet.DefaultCellStyle = dataGridViewCellStyle49;
             dgvChiTiet.Dock = DockStyle.Fill;
             dgvChiTiet.EnableHeadersVisualStyles = false;
             dgvChiTiet.Font = new Font("Segoe UI", 10.2F);
@@ -953,14 +953,14 @@ partial class frmHoaDon
             dgvChiTiet.MultiSelect = false;
             dgvChiTiet.Name = "dgvChiTiet";
             dgvChiTiet.ReadOnly = true;
-            dataGridViewCellStyle25.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = Color.FromArgb(248, 250, 252);
-            dataGridViewCellStyle25.Font = new Font("Segoe UI", 10.2F);
-            dataGridViewCellStyle25.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle25.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle25.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = DataGridViewTriState.True;
-            dgvChiTiet.RowHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle50.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle50.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle50.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle50.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle50.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle50.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle50.WrapMode = DataGridViewTriState.True;
+            dgvChiTiet.RowHeadersDefaultCellStyle = dataGridViewCellStyle50;
             dgvChiTiet.RowHeadersVisible = false;
             dgvChiTiet.RowHeadersWidth = 51;
             dgvChiTiet.RowTemplate.Height = 34;

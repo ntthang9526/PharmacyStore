@@ -12,6 +12,7 @@ public partial class frmThemThuoc : Form
     {
         this.supplierId=supplierId;
         InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
         label3.Text="NCC: "+supplierName;
         Load+=(_,_)=>NapNhom();

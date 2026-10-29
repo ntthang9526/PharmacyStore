@@ -51,7 +51,7 @@ partial class frmKhachHang
         tableLayoutPanel15 = new TableLayoutPanel();
         label16 = new Label();
         txtDiem = new TextBox();
-        tableLayoutPanel17 = new TableLayoutPanel();
+        tableLayoutPanel17 = new FlowLayoutPanel();
         btnThem = new Button();
         btnSua = new Button();
         btnXoa = new Button();
@@ -313,7 +313,7 @@ partial class frmKhachHang
         tableLayoutPanel7.RowCount = 3;
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 168F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 88F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.AutoSize));
         tableLayoutPanel7.Size = new Size(330, 544);
         tableLayoutPanel7.TabIndex = 0;
         // 
@@ -491,37 +491,34 @@ partial class frmKhachHang
         // tableLayoutPanel17
         // 
         tableLayoutPanel17.AutoSize = true;
+        tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel17.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
+        tableLayoutPanel17.WrapContents = true;
         tableLayoutPanel17.BackColor = Color.FromArgb(248,250,252);
-        tableLayoutPanel17.ColumnCount = 2;
-        tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel17.Controls.Add(btnThem, 0, 0);
-        tableLayoutPanel17.Controls.Add(btnSua, 1, 0);
-        tableLayoutPanel17.Controls.Add(btnXoa, 0, 1);
-        tableLayoutPanel17.Controls.Add(btnLamMoi, 1, 1);
-        tableLayoutPanel17.Dock = DockStyle.Fill;
+        tableLayoutPanel17.Controls.Add(btnThem);
+        tableLayoutPanel17.Controls.Add(btnSua);
+        tableLayoutPanel17.Controls.Add(btnXoa);
+        tableLayoutPanel17.Controls.Add(btnLamMoi);
+        tableLayoutPanel17.Dock = global::System.Windows.Forms.DockStyle.Bottom;
         tableLayoutPanel17.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel17.ForeColor = SystemColors.ControlText;
         tableLayoutPanel17.Location = new Point(0, 412);
         tableLayoutPanel17.Margin = new Padding(0);
         tableLayoutPanel17.Name = "tableLayoutPanel17";
-        tableLayoutPanel17.RowCount = 2;
-        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-        tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
         tableLayoutPanel17.Size = new Size(330, 88);
         tableLayoutPanel17.TabIndex = 1;
         // 
         // btnThem
         // 
         btnThem.BackColor = Color.FromArgb(192, 255, 192);
-        btnThem.Dock = DockStyle.Fill;
+        btnThem.Dock = global::System.Windows.Forms.DockStyle.None;
         btnThem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnThem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnThem.ForeColor = SystemColors.ControlText;
         btnThem.Location = new Point(0, 4);
-        btnThem.Margin = new Padding(0, 4, 4, 4);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnThem.Name = "btnThem";
-        btnThem.Size = new Size(161, 40);
+        btnThem.Size = new global::System.Drawing.Size(156, 38);
         btnThem.TabIndex = 10;
         btnThem.Text = "Thêm";
         btnThem.Click += btnThem_Click;
@@ -529,14 +526,14 @@ partial class frmKhachHang
         // btnSua
         // 
         btnSua.BackColor = SystemColors.ControlLight;
-        btnSua.Dock = DockStyle.Fill;
+        btnSua.Dock = global::System.Windows.Forms.DockStyle.None;
         btnSua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnSua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnSua.ForeColor = SystemColors.ControlText;
         btnSua.Location = new Point(169, 4);
-        btnSua.Margin = new Padding(4, 4, 0, 4);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnSua.Name = "btnSua";
-        btnSua.Size = new Size(161, 40);
+        btnSua.Size = new global::System.Drawing.Size(156, 38);
         btnSua.TabIndex = 11;
         btnSua.Text = "Sửa";
         btnSua.Click += btnSua_Click;
@@ -544,14 +541,14 @@ partial class frmKhachHang
         // btnXoa
         // 
         btnXoa.BackColor = Color.FromArgb(255, 192, 192);
-        btnXoa.Dock = DockStyle.Fill;
+        btnXoa.Dock = global::System.Windows.Forms.DockStyle.None;
         btnXoa.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnXoa.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnXoa.ForeColor = SystemColors.ControlText;
         btnXoa.Location = new Point(0, 48);
-        btnXoa.Margin = new Padding(0, 4, 4, 4);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnXoa.Name = "btnXoa";
-        btnXoa.Size = new Size(161, 40);
+        btnXoa.Size = new global::System.Drawing.Size(156, 38);
         btnXoa.TabIndex = 12;
         btnXoa.Text = "Xóa";
         btnXoa.Click += btnXoa_Click;
@@ -559,14 +556,14 @@ partial class frmKhachHang
         // btnLamMoi
         // 
         btnLamMoi.BackColor = SystemColors.ControlLight;
-        btnLamMoi.Dock = DockStyle.Fill;
+        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.None;
         btnLamMoi.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnLamMoi.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnLamMoi.ForeColor = SystemColors.ControlText;
         btnLamMoi.Location = new Point(169, 48);
-        btnLamMoi.Margin = new Padding(4, 4, 0, 4);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLamMoi.Name = "btnLamMoi";
-        btnLamMoi.Size = new Size(161, 40);
+        btnLamMoi.Size = new global::System.Drawing.Size(156, 38);
         btnLamMoi.TabIndex = 13;
         btnLamMoi.Text = "Làm mới";
         btnLamMoi.Click += btnLamMoi_Click;
@@ -760,7 +757,7 @@ partial class frmKhachHang
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
     private global::System.Windows.Forms.Label label16;
     private global::System.Windows.Forms.TextBox txtDiem;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+    private global::System.Windows.Forms.FlowLayoutPanel tableLayoutPanel17;
     private global::System.Windows.Forms.Button btnThem;
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnXoa;

@@ -16,5 +16,6 @@
   <Folder Name="/Documentation/">
     <File Path="README.md" />
     <File Path="Docs/MERGE-NOTES.md" />
+    <File Path="Docs/SELLING-STATUS.md" />
   </Folder>
 </Solution>

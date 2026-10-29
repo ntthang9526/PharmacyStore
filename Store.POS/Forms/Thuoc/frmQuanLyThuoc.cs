@@ -12,6 +12,7 @@ namespace Store.POS
         public frmQuanLyThuoc()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnNhapExcel.Click+=(_,_)=>NhapExcel();btnXuatExcel.Click+=(_,_)=>XuatExcel();
             btnMauExcel.Click+=(_,_)=> {try {Store.POS.Common.ExcelHelper.XuatFileMauNhapThuoc();}catch(Exception ex){MessageBox.Show(ex.Message);}};
             PhanQuyenGiaoDien.Gan(this);
@@ -54,6 +55,7 @@ namespace Store.POS
             SetControlState(false);
             maDangChon=""; txtTenThuoc.Clear(); txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
+            cboTrangThaiBan.SelectedIndex = 0;
             cboNhomThuoc.SelectedIndex = -1;
             cboNhaCungCap.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;
@@ -106,6 +108,7 @@ namespace Store.POS
         // Hàm quản lý trạng thái bật/tắt của các control
         private void SetControlState(bool status)
         {
+            cboTrangThaiBan.Enabled = status;
             txtTenThuoc.Enabled = status;
             cboNhomThuoc.Enabled = status;
             cboDonViTinh.Enabled = status;
@@ -135,6 +138,7 @@ namespace Store.POS
             cboDonViTinh.SelectedIndex = -1;
             txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
+            cboTrangThaiBan.SelectedIndex = 0;
             txtTenThuoc.Focus();
         }
 
@@ -149,6 +153,7 @@ namespace Store.POS
             cboDonViTinh.Text = Convert.ToString(data["DonViTinh"]);
             txtDonGia.Text = Store.Shared.TienTe.LamTron(Convert.ToDecimal(data["DonGia"])).ToString("0");
             txtSoLuongTon.Text = Convert.ToString(data["SoLuongTon"]);
+            cboTrangThaiBan.SelectedIndex = Convert.ToBoolean(data["DangBan"])?0:1;
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -173,7 +178,7 @@ namespace Store.POS
             }
 
             // Hỏi xác nhận trước khi xóa tránh bấm nhầm
-            DialogResult dr = MessageBox.Show("Ngừng kinh doanh thuốc này? Lịch sử và tồn kho vẫn được giữ.", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Ẩn thuốc này khỏi danh mục? Nếu chỉ tạm ngừng bán, hãy chọn Sửa → Trạng thái bán → Ngừng bán. Lịch sử và tồn kho vẫn được giữ.", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
                 string error;
@@ -181,7 +186,7 @@ namespace Store.POS
 
                 if (kq)
                 {
-                    MessageBox.Show("Đã ngừng kinh doanh thuốc!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã ẩn thuốc khỏi danh mục!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadDataToGrid();
 
                     // Xóa trắng các ô nhập
@@ -191,6 +196,7 @@ namespace Store.POS
                     cboDonViTinh.SelectedIndex = -1;
                     txtDonGia.Clear();
                     txtSoLuongTon.Text = "0";
+            cboTrangThaiBan.SelectedIndex = 0;
                 }
                 else
                 {
@@ -236,12 +242,12 @@ namespace Store.POS
 
             if (isThem)
             {
-                kq = bll.ThemMoiThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
+                kq = bll.ThemMoiThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0);
             }
             else
             {
                 // Gọi hàm Sửa
-                kq = bll.SuaThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error);
+                kq = bll.SuaThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0);
             }
 
             if (kq)
@@ -266,6 +272,7 @@ namespace Store.POS
             cboDonViTinh.SelectedIndex = -1;
             txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
+            cboTrangThaiBan.SelectedIndex = 0;
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
@@ -288,6 +295,7 @@ namespace Store.POS
             cboNhaCungCap.SelectedIndex = -1;
             txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
+            cboTrangThaiBan.SelectedIndex = 0;
             SetControlState(false);
             LamMoiDuLieu();
             dgvThuoc.ClearSelection();

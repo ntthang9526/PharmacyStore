@@ -9,6 +9,7 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
     public frmVoucher()
     {
         InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
         cboLoai.DisplayMember="Text";cboLoai.ValueMember="Value";
         cboLoai.DataSource=new[] {new {Text="Số tiền (đ)",Value="FIXED"},new {Text="Phần trăm (%)",Value="PERCENT"}};

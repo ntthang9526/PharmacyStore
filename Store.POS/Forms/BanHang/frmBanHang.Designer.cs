@@ -206,7 +206,6 @@
             tableTimKiem.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 250, 252);
             tableTimKiem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            tableTimKiem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             tableTimKiem.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             tableTimKiem.BackgroundColor = Color.White;
             tableTimKiem.BorderStyle = BorderStyle.None;
@@ -270,9 +269,9 @@
             nameDataGridViewTextBoxColumn1.HeaderText = "Tên thuốc";
             nameDataGridViewTextBoxColumn1.MinimumWidth = 180;
             nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-            nameDataGridViewTextBoxColumn1.Width = 230;
             nameDataGridViewTextBoxColumn1.ReadOnly = true;
             nameDataGridViewTextBoxColumn1.Resizable = DataGridViewTriState.False;
+            nameDataGridViewTextBoxColumn1.Width = 230;
             // 
             // btnThemGioHang
             // 
@@ -369,6 +368,7 @@
             // 
             btnXoaTimKiem.BackColor = Color.FromArgb(225, 29, 72);
             btnXoaTimKiem.Dock = DockStyle.Fill;
+            btnXoaTimKiem.FlatStyle = FlatStyle.Flat;
             btnXoaTimKiem.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnXoaTimKiem.ForeColor = Color.White;
             btnXoaTimKiem.Location = new Point(676, 4);
@@ -391,7 +391,6 @@
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = SystemColors.ControlText;
             tableGioHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
-            tableGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             tableGioHang.BackgroundColor = Color.White;
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = Color.FromArgb(15, 118, 110);
@@ -457,9 +456,9 @@
             nameDataGridViewTextBoxColumn.HeaderText = "Tên thuốc";
             nameDataGridViewTextBoxColumn.MinimumWidth = 180;
             nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            nameDataGridViewTextBoxColumn.Width = 230;
             nameDataGridViewTextBoxColumn.ReadOnly = true;
             nameDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
+            nameDataGridViewTextBoxColumn.Width = 230;
             // 
             // unitDataGridViewTextBoxColumn
             // 
@@ -487,7 +486,7 @@
             quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             quantityDataGridViewTextBoxColumn.ReadOnly = true;
             quantityDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            quantityDataGridViewTextBoxColumn.Width = 100;
+            quantityDataGridViewTextBoxColumn.Width = 125;
             // 
             // priceDataGridViewTextBoxColumn
             // 
@@ -708,6 +707,7 @@
             // btnHuyKhachHang
             // 
             btnHuyKhachHang.BackColor = Color.FromArgb(100, 116, 139);
+            btnHuyKhachHang.FlatStyle = FlatStyle.Flat;
             btnHuyKhachHang.ForeColor = Color.White;
             btnHuyKhachHang.Location = new Point(274, 33);
             btnHuyKhachHang.Name = "btnHuyKhachHang";
@@ -719,6 +719,7 @@
             // btnNhapKhachHang
             // 
             btnNhapKhachHang.BackColor = Color.FromArgb(15, 118, 110);
+            btnNhapKhachHang.FlatStyle = FlatStyle.Flat;
             btnNhapKhachHang.ForeColor = Color.White;
             btnNhapKhachHang.Location = new Point(198, 33);
             btnNhapKhachHang.Name = "btnNhapKhachHang";
@@ -772,6 +773,7 @@
             // btnHuyVoucher
             // 
             btnHuyVoucher.BackColor = Color.FromArgb(100, 116, 139);
+            btnHuyVoucher.FlatStyle = FlatStyle.Flat;
             btnHuyVoucher.ForeColor = Color.White;
             btnHuyVoucher.Location = new Point(274, 33);
             btnHuyVoucher.Name = "btnHuyVoucher";
@@ -783,6 +785,7 @@
             // btnNhapMaVoucher
             // 
             btnNhapMaVoucher.BackColor = Color.FromArgb(15, 118, 110);
+            btnNhapMaVoucher.FlatStyle = FlatStyle.Flat;
             btnNhapMaVoucher.ForeColor = Color.White;
             btnNhapMaVoucher.Location = new Point(198, 33);
             btnNhapMaVoucher.Name = "btnNhapMaVoucher";
@@ -1034,10 +1037,11 @@
             // btnHuyHoaDon
             // 
             btnHuyHoaDon.BackColor = Color.FromArgb(225, 29, 72);
+            btnHuyHoaDon.FlatStyle = FlatStyle.Flat;
             btnHuyHoaDon.ForeColor = Color.White;
             btnHuyHoaDon.Location = new Point(179, 3);
             btnHuyHoaDon.Name = "btnHuyHoaDon";
-            btnHuyHoaDon.Size = new Size(165, 57);
+            btnHuyHoaDon.Size = new Size(157, 57);
             btnHuyHoaDon.TabIndex = 1;
             btnHuyHoaDon.Text = "HỦY HÓA ĐƠN";
             btnHuyHoaDon.UseVisualStyleBackColor = false;
@@ -1046,6 +1050,8 @@
             // btnThanhToan
             // 
             btnThanhToan.BackColor = Color.FromArgb(22, 101, 52);
+            btnThanhToan.Enabled = false;
+            btnThanhToan.FlatStyle = FlatStyle.Flat;
             btnThanhToan.ForeColor = Color.White;
             btnThanhToan.Location = new Point(5, 3);
             btnThanhToan.Name = "btnThanhToan";
@@ -1053,18 +1059,17 @@
             btnThanhToan.TabIndex = 0;
             btnThanhToan.Text = "THANH TOÁN";
             btnThanhToan.UseVisualStyleBackColor = false;
-            btnThanhToan.Enabled = false;
             btnThanhToan.Click += btnThanhToan_Click;
             // 
             // btnLuuCho
             // 
             btnLuuCho.BackColor = Color.FromArgb(204, 251, 241);
-            btnLuuCho.Dock = DockStyle.Bottom;
             btnLuuCho.Enabled = false;
+            btnLuuCho.FlatStyle = FlatStyle.Flat;
             btnLuuCho.ForeColor = Color.FromArgb(15, 23, 42);
-            btnLuuCho.Location = new Point(0, 70);
+            btnLuuCho.Location = new Point(5, 66);
             btnLuuCho.Name = "btnLuuCho";
-            btnLuuCho.Size = new Size(336, 40);
+            btnLuuCho.Size = new Size(331, 44);
             btnLuuCho.TabIndex = 2;
             btnLuuCho.Text = "Lưu chờ thanh toán";
             btnLuuCho.UseVisualStyleBackColor = false;

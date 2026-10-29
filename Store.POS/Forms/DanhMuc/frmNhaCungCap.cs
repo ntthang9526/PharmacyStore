@@ -12,6 +12,7 @@ namespace Store.POS
         public frmNhaCungCap()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
             txtTimKiem.MaxLength = 200;
             txtTimKiem.PlaceholderText = "Tên, điện thoại hoặc địa chỉ";

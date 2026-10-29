@@ -27,9 +27,9 @@ namespace Store.DAL
                 FROM Medicines m
                 LEFT JOIN Batches b
                        ON b.MedicineId = m.Id
-                      AND b.Stock > 0
+                      AND b.Stock > 0 AND b.IsBlocked=0
                       AND b.ExpiryDate >= CAST(GETDATE() AS DATE)
-                WHERE m.IsActive = 1
+                WHERE m.IsActive = 1 AND m.IsSelling=1
                   AND ( m.Name LIKE @kw
                      OR m.BarCode LIKE @kw
                      OR m.ActiveIngredient LIKE @kw
@@ -50,7 +50,7 @@ namespace Store.DAL
         // 2. Lấy tên + giá hiện hành của thuốc (thuốc còn bán)
         public DataTable LayThongTinThuoc(int maThuoc)
         {
-            const string sql = "SELECT Name, Price FROM Medicines WHERE Id = @id AND IsActive = 1";
+            const string sql = "SELECT Name, Price FROM Medicines WHERE Id = @id AND IsActive = 1 AND IsSelling=1";
 
             using var conn = new SqlConnection(DBConnection.connectionString);
             using var cmd = new SqlCommand(sql, conn);
@@ -152,7 +152,7 @@ namespace Store.DAL
             decimal sum=0;
             foreach(var item in items.OrderBy(x=>x.MaThuoc))
             {
-                using var cmd=new SqlCommand("SELECT Price FROM Medicines WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND IsActive=1",conn,tran);
+                using var cmd=new SqlCommand("SELECT Price FROM Medicines WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND IsActive=1 AND IsSelling=1",conn,tran);
                 cmd.Parameters.Add("@id",SqlDbType.Int).Value=item.MaThuoc;object? value=cmd.ExecuteScalar();
                 if(value==null || item.SoLuong<=0 || item.DonGia<0 || item.DonGia!=TienTe.LamTron(item.DonGia) || currentPrice && TienTe.LamTron(Convert.ToDecimal(value))!=item.DonGia)
                     throw new InvalidOperationException("Giá hoặc trạng thái thuốc đã đổi. Vui lòng kiểm tra lại hóa đơn.");
@@ -186,7 +186,7 @@ namespace Store.DAL
             foreach(var item in items.OrderBy(x=>x.MaThuoc))
             {
                 int remaining=item.SoLuong;var batches=new List<(int Id,int Stock)>();
-                using(var cmd=new SqlCommand(@"SELECT Id,Stock FROM Batches WITH (UPDLOCK,HOLDLOCK) WHERE MedicineId=@m AND Stock>0
+                using(var cmd=new SqlCommand(@"SELECT Id,Stock FROM Batches WITH (UPDLOCK,HOLDLOCK) WHERE MedicineId=@m AND Stock>0 AND IsBlocked=0
                     AND ExpiryDate>=CAST(GETDATE() AS date) ORDER BY ExpiryDate,Id",conn,tran))
                 {
                     cmd.Parameters.Add("@m",SqlDbType.Int).Value=item.MaThuoc;using var reader=cmd.ExecuteReader();
@@ -195,7 +195,7 @@ namespace Store.DAL
                 foreach(var batch in batches)
                 {
                     if(remaining<=0) break;int quantity=Math.Min(remaining,batch.Stock);
-                    using(var cmd=new SqlCommand("UPDATE Batches SET Stock=Stock-@q WHERE Id=@id AND Stock>=@q",conn,tran))
+                    using(var cmd=new SqlCommand("UPDATE Batches SET Stock=Stock-@q WHERE Id=@id AND Stock>=@q AND IsBlocked=0",conn,tran))
                     {
                         cmd.Parameters.Add("@id",SqlDbType.Int).Value=batch.Id;cmd.Parameters.Add("@q",SqlDbType.Int).Value=quantity;
                         if(cmd.ExecuteNonQuery()!=1) throw new InvalidOperationException("Tồn kho vừa thay đổi. Vui lòng thử lại.");
@@ -207,7 +207,7 @@ namespace Store.DAL
                     }
                     remaining-=quantity;
                 }
-                if(remaining>0) throw new InvalidOperationException($"Không đủ tồn kho còn hạn cho thuốc {item.TenThuoc}. Hóa đơn vẫn chờ thanh toán.");
+                if(remaining>0) throw new InvalidOperationException($"Không đủ tồn kho còn hạn, được phép bán cho thuốc {item.TenThuoc}. Hóa đơn vẫn chờ thanh toán.");
             }
         }
     }

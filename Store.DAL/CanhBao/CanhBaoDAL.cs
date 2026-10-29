@@ -10,13 +10,13 @@ namespace Store.DAL
         {
             const string sql = @"
                 SELECT m.Id AS MaThuoc, m.Name AS TenThuoc, m.Unit AS DonViTinh, s.Name AS NhaCungCap,
-                       ISNULL(SUM(CASE WHEN b.ExpiryDate >= CAST(GETDATE() AS DATE) THEN b.Stock END), 0) AS TonKho
+                       ISNULL(SUM(CASE WHEN b.IsBlocked=0 AND b.ExpiryDate >= CAST(GETDATE() AS DATE) THEN b.Stock END), 0) AS TonKho
                 FROM Medicines m
                 JOIN Suppliers s ON s.Id = m.SupplierId
                 LEFT JOIN Batches b ON b.MedicineId = m.Id
-                WHERE m.IsActive = 1
+                WHERE m.IsActive = 1 AND m.IsSelling=1
                 GROUP BY m.Id, m.Name, m.Unit, s.Name
-                HAVING ISNULL(SUM(CASE WHEN b.ExpiryDate >= CAST(GETDATE() AS DATE) THEN b.Stock END), 0) < @n
+                HAVING ISNULL(SUM(CASE WHEN b.IsBlocked=0 AND b.ExpiryDate >= CAST(GETDATE() AS DATE) THEN b.Stock END), 0) < @n
                 ORDER BY TonKho, m.Name";
 
             using var conn = new SqlConnection(DBConnection.connectionString);

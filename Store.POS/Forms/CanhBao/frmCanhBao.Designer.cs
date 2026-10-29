@@ -847,7 +847,7 @@ partial class frmCanhBao
         // dgvSapHetColumn5
         //
         this.dgvSapHetColumn5.Name = "TonKho";
-        this.dgvSapHetColumn5.HeaderText = "Tồn còn hạn";
+        this.dgvSapHetColumn5.HeaderText = "Tồn có thể bán";
         this.dgvSapHetColumn5.Visible = true;
         this.dgvSapHetColumn5.ReadOnly = true;
         this.dgvSapHetColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -857,7 +857,7 @@ partial class frmCanhBao
         this.dgvSapHetColumn5.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvSapHetColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvSapHetColumn5.MinimumWidth = 5;
-        this.dgvSapHetColumn5.Width = 146;
+        this.dgvSapHetColumn5.Width = 175;
         this.dgvSapHetColumn5.FillWeight = 112F;
         //
         // dgvSapHetHanColumn1

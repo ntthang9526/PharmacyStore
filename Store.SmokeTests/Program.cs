@@ -38,7 +38,7 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
-        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design") && !args.Contains("--fixed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(!args.Contains("--disabled-buttons") && !args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design") && !args.Contains("--fixed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
         if(args.Contains("--cart-actions-live"))
         {
             try
@@ -47,6 +47,31 @@ internal static partial class Program
                 medicineId=medicines.First(m=>new MedicineDAL().SoLuongConHan(m.Id)>=4).Id;
                 TestCartActions();Console.WriteLine($"ALL {checks} LIVE CART ACTION CHECKS PASSED");return 0;
             }
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--batch-action-focus"))
+        {
+            try {TestBatchActionFocus();Console.WriteLine($"ALL {checks} BATCH ACTION FOCUS CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--selling-status"))
+        {
+            try {TestSellingStatus();Console.WriteLine($"ALL {checks} SELLING STATUS CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--admin-protection"))
+        {
+            try {TestAdminProtection();Console.WriteLine($"ALL {checks} ADMIN PROTECTION CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--disabled-buttons"))
+        {
+            try {TestDisabledButtons();Console.WriteLine($"ALL {checks} DISABLED BUTTON CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--staff-ui-review"))
+        {
+            try {ReviewStaffUi();Console.WriteLine($"ALL {checks} STAFF UI CHECKS PASSED");return 0;}
             catch(Exception ex){Console.WriteLine(ex);return 1;}
         }
         if(args.Contains("--ui-fixes"))

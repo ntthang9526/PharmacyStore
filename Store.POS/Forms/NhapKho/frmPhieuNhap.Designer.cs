@@ -115,7 +115,7 @@ partial class frmPhieuNhap
         this.dgvPhieuNhapCol0.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuNhapCol0.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuNhapCol0.MinimumWidth = 5;
-        this.dgvPhieuNhapCol0.Width = 114;
+        this.dgvPhieuNhapCol0.Width = 158;
         this.dgvPhieuNhapCol0.FillWeight = 88F;
         //
         // dgvPhieuNhapCol1
@@ -209,7 +209,7 @@ partial class frmPhieuNhap
         this.dgvChiTietCol1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvChiTietCol1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvChiTietCol1.MinimumWidth = 5;
-        this.dgvChiTietCol1.Width = 79;
+        this.dgvChiTietCol1.Width = 126;
         this.dgvChiTietCol1.FillWeight = 72F;
         //
         // dgvChiTietCol2
@@ -236,7 +236,7 @@ partial class frmPhieuNhap
         this.dgvChiTietCol3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvChiTietCol3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvChiTietCol3.MinimumWidth = 5;
-        this.dgvChiTietCol3.Width = 118;
+        this.dgvChiTietCol3.Width = 140;
         this.dgvChiTietCol3.FillWeight = 88F;
         //
         // dgvChiTietCol4

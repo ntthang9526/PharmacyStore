@@ -339,13 +339,14 @@ namespace Store.POS.Common
             string? path=outputPath ?? ChonNoiLuuFile("DanhSachThuoc.xlsx");if(path==null) return;
             using var book=new XLWorkbook();var sheet=book.AddWorksheet("Thuốc");
             sheet.Column(2).Style.NumberFormat.Format="@";
-            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia"};
-            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán"};
+            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan"};
+            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán"};
             for(int c=0;c<keys.Length;c++) sheet.Cell(1,c+1).Value=headings[c];
             for(int row=0;row<data.Rows.Count;row++) for(int col=0;col<keys.Length;col++)
             {
                 object v=data.Rows[row][keys[col]];
                 if(v is decimal price) {sheet.Cell(row+2,col+1).Value=price;sheet.Cell(row+2,col+1).Style.NumberFormat.Format="#,##0";}
+                else if(v is int count) sheet.Cell(row+2,col+1).Value=count;
                 else sheet.Cell(row+2,col+1).Value=v==DBNull.Value?"":v.ToString()??"";
             }
             sheet.Row(1).Style.Font.Bold=true;sheet.SheetView.FreezeRows(1);sheet.Columns().AdjustToContents();

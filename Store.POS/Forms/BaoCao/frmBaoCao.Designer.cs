@@ -1297,7 +1297,7 @@ partial class frmBaoCao
         this.dgvHoaDonColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvHoaDonColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvHoaDonColumn1.MinimumWidth = 5;
-        this.dgvHoaDonColumn1.Width = 103;
+        this.dgvHoaDonColumn1.Width = 143;
         this.dgvHoaDonColumn1.FillWeight = 48F;
         //
         // dgvHoaDonColumn2

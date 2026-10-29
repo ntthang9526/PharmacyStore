@@ -18,7 +18,7 @@ public class NhanVienDAL
         using var connection=DBConnection.GetDbConnection();
         using var transaction=connection.BeginTransaction(IsolationLevel.Serializable);
         if(role is not ("ADMIN" or "STAFF")) throw new ArgumentException("Vai trò không hợp lệ.");
-        KiemTraTaiKhoan(connection,transaction,id,active,operatorId,role);
+        KiemTraTaiKhoan(connection,transaction,id,active,operatorId,role,username);
         using var cmd=new SqlCommand(id.HasValue ? @"
             UPDATE Employees SET FullName=@name, Username=@user, Phone=@phone, IsActive=@active, Role=@role,
                 PasswordHash=CASE WHEN @hash IS NULL THEN PasswordHash ELSE @hash END
@@ -45,13 +45,16 @@ public class NhanVienDAL
         cmd.Parameters.Add("@id",SqlDbType.Int).Value=id;cmd.ExecuteNonQuery();
         transaction.Commit();DBConnection.NotifyDataChanged();
     }
-    private static void KiemTraTaiKhoan(SqlConnection connection,SqlTransaction transaction,int? id,bool active,int operatorId,string? role=null)
+    private static void KiemTraTaiKhoan(SqlConnection connection,SqlTransaction transaction,int? id,bool active,int operatorId,string? role=null,string? username=null)
     {
         PhanQuyenDAL.YeuCau(Quyen.QuanTri,connection,transaction,operatorId);
-        var accounts=new Dictionary<int,(bool Active,string Role)>();
-        using(var cmd=new SqlCommand("SELECT Id,IsActive,Role FROM Employees WITH (UPDLOCK,HOLDLOCK) ORDER BY Id",connection,transaction))
-        using(var reader=cmd.ExecuteReader()) while(reader.Read()) accounts.Add(reader.GetInt32(0),(reader.GetBoolean(1),reader.GetString(2)));
+        var accounts=new Dictionary<int,(bool Active,string Role,string Username)>();
+        using(var cmd=new SqlCommand("SELECT Id,IsActive,Role,Username FROM Employees WITH (UPDLOCK,HOLDLOCK) ORDER BY Id",connection,transaction))
+        using(var reader=cmd.ExecuteReader()) while(reader.Read()) accounts.Add(reader.GetInt32(0),(reader.GetBoolean(1),reader.GetString(2),reader.GetString(3)));
         if(id.HasValue && !accounts.ContainsKey(id.Value)) throw new InvalidOperationException("Nhân viên không còn tồn tại. Hãy tải lại danh sách.");
+        if(!active && (role=="ADMIN" || string.Equals(username?.Trim(),"admin",StringComparison.OrdinalIgnoreCase) ||
+            id.HasValue && (accounts[id.Value].Role=="ADMIN" || accounts[id.Value].Username.Equals("admin",StringComparison.OrdinalIgnoreCase))))
+            throw new InvalidOperationException("Không được ngừng hoạt động hoặc khóa tài khoản Admin.");
         if(!active && id==operatorId) throw new InvalidOperationException("Không thể khóa tài khoản đang đăng nhập.");
         if(id.HasValue && accounts[id.Value].Active && accounts[id.Value].Role=="ADMIN" &&
             (!active || role!=null && role!="ADMIN") && accounts.Count(x=>x.Value.Active && x.Value.Role=="ADMIN")<=1)

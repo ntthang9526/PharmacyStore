@@ -12,6 +12,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
     {
         maMoSan=id;
         InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
         dgvHoaDon.AutoGenerateColumns = false; dgvChiTiet.AutoGenerateColumns = false;
         btnXuatExcel.Click+=(_,_)=>XuatDanhSachExcel();btnXuatChiTietExcel.Click+=(_,_)=>XuatChiTietExcel();
         btnThanhToanCho.Click+=(_,_)=>ThanhToanCho();chkChiCho.CheckedChanged+=(_,_)=>TimKiem();

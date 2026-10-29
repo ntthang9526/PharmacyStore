@@ -5,6 +5,7 @@ public partial class frmDoiMatKhau : Form
     public frmDoiMatKhau()
     {
         InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
         btnLuu.Click+=(_,_)=>Luu();btnHuy.Click+=(_,_)=>Xoa();
         Load+=(_,_)=> {if(!PosFormStyle.IsInDesigner(this)) lblTaiKhoan.Text="Tài khoản: "+PhienDangNhap.HoTen;};
         VisibleChanged+=(_,_)=> {if(!Visible) Xoa();};

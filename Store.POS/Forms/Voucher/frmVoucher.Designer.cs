@@ -58,7 +58,7 @@ partial class frmVoucher
         tableLayoutPanel18 = new global::System.Windows.Forms.TableLayoutPanel();
         label19 = new global::System.Windows.Forms.Label();
         chkHoatDong = new global::System.Windows.Forms.CheckBox();
-        tableLayoutPanel20 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel20 = new global::System.Windows.Forms.FlowLayoutPanel();
         btnThem = new global::System.Windows.Forms.Button();
         btnSua = new global::System.Windows.Forms.Button();
         btnLuu = new global::System.Windows.Forms.Button();
@@ -606,7 +606,7 @@ partial class frmVoucher
         tableLayoutPanel8.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 280F));
         tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 132F));
+        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.AutoSize));
 
         // tableLayoutPanel9
         tableLayoutPanel9.Name = "tableLayoutPanel9";
@@ -1059,10 +1059,12 @@ partial class frmVoucher
         tableLayoutPanel20.Size = new global::System.Drawing.Size(330, 132);
         tableLayoutPanel20.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel20.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel20.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel20.Dock = global::System.Windows.Forms.DockStyle.Bottom;
 
         tableLayoutPanel20.AutoSize = true;
-        tableLayoutPanel20.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel20.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel20.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
+        tableLayoutPanel20.WrapContents = true;
         tableLayoutPanel20.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel20.ForeColor = global::System.Drawing.SystemColors.ControlText;
         tableLayoutPanel20.BackColor = Color.FromArgb(248,250,252);
@@ -1071,27 +1073,18 @@ partial class frmVoucher
         tableLayoutPanel20.TabStop = false;
         tableLayoutPanel20.AccessibleName = null;
         tableLayoutPanel20.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel20.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel20.RowCount = 3;
-        tableLayoutPanel20.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
         tableLayoutPanel20.AutoScroll = false;
         tableLayoutPanel20.Visible = true;
-        tableLayoutPanel20.ColumnCount = 2;
         tableLayoutPanel20.Enabled = true;
-        tableLayoutPanel20.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel20.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel20.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 33.33F));
-        tableLayoutPanel20.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 33.33F));
-        tableLayoutPanel20.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 33.34F));
 
         // btnThem
         btnThem.Name = "btnThem";
         btnThem.Text = "Thêm";
         btnThem.Location = new global::System.Drawing.Point(0, 4);
-        btnThem.Size = new global::System.Drawing.Size(161, 40);
-        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
+        btnThem.Size = new global::System.Drawing.Size(156, 38);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnThem.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnThem.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnThem.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnThem.AutoSize = false;
         btnThem.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1113,10 +1106,10 @@ partial class frmVoucher
         btnSua.Name = "btnSua";
         btnSua.Text = "Sửa";
         btnSua.Location = new global::System.Drawing.Point(169, 4);
-        btnSua.Size = new global::System.Drawing.Size(161, 40);
-        btnSua.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
+        btnSua.Size = new global::System.Drawing.Size(156, 38);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnSua.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnSua.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnSua.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnSua.AutoSize = false;
         btnSua.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1138,10 +1131,10 @@ partial class frmVoucher
         btnLuu.Name = "btnLuu";
         btnLuu.Text = "Lưu";
         btnLuu.Location = new global::System.Drawing.Point(0, 48);
-        btnLuu.Size = new global::System.Drawing.Size(161, 40);
-        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
+        btnLuu.Size = new global::System.Drawing.Size(156, 38);
+        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLuu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnLuu.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnLuu.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnLuu.AutoSize = false;
         btnLuu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1163,10 +1156,10 @@ partial class frmVoucher
         btnHuy.Name = "btnHuy";
         btnHuy.Text = "Hủy";
         btnHuy.Location = new global::System.Drawing.Point(169, 48);
-        btnHuy.Size = new global::System.Drawing.Size(161, 40);
-        btnHuy.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
+        btnHuy.Size = new global::System.Drawing.Size(156, 38);
+        btnHuy.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnHuy.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnHuy.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnHuy.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnHuy.AutoSize = false;
         btnHuy.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1188,10 +1181,10 @@ partial class frmVoucher
         btnXoa.Name = "btnXoa";
         btnXoa.Text = "Xóa";
         btnXoa.Location = new global::System.Drawing.Point(0, 92);
-        btnXoa.Size = new global::System.Drawing.Size(161, 40);
-        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
+        btnXoa.Size = new global::System.Drawing.Size(156, 38);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnXoa.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnXoa.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnXoa.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnXoa.AutoSize = false;
         btnXoa.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1213,10 +1206,10 @@ partial class frmVoucher
         btnLamMoi.Name = "btnLamMoi";
         btnLamMoi.Text = "Làm mới";
         btnLamMoi.Location = new global::System.Drawing.Point(169, 92);
-        btnLamMoi.Size = new global::System.Drawing.Size(161, 40);
-        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
+        btnLamMoi.Size = new global::System.Drawing.Size(156, 38);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLamMoi.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnLamMoi.AutoSize = false;
         btnLamMoi.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -1264,12 +1257,12 @@ partial class frmVoucher
         tableLayoutPanel18.Controls.Add(label19, 0, 0);
         tableLayoutPanel18.Controls.Add(chkHoatDong, 0, 1);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel20, 0, 2);
-        tableLayoutPanel20.Controls.Add(btnThem, 0, 0);
-        tableLayoutPanel20.Controls.Add(btnSua, 1, 0);
-        tableLayoutPanel20.Controls.Add(btnLuu, 0, 1);
-        tableLayoutPanel20.Controls.Add(btnHuy, 1, 1);
-        tableLayoutPanel20.Controls.Add(btnXoa, 0, 2);
-        tableLayoutPanel20.Controls.Add(btnLamMoi, 1, 2);
+        tableLayoutPanel20.Controls.Add(btnThem);
+        tableLayoutPanel20.Controls.Add(btnSua);
+        tableLayoutPanel20.Controls.Add(btnLuu);
+        tableLayoutPanel20.Controls.Add(btnHuy);
+        tableLayoutPanel20.Controls.Add(btnXoa);
+        tableLayoutPanel20.Controls.Add(btnLamMoi);
         tableLayoutPanel1.Controls.Add(lblTrangThai, 0, 1);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
@@ -1322,7 +1315,7 @@ partial class frmVoucher
         this.dgvVoucherColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvVoucherColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvVoucherColumn1.MinimumWidth = 5;
-        this.dgvVoucherColumn1.Width = 67;
+        this.dgvVoucherColumn1.Width = 133;
         this.dgvVoucherColumn1.FillWeight = 48F;
         //
         // dgvVoucherColumn2
@@ -1354,7 +1347,7 @@ partial class frmVoucher
         this.dgvVoucherColumn3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvVoucherColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvVoucherColumn3.MinimumWidth = 5;
-        this.dgvVoucherColumn3.Width = 149;
+        this.dgvVoucherColumn3.Width = 177;
         this.dgvVoucherColumn3.FillWeight = 120F;
         //
         // dgvVoucherColumn4
@@ -1572,7 +1565,7 @@ partial class frmVoucher
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel18;
     private global::System.Windows.Forms.Label label19;
     private global::System.Windows.Forms.CheckBox chkHoatDong;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel20;
+    private global::System.Windows.Forms.FlowLayoutPanel tableLayoutPanel20;
     private global::System.Windows.Forms.Button btnThem;
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnLuu;

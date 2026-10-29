@@ -11,6 +11,7 @@ namespace Store.POS
         public frmCanhBao()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
             nudNguongTon.KeyDown += nudNguongTon_KeyDown;
             dgvSapHetHan.CellFormatting += (_, e) =>

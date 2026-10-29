@@ -47,7 +47,7 @@ partial class frmNhaCungCap
         tableLayoutPanel15 = new global::System.Windows.Forms.TableLayoutPanel();
         label16 = new global::System.Windows.Forms.Label();
         txtDiaChi = new global::System.Windows.Forms.TextBox();
-        tableLayoutPanel17 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel17 = new global::System.Windows.Forms.FlowLayoutPanel();
         btnThem = new global::System.Windows.Forms.Button();
         btnSua = new global::System.Windows.Forms.Button();
         btnXoa = new global::System.Windows.Forms.Button();
@@ -512,7 +512,7 @@ partial class frmNhaCungCap
         tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 168F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 88F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.AutoSize));
 
         // tableLayoutPanel8
         tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -798,10 +798,12 @@ partial class frmNhaCungCap
         tableLayoutPanel17.Size = new global::System.Drawing.Size(330, 88);
         tableLayoutPanel17.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
         tableLayoutPanel17.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        tableLayoutPanel17.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel17.Dock = global::System.Windows.Forms.DockStyle.Bottom;
 
         tableLayoutPanel17.AutoSize = true;
-        tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel17.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
+        tableLayoutPanel17.WrapContents = true;
         tableLayoutPanel17.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         tableLayoutPanel17.ForeColor = global::System.Drawing.SystemColors.ControlText;
         tableLayoutPanel17.BackColor = Color.FromArgb(248,250,252);
@@ -810,26 +812,18 @@ partial class frmNhaCungCap
         tableLayoutPanel17.TabStop = false;
         tableLayoutPanel17.AccessibleName = null;
         tableLayoutPanel17.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
-        tableLayoutPanel17.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel17.RowCount = 2;
-        tableLayoutPanel17.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
         tableLayoutPanel17.AutoScroll = false;
         tableLayoutPanel17.Visible = true;
-        tableLayoutPanel17.ColumnCount = 2;
         tableLayoutPanel17.Enabled = true;
-        tableLayoutPanel17.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel17.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel17.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel17.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
 
         // btnThem
         btnThem.Name = "btnThem";
         btnThem.Text = "Thêm";
         btnThem.Location = new global::System.Drawing.Point(0, 4);
-        btnThem.Size = new global::System.Drawing.Size(161, 40);
-        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
+        btnThem.Size = new global::System.Drawing.Size(156, 38);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnThem.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnThem.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnThem.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnThem.AutoSize = false;
         btnThem.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -851,10 +845,10 @@ partial class frmNhaCungCap
         btnSua.Name = "btnSua";
         btnSua.Text = "Sửa";
         btnSua.Location = new global::System.Drawing.Point(169, 4);
-        btnSua.Size = new global::System.Drawing.Size(161, 40);
-        btnSua.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
+        btnSua.Size = new global::System.Drawing.Size(156, 38);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnSua.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnSua.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnSua.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnSua.AutoSize = false;
         btnSua.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -876,10 +870,10 @@ partial class frmNhaCungCap
         btnXoa.Name = "btnXoa";
         btnXoa.Text = "Xóa";
         btnXoa.Location = new global::System.Drawing.Point(0, 48);
-        btnXoa.Size = new global::System.Drawing.Size(161, 40);
-        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 4);
+        btnXoa.Size = new global::System.Drawing.Size(156, 38);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnXoa.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnXoa.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnXoa.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnXoa.AutoSize = false;
         btnXoa.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -901,10 +895,10 @@ partial class frmNhaCungCap
         btnLamMoi.Name = "btnLamMoi";
         btnLamMoi.Text = "Làm mới";
         btnLamMoi.Location = new global::System.Drawing.Point(169, 48);
-        btnLamMoi.Size = new global::System.Drawing.Size(161, 40);
-        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 4);
+        btnLamMoi.Size = new global::System.Drawing.Size(156, 38);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLamMoi.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
-        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.Fill;
+        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.None;
 
         btnLamMoi.AutoSize = false;
         btnLamMoi.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
@@ -945,10 +939,10 @@ partial class frmNhaCungCap
         tableLayoutPanel15.Controls.Add(label16, 0, 0);
         tableLayoutPanel15.Controls.Add(txtDiaChi, 0, 1);
         tableLayoutPanel7.Controls.Add(tableLayoutPanel17, 0, 2);
-        tableLayoutPanel17.Controls.Add(btnThem, 0, 0);
-        tableLayoutPanel17.Controls.Add(btnSua, 1, 0);
-        tableLayoutPanel17.Controls.Add(btnXoa, 0, 1);
-        tableLayoutPanel17.Controls.Add(btnLamMoi, 1, 1);
+        tableLayoutPanel17.Controls.Add(btnThem);
+        tableLayoutPanel17.Controls.Add(btnSua);
+        tableLayoutPanel17.Controls.Add(btnXoa);
+        tableLayoutPanel17.Controls.Add(btnLamMoi);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
         BackColor = Color.FromArgb(248,250,252);
@@ -1165,7 +1159,7 @@ partial class frmNhaCungCap
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
     private global::System.Windows.Forms.Label label16;
     private global::System.Windows.Forms.TextBox txtDiaChi;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+    private global::System.Windows.Forms.FlowLayoutPanel tableLayoutPanel17;
     private global::System.Windows.Forms.Button btnThem;
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnXoa;

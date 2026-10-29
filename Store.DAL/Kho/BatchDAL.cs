@@ -14,9 +14,9 @@ namespace Store.DAL
         public int TimToanBoSoLuongConHan(int medicineId)
         {
             string sql = """
-                select COALESCE(SUM(Stock), 0) as TotalStock
-                from Batches
-                where MedicineId = @MedicineId and CAST(ExpiryDate AS date) >= CAST(GETDATE() AS date)
+                select COALESCE(SUM(b.Stock), 0) as TotalStock
+                from Batches b JOIN Medicines m ON m.Id=b.MedicineId
+                where b.MedicineId = @MedicineId AND b.IsBlocked=0 AND m.IsActive=1 AND m.IsSelling=1 and CAST(b.ExpiryDate AS date) >= CAST(GETDATE() AS date)
                 """;
             using var connection = DBConnection.GetDbConnection();
             using var command = new SqlCommand(sql, connection);

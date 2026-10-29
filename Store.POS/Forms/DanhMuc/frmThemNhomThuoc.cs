@@ -9,6 +9,7 @@ public partial class frmThemNhomThuoc : Form
     public frmThemNhomThuoc()
     {
         InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
         errors = new ErrorProvider { ContainerControl = this, BlinkStyle = ErrorBlinkStyle.NeverBlink };
         btnLuu.Click += Luu;

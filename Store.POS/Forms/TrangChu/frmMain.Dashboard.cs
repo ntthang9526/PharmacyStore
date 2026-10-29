@@ -1,4 +1,4 @@
-using Store.BLL;
+﻿using Store.BLL;
 using System.Data;
 namespace Store.POS;
 public partial class frmMain
@@ -38,7 +38,7 @@ public partial class frmMain
             var bills=new HoaDonBLL();var alerts=new CanhBaoBLL();
             var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet(CanhBaoSettings.NguongTon);var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
             lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
-            label13.Text=$"Tồn còn hạn dưới {CanhBaoSettings.NguongTon}";
+            label13.Text=$"Có thể bán dưới {CanhBaoSettings.NguongTon}";
             lblSapHet.Text=low.Rows.Count.ToString();
             // Lọc các lô đã được đánh dấu "Đã xử lý" khỏi hiển thị trang chủ
             var chuaXuLy=expiry.Rows.Cast<System.Data.DataRow>().Where(r=>{int ma=Convert.ToInt32(r["MaThuoc"]);string lo=r["SoLo"]?.ToString()??"";return !frmCanhBao.LoXuLyDaXuLy.Contains(ma+"|"+lo);}).ToList();

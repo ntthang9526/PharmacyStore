@@ -18,6 +18,8 @@ partial class frmLoHang
 
     private void InitializeComponent()
     {
+        colTrangThaiLo=new global::System.Windows.Forms.DataGridViewTextBoxColumn();
+        colTonCoTheBan=new global::System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvLoHangColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvLoHangColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvLoHangColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -28,6 +30,7 @@ partial class frmLoHang
         this.dgvLoHangColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvLoHangColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.colGiaNhap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        btnDoiTrangThai = new global::System.Windows.Forms.Button();
         components = new global::System.ComponentModel.Container();
         posLayout = new global::System.Windows.Forms.TableLayoutPanel();
         posHeading = new global::System.Windows.Forms.Label();
@@ -602,8 +605,8 @@ partial class frmLoHang
         tableLayoutPanel7.Visible = true;
         tableLayoutPanel7.ColumnCount = 2;
         tableLayoutPanel7.Enabled = true;
-        tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 140F));
         tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
 
         // btnLamMoi
@@ -645,7 +648,7 @@ partial class frmLoHang
         tableLayoutPanel6.Controls.Add(lblKetQua, 0, 0);
         tableLayoutPanel6.Controls.Add(tableLayoutPanel7, 1, 0);
         tableLayoutPanel7.Controls.Add(btnLamMoi, 0, 0);
-        tableLayoutPanel7.SetColumnSpan(btnLamMoi, 2);
+        tableLayoutPanel7.Controls.Add(btnDoiTrangThai, 1, 0);
         AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
         AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
         BackColor = Color.FromArgb(248,250,252);
@@ -829,7 +832,7 @@ partial class frmLoHang
         this.colGiaNhap.FillWeight = 192F;
 
         this.dgvLoHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-        this.dgvLoHang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvLoHangColumn1, this.dgvLoHangColumn2, this.dgvLoHangColumn3, this.dgvLoHangColumn4, this.dgvLoHangColumn5, this.dgvLoHangColumn6, this.dgvLoHangColumn7, this.dgvLoHangColumn8, this.dgvLoHangColumn9, this.colGiaNhap });
+        this.dgvLoHang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvLoHangColumn1, this.dgvLoHangColumn2, this.dgvLoHangColumn3, colTrangThaiLo, this.dgvLoHangColumn4, this.dgvLoHangColumn5, this.dgvLoHangColumn6, this.dgvLoHangColumn7, colTonCoTheBan, this.dgvLoHangColumn8, this.dgvLoHangColumn9, this.colGiaNhap });
         ((global::System.ComponentModel.ISupportInitialize)dgvLoHang).EndInit();
         groupBox5.ResumeLayout(false);
         groupBox5.PerformLayout();
@@ -914,10 +917,41 @@ partial class frmLoHang
         
         
         
+        colTrangThaiLo.Name="colTrangThaiLo";
+        colTrangThaiLo.DataPropertyName="TrangThaiLo";
+        colTrangThaiLo.HeaderText="Trạng thái lô";
+        colTrangThaiLo.Width=190;
+        colTrangThaiLo.MinimumWidth=50;
+        colTrangThaiLo.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+        colTrangThaiLo.ReadOnly=true;
+        colTrangThaiLo.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
+        colTonCoTheBan.Name="colTonCoTheBan";
+        colTonCoTheBan.DataPropertyName="TonCoTheBan";
+        colTonCoTheBan.HeaderText="Tồn có thể bán";
+        colTonCoTheBan.Width=175;
+        colTonCoTheBan.MinimumWidth=50;
+        colTonCoTheBan.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+        colTonCoTheBan.ReadOnly=true;
+        colTonCoTheBan.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
+        colTonCoTheBan.DefaultCellStyle.Format="N0";
+        colTonCoTheBan.DefaultCellStyle.Alignment=global::System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+        btnDoiTrangThai.Name="btnDoiTrangThai";
+        btnDoiTrangThai.Text="Tạm khóa";
+        btnDoiTrangThai.Size=new global::System.Drawing.Size(132,36);
+        btnDoiTrangThai.Dock=DockStyle.Fill;
+        btnDoiTrangThai.Margin=new Padding(4,4,0,4);
+        btnDoiTrangThai.BackColor=Color.FromArgb(15,118,110);
+        btnDoiTrangThai.ForeColor=Color.White;
+        btnDoiTrangThai.FlatStyle=FlatStyle.Flat;
+        btnDoiTrangThai.FlatAppearance.BorderSize=0;
+        btnDoiTrangThai.Enabled=false;
         ResumeLayout(false);
         PerformLayout();
     }
 
+    private global::System.Windows.Forms.Button btnDoiTrangThai;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colTrangThaiLo;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colTonCoTheBan;
     private global::System.Windows.Forms.TableLayoutPanel posLayout;
     private global::System.Windows.Forms.Label posHeading;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

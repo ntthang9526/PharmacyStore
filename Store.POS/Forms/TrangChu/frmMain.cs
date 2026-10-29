@@ -21,6 +21,7 @@ namespace Store.POS
         public frmMain()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             menuQuanLyKhac = new ContextMenuStrip(components ??= new Container());
             menuQuanLyKhac.Items.Add("Nhóm thuốc", null, (_, _) => MoForm<frmNhomThuoc>());
             menuQuanLyKhac.Items.Add("Nhà cung cấp", null, (_, _) => MoForm<frmNhaCungCap>());
@@ -174,7 +175,7 @@ namespace Store.POS
             if(changed)
             {
                 foreach(var pair in cuaSoDangMo.ToArray())
-                    if(PhanQuyenGiaoDien.ChiAdmin(pair.Key) || pair.Value is frmQuanLyThuoc or frmNhomThuoc or frmNhaCungCap or frmVoucher or frmKhachHang)
+                    if(PhanQuyenGiaoDien.ChiAdmin(pair.Key) || pair.Value is frmQuanLyThuoc or frmNhomThuoc or frmNhaCungCap or frmVoucher or frmKhachHang or frmLoHang)
                     {cuaSoDangMo.Remove(pair.Key);pair.Value.Dispose();}
                 VeTrangChu();
             }

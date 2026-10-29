@@ -17,6 +17,7 @@ namespace Store.POS
         public frmNhapKho()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnNhapExcel.Click+=(_,_)=>NhapExcelPhieuNhap();btnMauExcel.Click+=(_,_)=>TaiFileMauNhapKho();
             PhanQuyenGiaoDien.Gan(this);
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);

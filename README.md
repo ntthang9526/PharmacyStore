@@ -69,3 +69,7 @@ Các mục/nút không được cấp quyền sẽ ẩn. Nhân viên dùng Nhậ
 Database hiện tại đã được nâng cấp bằng `Store.DAL/Database/AddOrderPayments.sql`. Script chạy lại được, không tạo/xóa database. Thêm cột PaymentMethod, PaymentStatus, PaidAt, PaidEmployeeId và bảng OrderPendingItems để lưu chi tiết đơn chưa trừ tồn. Nếu dùng bản database thử khác, áp dụng script này trước khi chạy phiên bản mới; không chạy lại InitDatabase.sql trên database đang có.
 
 Kiểm tra mới: `dotnet run --project Store.SmokeTests/Store.SmokeTests.csproj -- --excel-payments`.
+
+## Trạng thái bán và khóa lô
+
+Xem [hướng dẫn trạng thái thuốc/lô](Docs/SELLING-STATUS.md). Database hiện tại đã bổ sung Medicines.IsSelling và Batches.IsBlocked bằng Store.DAL/Database/AddSellingStatus.sql; không thêm bảng hay database mới.

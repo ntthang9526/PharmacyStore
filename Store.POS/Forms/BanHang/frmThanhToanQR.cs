@@ -17,6 +17,7 @@ namespace Store.POS.FormBanHang
         public frmThanhToanQR(decimal tongTien)
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
 
             this.tongTien = Store.Shared.TienTe.LamTron(tongTien);
 

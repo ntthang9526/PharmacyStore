@@ -31,15 +31,15 @@ internal static partial class Program
         {
             role.SetValue(null,"ADMIN");
             using var form=new frmQuanLyThuoc();form.Site=new FormDesignSite(form);Offscreen(form);form.Site=null;
-            var button=UiField<Button>(form,"btnSua");var table=(TableLayoutPanel)button.Parent!;
-            table.SetCellPosition(button,new TableLayoutPanelCellPosition(0,2));button.Margin=new Padding(9);table.RowStyles[0].Height=73;
-            var position=table.GetCellPosition(button);button.Visible=false;
+            var button=UiField<Button>(form,"btnSua");var panel=(FlowLayoutPanel)button.Parent!;
+            panel.Controls.SetChildIndex(button,0);button.Margin=new Padding(9);button.Size=new Size(145,41);
+            int position=panel.Controls.GetChildIndex(button);button.Visible=false;
             permissions.Invoke(null,new object[]{form});permissions.Invoke(null,new object[]{form});
-            Check(table.GetCellPosition(button).Equals(position) && button.Margin==new Padding(9) && table.RowStyles[0].Height==73,"repeated permission refresh preserves designed button positions, margins and row heights");
+            Check(panel.Controls.GetChildIndex(button)==position && button.Margin==new Padding(9) && button.Size==new Size(145,41),"repeated permission refresh preserves designed button order, margins and size");
             Check(!button.Visible,"permission refresh does not show a button hidden by the designer");
             role.SetValue(null,"STAFF");permissions.Invoke(null,new object[]{form});
             Check(!UiField<Button>(form,"btnThem").Visible && !button.Visible,"staff permissions still hide restricted actions");
-            Check(table.GetCellPosition(button).Equals(position),"staff permissions leave Designer button placement intact");
+            Check(panel.Controls.GetChildIndex(button)==position,"staff permissions leave Designer button order intact");
             role.SetValue(null,"ADMIN");
             using var stock=new frmNhapKho();stock.Site=new FormDesignSite(stock);Offscreen(stock);stock.Site=null;
             var addSupplier=UiField<Button>(stock,"btnThemNCC");var addMedicine=UiField<Button>(stock,"btnTaoThuoc");

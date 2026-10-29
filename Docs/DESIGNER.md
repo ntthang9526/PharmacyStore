@@ -53,3 +53,8 @@ Mở solution `PharmacyStore.slnx`, vào project `Store.POS/Forms`, mở file Fo
 - Phân quyền chỉ ẩn thao tác bị cấm, không đặt lại vị trí nút, Margin hoặc chiều cao hàng về giá trị cố định. Nút đã ẩn trong thiết kế được giữ nguyên khi quản trị viên mở form.
 - Độ rộng gốc lấy từ Designer; chỉ fill khi tổng độ rộng cột nhỏ hơn khung chứa. Cột bị xóa không được tạo lại khi làm mới hoặc thay đổi kích thước.
 - Khi đang chỉnh cùng một form, lưu và đóng tab Designer trước khi sửa file Designer từ bên ngoài Visual Studio để tránh bản chưa lưu trong bộ nhớ ghi đè tệp.
+## 6. Nút thao tác ở khung chi tiết
+
+- Thuốc, Nhóm thuốc, Nhà cung cấp, Khách hàng và Voucher dùng FlowLayoutPanel ở đáy khung. Nút được xếp liên tiếp; nút bị ẩn theo quyền không chiếm ô trống.
+- Chỉnh Size và Margin của nút trong Designer; chỉnh FlowDirection/WrapContents của panel để thay đổi cách xếp. Hàng chứa nút dùng AutoSize, hàng trống phía trên dùng Percent 100 để giữ các nút sát đáy.
+- Phân quyền chỉ ẩn thao tác, gồm cả File mẫu ở Quản lý thuốc; không ghi đè kích thước hoặc vị trí đã thiết kế.

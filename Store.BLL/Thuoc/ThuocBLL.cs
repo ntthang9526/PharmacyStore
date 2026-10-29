@@ -12,7 +12,7 @@ namespace Store.BLL
             return dal.GetAllThuoc();
         }
 
-        public bool ThemMoiThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error)
+        public bool ThemMoiThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true)
         {
             error = "";
             if (string.IsNullOrWhiteSpace(tenThuoc))
@@ -25,10 +25,10 @@ namespace Store.BLL
                 !int.TryParse(strSoLuong, out int soLuong) || soLuong < 0)
             { error = "Đơn giá hoặc số lượng không hợp lệ."; return false; }
 
-            return dal.InsertThuoc(maThuoc.Trim(), tenThuoc.Trim(), maNhom, dvt, donGia, soLuong, supplierId, out error);
+            return dal.InsertThuoc(maThuoc.Trim(), tenThuoc.Trim(), maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan);
         }
 
-        public bool SuaThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error)
+        public bool SuaThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true)
         {
             error = "";
             if (string.IsNullOrWhiteSpace(maThuoc) || string.IsNullOrWhiteSpace(tenThuoc))
@@ -41,7 +41,7 @@ namespace Store.BLL
                 !int.TryParse(strSoLuong, out int soLuong) || soLuong < 0)
             { error = "Đơn giá hoặc số lượng không hợp lệ."; return false; }
 
-            return dal.UpdateThuoc(maThuoc, tenThuoc, maNhom, dvt, donGia, soLuong, supplierId, out error);
+            return dal.UpdateThuoc(maThuoc, tenThuoc, maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan);
         }
 
         public bool XoaThuoc(string maThuoc, out string error)

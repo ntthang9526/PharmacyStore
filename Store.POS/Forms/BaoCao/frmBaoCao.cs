@@ -12,6 +12,7 @@ namespace Store.POS
         public frmBaoCao()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnXuatExcel.Click+=(_,_)=>XuatExcel();
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
         }

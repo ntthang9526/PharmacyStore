@@ -678,7 +678,7 @@ partial class frmMain
             label13.Name = "label13";
             label13.Size = new Size(276, 23);
             label13.TabIndex = 2;
-            label13.Text = "Tồn còn hạn dưới 10";
+            label13.Text = "Có thể bán dưới 10";
             // 
             // tableLayoutPanel14
             // 
@@ -1196,11 +1196,11 @@ partial class frmMain
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle3.Format = "N0";
             dgvSapHetColumn5.DefaultCellStyle = dataGridViewCellStyle3;
-            dgvSapHetColumn5.HeaderText = "Tồn còn hạn";
+            dgvSapHetColumn5.HeaderText = "Tồn có thể bán";
             dgvSapHetColumn5.MinimumWidth = 6;
             dgvSapHetColumn5.Name = "dgvSapHetColumn5";
             dgvSapHetColumn5.ReadOnly = true;
-            dgvSapHetColumn5.Width = 146;
+            dgvSapHetColumn5.Width = 175;
             // 
             // dgvSapHetColumn4
             // 

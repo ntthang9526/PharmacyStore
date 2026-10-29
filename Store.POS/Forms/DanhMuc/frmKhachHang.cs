@@ -13,6 +13,7 @@ namespace Store.POS
         public frmKhachHang(string? sdt)
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
             txtTimKiem.MaxLength = 200;
             txtTimKiem.PlaceholderText = "Tên hoặc số điện thoại";

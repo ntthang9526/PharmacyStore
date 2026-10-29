@@ -15,7 +15,7 @@ namespace Store.DAL
         {
             Dictionary<int, Medicine> list = new();
 
-            string sql = "select * from Medicines where IsActive = 1";
+            string sql = "select * from Medicines where IsActive = 1 AND IsSelling = 1";
             using var connection = DBConnection.GetDbConnection();
             using var command = new SqlCommand(sql, connection);
 
@@ -47,8 +47,8 @@ namespace Store.DAL
         {
             string sql = """
                 select b.MedicineId, SUM(b.Stock) as TotalStock
-                from Batches b
-                where CAST(b.ExpiryDate AS DATE) >= CAST(GETDATE() AS DATE) and b.MedicineId = @MedicineId
+                from Batches b JOIN Medicines m ON m.Id=b.MedicineId
+                where m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND CAST(b.ExpiryDate AS DATE) >= CAST(GETDATE() AS DATE) and b.MedicineId = @MedicineId
                 group by b.MedicineId
                 """;
 

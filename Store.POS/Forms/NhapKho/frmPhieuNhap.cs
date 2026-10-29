@@ -7,7 +7,8 @@ public partial class frmPhieuNhap : Form,ILamMoiDuLieu
     private int? selected;
     public frmPhieuNhap()
     {
-        InitializeComponent();PosFormStyle.ConfigureGridSelection(this,posLayout,XoaChiTiet);
+        InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);PosFormStyle.ConfigureGridSelection(this,posLayout,XoaChiTiet);
         btnTimKiem.Click+=(_,_)=>TimKiem();btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();dtpTuNgay.Checked=dtpDenNgay.Checked=false;TimKiem();};
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
         dgvPhieuNhap.CellClick+=(_,e)=> {if(e.RowIndex>=0) Chon(dgvPhieuNhap.Rows[e.RowIndex]);};

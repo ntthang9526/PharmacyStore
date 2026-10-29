@@ -13,6 +13,7 @@ namespace Store.POS
         public frmNhomThuoc()
         {
             InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
             btnTimNhom.Click += (_, _) => TimNhom();
             txtTimNhom.KeyDown += (_, e) =>

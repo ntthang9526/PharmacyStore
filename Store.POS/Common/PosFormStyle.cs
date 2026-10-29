@@ -177,7 +177,7 @@ internal static class PosFormStyle
         ResizeColumns();
     }
 
-    internal static void ConfigureGridSelection(Form form, Control root, Action? resetDetails)
+    internal static void ConfigureGridSelection(Form form, Control root, Action? resetDetails, bool clearSelectionOnLeave = true)
     {
         if (IsInDesigner(form)) return;
         
@@ -235,7 +235,7 @@ internal static class PosFormStyle
         WireOutside(form);
         foreach (var grid in grids)
         {
-            grid.Leave += (_, _) => Clear(grid);
+            if (clearSelectionOnLeave) grid.Leave += (_, _) => Clear(grid);
             grid.MouseDown += (_, e) =>
             {
                 if (grid.HitTest(e.X, e.Y).Type == DataGridViewHitTestType.None) { Clear(grid); resetDetails?.Invoke(); }
@@ -279,6 +279,33 @@ internal static class PosFormStyle
         }
     }
 
+    internal static void ConfigureDisabledButtons(Form form)
+    {
+        if (IsInDesigner(form)) return;
+        foreach (var button in FindButtons(form))
+        {
+            button.Paint -= Button_Paint;
+            button.Paint += Button_Paint;
+            button.EnabledChanged -= Button_EnabledChanged;
+            button.EnabledChanged += Button_EnabledChanged;
+        }
+    }
+
+    internal static Color DisabledButtonTextColor(Color background)
+    {
+        static double Channel(byte value)
+        {
+            double channel = value / 255d;
+            return channel <= 0.04045 ? channel / 12.92 : Math.Pow((channel + 0.055) / 1.055, 2.4);
+        }
+        static double Luminance(Color color) => 0.2126 * Channel(color.R) + 0.7152 * Channel(color.G) + 0.0722 * Channel(color.B);
+        double luminance = Luminance(background);
+        var slate = Color.FromArgb(71, 85, 105);
+        if ((luminance + 0.05) / (Luminance(slate) + 0.05) >= 4.5) return slate;
+        if (1.05 / (luminance + 0.05) >= 4.5) return Color.White;
+        return Color.Black;
+    }
+
     private static void Button_EnabledChanged(object? sender, EventArgs e)
     {
         if (sender is Button btn)
@@ -287,7 +314,7 @@ internal static class PosFormStyle
 
     private static void Button_Paint(object? sender, PaintEventArgs e)
     {
-        if (sender is not Button btn || btn.Enabled) return;
+        if (sender is not Button btn || btn.Enabled || btn.FindForm() is Form form && IsInDesigner(form)) return;
 
         Color back = btn.BackColor;
         using var brush = new SolidBrush(back);
@@ -299,11 +326,8 @@ internal static class PosFormStyle
             e.Graphics.DrawRectangle(pen, 0, 0, btn.Width - 1, btn.Height - 1);
         }
 
-        // Soft light gray text: on dark backgrounds use soft light gray (Slate-300 #CBD5E1);
-        // on light pastel backgrounds use soft slate gray (Slate-400 #94A3B8)
-        Color disabledText = back.GetBrightness() > 0.55f
-            ? Color.FromArgb(148, 163, 184)
-            : Color.FromArgb(203, 213, 225);
+        // WinForms ignores ForeColor for disabled buttons; paint readable text without changing Designer colors.
+        Color disabledText = DisabledButtonTextColor(back);
 
         TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.WordBreak;
         switch (btn.TextAlign)

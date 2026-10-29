@@ -17,12 +17,18 @@ partial class frmQuanLyThuoc
 
     private void InitializeComponent()
     {
+        colTrangThaiBan=new global::System.Windows.Forms.DataGridViewTextBoxColumn();
+        colTonCoTheBan=new global::System.Windows.Forms.DataGridViewTextBoxColumn();
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
         DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+        stockStatusLayout = new TableLayoutPanel();
+        statusLayout = new TableLayoutPanel();
+        lblTrangThaiBan = new Label();
+        cboTrangThaiBan = new ComboBox();
         posLayout = new TableLayoutPanel();
         posHeading = new Label();
         excelActions = new FlowLayoutPanel();
@@ -72,7 +78,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23 = new TableLayoutPanel();
         label24 = new Label();
         txtSoLuongTon = new TextBox();
-        tableLayoutPanel25 = new TableLayoutPanel();
+        tableLayoutPanel25 = new FlowLayoutPanel();
         btnThem = new Button();
         btnSua = new Button();
         btnXoa = new Button();
@@ -323,7 +329,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
         dgvThuoc.ColumnHeadersHeight = 43;
         dgvThuoc.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, MaNhom, MaNCC, TenNhom, DonViTinh, DonGia, SoLuongTon, TenNCC, colMaVach });
+        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, colTrangThaiBan, MaNhom, MaNCC, TenNhom, DonViTinh, DonGia, SoLuongTon, colTonCoTheBan, TenNCC, colMaVach });
         dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
         dataGridViewCellStyle5.BackColor = Color.White;
         dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F);
@@ -390,7 +396,7 @@ partial class frmQuanLyThuoc
         MaNhom.ReadOnly = true;
         MaNhom.Resizable = DataGridViewTriState.False;
         MaNhom.Visible = false;
-        MaNhom.Width = 125;
+        MaNhom.Width = 173;
         // 
         // MaNCC
         // 
@@ -402,7 +408,7 @@ partial class frmQuanLyThuoc
         MaNCC.ReadOnly = true;
         MaNCC.Resizable = DataGridViewTriState.False;
         MaNCC.Visible = false;
-        MaNCC.Width = 125;
+        MaNCC.Width = 183;
         // 
         // TenNhom
         // 
@@ -507,7 +513,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel7.RowCount = 3;
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 336F));
         tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.AutoSize));
         tableLayoutPanel7.Size = new Size(330, 498);
         tableLayoutPanel7.TabIndex = 0;
         // 
@@ -523,7 +529,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel8.Controls.Add(tableLayoutPanel16);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel19);
         tableLayoutPanel8.Controls.Add(tableLayoutPanel21);
-        tableLayoutPanel8.Controls.Add(tableLayoutPanel23);
+        tableLayoutPanel8.Controls.Add(stockStatusLayout,0,5);
         tableLayoutPanel8.Dock = DockStyle.Top;
         tableLayoutPanel8.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel8.ForeColor = SystemColors.ControlText;
@@ -878,7 +884,7 @@ partial class frmQuanLyThuoc
         label24.Name = "label24";
         label24.Size = new Size(324, 22);
         label24.TabIndex = 0;
-        label24.Text = "Tồn kho (cập nhật qua nhập kho)";
+        label24.Text = "Tồn thực tế";
         label24.TextAlign = ContentAlignment.MiddleLeft;
         // 
         // txtSoLuongTon
@@ -899,26 +905,22 @@ partial class frmQuanLyThuoc
         // tableLayoutPanel25
         // 
         tableLayoutPanel25.AutoSize = true;
+        tableLayoutPanel25.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel25.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
+        tableLayoutPanel25.WrapContents = true;
         tableLayoutPanel25.BackColor = Color.FromArgb(248, 250, 252);
-        tableLayoutPanel25.ColumnCount = 2;
-        tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel25.Controls.Add(btnThem, 0, 0);
-        tableLayoutPanel25.Controls.Add(btnSua, 1, 0);
-        tableLayoutPanel25.Controls.Add(btnXoa, 0, 1);
-        tableLayoutPanel25.Controls.Add(btnLuu, 1, 1);
-        tableLayoutPanel25.Controls.Add(btnBoQua, 0, 2);
-        tableLayoutPanel25.Controls.Add(btnLamMoi, 1, 2);
-        tableLayoutPanel25.Dock = DockStyle.Fill;
+        tableLayoutPanel25.Controls.Add(btnThem);
+        tableLayoutPanel25.Controls.Add(btnSua);
+        tableLayoutPanel25.Controls.Add(btnXoa);
+        tableLayoutPanel25.Controls.Add(btnLuu);
+        tableLayoutPanel25.Controls.Add(btnBoQua);
+        tableLayoutPanel25.Controls.Add(btnLamMoi);
+        tableLayoutPanel25.Dock = global::System.Windows.Forms.DockStyle.Bottom;
         tableLayoutPanel25.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel25.ForeColor = SystemColors.ControlText;
         tableLayoutPanel25.Location = new Point(0, 366);
         tableLayoutPanel25.Margin = new Padding(0);
         tableLayoutPanel25.Name = "tableLayoutPanel25";
-        tableLayoutPanel25.RowCount = 3;
-        tableLayoutPanel25.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-        tableLayoutPanel25.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
-        tableLayoutPanel25.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
         tableLayoutPanel25.Size = new Size(330, 132);
         tableLayoutPanel25.TabIndex = 1;
         // 
@@ -926,15 +928,15 @@ partial class frmQuanLyThuoc
         // 
         btnThem.BackColor = Color.FromArgb(22, 101, 52);
         btnThem.Cursor = Cursors.Hand;
-        btnThem.Dock = DockStyle.Fill;
+        btnThem.Dock = global::System.Windows.Forms.DockStyle.None;
         btnThem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnThem.FlatStyle = FlatStyle.Flat;
         btnThem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnThem.ForeColor = Color.White;
         btnThem.Location = new Point(0, 4);
-        btnThem.Margin = new Padding(0, 4, 4, 4);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnThem.Name = "btnThem";
-        btnThem.Size = new Size(161, 36);
+        btnThem.Size = new global::System.Drawing.Size(156, 38);
         btnThem.TabIndex = 13;
         btnThem.Text = "Thêm";
         btnThem.UseVisualStyleBackColor = false;
@@ -944,15 +946,15 @@ partial class frmQuanLyThuoc
         // 
         btnSua.BackColor = Color.FromArgb(15, 118, 110);
         btnSua.Cursor = Cursors.Hand;
-        btnSua.Dock = DockStyle.Fill;
+        btnSua.Dock = global::System.Windows.Forms.DockStyle.None;
         btnSua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnSua.FlatStyle = FlatStyle.Flat;
         btnSua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnSua.ForeColor = Color.White;
         btnSua.Location = new Point(169, 4);
-        btnSua.Margin = new Padding(4, 4, 0, 4);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnSua.Name = "btnSua";
-        btnSua.Size = new Size(161, 36);
+        btnSua.Size = new global::System.Drawing.Size(156, 38);
         btnSua.TabIndex = 14;
         btnSua.Text = "Sửa";
         btnSua.UseVisualStyleBackColor = false;
@@ -962,15 +964,15 @@ partial class frmQuanLyThuoc
         // 
         btnXoa.BackColor = Color.FromArgb(225, 29, 72);
         btnXoa.Cursor = Cursors.Hand;
-        btnXoa.Dock = DockStyle.Fill;
+        btnXoa.Dock = global::System.Windows.Forms.DockStyle.None;
         btnXoa.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnXoa.FlatStyle = FlatStyle.Flat;
         btnXoa.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnXoa.ForeColor = Color.White;
         btnXoa.Location = new Point(0, 48);
-        btnXoa.Margin = new Padding(0, 4, 4, 4);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnXoa.Name = "btnXoa";
-        btnXoa.Size = new Size(161, 36);
+        btnXoa.Size = new global::System.Drawing.Size(156, 38);
         btnXoa.TabIndex = 15;
         btnXoa.Text = "Xóa";
         btnXoa.UseVisualStyleBackColor = false;
@@ -980,16 +982,16 @@ partial class frmQuanLyThuoc
         // 
         btnLuu.BackColor = Color.FromArgb(22, 101, 52);
         btnLuu.Cursor = Cursors.Hand;
-        btnLuu.Dock = DockStyle.Fill;
+        btnLuu.Dock = global::System.Windows.Forms.DockStyle.None;
         btnLuu.Enabled = false;
         btnLuu.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnLuu.FlatStyle = FlatStyle.Flat;
         btnLuu.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnLuu.ForeColor = Color.White;
         btnLuu.Location = new Point(169, 48);
-        btnLuu.Margin = new Padding(4, 4, 0, 4);
+        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLuu.Name = "btnLuu";
-        btnLuu.Size = new Size(161, 36);
+        btnLuu.Size = new global::System.Drawing.Size(156, 38);
         btnLuu.TabIndex = 16;
         btnLuu.Text = "Lưu";
         btnLuu.UseVisualStyleBackColor = false;
@@ -999,16 +1001,16 @@ partial class frmQuanLyThuoc
         // 
         btnBoQua.BackColor = Color.FromArgb(100, 116, 139);
         btnBoQua.Cursor = Cursors.Hand;
-        btnBoQua.Dock = DockStyle.Fill;
+        btnBoQua.Dock = global::System.Windows.Forms.DockStyle.None;
         btnBoQua.Enabled = false;
         btnBoQua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
         btnBoQua.FlatStyle = FlatStyle.Flat;
         btnBoQua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnBoQua.ForeColor = Color.White;
         btnBoQua.Location = new Point(0, 92);
-        btnBoQua.Margin = new Padding(0, 4, 4, 4);
+        btnBoQua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnBoQua.Name = "btnBoQua";
-        btnBoQua.Size = new Size(161, 36);
+        btnBoQua.Size = new global::System.Drawing.Size(156, 38);
         btnBoQua.TabIndex = 17;
         btnBoQua.Text = "Bỏ qua";
         btnBoQua.UseVisualStyleBackColor = false;
@@ -1018,7 +1020,7 @@ partial class frmQuanLyThuoc
         // 
         btnLamMoi.BackColor = Color.FromArgb(15, 118, 110);
         btnLamMoi.Cursor = Cursors.Hand;
-        btnLamMoi.Dock = DockStyle.Fill;
+        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.None;
         btnLamMoi.FlatAppearance.BorderSize = 0;
         btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
         btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
@@ -1026,9 +1028,9 @@ partial class frmQuanLyThuoc
         btnLamMoi.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
         btnLamMoi.ForeColor = Color.White;
         btnLamMoi.Location = new Point(169, 92);
-        btnLamMoi.Margin = new Padding(4, 4, 0, 4);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
         btnLamMoi.Name = "btnLamMoi";
-        btnLamMoi.Size = new Size(161, 36);
+        btnLamMoi.Size = new global::System.Drawing.Size(156, 38);
         btnLamMoi.TabIndex = 21;
         btnLamMoi.Text = "Làm mới";
         btnLamMoi.UseVisualStyleBackColor = false;
@@ -1072,9 +1074,65 @@ partial class frmQuanLyThuoc
         tableLayoutPanel23.ResumeLayout(false);
         tableLayoutPanel23.PerformLayout();
         tableLayoutPanel25.ResumeLayout(false);
+        colTrangThaiBan.Name="colTrangThaiBan";
+        colTrangThaiBan.DataPropertyName="TrangThaiBan";
+        colTrangThaiBan.HeaderText="Trạng thái bán";
+        colTrangThaiBan.Width=165;
+        colTrangThaiBan.MinimumWidth=50;
+        colTrangThaiBan.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+        colTrangThaiBan.ReadOnly=true;
+        colTrangThaiBan.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
+        colTonCoTheBan.Name="colTonCoTheBan";
+        colTonCoTheBan.DataPropertyName="TonCoTheBan";
+        colTonCoTheBan.HeaderText="Tồn có thể bán";
+        colTonCoTheBan.Width=175;
+        colTonCoTheBan.MinimumWidth=50;
+        colTonCoTheBan.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+        colTonCoTheBan.ReadOnly=true;
+        colTonCoTheBan.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
+        colTonCoTheBan.DefaultCellStyle.Format="N0";
+        colTonCoTheBan.DefaultCellStyle.Alignment=global::System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+        stockStatusLayout.Name="stockStatusLayout";
+        stockStatusLayout.Dock=DockStyle.Fill;
+        stockStatusLayout.Margin=new Padding(0);
+        stockStatusLayout.ColumnCount=2;
+        stockStatusLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,45F));
+        stockStatusLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,55F));
+        stockStatusLayout.RowCount=1;
+        stockStatusLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+        stockStatusLayout.Controls.Add(tableLayoutPanel23,0,0);
+        stockStatusLayout.Controls.Add(statusLayout,1,0);
+        tableLayoutPanel23.Margin=new Padding(0,0,6,0);
+        statusLayout.Name="statusLayout";
+        statusLayout.Dock=DockStyle.Fill;
+        statusLayout.Margin=new Padding(0);
+        statusLayout.ColumnCount=1;
+        statusLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+        statusLayout.RowCount=2;
+        statusLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,22F));
+        statusLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,34F));
+        statusLayout.Controls.Add(lblTrangThaiBan,0,0);
+        statusLayout.Controls.Add(cboTrangThaiBan,0,1);
+        lblTrangThaiBan.Name="lblTrangThaiBan";
+        lblTrangThaiBan.Text="Trạng thái bán";
+        lblTrangThaiBan.Dock=DockStyle.Fill;
+        lblTrangThaiBan.Font=new Font("Segoe UI",10.2F);
+        cboTrangThaiBan.Name="cboTrangThaiBan";
+        cboTrangThaiBan.Dock=DockStyle.Top;
+        cboTrangThaiBan.DropDownStyle=ComboBoxStyle.DropDownList;
+        cboTrangThaiBan.Font=new Font("Segoe UI",10.5F);
+        cboTrangThaiBan.Enabled=false;
+        cboTrangThaiBan.Items.AddRange(new object[]{"Đang bán","Ngừng bán"});
+        cboTrangThaiBan.SelectedIndex=0;
         ResumeLayout(false);
     }
 
+    private TableLayoutPanel stockStatusLayout;
+    private TableLayoutPanel statusLayout;
+    private Label lblTrangThaiBan;
+    private ComboBox cboTrangThaiBan;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colTrangThaiBan;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colTonCoTheBan;
     private global::System.Windows.Forms.TableLayoutPanel posLayout;
     private global::System.Windows.Forms.Label posHeading;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -1110,7 +1168,7 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel23;
     private global::System.Windows.Forms.Label label24;
     private global::System.Windows.Forms.TextBox txtSoLuongTon;
-    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel25;
+    private global::System.Windows.Forms.FlowLayoutPanel tableLayoutPanel25;
     private global::System.Windows.Forms.Button btnThem;
     private global::System.Windows.Forms.Button btnSua;
     private global::System.Windows.Forms.Button btnXoa;

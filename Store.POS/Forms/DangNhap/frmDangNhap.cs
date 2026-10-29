@@ -1,10 +1,11 @@
-using Store.BLL;
+﻿using Store.BLL;
 using Store.Shared.DTOs.Auth;
 namespace Store.POS;
 public partial class frmDangNhap : Form
 {
     private readonly AuthBLL authBLL = new();
-    public frmDangNhap() { InitializeComponent(); }
+    public frmDangNhap() { InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this); }
     private async void btnDangNhap_Click(object sender, EventArgs e)
     {
         btnDangNhap.Enabled = false;

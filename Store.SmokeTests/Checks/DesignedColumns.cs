@@ -6,6 +6,10 @@ internal static partial class Program
     static void TestDesignedColumns()
     {
         (string Form,string Grid,string Field,string Binding,string Header)[] expected={
+            ("frmLoHang","dgvLoHang","colTonCoTheBan","TonCoTheBan","Tồn có thể bán"),
+            ("frmLoHang","dgvLoHang","colTrangThaiLo","TrangThaiLo","Trạng thái lô"),
+            ("frmQuanLyThuoc","dgvThuoc","colTonCoTheBan","TonCoTheBan","Tồn có thể bán"),
+            ("frmQuanLyThuoc","dgvThuoc","colTrangThaiBan","TrangThaiBan","Trạng thái bán"),
             ("frmBanHang","tableTimKiem","idDataGridViewTextBoxColumn","Id","Mã"),
             ("frmBanHang","tableTimKiem","nameDataGridViewTextBoxColumn1","Name","Tên thuốc"),
             ("frmBanHang","tableTimKiem","btnThemGioHang","",""),
@@ -32,7 +36,7 @@ internal static partial class Program
             ("frmCanhBao","dgvSapHet","dgvSapHetColumn2","TenThuoc","Tên thuốc"),
             ("frmCanhBao","dgvSapHet","dgvSapHetColumn3","DonViTinh","Đơn vị tính"),
             ("frmCanhBao","dgvSapHet","dgvSapHetColumn4","NhaCungCap","Nhà cung cấp"),
-            ("frmCanhBao","dgvSapHet","dgvSapHetColumn5","TonKho","Tồn còn hạn"),
+            ("frmCanhBao","dgvSapHet","dgvSapHetColumn5","TonKho","Tồn có thể bán"),
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn1","MaThuoc","Mã thuốc"),
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn2","TenThuoc","Tên thuốc"),
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn3","SoLo","Số lô"),
@@ -129,7 +133,7 @@ internal static partial class Program
             ("frmMain","dgvSapHet","dgvSapHetColumn2","TenThuoc","Tên thuốc"),
             ("frmMain","dgvSapHet","dgvSapHetColumn3","DonViTinh","Đơn vị"),
             ("frmMain","dgvSapHet","dgvSapHetColumn4","NhaCungCap","Nhà cung cấp"),
-            ("frmMain","dgvSapHet","dgvSapHetColumn5","TonKho","Tồn còn hạn"),
+            ("frmMain","dgvSapHet","dgvSapHetColumn5","TonKho","Tồn có thể bán"),
             ("frmMain","dgvSapHetHan","dgvSapHetHanColumn1","MaThuoc","Mã thuốc"),
             ("frmMain","dgvSapHetHan","dgvSapHetHanColumn2","TenThuoc","Tên thuốc"),
             ("frmMain","dgvSapHetHan","dgvSapHetHanColumn3","SoLo","Số lô"),

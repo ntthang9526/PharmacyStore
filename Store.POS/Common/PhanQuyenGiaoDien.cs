@@ -29,10 +29,11 @@ internal static class PhanQuyenGiaoDien
     private static bool Cam(Form form,Control c)
     {
         if(ChiAdmin(form.GetType())) return c is Button or TextBox or ComboBox or NumericUpDown or CheckBox;
+        if(form is frmLoHang) return c.Name is "btnDoiTrangThai";
         if(form is frmNhapKho) return c.Name is "btnThemNCC" or "btnTaoThuoc";
         if(form is frmKhachHang) return c.Name is "btnXoa" or "txtDiem";
         if(form is frmQuanLyThuoc or frmNhomThuoc or frmNhaCungCap or frmVoucher)
-            return c.Name is "btnThem" or "btnSua" or "btnXoa" or "btnLuu" or "btnThemNhom" or "btnThemNCC" or "btnBoQua" or "btnHuy" or "btnNhapExcel";
+            return c.Name is "btnThem" or "btnSua" or "btnXoa" or "btnLuu" or "btnThemNhom" or "btnThemNCC" or "btnBoQua" or "btnHuy" or "btnNhapExcel" or "btnMauExcel";
         return false;
     }
     private sealed class HiddenLayout
@@ -66,7 +67,7 @@ internal static class PhanQuyenGiaoDien
                 c.Enabled = original.Enabled;
             }
             if (c.Name == "txtDiem" && c.Parent != null) c.Parent.Visible = allowed;
-            if (c.Name is "btnThemNCC" or "btnThemNhom" or "btnTaoThuoc" && c.Parent is TableLayoutPanel table)
+            if (c.Name is "btnThemNCC" or "btnThemNhom" or "btnTaoThuoc" or "btnDoiTrangThai" && c.Parent is TableLayoutPanel table)
             {
                 int index = table.GetColumn(c);
                 if (index < 0 || index >= table.ColumnStyles.Count) continue;
