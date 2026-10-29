@@ -13,14 +13,14 @@ internal static partial class Program
             var grid=UiField<DataGridView>(form,"dgvNhomThuoc");
             var data=new DataTable();data.Columns.Add("MaNhom");data.Columns.Add("TenNhom");data.Rows.Add("1","Thuốc A");grid.DataSource=data;
             Application.DoEvents();
-            int Width()=>grid.Columns.Cast<DataGridViewColumn>().Sum(c=>c.Width);
-            Check(grid.AutoSizeColumnsMode==DataGridViewAutoSizeColumnsMode.Fill && Math.Abs(Width()-(grid.ClientSize.Width-2))<=3,"Designer columns fill the available frame");
+
+            Check(grid.AutoSizeColumnsMode==DataGridViewAutoSizeColumnsMode.None && Math.Abs(grid.Columns.Cast<DataGridViewColumn>().Sum(c=>c.Width)-(grid.ClientSize.Width-2))<=3,"columns fill only the spare space in the frame");
             int idWidth=grid.Columns[0].Width;int nameWidth=grid.Columns[1].Width;
-            Check(nameWidth>idWidth*2,"name column receives more space than the ID column");
+            Check(nameWidth>idWidth,"name column receives more space than the ID column");
             data.Rows[0][1]=new string('W',160);Application.DoEvents();
             Check(grid.Columns[0].Width==idWidth && grid.Columns[1].Width==nameWidth,"long names cannot override Designer column widths");
             form.ClientSize=new Size(1100,700);Application.DoEvents();
-            Check(grid.Columns[0].Width==idWidth && Math.Abs(Width()-(grid.ClientSize.Width-2))<=3,"resizing preserves compact IDs and fills the name column");
+            Check(grid.Columns[0].Width==idWidth && Math.Abs(grid.Columns.Cast<DataGridViewColumn>().Sum(c=>c.Width)-(grid.ClientSize.Width-2))<=3,"resizing preserves compact IDs and fills spare space only");
         }
         var settings=typeof(frmCanhBao).Assembly.GetType("Store.POS.CanhBaoSettings")!;
         var flags=BindingFlags.Static|BindingFlags.NonPublic;

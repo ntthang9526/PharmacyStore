@@ -16,7 +16,7 @@ internal static partial class Program
         grid.Width=450;style.Invoke(null,new object[]{grid});grid.Width=150;
         Check(grid.Columns[1].Width==185,"repeated styling and resize keep the latest base width");
         grid.Columns.RemoveAt(0);grid.Width=300;
-        Check(grid.Columns.Count==1 && grid.Columns[0].Width==300,"a removed column is not resurrected or counted during fill");
+        Check(grid.Columns.Count==1 && grid.Columns[0].Width==300,"a removed column is not resurrected during resizing");
         using(var sales=new frmBanHang())
         {
             var search=UiField<DataGridView>(sales,"tableTimKiem");var cart=UiField<DataGridView>(sales,"tableGioHang");

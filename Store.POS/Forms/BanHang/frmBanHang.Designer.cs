@@ -206,7 +206,7 @@
             tableTimKiem.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 250, 252);
             tableTimKiem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            tableTimKiem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            tableTimKiem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             tableTimKiem.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             tableTimKiem.BackgroundColor = Color.White;
             tableTimKiem.BorderStyle = BorderStyle.None;
@@ -258,11 +258,11 @@
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             idDataGridViewTextBoxColumn.ReadOnly = true;
             idDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            idDataGridViewTextBoxColumn.Width = 65;
+            idDataGridViewTextBoxColumn.Width = 90;
             // 
             // nameDataGridViewTextBoxColumn1
             // 
-            nameDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            nameDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             nameDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle4;
@@ -270,6 +270,7 @@
             nameDataGridViewTextBoxColumn1.HeaderText = "Tên thuốc";
             nameDataGridViewTextBoxColumn1.MinimumWidth = 180;
             nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+            nameDataGridViewTextBoxColumn1.Width = 230;
             nameDataGridViewTextBoxColumn1.ReadOnly = true;
             nameDataGridViewTextBoxColumn1.Resizable = DataGridViewTriState.False;
             // 
@@ -289,7 +290,7 @@
             btnThemGioHang.SortMode = DataGridViewColumnSortMode.Automatic;
             btnThemGioHang.Text = "+";
             btnThemGioHang.UseColumnTextForButtonValue = true;
-            btnThemGioHang.Width = 42;
+            btnThemGioHang.Width = 44;
             // 
             // cartLayout
             // 
@@ -390,7 +391,7 @@
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = SystemColors.ControlText;
             tableGioHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
-            tableGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            tableGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             tableGioHang.BackgroundColor = Color.White;
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = Color.FromArgb(15, 118, 110);
@@ -444,11 +445,11 @@
             noDataGridViewTextBoxColumn.Name = "noDataGridViewTextBoxColumn";
             noDataGridViewTextBoxColumn.ReadOnly = true;
             noDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            noDataGridViewTextBoxColumn.Width = 60;
+            noDataGridViewTextBoxColumn.Width = 72;
             // 
             // nameDataGridViewTextBoxColumn
             // 
-            nameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            nameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
             dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
             nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle10;
@@ -456,6 +457,7 @@
             nameDataGridViewTextBoxColumn.HeaderText = "Tên thuốc";
             nameDataGridViewTextBoxColumn.MinimumWidth = 180;
             nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            nameDataGridViewTextBoxColumn.Width = 230;
             nameDataGridViewTextBoxColumn.ReadOnly = true;
             nameDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
             // 
@@ -471,7 +473,7 @@
             unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
             unitDataGridViewTextBoxColumn.ReadOnly = true;
             unitDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            unitDataGridViewTextBoxColumn.Width = 84;
+            unitDataGridViewTextBoxColumn.Width = 110;
             // 
             // quantityDataGridViewTextBoxColumn
             // 
@@ -485,7 +487,7 @@
             quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             quantityDataGridViewTextBoxColumn.ReadOnly = true;
             quantityDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            quantityDataGridViewTextBoxColumn.Width = 50;
+            quantityDataGridViewTextBoxColumn.Width = 100;
             // 
             // priceDataGridViewTextBoxColumn
             // 
@@ -500,7 +502,7 @@
             priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
             priceDataGridViewTextBoxColumn.ReadOnly = true;
             priceDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            priceDataGridViewTextBoxColumn.Width = 115;
+            priceDataGridViewTextBoxColumn.Width = 125;
             // 
             // totalDataGridViewTextBoxColumn
             // 
@@ -515,7 +517,7 @@
             totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
             totalDataGridViewTextBoxColumn.ReadOnly = true;
             totalDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            totalDataGridViewTextBoxColumn.Width = 115;
+            totalDataGridViewTextBoxColumn.Width = 126;
             // 
             // btnAction
             // 
@@ -536,7 +538,7 @@
             btnAction.Resizable = DataGridViewTriState.False;
             btnAction.Text = "+";
             btnAction.UseColumnTextForButtonValue = true;
-            btnAction.Width = 42;
+            btnAction.Width = 44;
             // 
             // entryLayout
             // 
@@ -837,7 +839,7 @@
             labelTienGiamGia.RightToLeft = RightToLeft.No;
             labelTienGiamGia.Size = new Size(146, 32);
             labelTienGiamGia.TabIndex = 3;
-            labelTienGiamGia.Text = "đ";
+            labelTienGiamGia.Text = "0 đ";
             labelTienGiamGia.TextAlign = ContentAlignment.MiddleRight;
             // 
             // labelGiamGia
@@ -858,7 +860,7 @@
             labelTienTamTinh.RightToLeft = RightToLeft.No;
             labelTienTamTinh.Size = new Size(146, 32);
             labelTienTamTinh.TabIndex = 1;
-            labelTienTamTinh.Text = "đ";
+            labelTienTamTinh.Text = "0 đ";
             labelTienTamTinh.TextAlign = ContentAlignment.MiddleRight;
             // 
             // labelTamTinh
@@ -892,7 +894,7 @@
             labelTienTongTien.RightToLeft = RightToLeft.No;
             labelTienTongTien.Size = new Size(146, 32);
             labelTienTongTien.TabIndex = 7;
-            labelTienTongTien.Text = "đ";
+            labelTienTongTien.Text = "0 đ";
             labelTienTongTien.TextAlign = ContentAlignment.MiddleRight;
             // 
             // labelTongTien
@@ -1051,6 +1053,7 @@
             btnThanhToan.TabIndex = 0;
             btnThanhToan.Text = "THANH TOÁN";
             btnThanhToan.UseVisualStyleBackColor = false;
+            btnThanhToan.Enabled = false;
             btnThanhToan.Click += btnThanhToan_Click;
             // 
             // btnLuuCho

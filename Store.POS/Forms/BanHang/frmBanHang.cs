@@ -103,6 +103,7 @@ namespace Store.POS
             }
             tableGioHang.DataSource = gioHang;
             tableTimKiem.DataSource = timKiem;
+            CapNhatGiaTien();
             timerDateTime.Start();
             UpdateDateTime();
         }

@@ -614,7 +614,7 @@ partial class frmNhomThuoc
         tableLayoutPanel13.AccessibleName = null;
         tableLayoutPanel13.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
         tableLayoutPanel13.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
-        tableLayoutPanel13.RowCount = 3;
+        tableLayoutPanel13.RowCount = 2;
         tableLayoutPanel13.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
         tableLayoutPanel13.AutoScroll = false;
         tableLayoutPanel13.Visible = true;
@@ -622,8 +622,7 @@ partial class frmNhomThuoc
         tableLayoutPanel13.Enabled = true;
         tableLayoutPanel13.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel13.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
         tableLayoutPanel13.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
 
         // btnThem
@@ -814,7 +813,7 @@ partial class frmNhomThuoc
         this.dgvNhomThuocColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvNhomThuocColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvNhomThuocColumn1.MinimumWidth = 5;
-        this.dgvNhomThuocColumn1.Width = 74;
+        this.dgvNhomThuocColumn1.Width = 173;
         this.dgvNhomThuocColumn1.FillWeight = 80F;
         //
         // dgvNhomThuocColumn2
@@ -830,7 +829,7 @@ partial class frmNhomThuoc
         this.dgvNhomThuocColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvNhomThuocColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvNhomThuocColumn2.MinimumWidth = 5;
-        this.dgvNhomThuocColumn2.Width = 175;
+        this.dgvNhomThuocColumn2.Width = 230;
         this.dgvNhomThuocColumn2.FillWeight = 220F;
 
         this.dgvNhomThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

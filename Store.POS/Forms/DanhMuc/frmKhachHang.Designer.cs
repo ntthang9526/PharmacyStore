@@ -602,7 +602,7 @@ partial class frmKhachHang
         this.MaKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.MaKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.MaKH.MinimumWidth = 5;
-        this.MaKH.Width = 74;
+        this.MaKH.Width = 168;
         this.MaKH.FillWeight = 128F;
         //
         // TenKH
@@ -615,7 +615,7 @@ partial class frmKhachHang
         this.TenKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.TenKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.TenKH.MinimumWidth = 5;
-        this.TenKH.Width = 170;
+        this.TenKH.Width = 200;
         this.TenKH.FillWeight = 220F;
         //
         // DienThoai
@@ -628,7 +628,7 @@ partial class frmKhachHang
         this.DienThoai.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.DienThoai.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.DienThoai.MinimumWidth = 5;
-        this.DienThoai.Width = 129;
+        this.DienThoai.Width = 151;
         this.DienThoai.FillWeight = 104F;
         //
         // Diem
@@ -641,7 +641,7 @@ partial class frmKhachHang
         this.Diem.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.Diem.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.Diem.MinimumWidth = 5;
-        this.Diem.Width = 90;
+        this.Diem.Width = 150;
         this.Diem.FillWeight = 56F;
 
         this.dgvKhachHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

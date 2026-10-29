@@ -38,16 +38,18 @@ Mở solution `PharmacyStore.slnx`, vào project `Store.POS/Forms`, mở file Fo
 
 ## 4. Chỉnh cột của các bảng
 
+**Nguyên tắc: chỉ fill khi tổng độ rộng các cột đang hiển thị nhỏ hơn khung chứa. Khi cột rộng hơn khung, giữ Width đã thiết kế và dùng cuộn ngang; không ép co cột.**
+
 - Chọn bảng trong View Designer, bấm **Edit Columns**. Các cột đã được khai báo sẵn với tiêu đề tiếng Việt và `DataPropertyName` tương ứng.
-- Chọn cột rồi chỉnh **Width**. `AutoSizeMode = None` và `MinimumWidth = 5` cho phép tự căn độ rộng; độ rộng này là mức gốc. Khi tổng cột nhỏ hơn khung, cột tên được giãn để lấp phần trống; khi khung nhỏ lại, các cột trở về mức gốc và có thể cuộn ngang.
+- Chọn cột rồi chỉnh **Width**. `AutoSizeMode = None` cho phép tự căn độ rộng bằng `Width`; giới hạn nhỏ nhất là `MinimumWidth` của từng cột; đây là độ rộng gốc. Khi còn khoảng trống trong khung, cột tên được giãn để fill; khi khung nhỏ lại, cột trở về độ rộng gốc. Bảng rộng hơn khung dùng cuộn ngang.
 - Đổi tiêu đề bằng **HeaderText**. Giữ nguyên `DataPropertyName` để dữ liệu vẫn hiển thị đúng. Các cột mã nhóm/NCC trong quản lý thuốc được ẩn vì đã có cột tên.
 - File `.resx` của từng form chứa `UserAddedColumn = True` cho các cột khai báo sẵn. Giữ các mục này để Visual Studio không loại bỏ cột khi mở/lưu Designer.
-- Chế độ không tự sinh cột dữ liệu được đặt trong `PosFormStyle.ApplyTableStyle`, vì Visual Studio không lưu thuộc tính `AutoGenerateColumns` trong Designer. Tiêu đề giữ trong Designer. ConfigureConditionalFill chỉ giãn cột khi còn khoảng trống; không ép các cột co nhỏ hơn độ rộng gốc.
+- Chế độ không tự sinh cột dữ liệu được đặt trong `PosFormStyle.ApplyTableStyle`, vì Visual Studio không lưu thuộc tính `AutoGenerateColumns` trong Designer. Tiêu đề và độ rộng gốc giữ trong Designer. ConfigureConditionalFill chỉ giãn phần còn trống, không ép cột co nhỏ hơn độ rộng gốc.
 
 ## 5. Tránh Designer tự sinh lại giao diện
 
 - Các bảng bán hàng không gắn mẫu BindingSource trong Designer. Danh sách thuốc và giỏ hàng được gắn dữ liệu trong sự kiện Load khi chạy, nên Designer không thêm lại các cột từ model.
 - Mỗi cột khai báo sẵn có UserAddedColumn trong resx. Khi sửa cột, giữ DataPropertyName của cột còn sử dụng.
 - Phân quyền chỉ ẩn thao tác bị cấm, không đặt lại vị trí nút, Margin hoặc chiều cao hàng về giá trị cố định. Nút đã ẩn trong thiết kế được giữ nguyên khi quản trị viên mở form.
-- Fill giữ độ rộng mới nhất của cột làm mức gốc. Cột bị xóa không được tạo lại khi làm mới hoặc thay đổi kích thước.
+- Độ rộng gốc lấy từ Designer; chỉ fill khi tổng độ rộng cột nhỏ hơn khung chứa. Cột bị xóa không được tạo lại khi làm mới hoặc thay đổi kích thước.
 - Khi đang chỉnh cùng một form, lưu và đóng tab Designer trước khi sửa file Designer từ bên ngoài Visual Studio để tránh bản chưa lưu trong bộ nhớ ghi đè tệp.

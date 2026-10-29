@@ -156,7 +156,7 @@ partial class frmNhanVien
         this.colVaiTro.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colVaiTro.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colVaiTro.MinimumWidth = 5;
-        this.colVaiTro.Width = 125;
+        this.colVaiTro.Width = 175;
         this.colVaiTro.FillWeight = 220F;
         //
         // colMaNV
@@ -169,7 +169,7 @@ partial class frmNhanVien
         this.colMaNV.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colMaNV.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colMaNV.MinimumWidth = 5;
-        this.colMaNV.Width = 66;
+        this.colMaNV.Width = 146;
         this.colMaNV.FillWeight = 64F;
         //
         // colHoTen
@@ -182,7 +182,7 @@ partial class frmNhanVien
         this.colHoTen.Resizable = DataGridViewTriState.False;
         this.colHoTen.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colHoTen.MinimumWidth = 5;
-        this.colHoTen.Width = 135;
+        this.colHoTen.Width = 230;
         this.colHoTen.FillWeight = 220F;
         //
         // colTaiKhoan
@@ -195,7 +195,7 @@ partial class frmNhanVien
         this.colTaiKhoan.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colTaiKhoan.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colTaiKhoan.MinimumWidth = 5;
-        this.colTaiKhoan.Width = 114;
+        this.colTaiKhoan.Width = 150;
         this.colTaiKhoan.FillWeight = 96F;
         //
         // colDienThoai
@@ -208,7 +208,7 @@ partial class frmNhanVien
         this.colDienThoai.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colDienThoai.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colDienThoai.MinimumWidth = 5;
-        this.colDienThoai.Width = 121;
+        this.colDienThoai.Width = 145;
         this.colDienThoai.FillWeight = 104F;
         //
         // colDangLam
@@ -221,7 +221,7 @@ partial class frmNhanVien
         this.colDangLam.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colDangLam.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colDangLam.MinimumWidth = 5;
-        this.colDangLam.Width = 116;
+        this.colDangLam.Width = 150;
         this.colDangLam.FillWeight = 88F;
 
         this.dgvNhanVien.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

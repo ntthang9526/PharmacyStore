@@ -1338,7 +1338,7 @@ partial class frmVoucher
         this.dgvVoucherColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvVoucherColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvVoucherColumn2.MinimumWidth = 5;
-        this.dgvVoucherColumn2.Width = 74;
+        this.dgvVoucherColumn2.Width = 160;
         this.dgvVoucherColumn2.FillWeight = 104F;
         //
         // dgvVoucherColumn3
@@ -1370,7 +1370,7 @@ partial class frmVoucher
         this.dgvVoucherColumn4.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvVoucherColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvVoucherColumn4.MinimumWidth = 5;
-        this.dgvVoucherColumn4.Width = 124;
+        this.dgvVoucherColumn4.Width = 175;
         this.dgvVoucherColumn4.FillWeight = 96F;
         //
         // dgvVoucherColumn5
@@ -1418,7 +1418,7 @@ partial class frmVoucher
         this.dgvVoucherColumn7.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvVoucherColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvVoucherColumn7.MinimumWidth = 5;
-        this.dgvVoucherColumn7.Width = 127;
+        this.dgvVoucherColumn7.Width = 132;
         this.dgvVoucherColumn7.FillWeight = 96F;
 
         this.dgvVoucher.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

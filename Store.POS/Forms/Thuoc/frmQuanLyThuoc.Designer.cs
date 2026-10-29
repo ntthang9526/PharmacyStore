@@ -378,7 +378,7 @@ partial class frmQuanLyThuoc
         TenThuoc.Name = "TenThuoc";
         TenThuoc.ReadOnly = true;
         TenThuoc.Resizable = DataGridViewTriState.False;
-        TenThuoc.Width = 250;
+        TenThuoc.Width = 230;
         // 
         // MaNhom
         // 
@@ -413,7 +413,7 @@ partial class frmQuanLyThuoc
         TenNhom.Name = "TenNhom";
         TenNhom.ReadOnly = true;
         TenNhom.Resizable = DataGridViewTriState.False;
-        TenNhom.Width = 175;
+        TenNhom.Width = 230;
         // 
         // DonViTinh
         // 
@@ -424,7 +424,7 @@ partial class frmQuanLyThuoc
         DonViTinh.Name = "DonViTinh";
         DonViTinh.ReadOnly = true;
         DonViTinh.Resizable = DataGridViewTriState.False;
-        DonViTinh.Width = 125;
+        DonViTinh.Width = 110;
         // 
         // DonGia
         // 
@@ -452,7 +452,7 @@ partial class frmQuanLyThuoc
         SoLuongTon.Name = "SoLuongTon";
         SoLuongTon.ReadOnly = true;
         SoLuongTon.Resizable = DataGridViewTriState.False;
-        SoLuongTon.Width = 125;
+        SoLuongTon.Width = 112;
         // 
         // TenNCC
         // 
@@ -463,7 +463,7 @@ partial class frmQuanLyThuoc
         TenNCC.Name = "TenNCC";
         TenNCC.ReadOnly = true;
         TenNCC.Resizable = DataGridViewTriState.False;
-        TenNCC.Width = 150;
+        TenNCC.Width = 220;
         // 
         // colMaVach
         // 
@@ -473,7 +473,7 @@ partial class frmQuanLyThuoc
         colMaVach.MinimumWidth = 6;
         colMaVach.Name = "colMaVach";
         colMaVach.ReadOnly = true;
-        colMaVach.Width = 150;
+        colMaVach.Width = 160;
         // 
         // groupBox6
         // 

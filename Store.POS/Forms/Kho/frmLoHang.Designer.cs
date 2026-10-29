@@ -681,7 +681,7 @@ partial class frmLoHang
         this.dgvLoHangColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn1.MinimumWidth = 5;
-        this.dgvLoHangColumn1.Width = 93;
+        this.dgvLoHangColumn1.Width = 110;
         this.dgvLoHangColumn1.FillWeight = 64F;
         //
         // dgvLoHangColumn2
@@ -697,7 +697,7 @@ partial class frmLoHang
         this.dgvLoHangColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn2.MinimumWidth = 5;
-        this.dgvLoHangColumn2.Width = 115;
+        this.dgvLoHangColumn2.Width = 170;
         this.dgvLoHangColumn2.FillWeight = 64F;
         //
         // dgvLoHangColumn3
@@ -713,7 +713,7 @@ partial class frmLoHang
         this.dgvLoHangColumn3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn3.MinimumWidth = 5;
-        this.dgvLoHangColumn3.Width = 200;
+        this.dgvLoHangColumn3.Width = 230;
         this.dgvLoHangColumn3.FillWeight = 220F;
         //
         // dgvLoHangColumn4
@@ -729,7 +729,7 @@ partial class frmLoHang
         this.dgvLoHangColumn4.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn4.MinimumWidth = 5;
-        this.dgvLoHangColumn4.Width = 165;
+        this.dgvLoHangColumn4.Width = 220;
         this.dgvLoHangColumn4.FillWeight = 220F;
         //
         // dgvLoHangColumn5
@@ -745,7 +745,7 @@ partial class frmLoHang
         this.dgvLoHangColumn5.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn5.MinimumWidth = 5;
-        this.dgvLoHangColumn5.Width = 155;
+        this.dgvLoHangColumn5.Width = 230;
         this.dgvLoHangColumn5.FillWeight = 220F;
         //
         // dgvLoHangColumn6
@@ -761,7 +761,7 @@ partial class frmLoHang
         this.dgvLoHangColumn6.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn6.MinimumWidth = 5;
-        this.dgvLoHangColumn6.Width = 126;
+        this.dgvLoHangColumn6.Width = 148;
         this.dgvLoHangColumn6.FillWeight = 88F;
         //
         // dgvLoHangColumn7
@@ -777,7 +777,7 @@ partial class frmLoHang
         this.dgvLoHangColumn7.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn7.MinimumWidth = 5;
-        this.dgvLoHangColumn7.Width = 141;
+        this.dgvLoHangColumn7.Width = 112;
         this.dgvLoHangColumn7.FillWeight = 120F;
         //
         // dgvLoHangColumn8
@@ -809,7 +809,7 @@ partial class frmLoHang
         this.dgvLoHangColumn9.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvLoHangColumn9.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvLoHangColumn9.MinimumWidth = 5;
-        this.dgvLoHangColumn9.Width = 166;
+        this.dgvLoHangColumn9.Width = 175;
         this.dgvLoHangColumn9.FillWeight = 128F;
         //
         // colGiaNhap
@@ -825,7 +825,7 @@ partial class frmLoHang
         this.colGiaNhap.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.colGiaNhap.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.colGiaNhap.MinimumWidth = 5;
-        this.colGiaNhap.Width = 218;
+        this.colGiaNhap.Width = 193;
         this.colGiaNhap.FillWeight = 192F;
 
         this.dgvLoHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

@@ -69,7 +69,7 @@ partial class frmXemTruocExcel
         this.previewCol0.DataPropertyName = "Thuốc";
         this.previewCol0.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol0.MinimumWidth = 5;
-        this.previewCol0.Width = 170;
+        this.previewCol0.Width = 125;
         this.previewCol0.FillWeight = 220F;
         //
         // previewCol1
@@ -79,7 +79,7 @@ partial class frmXemTruocExcel
         this.previewCol1.DataPropertyName = "Mã vạch";
         this.previewCol1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol1.MinimumWidth = 5;
-        this.previewCol1.Width = 120;
+        this.previewCol1.Width = 110;
         this.previewCol1.FillWeight = 80F;
         //
         // previewCol2
@@ -109,7 +109,7 @@ partial class frmXemTruocExcel
         this.previewCol4.DataPropertyName = "Đơn vị";
         this.previewCol4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol4.MinimumWidth = 5;
-        this.previewCol4.Width = 79;
+        this.previewCol4.Width = 126;
         this.previewCol4.FillWeight = 72F;
         //
         // previewCol5
@@ -121,7 +121,7 @@ partial class frmXemTruocExcel
         this.previewCol5.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         this.previewCol5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol5.MinimumWidth = 5;
-        this.previewCol5.Width = 115;
+        this.previewCol5.Width = 110;
         this.previewCol5.FillWeight = 80F;
         //
         // previewCol6
@@ -131,7 +131,7 @@ partial class frmXemTruocExcel
         this.previewCol6.DataPropertyName = "Số lô";
         this.previewCol6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol6.MinimumWidth = 5;
-        this.previewCol6.Width = 115;
+        this.previewCol6.Width = 110;
         this.previewCol6.FillWeight = 64F;
         //
         // previewCol7
@@ -164,7 +164,7 @@ partial class frmXemTruocExcel
         this.previewCol9.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         this.previewCol9.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.previewCol9.MinimumWidth = 5;
-        this.previewCol9.Width = 115;
+        this.previewCol9.Width = 111;
         this.previewCol9.FillWeight = 88F;
 
         this.dgvDuLieu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;

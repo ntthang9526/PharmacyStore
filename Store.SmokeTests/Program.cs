@@ -38,7 +38,7 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
-        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design") && !args.Contains("--fixed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
         if(args.Contains("--cart-actions-live"))
         {
             try
@@ -49,12 +49,17 @@ internal static partial class Program
             }
             catch(Exception ex){Console.WriteLine(ex);return 1;}
         }
+        if(args.Contains("--ui-fixes"))
+        {
+            try {TestRequestedUiFixes();Console.WriteLine($"ALL {checks} REQUESTED UI FIX CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--preserve-design"))
         {
             try {TestPreserveDesign();Console.WriteLine($"ALL {checks} PRESERVE DESIGN CHECKS PASSED");return 0;}
             catch(Exception ex){Console.WriteLine(ex);return 1;}
         }
-        if(args.Contains("--conditional-fill"))
+        if(args.Contains("--fixed-columns") || args.Contains("--conditional-fill"))
         {
             try {TestConditionalFill();Console.WriteLine($"ALL {checks} CONDITIONAL FILL CHECKS PASSED");return 0;}
             catch(Exception ex){Console.WriteLine(ex);return 1;}

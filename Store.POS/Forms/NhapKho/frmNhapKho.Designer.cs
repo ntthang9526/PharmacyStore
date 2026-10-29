@@ -1901,7 +1901,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn1.MinimumWidth = 5;
-        this.dgvPhieuColumn1.Width = 74;
+        this.dgvPhieuColumn1.Width = 125;
         this.dgvPhieuColumn1.FillWeight = 48F;
         //
         // dgvPhieuColumn2
@@ -1917,7 +1917,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn2.MinimumWidth = 5;
-        this.dgvPhieuColumn2.Width = 200;
+        this.dgvPhieuColumn2.Width = 230;
         this.dgvPhieuColumn2.FillWeight = 220F;
         //
         // dgvPhieuColumn3
@@ -1933,7 +1933,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn3.MinimumWidth = 5;
-        this.dgvPhieuColumn3.Width = 82;
+        this.dgvPhieuColumn3.Width = 134;
         this.dgvPhieuColumn3.FillWeight = 48F;
         //
         // dgvPhieuColumn4
@@ -1949,7 +1949,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn4.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn4.MinimumWidth = 5;
-        this.dgvPhieuColumn4.Width = 115;
+        this.dgvPhieuColumn4.Width = 170;
         this.dgvPhieuColumn4.FillWeight = 64F;
         //
         // dgvPhieuColumn5
@@ -1965,7 +1965,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn5.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn5.MinimumWidth = 5;
-        this.dgvPhieuColumn5.Width = 126;
+        this.dgvPhieuColumn5.Width = 148;
         this.dgvPhieuColumn5.FillWeight = 88F;
         //
         // dgvPhieuColumn6
@@ -1997,7 +1997,7 @@ partial class frmNhapKho
         this.dgvPhieuColumn7.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         this.dgvPhieuColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         this.dgvPhieuColumn7.MinimumWidth = 5;
-        this.dgvPhieuColumn7.Width = 119;
+        this.dgvPhieuColumn7.Width = 125;
         this.dgvPhieuColumn7.FillWeight = 88F;
         //
         // dgvPhieuColumn8
