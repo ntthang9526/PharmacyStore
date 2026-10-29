@@ -85,8 +85,6 @@ namespace Store.POS
             tableGioHang.Scroll += (_,_) => { if(panelAction.Visible) DinhViPanelAction(); };
             if (!PosFormStyle.IsInDesigner(this))
             {
-                foreach (var b in new[] { btnThanhToan, btnLuuCho, btnHuyHoaDon, btnNhapSanPham, btnXoaTimKiem, btnNhapKhachHang, btnHuyKhachHang, btnNhapMaVoucher, btnHuyVoucher, btnSua, btnXoa })
-                    PosFormStyle.ApplyModernButton(b);
                 PosFormStyle.ApplyTableStyle(tableGioHang);
                 PosFormStyle.ApplyTableStyle(tableTimKiem);
                 CapNhatThongTinKhachHang();
@@ -436,37 +434,11 @@ namespace Store.POS
         }
         private void CapNhatThongTinVoucher()
         {
-            if (voucherApDung != null)
-            {
-                cardVoucher.Visible = true;
-                panel3.Height = 140;
-                lblMaVoucherCard.Text = "Mã voucher: " + voucherApDung.Code;
-                string discountStr = voucherApDung.DiscountType == "PERCENT"
-                    ? $"Giảm {voucherApDung.DiscountValue:0.##}%"
-                    : $"Giảm {voucherApDung.DiscountValue:N0} đ";
-                lblThongTinVoucherCard.Text = "Thông tin: " + discountStr;
-            }
-            else
-            {
-                cardVoucher.Visible = false;
-                panel3.Height = 76;
-            }
+            lblMaVoucher.Text = "Mã voucher";
         }
         private void CapNhatThongTinKhachHang()
         {
-            if (khachHang != null)
-            {
-                cardKhachHang.Visible = true;
-                panel5.Height = 140;
-                lblTenKhachHang.Text = "Tên khách hàng: " + khachHang.FullName;
-                lblDiemKhachHang.Text = $"Điểm: {khachHang.Point:N0}";
-                lblSdtKhachHang.Text = "Số điện thoại: " + khachHang.Phone;
-            }
-            else
-            {
-                cardKhachHang.Visible = false;
-                panel5.Height = 76;
-            }
+            labelMaKhachHang.Text = khachHang?.FullName ?? "SĐT khách hàng";
         }
         private void ThemKhachHang()
         {

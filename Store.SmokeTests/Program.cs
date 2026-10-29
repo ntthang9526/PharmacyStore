@@ -38,7 +38,27 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
-        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(!args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
+        if(args.Contains("--cart-actions-live"))
+        {
+            try
+            {
+                var medicines=new MedicineDAL().GetMedicines().Values;
+                medicineId=medicines.First(m=>new MedicineDAL().SoLuongConHan(m.Id)>=4).Id;
+                TestCartActions();Console.WriteLine($"ALL {checks} LIVE CART ACTION CHECKS PASSED");return 0;
+            }
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--preserve-design"))
+        {
+            try {TestPreserveDesign();Console.WriteLine($"ALL {checks} PRESERVE DESIGN CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--conditional-fill"))
+        {
+            try {TestConditionalFill();Console.WriteLine($"ALL {checks} CONDITIONAL FILL CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--designed-columns"))
         {
             try {TestDesignedColumns();Console.WriteLine($"ALL {checks} DESIGNER COLUMN CHECKS PASSED");return 0;}

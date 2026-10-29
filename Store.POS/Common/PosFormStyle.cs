@@ -126,14 +126,62 @@ internal static class PosFormStyle
             if (!string.IsNullOrEmpty(column.DataPropertyName)) column.Name = column.DataPropertyName;
         grid.ShowCellToolTips = true;
         grid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        ConfigureConditionalFill(grid);
+    }
+
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<DataGridView, object> configuredGrids = new();
+
+    private static void ConfigureConditionalFill(DataGridView grid)
+    {
+        if (configuredGrids.TryGetValue(grid, out _)) return;
+        configuredGrids.Add(grid, new object());
+        var widths = grid.Columns.Cast<DataGridViewColumn>().ToDictionary(c => c, c => c.Width);
+        var flexible = grid.Columns.Cast<DataGridViewColumn>()
+            .FirstOrDefault(c => c.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill);
+        grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+        foreach (var column in widths.Keys) column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        bool adjusting = false;
+        void ResizeColumns()
+        {
+            if (adjusting || grid.IsDisposed) return;
+            adjusting = true;
+            try
+            {
+                var visible = widths.Keys.Where(c => c.DataGridView == grid && c.Visible).ToArray();
+                if (visible.Length == 0) return;
+                foreach (var column in visible) column.Width = widths[column];
+                int available = grid.ClientSize.Width - (grid.RowHeadersVisible ? grid.RowHeadersWidth : 0)
+                    - (grid.BorderStyle == BorderStyle.None ? 0 : 2)
+                    - grid.Controls.OfType<VScrollBar>().Where(b => b.Visible).Sum(b => b.Width);
+                int extra = available - visible.Sum(c => c.Width);
+                if (extra <= 0) return;
+                var stretch = flexible != null && flexible.DataGridView == grid && flexible.Visible ? flexible
+                    : visible.Where(c => c.DataPropertyName.StartsWith("Ten") || c.DataPropertyName.Contains("Name") || c.DataPropertyName == "HoTen")
+                        .OrderByDescending(c => widths[c]).FirstOrDefault()
+                      ?? visible.OrderByDescending(c => widths[c]).First();
+                stretch.Width += extra;
+            }
+            finally { adjusting = false; }
+        }
+        grid.ColumnWidthChanged += (_, e) =>
+        {
+            if (adjusting || !widths.ContainsKey(e.Column)) return;
+            widths[e.Column] = e.Column.Width;
+            ResizeColumns();
+        };
+        grid.ColumnAdded += (_, e) => { widths[e.Column] = e.Column.Width; ResizeColumns(); };
+        grid.ColumnRemoved += (_, e) => { widths.Remove(e.Column); ResizeColumns(); };
+        grid.ClientSizeChanged += (_, _) => ResizeColumns();
+        grid.DataBindingComplete += (_, _) => ResizeColumns();
+        grid.ColumnStateChanged += (_, e) => { if (e.StateChanged == DataGridViewElementStates.Visible) ResizeColumns(); };
+        ResizeColumns();
     }
 
     internal static void ConfigureGridSelection(Form form, Control root, Action? resetDetails)
     {
         if (IsInDesigner(form)) return;
         
-        foreach (var btn in FindButtons(form))
-            ApplyModernButton(btn);
+
 
         var grids = FindGrids(form).Distinct().ToArray();
         foreach (var grid in grids)

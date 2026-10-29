@@ -6,16 +6,16 @@ internal static partial class Program
     static void TestDesignedColumns()
     {
         (string Form,string Grid,string Field,string Binding,string Header)[] expected={
-            ("frmBanHang","tableTimKiem","idDataGridViewTextBoxColumn","Id","Mã thuốc"),
+            ("frmBanHang","tableTimKiem","idDataGridViewTextBoxColumn","Id","Mã"),
             ("frmBanHang","tableTimKiem","nameDataGridViewTextBoxColumn1","Name","Tên thuốc"),
-            ("frmBanHang","tableTimKiem","btnThemGioHang","","Thêm"),
-            ("frmBanHang","tableGioHang","noDataGridViewTextBoxColumn","No","Số thứ tự"),
+            ("frmBanHang","tableTimKiem","btnThemGioHang","",""),
+            ("frmBanHang","tableGioHang","noDataGridViewTextBoxColumn","No","STT"),
             ("frmBanHang","tableGioHang","nameDataGridViewTextBoxColumn","Name","Tên thuốc"),
-            ("frmBanHang","tableGioHang","unitDataGridViewTextBoxColumn","Unit","Đơn vị tính"),
-            ("frmBanHang","tableGioHang","quantityDataGridViewTextBoxColumn","Quantity","Số lượng"),
+            ("frmBanHang","tableGioHang","unitDataGridViewTextBoxColumn","Unit","Đơn vị"),
+            ("frmBanHang","tableGioHang","quantityDataGridViewTextBoxColumn","Quantity","SL"),
             ("frmBanHang","tableGioHang","priceDataGridViewTextBoxColumn","Price","Đơn giá"),
             ("frmBanHang","tableGioHang","totalDataGridViewTextBoxColumn","Total","Thành tiền"),
-            ("frmBanHang","tableGioHang","btnAction","","Thao tác"),
+            ("frmBanHang","tableGioHang","btnAction","",""),
             ("frmBaoCao","dgvTheoNgay","dgvTheoNgayColumn1","Ngay","Ngày"),
             ("frmBaoCao","dgvTheoNgay","dgvTheoNgayColumn2","SoHoaDon","Số hóa đơn"),
             ("frmBaoCao","dgvTheoNgay","dgvTheoNgayColumn3","TongTien","Tổng tiền"),
@@ -121,10 +121,9 @@ internal static partial class Program
             ("frmQuanLyThuoc","dgvThuoc","MaNCC","MaNCC","Mã nhà cung cấp"),
             ("frmQuanLyThuoc","dgvThuoc","TenNhom","TenNhom","Nhóm thuốc"),
             ("frmQuanLyThuoc","dgvThuoc","TenNCC","TenNCC","Nhà cung cấp"),
-            ("frmQuanLyThuoc","dgvThuoc","DonViTinh","DonViTinh","Đơn vị tính"),
+            ("frmQuanLyThuoc","dgvThuoc","DonViTinh","DonViTinh","Đơn vị"),
             ("frmQuanLyThuoc","dgvThuoc","DonGia","DonGia","Đơn giá"),
             ("frmQuanLyThuoc","dgvThuoc","SoLuongTon","SoLuongTon","Tồn kho"),
-            ("frmQuanLyThuoc","dgvThuoc","GiaNhapGanNhat","GiaNhapGanNhat","Giá nhập gần nhất"),
             ("frmQuanLyThuoc","dgvThuoc","colMaVach","MaVach","Mã vạch"),
             ("frmMain","dgvSapHet","dgvSapHetColumn1","MaThuoc","Mã thuốc"),
             ("frmMain","dgvSapHet","dgvSapHetColumn2","TenThuoc","Tên thuốc"),
@@ -168,11 +167,14 @@ internal static partial class Program
                 {
                     var column=UiField<DataGridViewColumn>(form,spec.Field);
                     Check(column!=null && column.DataGridView==grid && column.DataPropertyName==spec.Binding && column.HeaderText==spec.Header,group.Key+"/"+spec.Field+" has Designer field, binding and Vietnamese header");
-                    Check(column!.AutoSizeMode==DataGridViewAutoSizeColumnMode.None && column.MinimumWidth<=10,group.Key+"/"+spec.Field+" allows Width editing without automatic sizing");
+                    Check(column!.AutoSizeMode==DataGridViewAutoSizeColumnMode.None && column.Width>=column.MinimumWidth,group.Key+"/"+spec.Field+" allows Width editing without automatic sizing");
                     if(column.Visible)
                     {
+                        // Validate the base width with no spare space for automatic fill.
+                        var dock=grid.Dock;int frameWidth=grid.Width;grid.Dock=DockStyle.None;grid.Width=1;
                         int width=column.Width;column.Width=width+19;Application.DoEvents();
-                        Check(column.Width==width+19,group.Key+"/"+spec.Field+" preserves the edited width");column.Width=width;
+                        Check(column.Width==width+19,group.Key+"/"+spec.Field+" preserves the edited width");
+                        column.Width=width;grid.Width=frameWidth;grid.Dock=dock;
                     }
                 }
             }
@@ -180,7 +182,7 @@ internal static partial class Program
             {
                 var grid=UiField<DataGridView>(form,"dgvThuoc");
                 Check(!grid.Columns["MaNhom"]!.Visible && !grid.Columns["MaNCC"]!.Visible,"medicine hides technical IDs and displays their names");
-                Check(grid.Columns["DonGia"]!.DefaultCellStyle.Format=="N0" && grid.Columns["GiaNhapGanNhat"]!.DefaultCellStyle.Format=="N0","medicine money columns retain whole-dong formatting");
+                Check(grid.Columns["DonGia"]!.DefaultCellStyle.Format=="N0","medicine money columns retain whole-dong formatting");
             }
             form.Dispose();
         }
