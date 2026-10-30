@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -1217,7 +1217,7 @@ partial class frmMain
             dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle17.Format = "N0";
             dgvGanNhatColumn7.DefaultCellStyle = dataGridViewCellStyle17;
-            dgvGanNhatColumn7.HeaderText = "Cần thanh toán";
+            dgvGanNhatColumn7.HeaderText = "Cần thu";
             dgvGanNhatColumn7.MinimumWidth = 6;
             dgvGanNhatColumn7.Name = "dgvGanNhatColumn7";
             dgvGanNhatColumn7.ReadOnly = true;

@@ -153,11 +153,11 @@ namespace Store.POS.Common
             ws2.ShowGridLines = true;
 
             ws2.Cell("A1").Value = "DANH SÁCH HÓA ĐƠN BÁN HÀNG";
-            ws2.Range("A1:H1").Merge().Style.Font.SetBold().Font.SetFontSize(15).Font.SetFontColor(PrimaryColor);
+            ws2.Range("A1:I1").Merge().Style.Font.SetBold().Font.SetFontSize(15).Font.SetFontColor(PrimaryColor);
             ws2.Cell("A1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
             int rIdx2 = 3;
-            string[] headersHD = { "Mã HĐ", "Ngày thanh toán", "Khách hàng", "Nhân viên", "Tiền hàng", "Giảm giá", "Thực thu", "Hình thức thanh toán" };
+            string[] headersHD = { "Mã HĐ", "Ngày thanh toán", "Khách hàng", "NV lập", "Tiền hàng", "Giảm giá", "Thực thu", "Hình thức thanh toán", "NV thu" };
             for (int col = 0; col < headersHD.Length; col++)
             {
                 var cell = ws2.Cell(rIdx2, col + 1);
@@ -180,6 +180,7 @@ namespace Store.POS.Common
                 ws2.Cell(rIdx2, 6).Value = Convert.ToDecimal(r["GiamGia"]);
                 ws2.Cell(rIdx2, 7).Value = Convert.ToDecimal(r["ThucThu"]);
                 ws2.Cell(rIdx2,8).Value=r["HinhThucThanhToan"]?.ToString()??"";
+                ws2.Cell(rIdx2,9).Value=Convert.ToString(r["NhanVienThuTien"]);
 
                 ws2.Cell(rIdx2, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                 ws2.Cell(rIdx2, 2).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
@@ -190,7 +191,7 @@ namespace Store.POS.Common
 
             if (rIdx2 >= startRow2)
             {
-                var rangeData2 = ws2.Range(startRow2 - 1, 1, rIdx2, 8);
+                var rangeData2 = ws2.Range(startRow2 - 1, 1, rIdx2, 9);
                 rangeData2.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
                 rangeData2.Style.Border.SetOutsideBorder(XLBorderStyleValues.Medium);
             }
@@ -209,7 +210,7 @@ namespace Store.POS.Common
             string? path=ChonNoiLuuFile("DanhSachHoaDon.xlsx");if(path==null) return;
             ExcelTable.Luu(path,"DANH SÁCH HÓA ĐƠN",data,("MaHD","Mã HĐ"),("NgayLap","Ngày lập"),("KhachHang","Khách hàng"),
                 ("NhanVien","NV lập"),("NhanVienThuTien","NV thu tiền"),("TrangThai","Trạng thái"),("HinhThucThanhToan","Hình thức thanh toán"),
-                ("TongTien","Tiền hàng"),("GiamGia","Giảm giá"),("CanThanhToan","Cần thanh toán"),("ThucThu","Đã thu"),
+                ("TongTien","Tiền hàng"),("GiamGia","Giảm giá"),("GiaTriHoaDon","Giá trị hóa đơn"),("ThucThu","Đã thu"),("CanThanhToan","Còn phải thu"),
                 ("ModifiedAt","Sửa lúc"),("NhanVienSua","NV sửa"),("CancelledAt","Hủy lúc"),("NhanVienHuy","NV hủy"),("CancelReason","Lý do hủy"),("NguonDauHoaDon","Nguồn thông tin đầu hóa đơn"));ThongBaoVaMoFile(path);
         }
 

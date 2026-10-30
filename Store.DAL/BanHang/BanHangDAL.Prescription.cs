@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
 using Store.Shared;
 namespace Store.DAL;
@@ -14,7 +14,7 @@ public partial class BanHangDAL
             if(thanhToan && item.KeDon && item.HuongDan.Length==0)
                 throw new InvalidOperationException($"Nhập hướng dẫn sử dụng cho thuốc kê đơn {item.TenThuoc}. Chọn Sửa đơn để bổ sung nếu là hóa đơn chờ.");
         }
-        if(donThuoc!=null && donThuoc.KiemTra() is string error) throw new InvalidOperationException(error);
+        if(donThuoc!=null && donThuoc.KiemTra(thanhToan || donThuoc.DaKiemTra) is string error) throw new InvalidOperationException(error);
         if(thanhToan && items.Any(i=>i.KeDon) && donThuoc==null)
             throw new InvalidOperationException("Hóa đơn có thuốc kê đơn. Chọn Sửa đơn để bổ sung và xác nhận thông tin đơn thuốc trước khi thanh toán.");
     }
@@ -28,7 +28,7 @@ public partial class BanHangDAL
         cmd.Parameters.Add("@patient",SqlDbType.NVarChar,150).Value=(object?)info?.BenhNhan.Trim()??DBNull.Value;
         cmd.Parameters.Add("@doctor",SqlDbType.NVarChar,150).Value=(object?)info?.NguoiKeDon.Trim()??DBNull.Value;
         cmd.Parameters.Add("@date",SqlDbType.Date).Value=(object?)info?.NgayKeDon.Date??DBNull.Value;
-        cmd.Parameters.Add("@employee",SqlDbType.Int).Value=info==null?DBNull.Value:employeeId;
+        cmd.Parameters.Add("@employee",SqlDbType.Int).Value=info?.DaKiemTra==true?employeeId:DBNull.Value;
         cmd.ExecuteNonQuery();
     }
 

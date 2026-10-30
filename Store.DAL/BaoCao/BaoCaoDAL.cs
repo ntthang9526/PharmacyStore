@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
 namespace Store.DAL
@@ -26,12 +26,14 @@ namespace Store.DAL
         {
             const string sql = @"
                 SELECT o.PaymentMethod AS HinhThucThanhToan, o.Id AS MaHD, COALESCE(o.PaidAt,o.OrderDate) AS NgayLap, COALESCE(o.EmployeeNameSnapshot,e.FullName) AS NhanVien,
+                       COALESCE(o.PaidEmployeeNameSnapshot,pe.FullName,N'Chưa xác định') AS NhanVienThuTien,
                        COALESCE(o.CustomerNameSnapshot,c.FullName, N'Khách lẻ') AS KhachHang,
                        COALESCE(o.VoucherCodeSnapshot,v.Code, '') AS Voucher,
                        o.TotalAmount AS TongTien, o.DiscountAmount AS GiamGia,
                        o.TotalAmount - o.DiscountAmount AS ThucThu
                 FROM Orders o
                 JOIN Employees e ON e.Id = o.EmployeeId
+                LEFT JOIN Employees pe ON pe.Id=o.PaidEmployeeId
                 LEFT JOIN Vouchers v ON v.Id = o.VoucherId
                 LEFT JOIN Customers c ON c.Id = o.CustomerId
                 WHERE o.PaymentStatus='PAID' AND COALESCE(o.PaidAt,o.OrderDate) >= @tu AND COALESCE(o.PaidAt,o.OrderDate) < DATEADD(DAY, 1, @den)

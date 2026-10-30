@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 using Store.POS;
 
@@ -50,6 +50,22 @@ internal static partial class Program
         dialogs=AnswerDialogs(main.Close,7);
         Check(dialogs.Count==1 && !main.IsDisposed && sales.Visible,"No also keeps the active child form open");
         Check(UiField<TextBox>(sales,"boxMaVoucher").Text=="DRAFT-KEEP","canceling exit preserves sale input");
+        string Warning(frmMain form,bool logout=false)=>(string)typeof(frmMain).GetMethod("NoiDungXacNhanThoat",PrivateInstance)!.Invoke(form,new object[]{logout})!;
+        Check(Warning(main).Contains("chưa lưu"),"close warning identifies unsaved sale input");
+        var cart=UiField<System.ComponentModel.BindingList<Store.POS.FormBanHang.RowData>>(sales,"gioHang");
+        cart.Add(new Store.POS.FormBanHang.RowData{Id=1,Name="Draft",Unit="Hộp",Quantity=2,Price=1000});
+        typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(typeof(frmNhapKho)).Invoke(main,null);Application.DoEvents();
+        var stock=(frmNhapKho)UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[typeof(frmNhapKho)];
+        var draft=UiField<System.Data.DataTable>(stock,"dtPhieu");
+        draft.Rows.Add(1,"Draft medicine","Hộp","DRAFT",DateTime.Today.AddYears(1),2,1000m);
+        Check(Warning(main).Contains("Giỏ hàng bán hàng: 1") && Warning(main).Contains("Phiếu nhập kho: 1"),"close warning includes hidden cart and current stock draft");
+        Check(Warning(main,true).Contains("Giỏ hàng") && Warning(main,true).Contains("Phiếu nhập") && Warning(main,true).Contains("đăng xuất"),"logout checks both unsaved documents");
+        dialogs=AnswerDialogs(main.Close,7);
+        Check(!main.IsDisposed && cart.Count==1 && draft.Rows.Count==1,"No preserves both unsaved cart and receipt rows");
+        cart.Clear();draft.Rows.Clear();UiField<TextBox>(sales,"boxMaVoucher").Clear();
+        UiField<TextBox>(stock,"txtSoLo").Text="UNADDED-LOT";
+        Check(Warning(main).Contains("đang nhập chưa lưu"),"unadded stock input is also detected");
+        UiField<TextBox>(stock,"txtSoLo").Clear();UiField<TextBox>(sales,"boxMaVoucher").Text="DRAFT-KEEP";
         UiField<Button>(main,"btnTrangChu").PerformClick();
         dialogs=AnswerDialogs(main.Close,7);
         Check(dialogs.Count==1 && !sales.IsDisposed && !sales.Visible,"home still confirms exit with a hidden sale draft");
@@ -66,5 +82,13 @@ internal static partial class Program
         dialogs=AnswerDialogs(()=>UiField<Button>(logout,"btnDangXuat").PerformClick(),6);
         Check(dialogs.Count==1 && dialogs[0].Title=="Xác nhận đăng xuất","logout asks once without a second exit prompt");
         Check(logout.DaDangXuat && logout.IsDisposed,"confirmed logout keeps its existing result");
+        using var cancelLogout=new frmMain();Offscreen(cancelLogout);
+        typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(typeof(frmBanHang)).Invoke(cancelLogout,null);
+        var draftSale=(frmBanHang)UiField<Dictionary<Type,Form>>(cancelLogout,"cuaSoDangMo")[typeof(frmBanHang)];
+        UiField<TextBox>(draftSale,"boxMaVoucher").Text="KEEP-ON-LOGOUT";
+        dialogs=AnswerDialogs(()=>UiField<Button>(cancelLogout,"btnDangXuat").PerformClick(),7);
+        Check(dialogs.Count==1 && dialogs[0].DefaultButton==7 && !cancelLogout.DaDangXuat && !cancelLogout.IsDisposed,"No is the logout default and cancels logout");
+        Check(UiField<TextBox>(draftSale,"boxMaVoucher").Text=="KEEP-ON-LOGOUT","cancelled logout preserves draft input");
+        cancelLogout.Dispose();
     }
 }

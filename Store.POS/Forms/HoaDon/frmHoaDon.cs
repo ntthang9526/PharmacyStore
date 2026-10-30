@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 namespace Store.POS;
 public partial class frmHoaDon : Form, ILamMoiDuLieu
@@ -22,7 +22,6 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         dgvHoaDon.CellFormatting+=(_,e)=>
         {
             if(e.RowIndex<0 || e.ColumnIndex<0 || dgvHoaDon.Rows[e.RowIndex].DataBoundItem is not DataRowView invoice) return;
-            if(dgvHoaDon.Columns[e.ColumnIndex].DataPropertyName=="CanThanhToan" && (string)invoice["PaymentStatus"]!="PENDING") e.Value=0m;
             if(dgvHoaDon.Columns[e.ColumnIndex].DataPropertyName=="TrangThai")
                 e.CellStyle!.ForeColor=(string)invoice["PaymentStatus"] switch
                 {
@@ -89,7 +88,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
             HienVungChiTiet(true);
             btnXuatChiTietExcel.Enabled=true;btnInPdf.Enabled=(string)data["PaymentStatus"]=="PAID";lblHinhThuc.Visible=btnThanhToanCho.Visible=cboHinhThuc.Visible=btnSuaCho.Visible=btnHuyCho.Visible=(string)data["PaymentStatus"]=="PENDING";
             dgvChiTiet.DataSource=bll.ChiTiet((int)data["MaHD"]);
-            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["TrangThai"]} · {data["HinhThucThanhToan"]}\nNV lập: {data["NhanVien"]} · NV thu: {data["NhanVienThuTien"]}\nTiền hàng: {data["TongTien"]:N0} đ · Giảm: {data["GiamGia"]:N0} đ · Cần trả: {data["CanThanhToan"]:N0} đ · Đã thu: {data["ThucThu"]:N0} đ";
+            lblChiTiet.Text=$"HD{(int)data["MaHD"]:D5} · {data["TrangThai"]} · {data["HinhThucThanhToan"]}\nNV lập: {data["NhanVien"]} · NV thu: {data["NhanVienThuTien"]}\nGiá trị hóa đơn: {data["GiaTriHoaDon"]:N0} đ · Đã thu: {data["ThucThu"]:N0} đ · Còn phải thu: {data["CanThanhToan"]:N0} đ";
             lblChiTiet.LinkArea=new LinkArea(0,0);lblChiTiet.TabStop=false;
             if(!data.Row.IsNull("PrescriptionNumber"))
             {
@@ -97,7 +96,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
                 lblChiTiet.Text=lblChiTiet.Text.Insert(lblChiTiet.Text.IndexOf('\n')," · "+link);
                 lblChiTiet.LinkArea=new LinkArea(lblChiTiet.Text.IndexOf(link,StringComparison.Ordinal),link.Length);lblChiTiet.TabStop=true;
             }
-            chiTietHint.SetToolTip(lblChiTiet,Convert.ToString(data["NguonDauHoaDon"]));
+            chiTietHint.SetToolTip(lblChiTiet,$"Tiền hàng: {data["TongTien"]:N0} đ · Giảm: {data["GiamGia"]:N0} đ\n{data["NguonDauHoaDon"]}");
             lblTrangThai.Text=trangThaiDanhSach+(((string)data["NguonDauHoaDon"]).StartsWith("Chưa")?" · Chứng từ cũ: tên thiếu lấy từ danh mục hiện tại.":"");
             if((string)data["PaymentStatus"]=="CANCELLED")
             {

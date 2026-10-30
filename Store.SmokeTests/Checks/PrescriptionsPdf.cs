@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
 using System.Reflection;
 using ClosedXML.Excel;
@@ -54,6 +54,22 @@ internal static partial class Program
             Check(!bills.KiemTraDonThuocCho(draft,out error) && error.Contains("Sửa đơn"),"pending payment preflight directs user to complete prescription");
             Check(!bills.ThanhToanCho(draft,"Tiền mặt",3000,out error),"pending payment also rejects missing prescription in DAL");
             Check(StockRx()==before,"incomplete pending prescription does not reserve or deduct stock");
+            var partial=new DonThuocInfo{BenhNhan="Người bệnh đang nhập dở"};
+            Check(Save(Items(dosage:""),partial,true,out error),"partial prescription with missing number/doctor/dosage can be saved as draft: "+error);
+            int partialId=ids.Last();
+            var partialData=bills.LayDonCho(partialId);var partialInfo=HoaDonBLL.DocDonThuoc(partialData.Tables[0].Rows[0]);
+            Check(partialInfo?.BenhNhan==partial.BenhNhan && partialInfo.SoDon=="" && !partialInfo.DaKiemTra,"loading draft preserves partial fields without a prescription number");
+            Check(Count("SELECT COUNT(*) FROM Orders WHERE Id=@id AND PrescriptionCheckedBy IS NULL AND PrescriptionCheckedAt IS NULL",("@id",partialId))==1,"saving draft never records a reviewer or review time");
+            Check(!bills.ThanhToanCho(partialId,"Tiền mặt",3000,out error) && StockRx()==before,"partial prescription remains blocked at payment with no stock deduction");
+            var tooLong=new DonThuocInfo{BenhNhan=new string('X',151)};
+            Check(!Save(Items(dosage:""),tooLong,true,out error),"draft still validates field lengths before SQL truncation");
+            using(var editor=new frmBanHang(partialId))
+            {Offscreen(editor);Check(UiField<DonThuocInfo?>(editor,"donThuoc")?.BenhNhan==partial.BenhNhan,"pending editor restores unfinished prescription fields");}
+            using(var partialForm=new frmDonThuoc(partial,new[]{new RowData{Id=rx,Name=tag,IsPrescription=true}}))
+            {
+                Offscreen(partialForm);UiField<Button>(partialForm,"btnLuuNhap").PerformClick();
+                Check(partialForm.DialogResult==DialogResult.OK && partialForm.DonThuoc?.BenhNhan==partial.BenhNhan && !partialForm.DonThuoc.DaKiemTra && partialForm.HuongDan[rx]=="","Save draft returns partial prescription and blank dosage without requiring confirmation");
+            }
             var pendingData=bills.LayDonCho(draft);byte[] version=(byte[])pendingData.Tables[0].Rows[0]["OrderVersion"];
             Scalar("UPDATE Medicines SET IsPrescription=0 WHERE Id=@id",("@id",rx));
             Check(sales.ThanhToan(admin,Items(),null,null,3000,out _,out _,out _,out error,"Chưa xác định",true,draft,version),"editing draft survives later classification change");
@@ -65,6 +81,25 @@ internal static partial class Program
             Check(Count("SELECT COUNT(*) FROM Orders WHERE Id=@id AND PrescriptionCheckedBy=@e AND PrescriptionCheckedAt IS NOT NULL",("@id",draft),("@e",admin))==1,"reviewer and review time saved");
             var loaded=bills.LayDonCho(draft);
             Check(HoaDonBLL.DocDonThuoc(loaded.Tables[0].Rows[0])?.SoDon==Info().SoDon && loaded.Tables[1].Rows.Cast<DataRow>().All(r=>(string)r["HuongDan"]==Items()[0].HuongDan),"reloading pending preserves metadata and instructions");
+            using(var editor=new frmBanHang(draft))
+            {
+                Offscreen(editor);var cart=UiField<BindingList<RowData>>(editor,"gioHang");var review=UiField<DonThuocInfo>(editor,"donThuoc");
+                Check(review.DaKiemTra,"loading unchanged verified draft preserves its confirmation");
+                cart.Add(new RowData{Id=otc,Name="OTC",Quantity=1,Price=1000});
+                Check(review.DaKiemTra,"adding ordinary medicine leaves prescription confirmation unchanged");
+                cart[0].Quantity++;cart.ResetItem(0);
+                Check(!review.DaKiemTra && UiField<Button>(editor,"btnDonThuoc").Text.Contains("*"),"changing prescription quantity removes confirmation and marks recheck required");
+                review.DaKiemTra=true;cart.ResetBindings();Check(review.DaKiemTra,"redrawing an unchanged cart does not remove confirmation");
+                cart[0].HuongDan="Changed instructions";cart.ResetItem(0);Check(!review.DaKiemTra,"changing dosage instructions also requires recheck");
+                review.DaKiemTra=true;cart.RemoveAt(0);Check(!review.DaKiemTra,"removing a prescription medicine invalidates prior confirmation");
+                review.DaKiemTra=true;cart.Add(new RowData{Id=rx,Name=tag,IsPrescription=true,Quantity=1,Price=1000});Check(!review.DaKiemTra,"adding prescription medicine invalidates prior confirmation");
+            }
+            var unverified=Info();unverified.DaKiemTra=false;
+            Check(sales.ThanhToan(admin,Items(4),null,null,4000,out _,out _,out _,out error,"Chưa xác định",true,draft,(byte[])loaded.Tables[0].Rows[0]["OrderVersion"],unverified),"modified prescription saves as unverified pending draft");
+            Check(Count("SELECT COUNT(*) FROM Orders WHERE Id=@id AND PrescriptionCheckedBy IS NULL AND PrescriptionCheckedAt IS NULL",("@id",draft))==1 && !bills.ThanhToanCho(draft,"Tiền mặt",4000,out error),"modified unverified draft clears reviewer and cannot be paid");
+            loaded=bills.LayDonCho(draft);
+            Check(sales.ThanhToan(admin,Items(),null,null,3000,out _,out _,out _,out error,"Chưa xác định",true,draft,(byte[])loaded.Tables[0].Rows[0]["OrderVersion"],Info()),"freshly reviewed pending draft can be saved again");
+            loaded=bills.LayDonCho(draft);
             Check(bills.ThanhToanCho(draft,"Tiền mặt",3000,out error,(byte[])loaded.Tables[0].Rows[0]["OrderVersion"]),"pay completed pending prescription: "+error);paid=draft;
             Check(StockRx()==before-3,"prescription sale deducts stock exactly once");
             Check(!bills.ThanhToanCho(paid,"Tiền mặt",3000,out error),"paid prescription cannot be charged twice");
@@ -106,6 +141,16 @@ internal static partial class Program
                 ((BindingList<RowData>)UiField<DataGridView>(form,"dgvHuongDan").DataSource!)[0].HuongDan=Items()[0].HuongDan;
                 using var image=new Bitmap(form.Width,form.Height);form.DrawToBitmap(image,new Rectangle(Point.Empty,image.Size));image.Save(Path.Combine(output,"don-thuoc.png"));
                 UiField<Button>(form,"btnLuu").PerformClick();Check(form.DonThuoc?.DaKiemTra==true && form.HuongDan[rx]==Items()[0].HuongDan,"prescription form returns verified fields and per-medicine instruction");
+            }
+            using(var reviewed=new frmDonThuoc(Info(),new[]{new RowData{Id=rx,Name=tag,IsPrescription=true,HuongDan="Original instructions"}}))
+            {
+                Offscreen(reviewed);UiField<TextBox>(reviewed,"txtBenhNhan").Text="Changed patient";
+                Check(!UiField<CheckBox>(reviewed,"chkDaKiemTra").Checked,"editing prescription metadata clears the checkbox");
+                UiField<CheckBox>(reviewed,"chkDaKiemTra").Checked=true;
+                UiField<DataGridView>(reviewed,"dgvHuongDan").Rows[0].Cells["colHuongDan"].Value="Changed dosage";
+                Check(!UiField<CheckBox>(reviewed,"chkDaKiemTra").Checked,"editing prescription grid clears the checkbox");
+                UiField<CheckBox>(reviewed,"chkDaKiemTra").Checked=true;UiField<Button>(reviewed,"btnLuuNhap").PerformClick();
+                Check(reviewed.DonThuoc?.DaKiemTra==false,"Save draft never claims verified even when the checkbox was checked");
             }
             using(var invoiceForm=new frmHoaDon())
             {

@@ -93,6 +93,13 @@ internal static partial class Program
                 }
                 using var image=new Bitmap(main.Width,main.Height);main.DrawToBitmap(image,new Rectangle(Point.Empty,image.Size));image.Save("artifacts/medicine-barcode-20261030/medicine-"+size.Width+".png");
             }
+            typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(typeof(Store.POS.frmBanHang)).Invoke(main,null);
+            var saleForm=(Store.POS.frmBanHang)UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[typeof(Store.POS.frmBanHang)];
+            UiField<TextBox>(saleForm,"boxTimKiem").Text="pArAcEtAmOl";Application.DoEvents();
+            var results=UiField<System.ComponentModel.BindingList<Store.Shared.Models.Medicine>>(saleForm,"timKiem");
+            Check(results.Any(m=>m.Id==med),"sales quick search finds ingredient even when medicine name has no matching text");
+            UiField<TextBox>(saleForm,"boxTimKiem").Clear();Application.DoEvents();
+            Check(!UiField<DataGridView>(saleForm,"tableTimKiem").Visible,"clearing ingredient query hides quick search results");
             main.Dispose();
         }
         finally

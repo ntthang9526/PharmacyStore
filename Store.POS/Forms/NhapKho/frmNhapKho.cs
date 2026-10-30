@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using System.Globalization;
 using Store.BLL;
 using Store.Shared;
@@ -20,8 +20,8 @@ namespace Store.POS
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnNhapExcel.Click+=(_,_)=>NhapExcelPhieuNhap();btnMauExcel.Click+=(_,_)=>TaiFileMauNhapKho();
             PhanQuyenGiaoDien.Gan(this);
-            PosFormStyle.ConfigureRowNavigation(dgvPhieu,row=>dongPhieuDangChon=((DataRowView)row.DataBoundItem).Row);
-            PosFormStyle.ConfigureGridSelection(this, posLayout, null);
+            PosFormStyle.ConfigureRowNavigation(dgvPhieu,row=>NapDongPhieu(((DataRowView)row.DataBoundItem).Row));
+            PosFormStyle.ConfigureGridSelection(this, posLayout, null,clearSelectionOnLeave:false);
             txtSoLo.MaxLength=50;
             cboNhaCungCap.SelectedIndexChanged += (_,_) => { if(!dangNapNCC) NapThuocTheoNCC(); };
             cboThuoc.SelectedIndexChanged += (_,_) => { txtSoLo.Clear(); CapNhatNhapLo(); };
@@ -31,7 +31,7 @@ namespace Store.POS
             dgvPhieu.CellClick += (_, e) =>
             {
                 if (e.RowIndex >= 0 && dgvPhieu.Rows[e.RowIndex].DataBoundItem is DataRowView row)
-                    dongPhieuDangChon = row.Row;
+                    NapDongPhieu(row.Row);
             };
 
         }
@@ -107,6 +107,7 @@ namespace Store.POS
             txtSoLo.Enabled=coNCC && cboThuoc.SelectedItem is DataRowView;
             txtSoLo.BackColor=txtSoLo.Enabled?Color.White:SystemColors.ControlLight;
             btnThemThuoc.Enabled=txtSoLo.Enabled;
+            btnCapNhatDong.Enabled=txtSoLo.Enabled && dongPhieuDangChon is {RowState:not DataRowState.Detached};
         }
 
         private void ThemNCC()
@@ -128,8 +129,32 @@ namespace Store.POS
             CapNhatNhapLo();
         }
 
-        private void btnThemThuoc_Click(object sender, EventArgs e)
+        private void NapDongPhieu(DataRow row)
         {
+            dongPhieuDangChon=row;
+            cboThuoc.SelectedValue=row["MaThuoc"];
+            txtSoLo.Text=Convert.ToString(row["SoLo"]);
+            dtpHanDung.Value=(DateTime)row["HanDung"];
+            nudSoLuong.Value=(int)row["SoLuong"];
+            nudGiaNhap.Value=(decimal)row["GiaNhap"];
+            CapNhatNhapLo();
+        }
+
+        private void BoChonDongPhieu()
+        {
+            dongPhieuDangChon=null;
+            btnCapNhatDong.Enabled=false;
+        }
+
+        private void btnThemThuoc_Click(object sender, EventArgs e) => LuuDongPhieu(false);
+        private void btnCapNhatDong_Click(object sender, EventArgs e) => LuuDongPhieu(true);
+        private void LuuDongPhieu(bool capNhat)
+        {
+            if(capNhat && (dongPhieuDangChon==null || dongPhieuDangChon.RowState==DataRowState.Detached))
+            {
+                MessageBox.Show("Chọn dòng phiếu nhập cần cập nhật.","Thông báo");
+                return;
+            }
             if (cboNhaCungCap.SelectedValue == null)
             {
                 MessageBox.Show("Chọn nhà cung cấp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -142,9 +167,9 @@ namespace Store.POS
             }
 
             string soLo = txtSoLo.Text.Trim();
-            if (soLo == "")
+            if (soLo.Length==0 || soLo.Length>50 || soLo.Any(char.IsControl))
             {
-                MessageBox.Show("Nhập số lô.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số lô không được trống, tối đa 50 ký tự và không chứa ký tự điều khiển.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtSoLo.Focus();
                 return;
             }
@@ -154,21 +179,25 @@ namespace Store.POS
                 dtpHanDung.Focus();
                 return;
             }
-            if (nudGiaNhap.Value <= 0)
+            if (nudSoLuong.Value<1 || Store.Shared.TienTe.LamTron(nudGiaNhap.Value)<=0)
             {
-                MessageBox.Show("Giá nhập phải lớn hơn 0.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số lượng và giá nhập sau làm tròn phải lớn hơn 0.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nudGiaNhap.Focus();
                 return;
             }
 
-            dtPhieu.Rows.Add(
+            object[] values={
                 Convert.ToInt32(thuoc["MaThuoc"]),
-                thuoc["TenThuoc"].ToString(),
-                thuoc["DonViTinh"].ToString(),
+                thuoc["TenThuoc"].ToString()??"",
+                thuoc["DonViTinh"].ToString()??"",
                 soLo.ToUpper(),
                 dtpHanDung.Value.Date,
                 (int)nudSoLuong.Value,
-                Store.Shared.TienTe.LamTron(nudGiaNhap.Value));
+                Store.Shared.TienTe.LamTron(nudGiaNhap.Value)};
+            if(capNhat) dongPhieuDangChon!.ItemArray=values;
+            else dtPhieu.Rows.Add(values);
+            BoChonDongPhieu();
+            dgvPhieu.ClearSelection();dgvPhieu.CurrentCell=null;
 
             txtSoLo.Clear();
             nudSoLuong.Value = 1;
@@ -184,9 +213,15 @@ namespace Store.POS
                 return;
             }
             dtPhieu.Rows.Remove(dongPhieuDangChon);
-            dongPhieuDangChon = null;
+            BoChonDongPhieu();
+            txtSoLo.Clear();nudSoLuong.Value=1;
             CapNhatTongVon();
         }
+
+        internal string? CanhBaoChuaLuu => dtPhieu.Rows.Count>0
+            ? $"Phiếu nhập kho: {dtPhieu.Rows.Count} dòng thuốc chưa lưu."
+            : (cboThuoc.SelectedItem!=null || !string.IsNullOrWhiteSpace(txtSoLo.Text) || !string.IsNullOrWhiteSpace(txtGhiChu.Text) || nudGiaNhap.Value>0)
+                ? "Thông tin phiếu nhập kho đang nhập chưa lưu." : null;
 
         private void btnXoaPhieu_Click(object sender, EventArgs e)
         {
@@ -217,7 +252,7 @@ namespace Store.POS
 
         private void LamMoiPhieu()
         {
-            dongPhieuDangChon = null;
+            BoChonDongPhieu();
             dtPhieu.Rows.Clear();
             txtGhiChu.Clear();
             txtSoLo.Clear();

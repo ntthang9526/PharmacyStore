@@ -1,4 +1,4 @@
-namespace Store.POS
+﻿namespace Store.POS
 {
     partial class frmBanHang
     {
@@ -362,7 +362,7 @@ namespace Store.POS
             boxTimKiem.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             boxTimKiem.Location = new Point(5, 5);
             boxTimKiem.Name = "boxTimKiem";
-            boxTimKiem.PlaceholderText = "Tìm tên thuốc, mã thuốc hoặc mã vạch";
+            boxTimKiem.PlaceholderText = "Tìm tên thuốc, hoạt chất, mã thuốc hoặc mã vạch";
             boxTimKiem.Size = new Size(533, 23);
             boxTimKiem.TabIndex = 2;
             boxTimKiem.TextChanged += boxTimKiem_TextChanged;

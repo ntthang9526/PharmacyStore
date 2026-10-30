@@ -1,10 +1,12 @@
-using Store.BLL;
+﻿using Store.BLL;
 using System.Data;
 
 namespace Store.POS
 {
     public partial class frmKhachHang : Form, ILamMoiDuLieu
     {
+        private readonly string? soDienThoaiBanDau;
+        public string? CreatedPhone {get;private set;}
         private string maDangChon="";
         private KhachHangBLL bll = new KhachHangBLL();
         private bool isThem = false;
@@ -12,6 +14,7 @@ namespace Store.POS
         public frmKhachHang() : this(null) {}
         public frmKhachHang(string? sdt)
         {
+            soDienThoaiBanDau=string.IsNullOrWhiteSpace(sdt)?null:sdt.Trim();
             InitializeComponent();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
@@ -23,7 +26,7 @@ namespace Store.POS
             };
             PosFormStyle.ConfigureRowNavigation(dgvKhachHang,row=>dgvKhachHang_CellClick(dgvKhachHang,new DataGridViewCellEventArgs(0,row.Index)));
             PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
-            if (!string.IsNullOrEmpty(sdt)) txtDienThoai.Text = sdt;
+
         }
 
         private void ResetDetails(bool force = false)
@@ -40,6 +43,11 @@ namespace Store.POS
 
             SetControlState(false);
             ResetDetails();
+            if(soDienThoaiBanDau!=null)
+            {
+                btnThem_Click(this,EventArgs.Empty);
+                txtDienThoai.Text=soDienThoaiBanDau;
+            }
         }
         private void LoadData()
         {
@@ -137,6 +145,11 @@ namespace Store.POS
             // 5. Gọi BLL để thêm mới
             if (bll.ThemMoiKhachHang(maDangChon.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
             {
+                CreatedPhone=sdt;
+                if(soDienThoaiBanDau!=null)
+                {
+                    DialogResult=DialogResult.OK;Close();return;
+                }
                 MessageBox.Show("Đã thêm khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
 

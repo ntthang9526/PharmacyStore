@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
 namespace Store.DAL;
 public partial class HoaDonDAL
@@ -10,7 +10,8 @@ public partial class HoaDonDAL
                CASE o.PaymentStatus WHEN 'PENDING' THEN N'Chờ thanh toán' WHEN 'CANCELLED' THEN N'Đã hủy' ELSE N'Đã thanh toán' END AS TrangThai,
                o.PaidAt AS NgayThanhToan, COALESCE(o.PaidEmployeeNameSnapshot,pe.FullName) AS NhanVienThuTien, o.TotalAmount AS TongTien,
                o.DiscountAmount AS GiamGia, CASE WHEN o.PaymentStatus='PAID' THEN o.TotalAmount-o.DiscountAmount ELSE 0 END AS ThucThu,
-               CASE WHEN o.PaymentStatus='CANCELLED' THEN 0 ELSE o.TotalAmount-o.DiscountAmount END AS CanThanhToan,
+               o.TotalAmount-o.DiscountAmount AS GiaTriHoaDon,
+               CASE WHEN o.PaymentStatus='PENDING' THEN o.TotalAmount-o.DiscountAmount ELSE 0 END AS CanThanhToan,
                o.OrderVersion,o.ModifiedAt,COALESCE(o.ModifiedEmployeeNameSnapshot,me.FullName) AS NhanVienSua,o.CancelledAt,COALESCE(o.CancelledEmployeeNameSnapshot,ce.FullName) AS NhanVienHuy,o.CancelReason,o.PrescriptionNumber,o.PatientName,o.Prescriber,o.PrescriptionDate,o.PrescriptionCheckedBy,o.PrescriptionCheckedAt,
                CASE WHEN o.EmployeeNameSnapshot IS NOT NULL AND o.CustomerNameSnapshot IS NOT NULL AND o.CustomerPhoneSnapshot IS NOT NULL AND o.VoucherCodeSnapshot IS NOT NULL
                     AND (o.PaymentStatus<>'PAID' OR o.PaidEmployeeNameSnapshot IS NOT NULL)

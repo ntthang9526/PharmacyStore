@@ -99,3 +99,9 @@ Admin chọn Thêm/Sửa → nhập hoặc quét vào ô Mã vạch → Lưu. Ch
 Trong **Quản lý thuốc**, ô **Hoạt chất** cho phép thêm/sửa (tùy chọn, tối đa 150 ký tự) và tìm thuốc theo hoạt chất. Thêm tay và thêm nhanh đều chặn thuốc đang hiển thị trùng tên + nhà cung cấp + đơn vị, không phân biệt hoa/thường hay khoảng trắng đầu/cuối.
 
 Nhập Excel thuốc: tải lại **File mẫu** để có cột **Hoạt chất (không bắt buộc)** ở cuối. File mẫu cũ 6/7 cột vẫn dùng được; Hoạt chất để trống khi thiếu cột. Mã vạch cần định dạng Text để giữ số 0 đầu. Xem trước hiển thị Hoạt chất/Kê đơn và loại các dòng trùng trước khi xác nhận; bước lưu vẫn kiểm tra lại. Nhập danh mục chỉ thêm thuốc mới, không cập nhật thuốc đang có và không cộng tồn kho.
+
+Hóa đơn thống nhất Giá trị hóa đơn (sau giảm giá), Đã thu và Còn phải thu; chỉ hóa đơn Chờ thanh toán có tiền còn thu. Bán hàng tìm được theo hoạt chất. Khi đóng ứng dụng/đăng xuất, cảnh báo cả giỏ hàng và phiếu nhập nháp trên các màn đang ẩn; chọn Không để quay lại lưu. Báo cáo và Excel tách NV lập/NV thu theo lịch sử giao dịch.
+
+Phiếu nhập chưa lưu: chọn dòng, sửa thông tin và bấm **Cập nhật dòng**; chỉ khi **LƯU PHIẾU** mới ghi vào kho. Từ Bán hàng, thêm khách mới sẽ giữ số điện thoại vừa tra cứu, mở sẵn chế độ thêm; lưu thành công tự quay lại và chọn khách với số điện thoại đã lưu.
+
+Đơn thuốc có **Lưu nháp** (cho nhập thiếu, chưa xác nhận) và **Xác nhận kiểm tra** (đủ thông tin/hướng dẫn, tích đã kiểm tra). Lưu nháp giữ nội dung trên màn Bán hàng; bấm **Lưu chờ thanh toán** để ghi vào database và mở lại sau. Đổi thuốc kê đơn, số lượng hoặc hướng dẫn sẽ bỏ xác nhận cũ; thanh toán vẫn yêu cầu kiểm tra lại.

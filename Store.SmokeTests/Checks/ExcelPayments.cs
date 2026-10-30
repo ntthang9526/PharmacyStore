@@ -66,6 +66,17 @@ internal static partial class Program
             Check(Count("SELECT COUNT(*) FROM OrderPendingItems WHERE OrderId=@id",("@id",pending))==0 && Count("SELECT COUNT(*) FROM OrderDetails WHERE OrderId=@id AND UnitPrice=1000",("@id",pending))==2,"confirmation replaces draft with batch details and preserves quoted unit price");
             Check((string)Scalar("SELECT PaymentMethod FROM Orders WHERE Id=@id",("@id",pending))=="Chuyển khoản QR" && Count("SELECT PaidEmployeeId FROM Orders WHERE Id=@id",("@id",pending))==staff,"actual payment method and collecting cashier are recorded");
             Check(Revenue()==before+3900,"revenue uses payment date rather than yesterday's draft date");
+            var paidInvoice=invoices.TimKiem("HD"+pending.ToString("D5")).Rows[0];
+            Check((decimal)paidInvoice["GiaTriHoaDon"]==3900 && (decimal)paidInvoice["ThucThu"]==3900 && (decimal)paidInvoice["CanThanhToan"]==0,"paid invoice separates value, collected and remaining due in bound data");
+            var reportInvoice=new BaoCaoDAL().LayDanhSachHoaDon(DateTime.Today,DateTime.Today).Rows.Cast<DataRow>().Single(r=>(int)r["MaHD"]==pending);
+            string creator=Convert.ToString(Scalar("SELECT FullName FROM Employees WHERE Id=@id",("@id",admin)))!,collector=Convert.ToString(Scalar("SELECT FullName FROM Employees WHERE Id=@id",("@id",staff)))!;
+            Check((string)reportInvoice["NhanVien"]==creator && (string)reportInvoice["NhanVienThuTien"]==collector && creator!=collector,"revenue report distinguishes draft creator from collecting cashier");
+            using(var paidForm=new frmHoaDon(pending))
+            {
+                Offscreen(paidForm);string summary=UiField<LinkLabel>(paidForm,"lblChiTiet").Text;
+                Check(summary.Contains("Giá trị hóa đơn: 3,900") && summary.Contains("Đã thu: 3,900") && summary.Contains("Còn phải thu: 0") && !summary.Contains("Cần trả:"),"paid invoice detail matches list amount due");
+            }
+
             Check(!invoices.ThanhToanCho(pending,"Tiền mặt",3900,out _) && StockFor()==1,"paid invoice cannot be paid again");
             Check(sales.ThanhToan(staff,CartFor(1),null,null,2000,out int concurrent,out _,out _,out error,"Chưa xác định",true),"second pending invoice");orders.Add(concurrent);
             var results=Task.WhenAll(Task.Run(()=>invoices.ThanhToanCho(concurrent,"Tiền mặt",2000,out _)),Task.Run(()=>invoices.ThanhToanCho(concurrent,"Tiền mặt",2000,out _))).GetAwaiter().GetResult();
@@ -150,7 +161,14 @@ internal static partial class Program
             }
             var reports=new BaoCaoBLL();Check(reports.LayBaoCao(DateTime.Today,DateTime.Today,out var daily,out var paidOrders,out int billCount,out decimal total,out decimal reductions,out decimal revenue,out _),"paid report data prepared for export");
             string reportPath=Path.Combine(folder,"report.xlsx");ExcelHelper.XuatBaoCaoDoanhThu(DateTime.Today,DateTime.Today,billCount,total,reductions,revenue,daily,paidOrders,reportPath,false);
-            using(var book=new XLWorkbook(reportPath)) Check(book.Worksheets.Count==2 && book.Worksheet(2).Cell(3,8).GetString()=="Hình thức thanh toán","actual report export creates both sheets including payment method");
+            using(var book=new XLWorkbook(reportPath))
+            {
+                var sheet=book.Worksheet(2);
+                Check(book.Worksheets.Count==2 && sheet.Cell(3,8).GetString()=="Hình thức thanh toán","actual report export creates both sheets including payment method");
+                Check(sheet.Cell(3,4).GetString()=="NV lập" && sheet.Cell(3,9).GetString()=="NV thu","report Excel has separate creator/collector headers");
+                var exported=sheet.RowsUsed().Single(r=>r.Cell(1).GetString()=="HD"+pending.ToString("D5"));
+                Check(exported.Cell(4).GetString()==creator && exported.Cell(9).GetString()==collector,"report Excel records both employees correctly");
+            }
             SetTestSession(staff);
             using(var medForm=new frmQuanLyThuoc())
             {Offscreen(medForm);Check(!UiField<Button>(medForm,"btnNhapExcel").Visible && UiField<Button>(medForm,"btnXuatExcel").Visible,"staff may export but cannot import medicine catalog");}

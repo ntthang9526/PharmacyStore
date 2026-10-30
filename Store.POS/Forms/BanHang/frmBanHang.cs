@@ -1,4 +1,4 @@
-using Store.Shared;
+﻿using Store.Shared;
 using Store.BLL;
 using Store.DAL;
 using Store.POS.FormBanHang;
@@ -110,6 +110,8 @@ namespace Store.POS
             tableTimKiem.DataSource = timKiem;
             try {NapHoaDonCho();}
             catch(Exception ex) {MessageBox.Show(this,ex.Message,"Không mở được đơn chờ");BeginInvoke(new Action(Close));return;}
+            GhiNhanThuocKeDon();
+            gioHang.ListChanged+=(_,_)=>KiemTraThayDoiThuocKeDon();
             CapNhatGiaTien();
             timerDateTime.Start();
             UpdateDateTime();
@@ -131,6 +133,11 @@ namespace Store.POS
                 foreach(DataGridViewRow row in tableGioHang.Rows)
                     if(ReferenceEquals(row.DataBoundItem,dongDangThaoTac)) {row.Selected=true;break;}
         }
+
+        internal string? CanhBaoChuaLuu => gioHang.Count>0
+            ? $"Giỏ hàng bán hàng: {gioHang.Count} dòng thuốc chưa lưu."
+            : (!string.IsNullOrWhiteSpace(boxMaKhachHang.Text) || !string.IsNullOrWhiteSpace(boxMaVoucher.Text) || !string.IsNullOrWhiteSpace(boxTienKhach.Text))
+                ? "Thông tin bán hàng đang nhập chưa lưu." : null;
 
         private void frmBanHang_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -186,7 +193,8 @@ namespace Store.POS
                 foreach (var item in danhSachThuoc)
                 {
                     if (item.Key.ToString().Contains(text) || item.Value.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
-                        (item.Value.BarCode?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false))
+                        (item.Value.BarCode?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (item.Value.ActiveIngredient?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false))
                     {
                         listData.Add(item.Key, item.Value);
                     }
@@ -453,9 +461,12 @@ namespace Store.POS
                 khachHang = customerDAL.GetCustomerByPhone(phone);
                 if (khachHang == null && MessageBox.Show("Chưa có khách hàng này. Thêm mới?", "Khách hàng", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    using var form = new frmKhachHang();
-                    form.ShowDialog(this);
-                    khachHang = customerDAL.GetCustomerByPhone(phone);
+                    using var form = new frmKhachHang(phone);
+                    if(form.ShowDialog(this)==DialogResult.OK && form.CreatedPhone is string savedPhone)
+                    {
+                        boxMaKhachHang.Text=savedPhone;
+                        khachHang=customerDAL.GetCustomerByPhone(savedPhone);
+                    }
                 }
                 CapNhatThongTinKhachHang();
             }

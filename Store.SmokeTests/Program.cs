@@ -69,6 +69,11 @@ internal static partial class Program
             try {TestPendingActions();Console.WriteLine($"ALL {checks} PENDING ACTION CHECKS PASSED");return 0;}
             catch(Exception ex) {Console.WriteLine(ex);return 1;}
         }
+        if(args.Contains("--stock-customer"))
+        {
+            try {TestStockCustomer();Console.WriteLine($"ALL {checks} STOCK/CUSTOMER CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--medicine-excel"))
         {
             try {TestMedicineExcel();Console.WriteLine($"ALL {checks} MEDICINE EXCEL CHECKS PASSED");return 0;}

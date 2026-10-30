@@ -43,7 +43,7 @@ namespace Store.POS
             {
                 if(DaDangXuat) return;
                 if(e.CloseReason==CloseReason.UserClosing &&
-                    MessageBox.Show(this,"Bạn muốn đóng ứng dụng?","Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2)!=DialogResult.Yes) e.Cancel=true;
+                    MessageBox.Show(this,NoiDungXacNhanThoat(false),"Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2)!=DialogResult.Yes) e.Cancel=true;
             };
             var timerQuyen=new System.Windows.Forms.Timer(components) {Interval=5000};
             timerQuyen.Tick+=(_,_)=>
@@ -263,11 +263,24 @@ namespace Store.POS
             ShowFormBaoCao();
         }
     
+        private string NoiDungXacNhanThoat(bool dangXuat)
+        {
+            var drafts=cuaSoDangMo.Values.Where(f=>!f.IsDisposed).Select(f=>f switch
+            {
+                frmBanHang sales=>sales.CanhBaoChuaLuu,
+                frmNhapKho stock=>stock.CanhBaoChuaLuu,
+                _=>null
+            }).Where(s=>s!=null).ToArray();
+            string question=dangXuat?"Bạn có muốn đăng xuất?":"Bạn muốn đóng ứng dụng?";
+            return drafts.Length==0?question:string.Join(Environment.NewLine,drafts)+Environment.NewLine+
+                "Dữ liệu chưa lưu sẽ bị mất. Chọn Không để quay lại lưu."+Environment.NewLine+question;
+        }
+
         public bool DaDangXuat { get; private set; }
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, "Bạn có muốn đăng xuất?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(this, NoiDungXacNhanThoat(true), "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 DaDangXuat = true;
                 Close();

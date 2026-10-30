@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -78,6 +78,7 @@ partial class frmNhapKho
         label31 = new global::System.Windows.Forms.Label();
         nudGiaNhap = new global::System.Windows.Forms.NumericUpDown();
         tableLayoutPanel32 = new global::System.Windows.Forms.TableLayoutPanel();
+        btnCapNhatDong = new global::System.Windows.Forms.Button();
         btnThemThuoc = new global::System.Windows.Forms.Button();
         tableLayoutPanel33 = new global::System.Windows.Forms.TableLayoutPanel();
         lblTongVonText = new global::System.Windows.Forms.Label();
@@ -1808,7 +1809,7 @@ partial class frmNhapKho
         tableLayoutPanel30.Controls.Add(nudGiaNhap, 0, 1);
         tableLayoutPanel14.Controls.Add(tableLayoutPanel32, 0, 4);
         tableLayoutPanel32.Controls.Add(btnThemThuoc, 0, 0);
-        tableLayoutPanel32.SetColumnSpan(btnThemThuoc, 2);
+        tableLayoutPanel32.Controls.Add(btnCapNhatDong,1,0);
         tableLayoutPanel5.Controls.Add(tableLayoutPanel33, 0, 2);
         tableLayoutPanel33.Controls.Add(lblTongVonText, 0, 0);
         tableLayoutPanel33.Controls.Add(lblTongVon, 0, 1);
@@ -1833,6 +1834,7 @@ partial class frmNhapKho
         ShowInTaskbar = true;
         Name = "frmNhapKho";
         btnThemThuoc.Click += btnThemThuoc_Click;
+        btnCapNhatDong.Click += btnCapNhatDong_Click;
         btnXoaDong.Click += btnXoaDong_Click;
         btnXoaPhieu.Click += btnXoaPhieu_Click;
         btnLuu.Click += btnLuu_Click;
@@ -2136,6 +2138,19 @@ partial class frmNhapKho
         
         
         
+        btnThemThuoc.Margin=new Padding(0,4,4,0);
+        btnCapNhatDong.Name="btnCapNhatDong";
+        btnCapNhatDong.Text="Cập nhật dòng";
+        btnCapNhatDong.Dock=DockStyle.Fill;
+        btnCapNhatDong.Margin=new Padding(4,4,0,0);
+        btnCapNhatDong.Font=new Font("Segoe UI Semibold",10.2F);
+        btnCapNhatDong.BackColor=Color.FromArgb(15,118,110);
+        btnCapNhatDong.ForeColor=Color.White;
+        btnCapNhatDong.FlatStyle=FlatStyle.Flat;
+        btnCapNhatDong.FlatAppearance.BorderSize=0;
+        btnCapNhatDong.UseVisualStyleBackColor=false;
+        btnCapNhatDong.Enabled=false;
+        btnCapNhatDong.TabIndex=11;
         ResumeLayout(false);
         PerformLayout();
     }
@@ -2196,6 +2211,7 @@ partial class frmNhapKho
     private global::System.Windows.Forms.NumericUpDown nudGiaNhap;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel32;
     private global::System.Windows.Forms.Button btnThemThuoc;
+    private global::System.Windows.Forms.Button btnCapNhatDong;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel33;
     private global::System.Windows.Forms.Label lblTongVonText;
     private global::System.Windows.Forms.Label lblTongVon;

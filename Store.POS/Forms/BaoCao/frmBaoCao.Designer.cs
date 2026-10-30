@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -25,6 +25,7 @@ partial class frmBaoCao
         this.dgvTheoNgayColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvHoaDonColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvHoaDonColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.colNhanVienThu = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvHoaDonColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvHoaDonColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvHoaDonColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1319,7 +1320,7 @@ partial class frmBaoCao
         // dgvHoaDonColumn3
         //
         this.dgvHoaDonColumn3.Name = "NhanVien";
-        this.dgvHoaDonColumn3.HeaderText = "Nhân viên";
+        this.dgvHoaDonColumn3.HeaderText = "NV lập";
         this.dgvHoaDonColumn3.Visible = true;
         this.dgvHoaDonColumn3.ReadOnly = true;
         this.dgvHoaDonColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -1400,7 +1401,13 @@ partial class frmBaoCao
         this.dgvTheoNgay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvTheoNgayColumn1, this.dgvTheoNgayColumn2, this.dgvTheoNgayColumn3, this.dgvTheoNgayColumn4, this.dgvTheoNgayColumn5 });
 
         this.dgvHoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-        this.dgvHoaDon.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvHoaDonColumn1, this.dgvHoaDonColumn2, this.dgvHoaDonColumn3, this.dgvHoaDonColumn7, this.dgvHoaDonColumn4, this.dgvHoaDonColumn5, this.dgvHoaDonColumn6 });
+        this.colNhanVienThu.Name="colNhanVienThu";
+        this.colNhanVienThu.DataPropertyName="NhanVienThuTien";
+        this.colNhanVienThu.HeaderText="NV thu";
+        this.colNhanVienThu.AutoSizeMode=DataGridViewAutoSizeColumnMode.None;
+        this.colNhanVienThu.Width=180;
+        this.colNhanVienThu.ReadOnly=true;
+        this.dgvHoaDon.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvHoaDonColumn1, this.dgvHoaDonColumn2, this.dgvHoaDonColumn3, this.colNhanVienThu, this.dgvHoaDonColumn7, this.dgvHoaDonColumn4, this.dgvHoaDonColumn5, this.dgvHoaDonColumn6 });
         ((global::System.ComponentModel.ISupportInitialize)dgvTheoNgay).EndInit();
         groupBox17.ResumeLayout(false);
         groupBox17.PerformLayout();
@@ -1565,6 +1572,7 @@ partial class frmBaoCao
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn1;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn2;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn3;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colNhanVienThu;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn4;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn5;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvHoaDonColumn6;

@@ -1,4 +1,4 @@
-#nullable disable
+﻿#nullable disable
 namespace Store.POS;
 partial class frmDonThuoc
 {
@@ -24,6 +24,7 @@ partial class frmDonThuoc
         chkDaKiemTra = new CheckBox();
         lblLoi = new Label();
         actions = new FlowLayoutPanel();
+        btnLuuNhap = new Button();
         btnLuu = new Button();
         btnHuy = new Button();
         SuspendLayout();
@@ -97,9 +98,12 @@ partial class frmDonThuoc
         colHuongDan.DataPropertyName="HuongDan";colHuongDan.HeaderText="Hướng dẫn sử dụng";colHuongDan.AutoSizeMode=DataGridViewAutoSizeColumnMode.Fill;colHuongDan.FillWeight=60F;colHuongDan.MinimumWidth=250;colHuongDan.MaxInputLength=500;
         dgvHuongDan.Columns.AddRange(new DataGridViewColumn[]{colThuoc,colHuongDan});
         chkDaKiemTra.Text="Tôi đã kiểm tra đơn thuốc và hướng dẫn sử dụng";chkDaKiemTra.AutoSize=true;chkDaKiemTra.TabIndex=5;lblLoi.ForeColor=Color.Firebrick;lblLoi.AutoEllipsis=true;
-        actions.FlowDirection=FlowDirection.RightToLeft;actions.WrapContents=false;actions.Controls.Add(btnLuu);actions.Controls.Add(btnHuy);
-        btnLuu.Dock=DockStyle.None;btnLuu.Size=new Size(145,36);btnLuu.Text="Lưu thông tin";btnLuu.FlatStyle=FlatStyle.Flat;btnLuu.ForeColor=Color.White;btnLuu.BackColor=Color.FromArgb(15,118,110);
+        actions.FlowDirection=FlowDirection.RightToLeft;actions.WrapContents=false;actions.Controls.Add(btnLuu);actions.Controls.Add(btnLuuNhap);actions.Controls.Add(btnHuy);
+        btnLuu.Dock=DockStyle.None;btnLuu.Size=new Size(145,36);btnLuu.Text="Xác nhận kiểm tra";btnLuu.FlatStyle=FlatStyle.Flat;btnLuu.ForeColor=Color.White;btnLuu.BackColor=Color.FromArgb(15,118,110);
         btnHuy.Dock=DockStyle.None;btnHuy.Size=new Size(145,36);btnHuy.Text="Quay lại";btnHuy.FlatStyle=FlatStyle.Flat;btnHuy.ForeColor=Color.White;btnHuy.BackColor=Color.FromArgb(15,118,110);
+        btnLuuNhap.Name="btnLuuNhap";btnLuuNhap.Text="Lưu nháp";btnLuuNhap.Size=new Size(125,36);
+        btnLuuNhap.FlatStyle=FlatStyle.Flat;btnLuuNhap.ForeColor=Color.White;btnLuuNhap.BackColor=Color.FromArgb(100,116,139);
+        btnLuuNhap.Click+=btnLuuNhap_Click;btnLuuNhap.TabIndex=7;
         btnLuu.TabIndex=6;btnLuu.Click+=btnLuu_Click;btnHuy.TabIndex=7;btnHuy.DialogResult=DialogResult.Cancel;CancelButton=btnHuy;
         Controls.Add(layout);AutoScaleMode=AutoScaleMode.Dpi;AutoScaleDimensions=new SizeF(96F,96F);Font=new Font("Segoe UI",10F);BackColor=Color.FromArgb(242,246,248);ClientSize=new Size(720,520);MinimumSize=new Size(640,480);StartPosition=FormStartPosition.CenterParent;Text="Đơn thuốc";MinimizeBox=false;MaximizeBox=false;ShowInTaskbar=false;ResumeLayout(false);
     }
@@ -122,5 +126,6 @@ partial class frmDonThuoc
     private Label lblLoi;
     private FlowLayoutPanel actions;
     private Button btnLuu;
+    private Button btnLuuNhap;
     private Button btnHuy;
 }
