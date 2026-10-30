@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.DAL;
 
 namespace Store.BLL
@@ -12,7 +12,7 @@ namespace Store.BLL
             return dal.GetAllThuoc();
         }
 
-        public bool ThemMoiThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true,bool? keDon=null)
+        public bool ThemMoiThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true,bool? keDon=null,string? barcode=null,string? hoatChat=null)
         {
             error = "";
             if (string.IsNullOrWhiteSpace(tenThuoc))
@@ -25,10 +25,10 @@ namespace Store.BLL
                 !int.TryParse(strSoLuong, out int soLuong) || soLuong < 0)
             { error = "Đơn giá hoặc số lượng không hợp lệ."; return false; }
 
-            return dal.InsertThuoc(maThuoc.Trim(), tenThuoc.Trim(), maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan,keDon);
+            return dal.InsertThuoc(maThuoc.Trim(), tenThuoc.Trim(), maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan,keDon,barcode,hoatChat);
         }
 
-        public bool SuaThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true,bool? keDon=null)
+        public bool SuaThuoc(string maThuoc, string tenThuoc, string maNhom, string dvt, string strDonGia, string strSoLuong, int supplierId, out string error, bool dangBan=true,bool? keDon=null,string? barcode=null,string? hoatChat=null)
         {
             error = "";
             if (string.IsNullOrWhiteSpace(maThuoc) || string.IsNullOrWhiteSpace(tenThuoc))
@@ -41,7 +41,7 @@ namespace Store.BLL
                 !int.TryParse(strSoLuong, out int soLuong) || soLuong < 0)
             { error = "Đơn giá hoặc số lượng không hợp lệ."; return false; }
 
-            return dal.UpdateThuoc(maThuoc, tenThuoc, maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan,keDon);
+            return dal.UpdateThuoc(maThuoc, tenThuoc, maNhom, dvt, donGia, soLuong, supplierId, out error, dangBan,keDon,barcode,hoatChat);
         }
 
         public bool XoaThuoc(string maThuoc, out string error)

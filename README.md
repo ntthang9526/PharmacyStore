@@ -91,3 +91,11 @@ Xem [hướng dẫn lịch sử chứng từ](Docs/DOCUMENT-HISTORY.md). Đơn v
 ## Dấu đã xem cảnh báo
 
 Đổi “Đã xử lý” thành **Đã xem**. Dấu này chỉ nhớ trong phiên hiện tại, không khóa lô và không làm giảm số lô cảnh báo. Tạm khóa lô vẫn dùng màn hình Lô hàng.
+
+## Mã vạch trong Quản lý thuốc
+
+Admin chọn Thêm/Sửa → nhập hoặc quét vào ô Mã vạch → Lưu. Cho phép để trống; xóa nội dung khi sửa sẽ bỏ mã vạch của thuốc. Mã tối đa 50 ký tự không dấu, không có khoảng trắng ở giữa; giữ nguyên số 0 đầu mã và không trùng thuốc khác (kể cả thuốc đã ẩn). Enter sau khi quét chỉ chuyển ô nhập, không tự lưu phiếu. Nhân viên được xem mã vạch nhưng không được sửa. Database dùng cột BarCode sẵn có, không cần nâng cấp schema.
+
+Trong **Quản lý thuốc**, ô **Hoạt chất** cho phép thêm/sửa (tùy chọn, tối đa 150 ký tự) và tìm thuốc theo hoạt chất. Thêm tay và thêm nhanh đều chặn thuốc đang hiển thị trùng tên + nhà cung cấp + đơn vị, không phân biệt hoa/thường hay khoảng trắng đầu/cuối.
+
+Nhập Excel thuốc: tải lại **File mẫu** để có cột **Hoạt chất (không bắt buộc)** ở cuối. File mẫu cũ 6/7 cột vẫn dùng được; Hoạt chất để trống khi thiếu cột. Mã vạch cần định dạng Text để giữ số 0 đầu. Xem trước hiển thị Hoạt chất/Kê đơn và loại các dòng trùng trước khi xác nhận; bước lưu vẫn kiểm tra lại. Nhập danh mục chỉ thêm thuốc mới, không cập nhật thuốc đang có và không cộng tồn kho.

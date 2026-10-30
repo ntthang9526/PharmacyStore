@@ -81,3 +81,9 @@ Mở solution `PharmacyStore.slnx`, vào project `Store.POS/Forms`, mở file Fo
 - F1 Trang chủ; F2 Bán hàng; F3 Hóa đơn; F4 Quản lý thuốc; F5 Quản lý khác; F6 Nhập kho; F7 Cảnh báo; F8 Báo cáo. Phím tắt trùng với nhãn trên thanh bên và dùng được khi đang nhập liệu trong màn hình con.
 - Esc không đóng màn hình bán hàng hay hủy giỏ hàng. Chuyển màn hình vẫn giữ giỏ đang nhập.
 - Thông báo thao tác dùng câu ngắn; các xác nhận xóa, hủy và nhận tiền vẫn được giữ.
+
+## Ô mã vạch trong Quản lý thuốc
+
+txtMaVach và lblMaVach nằm trong barcodeLayout ở file Designer. Đơn vị/giá bán dùng unitPriceLayout đặt cạnh nhau, giữ nguyên tổng chiều cao khung nhập liệu. Có thể chỉnh vị trí, Size, Margin hoặc tỉ lệ cột của các panel bằng Designer; runtime chỉ quản lý trạng thái nhập và dữ liệu.
+
+Quản lý thuốc: `medicineCodesLayout` chứa `barcodeLayout` và `ingredientLayout` cùng hàng; `txtHoatChat` và cột `colHoatChat` khai báo trong Designer, có thể chỉnh kích thước tại đó.

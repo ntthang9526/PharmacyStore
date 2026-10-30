@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
 using ClosedXML.Excel;
 
@@ -344,8 +344,8 @@ namespace Store.POS.Common
             string? path=outputPath ?? ChonNoiLuuFile("DanhSachThuoc.xlsx");if(path==null) return;
             using var book=new XLWorkbook();var sheet=book.AddWorksheet("Thuốc");
             sheet.Column(2).Style.NumberFormat.Format="@";
-            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan","KeDon"};
-            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán","Kê đơn"};
+            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan","KeDon","HoatChat"};
+            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán","Kê đơn","Hoạt chất"};
             for(int c=0;c<keys.Length;c++) sheet.Cell(1,c+1).Value=headings[c];
             for(int row=0;row<data.Rows.Count;row++) for(int col=0;col<keys.Length;col++)
             {
@@ -367,7 +367,7 @@ namespace Store.POS.Common
             var ws = workbook.Worksheets.Add("NhapThuoc");
             ws.ShowGridLines = true;
 
-            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp (*)", "Đơn vị tính (*)", "Giá bán (*)", "Kê đơn (0/1)" };
+            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp (*)", "Đơn vị tính (*)", "Giá bán (*)", "Kê đơn (0/1)", "Hoạt chất (không bắt buộc)" };
             for (int col = 0; col < headers.Length; col++)
             {
                 var cell = ws.Cell(1, col + 1);
@@ -393,11 +393,14 @@ namespace Store.POS.Common
             ws.Cell(3, 5).Value = "Hộp";
             ws.Cell(3, 6).Value = 180000;
             ws.Cell(2,7).Value=0;ws.Cell(3,7).Value=1;
+            ws.Cell(1,2).CreateComment().AddText("Không bắt buộc. Giữ định dạng Text để không mất số 0 ở đầu; tối đa 50 ký tự, không có khoảng trắng.");
+            ws.Cell(1,8).CreateComment().AddText("Có thể để trống; nhập đúng hoạt chất theo nhãn thuốc, tối đa 150 ký tự.");
+            ws.SheetView.FreezeRows(1);
 
             ws.Cell(2, 6).Style.NumberFormat.Format = "#,##0";
             ws.Cell(3, 6).Style.NumberFormat.Format = "#,##0";
 
-            var range = ws.Range(1, 1, 3, 7);
+            var range = ws.Range(1, 1, 3, 8);
             range.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
             range.Style.Border.SetOutsideBorder(XLBorderStyleValues.Medium);
 
@@ -433,6 +436,8 @@ namespace Store.POS.Common
                 return result;
             }
 
+            int rxColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Kê đơn",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
+            int ingredientColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Hoạt chất",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
             for (int r = 2; r <= lastRow; r++)
             {
                 string tenThuoc = ws.Cell(r, 1).GetString().Trim();
@@ -443,7 +448,9 @@ namespace Store.POS.Common
                 string tenNCC = ws.Cell(r, 4).GetString().Trim();
                 string dvt = ws.Cell(r, 5).GetString().Trim();
                 string giaStr = ws.Cell(r, 6).GetString().Trim();
-                int rxColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Kê đơn",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
+                string hoatChat=ingredientColumn>0?ws.Cell(r,ingredientColumn).GetString().Trim():"";
+                if(hoatChat.Length>150 || hoatChat.Any(char.IsControl)) {errors.Add($"Dòng {r}: Hoạt chất tối đa 150 ký tự, không chứa ký tự điều khiển.");continue;}
+                if(barcode.Length>50 || barcode.Any(c=>c<'!' || c>'~')) {errors.Add($"Dòng {r}: Mã vạch tối đa 50 ký tự không dấu, không chứa khoảng trắng hoặc ký tự điều khiển.");continue;}
                 string rx=rxColumn>0?ws.Cell(r,rxColumn).GetString().Trim():"0";
                 if(rx.Length==0) rx="0";
                 if(rx is not ("0" or "1") && !bool.TryParse(rx,out _)) {errors.Add($"Dòng {r}: Kê đơn phải là 0/1 hoặc True/False.");continue;}
@@ -479,7 +486,7 @@ namespace Store.POS.Common
                     TenNhom = tenNhom,
                     TenNCC = tenNCC,
                     DonViTinh = dvt,
-                    GiaBan = giaBan,KeDon=keDon
+                    GiaBan = giaBan,KeDon=keDon,HoatChat=string.IsNullOrEmpty(hoatChat)?null:hoatChat
                 });
             }
 
@@ -697,6 +704,7 @@ namespace Store.POS.Common
         public string TenThuoc { get; set; } = "";
         public string? BarCode { get; set; }
         public bool KeDon {get;set;}
+        public string? HoatChat {get;set;}
         public string TenNhom { get; set; } = "";
         public string TenNCC { get; set; } = "";
         public string DonViTinh { get; set; } = "";

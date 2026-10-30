@@ -13,7 +13,9 @@ internal static partial class Program
         var data=new DataTable();foreach(string name in names)data.Columns.Add(name,name is "MaThuoc" or "MaNhom" or "MaNCC" or "SoLuongTon"?typeof(int):name is "DonGia" or "GiaNhapGanNhat"?typeof(decimal):typeof(string));
         data.Columns.Add("DangBan",typeof(bool));
         data.Columns.Add("KhoaNCC",typeof(bool));
-        data.Rows.Add(18,"Thuốc kiểm tra",5,9,"Nhóm mẫu","NCC mẫu","Hộp",15000m,7,"893000001",true,false);
+        data.Columns.Add("KeDon",typeof(bool));
+        data.Columns.Add("HoatChat");
+        data.Rows.Add(18,"Thuốc kiểm tra",5,9,"Nhóm mẫu","NCC mẫu","Hộp",15000m,7,"893000001",true,false,false,"Paracetamol");
         foreach(var pair in new[]{("cboNhomThuoc","MaNhom","TenNhom",5,"Nhóm mẫu"),("cboNhaCungCap","MaNCC","TenNCC",9,"NCC mẫu")})
         {
             var table=new DataTable();table.Columns.Add(pair.Item2,typeof(int));table.Columns.Add(pair.Item3);table.Rows.Add(pair.Item4,pair.Item5);
@@ -23,6 +25,8 @@ internal static partial class Program
         Check(grid.Rows.Count==1 && Convert.ToString(grid.Rows[0].Cells["TenThuoc"].Value)=="Thuốc kiểm tra","medicine values are visible after binding");
         InvokePrivate(form,"dgvThuoc_CellClick",grid,new DataGridViewCellEventArgs(0,0));
         Check(UiField<TextBox>(form,"txtTenThuoc").Text=="Thuốc kiểm tra" && UiField<TextBox>(form,"txtSoLuongTon").Text=="7","clicking a medicine loads details without null errors");
+        Check(UiField<TextBox>(form,"txtMaVach").Text=="893000001","selecting a row fills the barcode input from bound data");
+        Check(UiField<TextBox>(form,"txtHoatChat").Text=="Paracetamol","selecting a row fills active ingredient");
         // Resize/reorder/display-name edits must never affect data selection.
         grid.Columns["TenThuoc"]!.MinimumWidth=250;grid.Columns["TenThuoc"]!.Width=300;grid.Columns["TenThuoc"]!.DisplayIndex=0;
         grid.Columns["MaThuoc"]!.Name="UserChangedColumnName";

@@ -1,8 +1,8 @@
-namespace Store.BLL;
+﻿namespace Store.BLL;
 public partial class ThuocBLL
 {
     public bool ThemNhanhThuoc(string name, int categoryId, int supplierId, string unit, decimal price,
-                               out int id, out string error,string? barcode=null,bool keDon=false)
+                               out int id, out string error,string? barcode=null,bool keDon=false,string? hoatChat=null)
     {
         id=0;
         error= DanhMucValidation.NameError(name,150) ?? DanhMucValidation.NameError(unit,30) ?? "";
@@ -12,7 +12,7 @@ public partial class ThuocBLL
         barcode=string.IsNullOrWhiteSpace(barcode)?null:barcode.Trim();
         if(error.Length==0 && barcode!=null && (barcode.Length>50 || barcode.Any(char.IsControl))) error="Mã vạch tối đa 50 ký tự, không có ký tự điều khiển.";
         if(error.Length>0) return false;
-        try { id=dal.ThemNhanh(name.Trim(),categoryId,supplierId,unit.Trim(),price,barcode,keDon);return true; }
+        try { id=dal.ThemNhanh(name.Trim(),categoryId,supplierId,unit.Trim(),price,barcode,keDon,hoatChat);return true; }
         catch(Exception ex) {error="Không thêm được thuốc: "+ex.Message;return false;}
     }
 }

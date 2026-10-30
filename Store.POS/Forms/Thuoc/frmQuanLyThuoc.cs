@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 
 namespace Store.POS
@@ -18,14 +18,17 @@ namespace Store.POS
             btnMauExcel.Click+=(_,_)=> {try {Store.POS.Common.ExcelHelper.XuatFileMauNhapThuoc();}catch(Exception ex){MessageBox.Show(ex.Message);}};
             PhanQuyenGiaoDien.Gan(this);
             var quickAddHints = new ToolTip(components ??= new System.ComponentModel.Container());
+            quickAddHints.SetToolTip(txtHoatChat, "Có thể để trống. Tối đa 150 ký tự.");
+            quickAddHints.SetToolTip(txtMaVach, "Có thể để trống. Nhập hoặc quét mã; tối đa 50 ký tự, không trùng thuốc khác.");
             quickAddHints.SetToolTip(cboDonViTinh, "Đơn vị chỉ được chọn khi thêm thuốc, không đổi sau khi tạo.");
             quickAddHints.SetToolTip(cboNhaCungCap, "Không đổi nhà cung cấp sau khi thuốc đã có lô hàng/phiếu nhập.");
             quickAddHints.SetToolTip(btnThemNhom, "Thêm nhóm thuốc mới");
             quickAddHints.SetToolTip(btnThemNCC, "Thêm nhà cung cấp mới");
             btnThemNhom.Click += (_, _) => ThemDanhMuc(false);
             btnThemNCC.Click += (_, _) => ThemDanhMuc(true);
+            txtMaVach.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;SelectNextControl(txtMaVach,true,true,true,true);}};
             txtTimKiem.MaxLength = 200;
-            txtTimKiem.PlaceholderText = "Tên thuốc, nhóm, NCC hoặc mã vạch";
+            txtTimKiem.PlaceholderText = "Tên thuốc, hoạt chất, nhóm, NCC hoặc mã vạch";
             txtTimKiem.KeyDown += (_, e) =>
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
@@ -58,7 +61,7 @@ namespace Store.POS
             isThem = false;
             khoaNhaCungCap = false;
             SetControlState(false);
-            maDangChon=""; txtTenThuoc.Clear(); txtDonGia.Clear();
+            maDangChon=""; txtTenThuoc.Clear();txtMaVach.Clear();txtHoatChat.Clear(); txtDonGia.Clear();
             txtSoLuongTon.Text = "0";
             cboTrangThaiBan.SelectedIndex = 0;chkKeDon.Checked=false;
             cboNhomThuoc.SelectedIndex = -1;
@@ -115,6 +118,8 @@ namespace Store.POS
         {
             dgvThuoc.Enabled=!status;
             cboTrangThaiBan.Enabled = status;chkKeDon.Enabled=status;
+            txtMaVach.Enabled = status;
+            txtHoatChat.Enabled = status;
             txtTenThuoc.Enabled = status;
             cboNhomThuoc.Enabled = status;
             cboDonViTinh.Enabled = status && isThem;
@@ -139,7 +144,7 @@ namespace Store.POS
 
             // Xóa trắng các ô để người dùng nhập mới
             maDangChon="";
-            txtTenThuoc.Clear();
+            txtTenThuoc.Clear();txtMaVach.Clear();txtHoatChat.Clear();
             cboNhomThuoc.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;
             txtDonGia.Clear();
@@ -156,6 +161,8 @@ namespace Store.POS
             khoaNhaCungCap = Convert.ToBoolean(data["KhoaNCC"]);chkKeDon.Checked=Convert.ToBoolean(data["KeDon"]);
             maDangChon = Convert.ToString(data["MaThuoc"]) ?? "";
             txtTenThuoc.Text = Convert.ToString(data["TenThuoc"]);
+            txtMaVach.Text = Convert.ToString(data["MaVach"]);
+            txtHoatChat.Text = Convert.ToString(data["HoatChat"]);
             cboNhomThuoc.SelectedValue = data["MaNhom"];
             cboNhaCungCap.SelectedValue = data["MaNCC"];
             cboDonViTinh.Text = Convert.ToString(data["DonViTinh"]);
@@ -199,7 +206,7 @@ namespace Store.POS
 
                     // Xóa trắng các ô nhập
                     maDangChon="";
-                    txtTenThuoc.Clear();
+                    txtTenThuoc.Clear();txtMaVach.Clear();txtHoatChat.Clear();
                     cboNhomThuoc.SelectedIndex = -1;
                     cboDonViTinh.SelectedIndex = -1;
                     txtDonGia.Clear();
@@ -250,12 +257,12 @@ namespace Store.POS
 
             if (isThem)
             {
-                kq = bll.ThemMoiThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0,chkKeDon.Checked);
+                kq = bll.ThemMoiThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0,chkKeDon.Checked,txtMaVach.Text,txtHoatChat.Text);
             }
             else
             {
                 // Gọi hàm Sửa
-                kq = bll.SuaThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0,chkKeDon.Checked);
+                kq = bll.SuaThuoc(maDangChon.Trim(), txtTenThuoc.Text.Trim(), maNhom, dvt, txtDonGia.Text.Trim(), txtSoLuongTon.Text.Trim(), Convert.ToInt32(cboNhaCungCap.SelectedValue), out error, cboTrangThaiBan.SelectedIndex==0,chkKeDon.Checked,txtMaVach.Text,txtHoatChat.Text);
             }
 
             if (kq)
@@ -275,7 +282,7 @@ namespace Store.POS
             SetControlState(false);
 
             maDangChon="";
-            txtTenThuoc.Clear();
+            txtTenThuoc.Clear();txtMaVach.Clear();txtHoatChat.Clear();
             cboNhomThuoc.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;
             txtDonGia.Clear();
@@ -297,7 +304,7 @@ namespace Store.POS
         {
             txtTimKiem.Clear();
             maDangChon = "";
-            txtTenThuoc.Clear();
+            txtTenThuoc.Clear();txtMaVach.Clear();txtHoatChat.Clear();
             cboNhomThuoc.SelectedIndex = -1;
             cboDonViTinh.SelectedIndex = -1;
             cboNhaCungCap.SelectedIndex = -1;

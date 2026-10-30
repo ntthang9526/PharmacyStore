@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -11,6 +11,8 @@ partial class frmXemTruocExcel
     protected override void Dispose(bool disposing) {if(disposing) components?.Dispose();base.Dispose(disposing);}
     private void InitializeComponent()
     {
+        this.colKeDon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.colHoatChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.previewCol0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.previewCol1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.previewCol2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -169,8 +171,21 @@ partial class frmXemTruocExcel
         this.previewCol9.Width = 111;
         this.previewCol9.FillWeight = 88F;
 
+        this.colKeDon.Name = "colKeDon";
+        this.colKeDon.HeaderText = "Kê đơn";
+        this.colKeDon.DataPropertyName = "Kê đơn";
+        this.colKeDon.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.colKeDon.Width = 90;
+        this.colKeDon.ReadOnly = true;
+        this.colHoatChat.Name = "colHoatChat";
+        this.colHoatChat.HeaderText = "Hoạt chất";
+        this.colHoatChat.DataPropertyName = "Hoạt chất";
+        this.colHoatChat.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.colHoatChat.Width = 200;
+        this.colHoatChat.ReadOnly = true;
+
         this.dgvDuLieu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-        this.dgvDuLieu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.previewCol0, this.previewCol1, this.previewCol2, this.previewCol3, this.previewCol4, this.previewCol5, this.previewCol6, this.previewCol7, this.previewCol8, this.previewCol9 });
+        this.dgvDuLieu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.previewCol0, this.previewCol1, this.previewCol2, this.previewCol3, this.previewCol4, this.previewCol5, this.previewCol6, this.previewCol7, this.previewCol8, this.previewCol9, this.colKeDon, this.colHoatChat });
         ((System.ComponentModel.ISupportInitialize)dgvDuLieu).EndInit();
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         dgvDuLieu.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
@@ -222,6 +237,7 @@ partial class frmXemTruocExcel
         ResumeLayout(false);
     }
     private System.Windows.Forms.DataGridViewTextBoxColumn previewCol0,previewCol1,previewCol2,previewCol3,previewCol4,previewCol5,previewCol6,previewCol7,previewCol8,previewCol9;
+    private System.Windows.Forms.DataGridViewTextBoxColumn colKeDon,colHoatChat;
     private TableLayoutPanel layout;
     private DataGridView dgvDuLieu;
     private TextBox txtLoi;
