@@ -8,8 +8,8 @@ public partial class ThuocDAL
         SELECT m.BarCode AS MaVach, m.Id AS MaThuoc, m.Name AS TenThuoc, m.ActiveIngredient AS HoatChat, m.CategoryId AS MaNhom,
                m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, ROUND(m.Price, 0) AS DonGia,
                ISNULL(SUM(b.Stock), 0) AS SoLuongTon, gia.UnitCost AS GiaNhapGanNhat, m.IsSelling AS DangBan,m.IsPrescription AS KeDon, CAST(CASE WHEN COUNT(b.Id)>0 THEN 1 ELSE 0 END AS bit) AS KhoaNCC,
-               CASE WHEN m.IsSelling=1 THEN N'Đang bán' ELSE N'Ngừng bán' END AS TrangThaiBan,
-               ISNULL(SUM(CASE WHEN m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock ELSE 0 END),0) AS TonCoTheBan
+               CASE WHEN m.IsActive=0 THEN N'Đã ẩn' WHEN m.IsSelling=1 THEN N'Đang bán' ELSE N'Ngừng bán' END AS TrangThaiBan,
+               ISNULL(SUM(CASE WHEN m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock ELSE 0 END),0) AS TonCoTheBan
         FROM Medicines m
         JOIN Categories c ON c.Id = m.CategoryId
         JOIN Suppliers s ON s.Id = m.SupplierId
@@ -17,12 +17,13 @@ public partial class ThuocDAL
         OUTER APPLY (SELECT TOP(1) d.UnitCost FROM StockInDetails d
                      JOIN StockIns i ON i.Id=d.StockInId JOIN Batches ib ON ib.Id=d.BatchId
                      WHERE ib.MedicineId=m.Id ORDER BY i.ImportDate DESC,i.Id DESC,d.Id DESC) gia
-        WHERE m.IsActive = 1 {0}
-        GROUP BY m.BarCode, m.Id, m.Name, m.ActiveIngredient, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price, m.IsSelling, m.IsPrescription, gia.UnitCost ORDER BY m.Id";
-    public DataTable GetAllThuoc() => db.DocBang(string.Format(SelectSql, ""));
-    public DataTable TimKiemThuoc(string keyword) => db.DocBang(
+        WHERE m.IsActive = @active {0}
+        GROUP BY m.BarCode, m.Id, m.Name, m.ActiveIngredient, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price, m.IsActive, m.IsSelling, m.IsPrescription, gia.UnitCost ORDER BY m.Id";
+    public DataTable GetAllThuoc() => TimKiemThuoc("");
+    public DataTable TimKiemThuoc(string keyword,bool daAn=false) => db.DocBang(
         string.Format(SelectSql, "AND (CAST(m.Id AS NVARCHAR(20)) LIKE @kw OR m.Name LIKE @kw OR m.ActiveIngredient LIKE @kw OR c.Name LIKE @kw OR s.Name LIKE @kw OR m.BarCode LIKE @kw)"),
-        new SqlParameter("@kw", SqlDbType.NVarChar, -1) { Value = DBConnection.LikePattern(keyword) });
+        new SqlParameter("@kw", SqlDbType.NVarChar, -1) { Value = DBConnection.LikePattern(keyword) },
+        new SqlParameter("@active",SqlDbType.Bit) {Value=!daAn});
 
     public bool InsertThuoc(string id, string name, string category, string unit, decimal price,
                             int stock, int supplierId, out string error, bool dangBan=true,bool? keDon=null,string? barcode=null,string? hoatChat=null)
@@ -97,5 +98,24 @@ public partial class ThuocDAL
         try { return db.CapNhatDuLieu("UPDATE Medicines SET IsActive=0 WHERE Id=@id",
             new SqlParameter("@id", SqlDbType.Int) { Value = int.Parse(id) }); }
         catch (Exception ex) { error = ex.Message; return false; }
+    }
+
+    public bool HienLaiThuoc(int id,out string error)
+    {
+        error="";
+        try
+        {
+            return db.CapNhatDuLieu(@"
+                IF NOT EXISTS(SELECT 1 FROM Medicines WITH(UPDLOCK,HOLDLOCK) WHERE Id=@id AND IsActive=0)
+                    THROW 50016,N'Thuốc đã được hiện lại hoặc không còn tồn tại. Hãy tải lại danh sách.',1;
+                IF EXISTS(SELECT 1 FROM Medicines h JOIN Medicines m WITH(UPDLOCK,HOLDLOCK)
+                    ON m.SupplierId=h.SupplierId AND m.IsActive=1
+                    AND UPPER(LTRIM(RTRIM(m.Name)))=UPPER(LTRIM(RTRIM(h.Name)))
+                    AND UPPER(LTRIM(RTRIM(m.Unit)))=UPPER(LTRIM(RTRIM(h.Unit))) WHERE h.Id=@id)
+                    THROW 50017,N'Đã có thuốc trùng tên, nhà cung cấp và đơn vị. Chưa thể hiện lại thuốc này.',1;
+                UPDATE Medicines SET IsActive=1 WHERE Id=@id AND IsActive=0;",
+                new SqlParameter("@id",SqlDbType.Int){Value=id});
+        }
+        catch(Exception ex) {error=ex.Message;return false;}
     }
 }

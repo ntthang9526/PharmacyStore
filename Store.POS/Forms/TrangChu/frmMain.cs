@@ -19,6 +19,8 @@ namespace Store.POS
         private bool dangDongBo;
         private DateTime thuLaiDongBoSau;
         private bool dangKiemTraDatabase;
+        private Task<(string HoTen,string VaiTro)>? tacVuDocPhien;
+        private int nhanVienDocPhien;
 
         public frmMain()
         {
@@ -37,7 +39,7 @@ namespace Store.POS
             menuQuanLyKhac.Items.Add("Đổi mật khẩu", null, (_, _) => MoForm<frmDoiMatKhau>());
             Shown+=async(_,_)=>
             {
-                try {await Task.Yield();CapNhatQuyen();await TaiTongQuanAsync();}
+                try {await CapNhatQuyenAsync();if(!IsDisposed && !Disposing) await TaiTongQuanAsync();}
                 catch(UnauthorizedAccessException ex) {MessageBox.Show(this,ex.Message,"Phiên đăng nhập");Dispose();}
                 catch(Exception ex) {lblTongQuan.Text="Chưa tải được dữ liệu: "+ex.Message;}
                 finally {taiLanDau?.Dispose();taiLanDau=null;}
@@ -55,10 +57,10 @@ namespace Store.POS
                     MessageBox.Show(this,NoiDungXacNhanThoat(false),"Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2)!=DialogResult.Yes) e.Cancel=true;
             };
             var timerQuyen=new System.Windows.Forms.Timer(components) {Interval=5000};
-            timerQuyen.Tick+=(_,_)=>
+            timerQuyen.Tick+=async(_,_)=>
             {
-                if(soLuotDangTai>0 || dangDongBo || !Enabled) return;
-                try {CapNhatQuyen();}
+                if(soLuotDangTai>0 || dangDongBo || tacVuDocPhien!=null || !Enabled) return;
+                try {await CapNhatQuyenAsync();}
                 catch(UnauthorizedAccessException ex)
                 {
                     timerQuyen.Stop();timerDongBo.Stop();timerDongBoDatabase.Stop();
@@ -85,10 +87,12 @@ namespace Store.POS
             {
                 await Task.Yield();
                 if(IsDisposed || Disposing) return;
-                CapNhatQuyen();
+                await CapNhatQuyenAsync();
+                if(IsDisposed || Disposing) return;
                 if(PhanQuyenGiaoDien.ChiAdmin(type) && !PhienDangNhap.LaAdmin)
                     throw new UnauthorizedAccessException("Chức năng này chỉ dành cho Admin.");
                 await DongBoDuLieuAsync();
+                if(IsDisposed || Disposing) return;
                 KiemTraDongBoDatabase();
                 if(cuaSoDangMo.TryGetValue(type,out form) && !form.IsDisposed)
                 {
@@ -165,7 +169,8 @@ namespace Store.POS
             var errors=new List<string>();
             try
             {
-                CapNhatQuyen();
+                await CapNhatQuyenAsync();
+                if(IsDisposed || Disposing) return false;
                 foreach(var form in cuaSoDangMo.Values.ToArray())
                     if(!form.IsDisposed && form is ILamMoiDuLieu data)
                         try
@@ -191,10 +196,30 @@ namespace Store.POS
             finally {dangDongBo=false;}
         }
 
-        private void CapNhatQuyen()
+        private async Task CapNhatQuyenAsync(Func<(string HoTen,string VaiTro)>? read=null)
         {
-            if(PosFormStyle.IsInDesigner(this)) return;
-            var account=Store.DAL.PhanQuyenDAL.LayPhien();
+            if(PosFormStyle.IsInDesigner(this) || IsDisposed || Disposing) return;
+            if(tacVuDocPhien==null)
+            {
+                nhanVienDocPhien=PhienDangNhap.NhanVienId;
+                tacVuDocPhien=Task.Run(read ?? Store.DAL.PhanQuyenDAL.LayPhien);
+            }
+            var task=tacVuDocPhien;
+            int employeeId=nhanVienDocPhien;
+            try
+            {
+                var account=await task;
+                if(IsDisposed || Disposing) return;
+                if(employeeId!=PhienDangNhap.NhanVienId)
+                    throw new UnauthorizedAccessException("Phiên đăng nhập đã thay đổi. Vui lòng đăng nhập lại.");
+                ApDungQuyen(account);
+            }
+            catch when(IsDisposed || Disposing) { }
+            finally {if(ReferenceEquals(tacVuDocPhien,task)) tacVuDocPhien=null;}
+        }
+
+        private void ApDungQuyen((string HoTen,string VaiTro) account)
+        {
             bool changed=PhienDangNhap.VaiTro!=account.VaiTro;
             PhienDangNhap.HoTen=account.HoTen;PhienDangNhap.VaiTro=account.VaiTro;
             btnNhapKho.Enabled=true;

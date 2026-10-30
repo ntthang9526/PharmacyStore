@@ -52,6 +52,7 @@ partial class frmQuanLyThuoc
         label5 = new Label();
         txtTimKiem = new TextBox();
         btnTimKiem = new Button();
+        chkDaAn = new CheckBox();
         dgvThuoc = new DataGridView();
         MaThuoc = new DataGridViewTextBoxColumn();
         TenThuoc = new DataGridViewTextBoxColumn();
@@ -246,7 +247,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel3.Margin = new Padding(0);
         tableLayoutPanel3.Name = "tableLayoutPanel3";
         tableLayoutPanel3.RowCount = 2;
-        tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 88F));
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         tableLayoutPanel3.Size = new Size(768, 498);
         tableLayoutPanel3.TabIndex = 0;
@@ -261,13 +262,21 @@ partial class frmQuanLyThuoc
         tableLayoutPanel4.Controls.Add(label5, 0, 0);
         tableLayoutPanel4.Controls.Add(txtTimKiem, 1, 0);
         tableLayoutPanel4.Controls.Add(btnTimKiem, 2, 0);
+        tableLayoutPanel4.Controls.Add(chkDaAn, 0, 1);
+        tableLayoutPanel4.SetColumnSpan(chkDaAn, 3);
+        chkDaAn.Name = "chkDaAn";
+        chkDaAn.Text = "Chỉ thuốc đã ẩn";
+        chkDaAn.AutoSize = true;
+        chkDaAn.Anchor = AnchorStyles.Left;
+        chkDaAn.CheckedChanged += chkDaAn_CheckedChanged;
         tableLayoutPanel4.Dock = DockStyle.Fill;
         tableLayoutPanel4.Font = new Font("Segoe UI", 10.2F);
         tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel4.Location = new Point(0, 0);
         tableLayoutPanel4.Margin = new Padding(0, 0, 0, 12);
         tableLayoutPanel4.Name = "tableLayoutPanel4";
-        tableLayoutPanel4.RowCount = 1;
+        tableLayoutPanel4.RowCount = 2;
+        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         tableLayoutPanel4.Size = new Size(768, 44);
         tableLayoutPanel4.TabIndex = 0;
@@ -1249,6 +1258,7 @@ partial class frmQuanLyThuoc
     private global::System.Windows.Forms.Label label5;
     private global::System.Windows.Forms.TextBox txtTimKiem;
     private global::System.Windows.Forms.Button btnTimKiem;
+    private CheckBox chkDaAn;
     private global::System.Windows.Forms.DataGridView dgvThuoc;
     private global::System.Windows.Forms.GroupBox groupBox6;
     private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;

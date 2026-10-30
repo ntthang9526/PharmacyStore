@@ -86,7 +86,7 @@ namespace Store.POS
         private void LoadDataToGrid()
         {
             using var loading=PosLoading.Show(this);
-            GanDuLieuThuoc(bll.GetAllThuoc());
+            GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text,ChiThuocDaAn));
         }
         private void GanDuLieuThuoc(DataTable data)
         {
@@ -133,9 +133,12 @@ namespace Store.POS
             btnLuu.Enabled = status;
             btnBoQua.Enabled = status;
 
-            btnThem.Enabled = !status;
-            btnSua.Enabled = !status;
+            btnThem.Enabled = !status && !ChiThuocDaAn;
+            btnSua.Enabled = !status && !ChiThuocDaAn;
             btnXoa.Enabled = !status;
+            btnXoa.Text = ChiThuocDaAn?"Hiện lại":"Ẩn thuốc";
+            btnXoa.BackColor = ChiThuocDaAn?Color.FromArgb(15,118,110):Color.FromArgb(225,29,72);
+            chkDaAn.Enabled = !status;
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -187,6 +190,7 @@ namespace Store.POS
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if(ChiThuocDaAn) {HienLaiThuoc();return;}
             if (string.IsNullOrEmpty(maDangChon))
             {
                 MessageBox.Show("Chọn thuốc cần ẩn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -297,7 +301,7 @@ namespace Store.POS
             try
             {
                 ResetDetails(true);
-                    GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text.Trim()));
+                    GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text.Trim(),ChiThuocDaAn));
             }
             catch (Exception ex) { MessageBox.Show("Không tìm được dữ liệu: " + ex.Message, "Lỗi"); }
         }

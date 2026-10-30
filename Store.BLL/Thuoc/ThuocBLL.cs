@@ -55,9 +55,16 @@ namespace Store.BLL
             return dal.DeleteThuoc(maThuoc, out error);
         }
 
-        public DataTable TimKiemThuoc(string tuKhoa)
+        public bool HienLaiThuoc(string maThuoc,out string error)
         {
-            return dal.TimKiemThuoc(tuKhoa);
+            if(!int.TryParse(maThuoc,out int id) || id<=0)
+            {error="Chọn thuốc cần hiện lại.";return false;}
+            return dal.HienLaiThuoc(id,out error);
+        }
+
+        public DataTable TimKiemThuoc(string tuKhoa,bool daAn=false)
+        {
+            return dal.TimKiemThuoc(tuKhoa,daAn);
         }
     }
 }

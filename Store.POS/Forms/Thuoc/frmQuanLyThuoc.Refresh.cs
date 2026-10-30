@@ -12,7 +12,7 @@ public partial class frmQuanLyThuoc
         bool editing=txtTenThuoc.Enabled;string medicineId=maDangChon;
         int? category=cboNhomThuoc.SelectedValue is int cat?cat:null;
         int? supplier=cboNhaCungCap.SelectedValue is int sup?sup:null;
-        GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text));
+        GanDuLieuThuoc(bll.TimKiemThuoc(txtTimKiem.Text,ChiThuocDaAn));
         PosFormStyle.RebindCombo(cboNhomThuoc,new NhomThuocBLL().GetAllNhomThuoc(),category);
         PosFormStyle.RebindCombo(cboNhaCungCap,new NhaCungCapBLL().GetAllNhaCungCap(),supplier);
         var row=dgvThuoc.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>r.DataBoundItem is DataRowView data && Convert.ToString(data["MaThuoc"])==medicineId);

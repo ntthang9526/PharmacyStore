@@ -2,11 +2,15 @@ namespace Store.POS;
 
 internal static class PosBackground
 {
+    private static readonly HashSet<Form> loadingForms=new();
+
     internal static async Task<bool> LoadAsync<T>(Form form,Func<T> read,Action<T> apply,Action<Exception> fail)
     {
-        if(form.IsDisposed || form.Disposing || !form.Enabled) return false;
+        if(form.IsDisposed || form.Disposing || !form.Enabled || !loadingForms.Add(form)) return false;
         using var loading=PosLoading.Show(form);
-        form.Enabled=false;form.UseWaitCursor=true;
+        bool lockForm=form is not frmMain;
+        if(lockForm) form.Enabled=false;
+        form.UseWaitCursor=true;
         try
         {
             var result=await Task.Run(read);
@@ -20,7 +24,12 @@ internal static class PosBackground
         }
         finally
         {
-            if(!form.IsDisposed && !form.Disposing) {form.UseWaitCursor=false;form.Enabled=true;}
+            loadingForms.Remove(form);
+            if(!form.IsDisposed && !form.Disposing)
+            {
+                form.UseWaitCursor=false;
+                if(lockForm) form.Enabled=true;
+            }
         }
     }
 }
