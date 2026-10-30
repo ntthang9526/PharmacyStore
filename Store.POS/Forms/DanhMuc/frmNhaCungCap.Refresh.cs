@@ -7,6 +7,7 @@ public partial class frmNhaCungCap
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         bool editing=txtTenNCC.Enabled;string id=maDangChon;
         dgvNhaCungCap.DataSource=bll.TimKiemNCC(txtTimKiem.Text);

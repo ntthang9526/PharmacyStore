@@ -7,6 +7,7 @@ public partial class frmNhomThuoc
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         bool editing=txtTenNhom.Enabled;string id=maDangChon;
         dgvNhomThuoc.DataSource=bll.TimKiemNhom(txtTimNhom.Text);

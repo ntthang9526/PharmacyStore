@@ -1,4 +1,4 @@
-using Store.BLL;
+﻿using Store.BLL;
 using System.Data;
 
 namespace Store.POS
@@ -41,6 +41,7 @@ namespace Store.POS
         }
         private void LoadData()
         {
+            using var loading=PosLoading.Show(this);
             dgvNhaCungCap.DataSource = bll.GetAllNhaCungCap();
         }
 
@@ -222,6 +223,7 @@ namespace Store.POS
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
+            using var loading=PosLoading.Show(this);
             try
             {
                 ResetDetails();

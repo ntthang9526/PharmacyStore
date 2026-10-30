@@ -85,6 +85,7 @@ namespace Store.POS
         }
         private void LoadDataToGrid()
         {
+            using var loading=PosLoading.Show(this);
             GanDuLieuThuoc(bll.GetAllThuoc());
         }
         private void GanDuLieuThuoc(DataTable data)
@@ -292,6 +293,7 @@ namespace Store.POS
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
+            using var loading=PosLoading.Show(this);
             try
             {
                 ResetDetails(true);

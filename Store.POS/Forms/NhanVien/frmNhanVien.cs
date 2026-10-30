@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 namespace Store.POS;
 
@@ -59,6 +59,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     }
     private void TimKiem()
     {
+            using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         try {ResetDetails();dgvNhanVien.DataSource=bll.TimKiem(txtTimKiem.Text);lblTrangThai.Text=$"{dgvNhanVien.Rows.Count} nhân viên.";}
         catch(Exception ex) {BaoLoi(ex.Message);}

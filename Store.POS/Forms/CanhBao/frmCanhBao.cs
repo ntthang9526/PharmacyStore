@@ -63,6 +63,7 @@ namespace Store.POS
 
         private void LocCanhBao(bool throwOnError=false)
         {
+            using var loading=PosLoading.Show(this);
             try
             {
                 int nguongTon = (int)nudNguongTon.Value;

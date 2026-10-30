@@ -7,6 +7,7 @@ public partial class frmQuanLyThuoc
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         bool editing=txtTenThuoc.Enabled;string medicineId=maDangChon;
         int? category=cboNhomThuoc.SelectedValue is int cat?cat:null;

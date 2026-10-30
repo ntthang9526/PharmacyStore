@@ -7,6 +7,7 @@ public partial class frmKhachHang
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         bool editing=txtTenKH.Enabled;string id=maDangChon;
         dgvKhachHang.DataSource=bll.TimKiemKhachHang(txtTimKiem.Text);

@@ -7,6 +7,7 @@ public partial class frmVoucher
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         bool editing=btnLuu.Enabled;int? id=selectedId;
         dgvVoucher.DataSource=bll.TimKiem(txtTimKiem.Text);

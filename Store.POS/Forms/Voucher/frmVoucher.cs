@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 namespace Store.POS;
 public partial class frmVoucher : Form, ILamMoiDuLieu
@@ -67,6 +67,7 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
     }
     private void TimKiem()
     {
+            using var loading=PosLoading.Show(this);
         if (PosFormStyle.IsInDesigner(this)) return;
         try {ResetDetails();dgvVoucher.DataSource=bll.TimKiem(txtTimKiem.Text);lblTrangThai.Text=$"{dgvVoucher.Rows.Count} voucher.";}
         catch(Exception ex) {BaoLoi("Không tải được voucher: "+ex.Message);}

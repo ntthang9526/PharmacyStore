@@ -24,6 +24,7 @@ public partial class frmLoHang : Form, ILamMoiDuLieu
 
     private void TimKiem(bool throwOnError=false)
     {
+            using var loading=PosLoading.Show(this);
         if (PosFormStyle.IsInDesigner(this)) return;
         try
         {

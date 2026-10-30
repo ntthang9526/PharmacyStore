@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Store.Shared\Store.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="Exists('..\.env')">
+    <None Include="..\.env" Link=".env" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

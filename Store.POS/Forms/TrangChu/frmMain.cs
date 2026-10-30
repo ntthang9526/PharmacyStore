@@ -23,6 +23,7 @@ namespace Store.POS
         public frmMain()
         {
             InitializeComponent();
+            ConfigureLoading();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             menuQuanLyKhac = new ContextMenuStrip(components ??= new Container());
             menuQuanLyKhac.Items.Add("Nhóm thuốc", null, (_, _) => MoForm<frmNhomThuoc>());
@@ -34,9 +35,15 @@ namespace Store.POS
             menuQuanLyKhac.Items.Add("Nhân viên", null, (_, _) => MoForm<frmNhanVien>());
             menuQuanLyKhac.Items.Add("Phiếu nhập hàng", null, (_, _) => MoForm<frmPhieuNhap>());
             menuQuanLyKhac.Items.Add("Đổi mật khẩu", null, (_, _) => MoForm<frmDoiMatKhau>());
-            Shown+=(_,_)=>CapNhatQuyen();
+            Shown+=async(_,_)=>
+            {
+                try {await Task.Yield();CapNhatQuyen();await TaiTongQuanAsync();}
+                catch(UnauthorizedAccessException ex) {MessageBox.Show(this,ex.Message,"Phiên đăng nhập");Dispose();}
+                catch(Exception ex) {lblTongQuan.Text="Chưa tải được dữ liệu: "+ex.Message;}
+                finally {taiLanDau?.Dispose();taiLanDau=null;}
+            };
             var timerDongBo = new System.Windows.Forms.Timer(components) { Interval=500 };
-            timerDongBo.Tick += (_, _) => DongBoDuLieu();
+            timerDongBo.Tick += (_, _) => {if(soLuotDangTai==0) DongBoDuLieu();};
             Shown += (_, _) => { if(!PosFormStyle.IsInDesigner(this)) timerDongBo.Start(); };
             var timerDongBoDatabase = new System.Windows.Forms.Timer(components) { Interval = 15 * 1000 };
             timerDongBoDatabase.Tick += (_, _) => KiemTraDongBoDatabase();
@@ -50,6 +57,7 @@ namespace Store.POS
             var timerQuyen=new System.Windows.Forms.Timer(components) {Interval=5000};
             timerQuyen.Tick+=(_,_)=>
             {
+                if(soLuotDangTai>0 || dangDongBo || !Enabled) return;
                 try {CapNhatQuyen();}
                 catch(UnauthorizedAccessException ex)
                 {
@@ -68,20 +76,24 @@ namespace Store.POS
             MoCuaSo(typeof(T), () => new T());
         }
 
-        private void MoCuaSo(Type type, Func<Form> create)
+        private async void MoCuaSo(Type type, Func<Form> create)
         {
+            if(soLuotDangTai>0 || IsDisposed || Disposing) return;
+            using var loading=HienDangTai();
             Form? form=null;
             try
             {
+                await Task.Yield();
+                if(IsDisposed || Disposing) return;
                 CapNhatQuyen();
                 if(PhanQuyenGiaoDien.ChiAdmin(type) && !PhienDangNhap.LaAdmin)
                     throw new UnauthorizedAccessException("Chức năng này chỉ dành cho Admin.");
-                DongBoDuLieu();
+                await DongBoDuLieuAsync();
                 KiemTraDongBoDatabase();
                 if(cuaSoDangMo.TryGetValue(type,out form) && !form.IsDisposed)
                 {
                     HienFormNhung(form);
-                    if(form is ILamMoiDuLieu data) data.LamMoiDuLieu();
+                    if(form is ILamMoiDuLieu data) await data.LamMoiDuLieuAsync();
                     return;
                 }
                 form=create();
@@ -113,6 +125,7 @@ namespace Store.POS
             foreach(var other in cuaSoDangMo.Values.ToArray())
                 if(other!=form && !other.IsDisposed) other.Hide();
             dashboard.Hide();form.Show();PhanQuyenGiaoDien.ApDung(form);form.BringToFront();form.Select();CapNhatMenu(form);
+            GiuVungDangTai();
             
         }
         internal void VeTrangChu()
@@ -124,7 +137,7 @@ namespace Store.POS
         private async void KiemTraDongBoDatabase()=>await KiemTraDongBoDatabaseAsync();
         private async Task KiemTraDongBoDatabaseAsync(Func<long?>? read=null)
         {
-            if(IsDisposed || Disposing || PosFormStyle.IsInDesigner(this) || dangDongBo || dangKiemTraDatabase || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
+            if(IsDisposed || Disposing || PosFormStyle.IsInDesigner(this) || soLuotDangTai>0 || dangDongBo || dangKiemTraDatabase || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
             dangKiemTraDatabase=true;
             try
             {
@@ -147,6 +160,7 @@ namespace Store.POS
             long version=Store.DAL.DBConnection.DataVersion;
             if(!force && version==phienBanDuLieu) return true;
             if(!force && DateTime.UtcNow<thuLaiDongBoSau) return false;
+            using var loading=PosLoading.Show(this);
             dangDongBo=true;
             var errors=new List<string>();
             try
@@ -160,7 +174,7 @@ namespace Store.POS
                             if(IsDisposed || Disposing) return false;
                         }
                         catch(Exception ex) {errors.Add(form.Text+": "+ex.Message);}
-                if(!TaiTongQuan()) errors.Add("Tổng quan");
+                if(!await TaiTongQuanAsync()) errors.Add("Tổng quan");
                 if(errors.Count==0) phienBanDuLieu=version;
                 thuLaiDongBoSau=errors.Count==0?DateTime.MinValue:DateTime.UtcNow.AddSeconds(15);
                 if(errors.Count>0) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải lại được một số màn hình. Bấm Làm mới để thử lại. "+string.Join("; ",errors);}
@@ -202,6 +216,7 @@ namespace Store.POS
 
         private void btnTrangChu_Click(object sender, EventArgs e)
         {
+            if(soLuotDangTai>0) return;
             VeTrangChu();DongBoDuLieu(true);
         }
 

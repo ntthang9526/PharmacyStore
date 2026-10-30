@@ -21,6 +21,7 @@ public partial class frmPhieuNhap : Form,ILamMoiDuLieu
     private void XoaChiTiet() {selected=null;dgvChiTiet.DataSource=null;lblChiTiet.Text="Chọn phiếu để xem chi tiết nhập hàng.";HienVungChiTiet(false);}
     private void TimKiem(bool throwOnError=false)
     {
+            using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         try
         {

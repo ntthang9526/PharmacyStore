@@ -5,6 +5,7 @@ internal static class PosBackground
     internal static async Task<bool> LoadAsync<T>(Form form,Func<T> read,Action<T> apply,Action<Exception> fail)
     {
         if(form.IsDisposed || form.Disposing || !form.Enabled) return false;
+        using var loading=PosLoading.Show(form);
         form.Enabled=false;form.UseWaitCursor=true;
         try
         {

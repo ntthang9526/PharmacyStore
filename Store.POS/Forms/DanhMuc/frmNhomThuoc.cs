@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 
 namespace Store.POS
@@ -47,6 +47,7 @@ namespace Store.POS
         // Hàm tải dữ liệu lên DataGridView
         private void LoadData()
         {
+            using var loading=PosLoading.Show(this);
             dgvNhomThuoc.DataSource = bll.GetAllNhomThuoc();
         }
         private void SetControlState(bool status)

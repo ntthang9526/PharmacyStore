@@ -7,6 +7,7 @@ public partial class frmNhapKho
 
     public void LamMoiDuLieu()
     {
+        using var loading=PosLoading.Show(this);
         if(PosFormStyle.IsInDesigner(this)) return;
         int? supplier=cboNhaCungCap.SelectedValue is int sup?sup:null;
         int? medicine=cboThuoc.SelectedValue is int med?med:null;

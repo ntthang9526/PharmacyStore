@@ -26,17 +26,24 @@ public partial class frmMain
             MoCuaSo(typeof(frmHoaDon),()=>new frmHoaDon(id));
             if(cuaSoDangMo.TryGetValue(typeof(frmHoaDon),out var form)) ((frmHoaDon)form).MoHoaDon(id);
         };
-        Shown+=(_,_)=>TaiTongQuan();
+
     }
 
-    private bool TaiTongQuan()
+    private async void TaiTongQuan()=>await TaiTongQuanAsync();
+
+    private Task<bool> TaiTongQuanAsync()
     {
-        if (PosFormStyle.IsInDesigner(this) || !dashboard.Visible) return true;
+        if (IsDisposed || Disposing) return Task.FromResult(false);
+        if (PosFormStyle.IsInDesigner(this) || !dashboard.Visible) return Task.FromResult(true);
         lblTieuDeTongQuan.Text = "Tổng quan · " + DateTime.Today.ToString("dd/MM/yyyy");
-        try
+        int threshold=CanhBaoSettings.NguongTon;
+        return PosBackground.LoadAsync(this,()=>
         {
             var bills=new HoaDonBLL();var alerts=new CanhBaoBLL();
-            var summary=bills.ThongKeHomNay().Rows[0];var low=alerts.LayThuocSapHet(CanhBaoSettings.NguongTon);var expiry=alerts.LayLoSapHetHan();var recent=bills.LayGanNhat();
+            return (summary:bills.ThongKeHomNay().Rows[0],low:alerts.LayThuocSapHet(threshold),expiry:alerts.LayLoSapHetHan(),recent:bills.LayGanNhat());
+        },data=>
+        {
+            var (summary,low,expiry,recent)=data;
             lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
             label13.Text=$"Có thể bán dưới {CanhBaoSettings.NguongTon}";
             lblSapHet.Text=low.Rows.Count.ToString();
@@ -50,8 +57,6 @@ public partial class frmMain
             dgvGanNhat.Visible=recent.Rows.Count>0;lblKhongHoaDon.Visible=!dgvGanNhat.Visible;
             lblTongQuan.ForeColor=Color.DimGray;
             lblTongQuan.Text=$"{(string.IsNullOrWhiteSpace(PhienDangNhap.HoTen)?"Nhân viên":PhienDangNhap.HoTen)} · {(PhienDangNhap.LaAdmin?"Admin":"Nhân viên")} · Cập nhật lúc {DateTime.Now:HH:mm:ss}";
-            return true;
-        }
-        catch(Exception ex) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải được tổng quan. Bấm Làm mới để thử lại. "+ex.Message;return false;}
+        },ex=> {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải được tổng quan. Bấm Làm mới để thử lại. "+ex.Message;});
     }
 }

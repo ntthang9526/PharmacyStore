@@ -51,6 +51,7 @@ namespace Store.POS
         }
         private void LoadData()
         {
+            using var loading=PosLoading.Show(this);
             dgvKhachHang.DataSource = bll.GetAllKhachHang();
         }
 
@@ -251,6 +252,7 @@ namespace Store.POS
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
+            using var loading=PosLoading.Show(this);
             try
             {
                 ResetDetails();
