@@ -38,6 +38,11 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
+        if(args.Contains("--sync-poll"))
+        {
+            try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestSyncPoll();Console.WriteLine($"ALL {checks} SYNC POLL CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--background-ui"))
         {
             try {TestAsyncLoading();Console.WriteLine($"ALL {checks} BACKGROUND UI CHECKS PASSED");return 0;}

@@ -14,7 +14,9 @@ public class DBConnection
         CapNhatPhienBanDatabase();
     }
 
-    public static long LayPhienBanDatabase()
+    public static long LayPhienBanDatabase() => ThuLayPhienBanDatabase() ?? DataVersion;
+
+    public static long? ThuLayPhienBanDatabase()
     {
         try
         {
@@ -28,7 +30,7 @@ public class DBConnection
         {
             // Bỏ qua lỗi kết nối khi chạy offline hoặc môi trường chưa có bảng
         }
-        return DataVersion;
+        return null;
     }
 
     private static void CapNhatPhienBanDatabase()

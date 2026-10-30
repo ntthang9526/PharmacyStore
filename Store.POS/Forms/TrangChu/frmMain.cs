@@ -17,6 +17,7 @@ namespace Store.POS
         private long phienBanDuLieu = Store.DAL.DBConnection.DataVersion;
         private long phienBanDatabase;
         private bool dangDongBo;
+        private bool dangKiemTraDatabase;
 
         public frmMain()
         {
@@ -36,7 +37,7 @@ namespace Store.POS
             var timerDongBo = new System.Windows.Forms.Timer(components) { Interval=500 };
             timerDongBo.Tick += (_, _) => DongBoDuLieu();
             Shown += (_, _) => { if(!PosFormStyle.IsInDesigner(this)) timerDongBo.Start(); };
-            var timerDongBoDatabase = new System.Windows.Forms.Timer(components) { Interval = 10 * 60 * 1000 };
+            var timerDongBoDatabase = new System.Windows.Forms.Timer(components) { Interval = 15 * 1000 };
             timerDongBoDatabase.Tick += (_, _) => KiemTraDongBoDatabase();
             Shown += (_, _) => { if(!PosFormStyle.IsInDesigner(this)) timerDongBoDatabase.Start(); };
             this.FormClosing += (_,e) =>
@@ -119,19 +120,23 @@ namespace Store.POS
             dashboard.Show();dashboard.BringToFront();TaiTongQuan();CapNhatMenu();
             
         }
-        private void KiemTraDongBoDatabase()
+        private async void KiemTraDongBoDatabase()=>await KiemTraDongBoDatabaseAsync();
+        private async Task KiemTraDongBoDatabaseAsync(Func<long?>? read=null)
         {
-            if (PosFormStyle.IsInDesigner(this) || dangDongBo || !Enabled || cuaSoDangMo.Values.Any(f => !f.IsDisposed && !f.Enabled)) return;
+            if(IsDisposed || Disposing || PosFormStyle.IsInDesigner(this) || dangDongBo || dangKiemTraDatabase || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
+            dangKiemTraDatabase=true;
             try
             {
-                long dbVersion = Store.DAL.DBConnection.LayPhienBanDatabase();
-                if (dbVersion > phienBanDatabase)
+                long? dbVersion=await Task.Run(read ?? Store.DAL.DBConnection.ThuLayPhienBanDatabase);
+                if(IsDisposed || Disposing || !dbVersion.HasValue || dangDongBo || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
+                if(dbVersion.Value>phienBanDatabase)
                 {
-                    phienBanDatabase = dbVersion;
-                    DongBoDuLieu(force: true);
+                    DongBoDuLieu(force:true);
+                    phienBanDatabase=dbVersion.Value;
                 }
             }
             catch { }
+            finally {dangKiemTraDatabase=false;}
         }
 
         private void DongBoDuLieu(bool force=false)
@@ -149,7 +154,6 @@ namespace Store.POS
                         try {data.LamMoiDuLieu();} catch(Exception ex) {errors.Add(form.Text+": "+ex.Message);}
                 TaiTongQuan();
                 phienBanDuLieu=version;
-                phienBanDatabase=Math.Max(phienBanDatabase, Store.DAL.DBConnection.LayPhienBanDatabase());
                 if(errors.Count>0) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải lại được một số màn hình. Bấm Làm mới để thử lại. "+string.Join("; ",errors);}
             }
             catch(Exception ex)
