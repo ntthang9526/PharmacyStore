@@ -67,16 +67,18 @@ internal static partial class Program
                 {
                     var list=UiField<DataGridView>(form,type==typeof(frmHoaDon)?"dgvHoaDon":"dgvPhieuNhap");
                     var detail=UiField<DataGridView>(form,"dgvChiTiet");
-                    var a=list.RectangleToScreen(list.ClientRectangle);var b=detail.RectangleToScreen(detail.ClientRectangle);
-                    Check(a.Right<b.Left && Math.Abs(a.Bottom-b.Bottom)<25 && a.Height>200 && b.Height>200,type.Name+" list and details occupy two readable columns at "+size.Width);
+                    ClickBackground(form);
+                    Check(!detail.Visible && list.Height>200,type.Name+" uses full list space before a receipt is selected at "+size.Width);
                     if(list.Rows.Count>0)
                     {
                         typeof(DataGridView).GetMethod("OnCellClick",PrivateInstance)!.Invoke(list,new object[]{new DataGridViewCellEventArgs(0,0)});
                         Application.DoEvents();
+                        var a=list.RectangleToScreen(list.ClientRectangle);var b=detail.RectangleToScreen(detail.ClientRectangle);
+                        Check(detail.Visible && a.Bottom<b.Top && Math.Abs(a.Width-b.Width)<8,type.Name+" shows full-width list and details at "+size.Width);
                         var label=UiField<Label>(form,"lblChiTiet");
                         int needed=TextRenderer.MeasureText(label.Text,label.Font,new Size(Math.Max(1,label.Width-label.Padding.Horizontal),int.MaxValue),TextFormatFlags.WordBreak).Height;
                         Check(label.Height-label.Padding.Vertical>=needed-2,type.Name+" selected receipt summary fits at "+size.Width);
-                        Check(detail.Height>150 && detail.Rows.Count>0 && detail.GetRowDisplayRectangle(0,true).Height>=detail.Rows[0].Height-2,type.Name+" selected receipt shows complete detail rows at "+size.Width);
+                        Check(detail.Rows.Count>0 && detail.GetRowDisplayRectangle(0,true).Height>=detail.Rows[0].Height-2,type.Name+" selected receipt shows complete detail rows at "+size.Width);
                         Directory.CreateDirectory("artifacts/previews/grid-receipt-report");
                         using var picture=new Bitmap(main.Width,main.Height);main.DrawToBitmap(picture,new Rectangle(0,0,picture.Width,picture.Height));
                         picture.Save("artifacts/previews/grid-receipt-report/"+type.Name+"-selected-"+size.Width+".png");

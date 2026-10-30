@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 using System.Data;
 
 namespace Store.POS
@@ -21,6 +21,7 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
+            PosFormStyle.ConfigureRowNavigation(dgvKhachHang,row=>dgvKhachHang_CellClick(dgvKhachHang,new DataGridViewCellEventArgs(0,row.Index)));
             PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
             if (!string.IsNullOrEmpty(sdt)) txtDienThoai.Text = sdt;
         }
@@ -48,6 +49,7 @@ namespace Store.POS
         // Hàm quản lý trạng thái khóa/mở các ô nhập liệu
         private void SetControlState(bool status)
         {
+            dgvKhachHang.Enabled=!status;
             txtTenKH.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiem.Enabled = status;
@@ -69,6 +71,7 @@ namespace Store.POS
         }
         private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(!dgvKhachHang.Enabled) return;
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvKhachHang.Rows[e.RowIndex];
@@ -102,7 +105,7 @@ namespace Store.POS
             // 2. Kiểm tra tên khách hàng không để trống
             if (string.IsNullOrWhiteSpace(txtTenKH.Text))
             {
-                MessageBox.Show("Tên khách hàng không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên khách hàng.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenKH.Focus();
                 return;
             }
@@ -111,7 +114,7 @@ namespace Store.POS
             string sdt = txtDienThoai.Text.Trim();
             if (string.IsNullOrWhiteSpace(sdt))
             {
-                MessageBox.Show("Số điện thoại không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập số điện thoại.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }
@@ -126,7 +129,7 @@ namespace Store.POS
             // 4. Kiểm tra định dạng điểm (phải là số nguyên >= 0)
             if (!int.TryParse(txtDiem.Text.Trim(), out int diem) || diem < 0)
             {
-                MessageBox.Show("Điểm phải là số nguyên lớn hơn hoặc bằng 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Điểm phải là số nguyên từ 0 trở lên.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDiem.Focus();
                 return;
             }
@@ -134,14 +137,14 @@ namespace Store.POS
             // 5. Gọi BLL để thêm mới
             if (bll.ThemMoiKhachHang(maDangChon.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
             {
-                MessageBox.Show("Thêm khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã thêm khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
 
                 SetControlState(false); // Thêm thành công thì khóa các ô lại
             }
             else
             {
-                MessageBox.Show("Lỗi (Có thể do trùng mã): " + error, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không lưu được: " + error, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -153,7 +156,7 @@ namespace Store.POS
             {
                 if (string.IsNullOrEmpty(maDangChon))
                 {
-                    MessageBox.Show("Vui lòng chọn khách hàng cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Chọn khách hàng cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -167,7 +170,7 @@ namespace Store.POS
             // Trường hợp 2: Khi đã sửa xong thông tin trên ô, bấm nút Sửa lần nữa để LƯU xuống CSDL
             if (string.IsNullOrWhiteSpace(txtTenKH.Text))
             {
-                MessageBox.Show("Tên khách hàng không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên khách hàng.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenKH.Focus();
                 return;
             }
@@ -182,7 +185,7 @@ namespace Store.POS
 
             if (!int.TryParse(txtDiem.Text.Trim(), out int diem) || diem < 0)
             {
-                MessageBox.Show("Điểm phải là số nguyên lớn hơn hoặc bằng 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Điểm phải là số nguyên từ 0 trở lên.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDiem.Focus();
                 return;
             }
@@ -190,7 +193,7 @@ namespace Store.POS
             // Gọi hàm sửa trong BLL
             if (bll.SuaKhachHang(maDangChon.Trim(), txtTenKH.Text.Trim(), sdt, txtDiem.Text.Trim(), out string error))
             {
-                MessageBox.Show("Cập nhật khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã lưu khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
 
                 SetControlState(false); // Lưu xong thì khóa lại
@@ -203,12 +206,12 @@ namespace Store.POS
        
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn xóa khách hàng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
                 if (bll.XoaKhachHang(maDangChon, out string error))
                 {
-                    MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                     btnLamLai_Click(sender, e);
                 }

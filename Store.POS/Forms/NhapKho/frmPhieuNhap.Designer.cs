@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -11,6 +11,7 @@ partial class frmPhieuNhap
     protected override void Dispose(bool disposing) {if(disposing) components?.Dispose();base.Dispose(disposing);}
     private void InitializeComponent()
     {
+        colNguonThongTin=new global::System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvPhieuNhapCol0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvPhieuNhapCol1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
         this.dgvPhieuNhapCol2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -28,6 +29,7 @@ partial class frmPhieuNhap
         search=new TableLayoutPanel();search.Name="search";
         details=new TableLayoutPanel();details.Name="details";
         posHeading=new Label();posHeading.Name="posHeading";
+        posHeading.ForeColor = Color.FromArgb(15,23,42);
         lblTu=new Label();lblTu.Name="lblTu";
         lblDen=new Label();lblDen.Name="lblDen";
         lblChiTiet=new Label();lblChiTiet.Name="lblChiTiet";
@@ -45,7 +47,7 @@ partial class frmPhieuNhap
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
         posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48));
         posLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,32));
-        posHeading.Text="Phiếu nhập hàng";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI",18,FontStyle.Bold);
+        posHeading.Text="Phiếu nhập hàng";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI Semibold",16F,FontStyle.Bold);
         search.Dock=DockStyle.Fill;search.ColumnCount=7;search.RowCount=1;
         search.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
         search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,40));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,155));
@@ -93,13 +95,13 @@ partial class frmPhieuNhap
         details.Controls.Add(lblChiTiet,0,0);details.Controls.Add(dgvChiTiet,0,1);
         posLayout.Controls.Add(posHeading,0,0);posLayout.Controls.Add(search,0,1);
         receiptColumns=new TableLayoutPanel();receiptColumns.Name="receiptColumns";receiptColumns.Dock=DockStyle.Fill;
-        receiptColumns.Margin=Padding.Empty;receiptColumns.ColumnCount=2;receiptColumns.RowCount=1;
-        receiptColumns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,45));receiptColumns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,55));
-        receiptColumns.RowStyles.Add(new RowStyle(SizeType.Percent,100));
+        receiptColumns.Margin=Padding.Empty;receiptColumns.ColumnCount=1;receiptColumns.RowCount=2;
+        receiptColumns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
+        receiptColumns.RowStyles.Add(new RowStyle(SizeType.Percent,40));receiptColumns.RowStyles.Add(new RowStyle(SizeType.Percent,60));
         grpPhieu=new GroupBox();grpPhieu.Name="grpPhieu";grpPhieu.Text="Phiếu nhập hàng";grpPhieu.Dock=DockStyle.Fill;grpPhieu.Padding=new Padding(10);
         grpChiTiet=new GroupBox();grpChiTiet.Name="grpChiTiet";grpChiTiet.Text="Chi tiết phiếu nhập";grpChiTiet.Dock=DockStyle.Fill;grpChiTiet.Padding=new Padding(10);
         grpPhieu.Controls.Add(dgvPhieuNhap);grpChiTiet.Controls.Add(details);
-        receiptColumns.Controls.Add(grpPhieu,0,0);receiptColumns.Controls.Add(grpChiTiet,1,0);
+        receiptColumns.Controls.Add(grpPhieu,0,0);receiptColumns.Controls.Add(grpChiTiet,0,1);
         posLayout.Controls.Add(receiptColumns,0,2);
         posLayout.Controls.Add(lblTrangThai,0,3);
         AutoScaleDimensions=new SizeF(8,20);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
@@ -288,7 +290,7 @@ partial class frmPhieuNhap
         this.dgvPhieuNhap.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvPhieuNhapCol0, this.dgvPhieuNhapCol1, this.dgvPhieuNhapCol2, this.dgvPhieuNhapCol3, this.dgvPhieuNhapCol4, this.dgvPhieuNhapCol5 });
 
         this.dgvChiTiet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
-        this.dgvChiTiet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvChiTietCol0, this.dgvChiTietCol1, this.dgvChiTietCol2, this.dgvChiTietCol3, this.dgvChiTietCol4, this.dgvChiTietCol5, this.dgvChiTietCol6 });
+        this.dgvChiTiet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvChiTietCol0, this.dgvChiTietCol1, this.dgvChiTietCol2, this.dgvChiTietCol3, this.dgvChiTietCol4, this.dgvChiTietCol5, this.dgvChiTietCol6, colNguonThongTin });
         ((System.ComponentModel.ISupportInitialize)dgvPhieuNhap).EndInit();((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);
@@ -309,12 +311,12 @@ partial class frmPhieuNhap
         dgvPhieuNhap.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvPhieuNhap.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvPhieuNhap.DefaultCellStyle.BackColor=Color.White;dgvPhieuNhap.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvPhieuNhap.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvPhieuNhap.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvPhieuNhap.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+        dgvPhieuNhap.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(242, 246, 248);
         dgvChiTiet.BackgroundColor=Color.White;dgvChiTiet.EnableHeadersVisualStyles=false;
         dgvChiTiet.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvChiTiet.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvChiTiet.DefaultCellStyle.BackColor=Color.White;dgvChiTiet.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvChiTiet.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvChiTiet.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvChiTiet.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+        dgvChiTiet.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(242, 246, 248);
         dgvPhieuNhap.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvPhieuNhap.MultiSelect=false;
         dgvPhieuNhap.AllowUserToResizeColumns=false;
@@ -400,8 +402,18 @@ partial class frmPhieuNhap
         
         
         
+        colNguonThongTin.Name="colNguonThongTin";
+        colNguonThongTin.DataPropertyName="NguonThongTin";
+        colNguonThongTin.HeaderText="Nguồn tên/đơn vị";
+        colNguonThongTin.Width=290;
+        colNguonThongTin.MinimumWidth=60;
+        colNguonThongTin.ReadOnly=true;
+        colNguonThongTin.Visible=false;
+        colNguonThongTin.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+        colNguonThongTin.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
         ResumeLayout(false);
     }
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn colNguonThongTin;
     private TableLayoutPanel posLayout,search,details,receiptColumns;
     private GroupBox grpPhieu,grpChiTiet;
     private Label posHeading,lblTu,lblDen,lblChiTiet,lblTrangThai;

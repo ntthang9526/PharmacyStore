@@ -40,12 +40,11 @@ public partial class frmMain
             lblDoanhThu.Text=$"{summary["DoanhThu"]:N0} đ";lblSoHoaDon.Text=summary["SoHoaDon"].ToString();
             label13.Text=$"Có thể bán dưới {CanhBaoSettings.NguongTon}";
             lblSapHet.Text=low.Rows.Count.ToString();
-            // Lọc các lô đã được đánh dấu "Đã xử lý" khỏi hiển thị trang chủ
-            var chuaXuLy=expiry.Rows.Cast<System.Data.DataRow>().Where(r=>{int ma=Convert.ToInt32(r["MaThuoc"]);string lo=r["SoLo"]?.ToString()??"";return !frmCanhBao.LoXuLyDaXuLy.Contains(ma+"|"+lo);}).ToList();
-            lblSapHetHan.Text=chuaXuLy.Count.ToString();
+            // Đã xem chỉ là nhắc việc trong phiên; các lô vẫn được tính vào cảnh báo.
+            lblSapHetHan.Text=expiry.Rows.Count.ToString();
             dgvSapHet.DataSource=low;dgvSapHetHan.DataSource=expiry;dgvGanNhat.DataSource=recent;
             dgvSapHet.Visible=low.Rows.Count>0;lblKhongSapHet.Visible=!dgvSapHet.Visible;
-            // Tô xám các hàng đã xử lý trong dgvSapHetHan trang chủ
+            // Tô xám các hàng đã xem trong dgvSapHetHan trang chủ
             foreach(DataGridViewRow r in dgvSapHetHan.Rows){if(r.IsNewRow)continue;int ma=Convert.ToInt32(r.Cells["MaThuoc"].Value);string lo=r.Cells["SoLo"].Value?.ToString()??"";bool dxl=frmCanhBao.LoXuLyDaXuLy.Contains(ma+"|"+lo);r.DefaultCellStyle.ForeColor=dxl?Color.Gray:Color.FromArgb(15,23,42);r.DefaultCellStyle.BackColor=dxl?Color.LightGray:(Convert.ToInt32(r.Cells["SoNgayConLai"].Value)<0?Color.LightCoral:Color.LemonChiffon);}
             dgvSapHetHan.Visible=expiry.Rows.Count>0;lblKhongSapHetHan.Visible=!dgvSapHetHan.Visible;
             dgvGanNhat.Visible=recent.Rows.Count>0;lblKhongHoaDon.Visible=!dgvGanNhat.Visible;

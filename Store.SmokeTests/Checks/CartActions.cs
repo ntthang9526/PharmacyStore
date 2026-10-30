@@ -41,10 +41,10 @@ internal static partial class Program
         foreach(var size in new[]{new Size(1182,653),new Size(1120,650),new Size(900,570)})
         {
             form.ClientSize=size;Application.DoEvents();
-            Check(!cartBox.Bounds.IntersectsWith(panel.Bounds) && payment.Bounds.IntersectsWith(panel.Bounds) &&
-                panel.Left>=payment.Left && panel.Right<=payment.Right && panel.Top>=payment.Top && panel.Bottom<=payment.Bottom &&
+            Check(cartBox.Bounds.IntersectsWith(panel.Bounds) && !payment.Bounds.IntersectsWith(panel.Bounds) &&
+                panel.Left>=cartBox.Left && panel.Right<=cartBox.Right && panel.Top>=cartBox.Top && panel.Bottom<=cartBox.Bottom &&
                 form.Controls.GetChildIndex(panel)<form.Controls.GetChildIndex(layout),
-                "action panel overlays payment, stays above it and never covers cart at "+size);
+                "action panel stays beside cart rows without covering payment at "+size);
             Check(numeric.Left>=0 && numeric.Right<=panel.ClientSize.Width && UiField<Button>(form,"btnXoa").Bottom<=panel.ClientSize.Height,
                 "action inputs stay inside floating panel at "+size);
         }

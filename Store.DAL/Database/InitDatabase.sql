@@ -1,4 +1,4 @@
-﻿:ON ERROR EXIT
+:ON ERROR EXIT
 -- ==============================================================
 -- CƠ SỞ DỮ LIỆU: PharmacyStoreTrialDB (Admin / Nhân viên)
 -- Dành cho nhóm: WinForms POS + ASP.NET Core Web API + SQL Server
@@ -233,4 +233,80 @@ IF COL_LENGTH('dbo.Medicines','IsSelling') IS NULL
  ALTER TABLE dbo.Medicines ADD IsSelling bit NOT NULL CONSTRAINT DF_Medicines_IsSelling DEFAULT 1 WITH VALUES;
 IF COL_LENGTH('dbo.Batches','IsBlocked') IS NULL
  ALTER TABLE dbo.Batches ADD IsBlocked bit NOT NULL CONSTRAINT DF_Batches_IsBlocked DEFAULT 0 WITH VALUES;
+COMMIT;
+
+GO
+-- Nâng cấp database hiện tại, không xóa dữ liệu và không suy đoán lịch sử cũ.
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+IF COL_LENGTH('dbo.OrderDetails','MedicineNameSnapshot') IS NULL
+ ALTER TABLE dbo.OrderDetails ADD MedicineNameSnapshot nvarchar(150) NULL;
+IF COL_LENGTH('dbo.OrderDetails','MedicineUnitSnapshot') IS NULL
+ ALTER TABLE dbo.OrderDetails ADD MedicineUnitSnapshot nvarchar(30) NULL;
+IF COL_LENGTH('dbo.OrderPendingItems','MedicineNameSnapshot') IS NULL
+ ALTER TABLE dbo.OrderPendingItems ADD MedicineNameSnapshot nvarchar(150) NULL;
+IF COL_LENGTH('dbo.OrderPendingItems','MedicineUnitSnapshot') IS NULL
+ ALTER TABLE dbo.OrderPendingItems ADD MedicineUnitSnapshot nvarchar(30) NULL;
+IF COL_LENGTH('dbo.StockInDetails','MedicineNameSnapshot') IS NULL
+ ALTER TABLE dbo.StockInDetails ADD MedicineNameSnapshot nvarchar(150) NULL;
+IF COL_LENGTH('dbo.StockInDetails','MedicineUnitSnapshot') IS NULL
+ ALTER TABLE dbo.StockInDetails ADD MedicineUnitSnapshot nvarchar(30) NULL;
+COMMIT;
+
+GO
+-- Cho phép sửa/hủy đơn chờ; giữ nguyên chứng từ và không thay đổi tồn/voucher.
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+IF COL_LENGTH('dbo.Orders','OrderVersion') IS NULL
+ ALTER TABLE dbo.Orders ADD OrderVersion rowversion;
+IF COL_LENGTH('dbo.Orders','ModifiedAt') IS NULL
+ ALTER TABLE dbo.Orders ADD ModifiedAt datetime2 NULL;
+IF COL_LENGTH('dbo.Orders','ModifiedEmployeeId') IS NULL
+ ALTER TABLE dbo.Orders ADD ModifiedEmployeeId int NULL REFERENCES dbo.Employees(Id);
+IF COL_LENGTH('dbo.Orders','CancelledAt') IS NULL
+ ALTER TABLE dbo.Orders ADD CancelledAt datetime2 NULL;
+IF COL_LENGTH('dbo.Orders','CancelledEmployeeId') IS NULL
+ ALTER TABLE dbo.Orders ADD CancelledEmployeeId int NULL REFERENCES dbo.Employees(Id);
+IF COL_LENGTH('dbo.Orders','CancelReason') IS NULL
+ ALTER TABLE dbo.Orders ADD CancelReason nvarchar(250) NULL;
+IF EXISTS(SELECT 1 FROM sys.check_constraints WHERE name='CK_Orders_PaymentStatus' AND parent_object_id=OBJECT_ID('dbo.Orders'))
+ ALTER TABLE dbo.Orders DROP CONSTRAINT CK_Orders_PaymentStatus;
+ALTER TABLE dbo.Orders WITH CHECK ADD CONSTRAINT CK_Orders_PaymentStatus CHECK(PaymentStatus IN ('PENDING','PAID','CANCELLED'));
+COMMIT;
+
+
+
+-- Bổ sung thông tin đơn thuốc; không suy đoán dữ liệu lịch sử.
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+IF COL_LENGTH('dbo.Orders','PrescriptionNumber') IS NULL
+ ALTER TABLE dbo.Orders ADD PrescriptionNumber nvarchar(100) NULL, PatientName nvarchar(150) NULL,
+ Prescriber nvarchar(150) NULL, PrescriptionDate date NULL, PrescriptionCheckedBy int NULL REFERENCES dbo.Employees(Id), PrescriptionCheckedAt datetime2 NULL;
+IF COL_LENGTH('dbo.OrderPendingItems','DosageInstruction') IS NULL
+ ALTER TABLE dbo.OrderPendingItems ADD DosageInstruction nvarchar(500) NULL;
+IF COL_LENGTH('dbo.OrderPendingItems','IsPrescriptionSnapshot') IS NULL
+ ALTER TABLE dbo.OrderPendingItems ADD IsPrescriptionSnapshot bit NULL;
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=OBJECT_ID('dbo.OrderDetails') AND name='DosageInstruction' AND max_length<1000)
+ ALTER TABLE dbo.OrderDetails ALTER COLUMN DosageInstruction nvarchar(500) NULL;
+IF COL_LENGTH('dbo.OrderDetails','IsPrescriptionSnapshot') IS NULL
+ ALTER TABLE dbo.OrderDetails ADD IsPrescriptionSnapshot bit NULL;
+COMMIT;
+
+-- Lưu thông tin hiển thị ở đầu hóa đơn mới, không suy đoán lịch sử cũ.
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+IF COL_LENGTH('dbo.Orders','CustomerNameSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD CustomerNameSnapshot nvarchar(100) NULL;
+IF COL_LENGTH('dbo.Orders','CustomerPhoneSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD CustomerPhoneSnapshot varchar(15) NULL;
+IF COL_LENGTH('dbo.Orders','EmployeeNameSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD EmployeeNameSnapshot nvarchar(100) NULL;
+IF COL_LENGTH('dbo.Orders','PaidEmployeeNameSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD PaidEmployeeNameSnapshot nvarchar(100) NULL;
+IF COL_LENGTH('dbo.Orders','VoucherCodeSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD VoucherCodeSnapshot nvarchar(50) NULL;
+IF COL_LENGTH('dbo.Orders','ModifiedEmployeeNameSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD ModifiedEmployeeNameSnapshot nvarchar(100) NULL;
+IF COL_LENGTH('dbo.Orders','CancelledEmployeeNameSnapshot') IS NULL
+ ALTER TABLE dbo.Orders ADD CancelledEmployeeNameSnapshot nvarchar(100) NULL;
 COMMIT;

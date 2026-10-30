@@ -204,7 +204,7 @@ internal static class PosFormStyle
 
                 for (Control? current = control; current != null; current = current.Parent)
                 {
-                    if (current is ButtonBase or TextBoxBase or ComboBox or NumericUpDown or DateTimePicker or ScrollBar)
+                    if (current is ButtonBase or LinkLabel or TextBoxBase or ComboBox or NumericUpDown or DateTimePicker or ScrollBar)
                     {
                         interactive = true;
                         break;
@@ -216,7 +216,7 @@ internal static class PosFormStyle
                     Control? hit = FindDeepestControlAtPoint(form, screenPt);
                     for (Control? c = hit; c != null && c != form; c = c.Parent)
                     {
-                        if (c is ButtonBase or TextBoxBase or ComboBox or NumericUpDown or DateTimePicker or ScrollBar)
+                        if (c is ButtonBase or LinkLabel or TextBoxBase or ComboBox or NumericUpDown or DateTimePicker or ScrollBar)
                         {
                             interactive = true;
                             break;
@@ -249,6 +249,21 @@ internal static class PosFormStyle
         }
         form.Shown += (_, _) => form.BeginInvoke((Action)ClearAll);
         form.Deactivate += (_, _) => ClearAll();
+    }
+
+    internal static void ConfigureRowNavigation(DataGridView grid, Action<DataGridViewRow> showRow)
+    {
+        bool navigationPending=false;
+        void ShowCurrent()
+        {
+            if(grid.IsDisposed || grid.Disposing || !grid.Enabled || !grid.Visible) return;
+            if(grid.CurrentRow is {IsNewRow:false,Selected:true} row && row.DataBoundItem!=null) showRow(row);
+        }
+        // Leave also covers pressing a button while a navigation key is still held.
+        grid.KeyDown+=(_,e)=>navigationPending|=e.KeyCode is Keys.Up or Keys.Down or Keys.Left or Keys.Right or Keys.Home or Keys.End or Keys.PageUp or Keys.PageDown or Keys.Enter or Keys.Tab;
+        grid.KeyUp+=(_,_)=> {ShowCurrent();navigationPending=false;};
+        grid.Sorted+=(_,_)=>ShowCurrent();
+        grid.Leave+=(_,_)=> {if(navigationPending) ShowCurrent();navigationPending=false;};
     }
 
     internal static void RebindCombo(ComboBox combo, System.Data.DataTable data, int? id)

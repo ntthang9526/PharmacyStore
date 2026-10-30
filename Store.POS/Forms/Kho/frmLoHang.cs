@@ -46,7 +46,7 @@ public partial class frmLoHang : Form, ILamMoiDuLieu
         var row=LoDangChon;if(row==null || !PhienDangNhap.LaAdmin)return;
         int id=(int)row["MaLo"];bool khoa=!(bool)row["KhoaLo"];
         string action=khoa?"Tạm khóa":"Mở khóa";
-        if(MessageBox.Show(this,$"{action} lô {row["SoLo"]}? Số lượng tồn được giữ nguyên. Lô hết hạn hoặc thuốc ngừng bán vẫn không được bán.",action,MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes)return;
+        if(MessageBox.Show(this,$"{action} lô {row["SoLo"]}? Tồn kho không thay đổi.",action,MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes)return;
         if(!bll.DoiTrangThai(id,khoa,out string error))MessageBox.Show(this,error,"Không đổi được trạng thái",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         TimKiem();
     }

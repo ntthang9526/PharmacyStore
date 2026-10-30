@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 namespace Store.POS;
 partial class frmDoiMatKhau
 {
@@ -13,7 +13,9 @@ partial class frmDoiMatKhau
         posLayout.Name="posLayout";posLayout.Dock=DockStyle.Fill;posLayout.Padding=new Padding(18);posLayout.ColumnCount=1;posLayout.RowCount=3;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
         posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,52));posLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,60));
-        posHeading.Name="posHeading";posHeading.Text="Đổi mật khẩu";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI",18,FontStyle.Bold);
+        posHeading.Name="posHeading";
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);posHeading.Text="Đổi mật khẩu";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI Semibold",16F,FontStyle.Bold);
         editor.Name="editor";editor.Dock=DockStyle.Fill;editor.MinimumSize=new Size(450,300);editor.MaximumSize=new Size(600,380);editor.ColumnCount=1;editor.RowCount=8;
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));
         editor.RowStyles.Add(new RowStyle(SizeType.Absolute,42));

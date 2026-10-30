@@ -39,11 +39,11 @@ namespace Store.POS
             var timerDongBoDatabase = new System.Windows.Forms.Timer(components) { Interval = 10 * 60 * 1000 };
             timerDongBoDatabase.Tick += (_, _) => KiemTraDongBoDatabase();
             Shown += (_, _) => { if(!PosFormStyle.IsInDesigner(this)) timerDongBoDatabase.Start(); };
-            FormClosing += (_,e) =>
+            this.FormClosing += (_,e) =>
             {
                 if(DaDangXuat) return;
-                if(e.CloseReason==CloseReason.UserClosing && cuaSoDangMo.Count>0 &&
-                    MessageBox.Show(this,"Đóng ứng dụng sẽ đóng cả các form đang tạm ẩn. Tiếp tục?","Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes) e.Cancel=true;
+                if(e.CloseReason==CloseReason.UserClosing &&
+                    MessageBox.Show(this,"Bạn muốn đóng ứng dụng?","Đóng ứng dụng",MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2)!=DialogResult.Yes) e.Cancel=true;
             };
             var timerQuyen=new System.Windows.Forms.Timer(components) {Interval=5000};
             timerQuyen.Tick+=(_,_)=>
@@ -58,6 +58,7 @@ namespace Store.POS
             };
             Shown+=(_,_)=> {if(!PosFormStyle.IsInDesigner(this)) timerQuyen.Start();};
             ConfigureDashboard();
+            Shown+=(_,_)=>CapNhatMenu();
         }
 
         private void MoForm<T>() where T : Form, new()
@@ -84,11 +85,7 @@ namespace Store.POS
                 form=create();
                 form.TopLevel=false;form.FormBorderStyle=FormBorderStyle.None;form.ShowInTaskbar=false;
                 form.KeyPreview=true;
-                form.KeyDown+=(_,e)=>
-                {
-                    if(e.Modifiers==Keys.None && e.KeyCode is Keys.F1 or Keys.F2 or Keys.F3 or Keys.F4 or Keys.F5 or Keys.F6)
-                    {e.SuppressKeyPress=true;frmMain_KeyDown(this,e);}
-                };
+                form.KeyDown+=(_,e)=>frmMain_KeyDown(this,e);
                 form.MinimumSize=Size.Empty;form.MaximumSize=Size.Empty;
                 form.Dock=DockStyle.Fill;contentHost.Controls.Add(form);
                 cuaSoDangMo[type]=form;
@@ -113,13 +110,13 @@ namespace Store.POS
         {
             foreach(var other in cuaSoDangMo.Values.ToArray())
                 if(other!=form && !other.IsDisposed) other.Hide();
-            dashboard.Hide();form.Show();PhanQuyenGiaoDien.ApDung(form);form.BringToFront();form.Select();
+            dashboard.Hide();form.Show();PhanQuyenGiaoDien.ApDung(form);form.BringToFront();form.Select();CapNhatMenu(form);
             
         }
         internal void VeTrangChu()
         {
             foreach(var form in cuaSoDangMo.Values.ToArray()) if(!form.IsDisposed) form.Hide();
-            dashboard.Show();dashboard.BringToFront();TaiTongQuan();
+            dashboard.Show();dashboard.BringToFront();TaiTongQuan();CapNhatMenu();
             
         }
         private void KiemTraDongBoDatabase()
@@ -153,7 +150,7 @@ namespace Store.POS
                 TaiTongQuan();
                 phienBanDuLieu=version;
                 phienBanDatabase=Math.Max(phienBanDatabase, Store.DAL.DBConnection.LayPhienBanDatabase());
-                if(errors.Count>0) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Một số form chưa tải lại được. Bấm Làm mới để thử lại. "+string.Join("; ",errors);}
+                if(errors.Count>0) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải lại được một số màn hình. Bấm Làm mới để thử lại. "+string.Join("; ",errors);}
             }
             catch(Exception ex)
             {
@@ -218,30 +215,22 @@ namespace Store.POS
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F1)
+            if(e.Handled || e.Modifiers!=Keys.None) return;
+            Button? button=e.KeyCode switch
             {
-                ShowFormBanHang();
-            }
-            if (e.KeyCode == Keys.F2)
-            {
-                ShowFormQuanLyThuoc();
-            }
-            if (e.KeyCode == Keys.F3)
-            {
-                ShowFormQuanLyKhac();
-            }
-            if (e.KeyCode == Keys.F4)
-            {
-                ShowFormNhapKho();
-            }
-            if (e.KeyCode == Keys.F5)
-            {
-                ShowFormCanhBao();
-            }
-            if (e.KeyCode == Keys.F6)
-            {
-                ShowFormBaoCao();
-            }
+                Keys.F1=>btnTrangChu,
+                Keys.F2=>btnBanHang,
+                Keys.F4=>btnQuanLyThuoc,
+                Keys.F5=>btnQuanLyKhac,
+                Keys.F6=>btnNhapKho,
+                Keys.F7=>btnCanhBao,
+                Keys.F8=>btnBaoCao,
+                Keys.F3=>btnHoaDon,
+                _=>null
+            };
+            if(button==null) return;
+            e.SuppressKeyPress=true;
+            button.PerformClick();
         }
 
         private void btnBanHang_Click(object sender, EventArgs e)
@@ -278,7 +267,7 @@ namespace Store.POS
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(this, "Bạn có muốn đăng xuất?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DaDangXuat = true;
                 Close();

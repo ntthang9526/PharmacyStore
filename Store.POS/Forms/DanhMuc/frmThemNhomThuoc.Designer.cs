@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 namespace Store.POS;
 
 partial class frmThemNhomThuoc
@@ -40,8 +40,8 @@ partial class frmThemNhomThuoc
         posLayout.AutoSize = false;
         posLayout.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         posLayout.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        posLayout.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posLayout.BackColor = Color.FromArgb(248,250,252);
+        posLayout.ForeColor = Color.FromArgb(15, 23, 42);
+        posLayout.BackColor = Color.FromArgb(242, 246, 248);
         posLayout.Cursor = global::System.Windows.Forms.Cursors.Default;
         posLayout.TabIndex = 0;
         posLayout.TabStop = false;
@@ -68,9 +68,9 @@ partial class frmThemNhomThuoc
         posHeading.Dock = global::System.Windows.Forms.DockStyle.Fill;
 
         posHeading.AutoSize = false;
-        posHeading.Font = new global::System.Drawing.Font("Segoe UI Semibold", 18F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        posHeading.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        posHeading.BackColor = Color.FromArgb(248,250,252);
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);
+        posHeading.BackColor = Color.FromArgb(242, 246, 248);
         posHeading.Cursor = global::System.Windows.Forms.Cursors.Default;
         posHeading.TabIndex = 0;
         posHeading.TabStop = false;
@@ -94,8 +94,8 @@ partial class frmThemNhomThuoc
         groupBox1.AutoSize = false;
         groupBox1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         groupBox1.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        groupBox1.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        groupBox1.BackColor = Color.FromArgb(248,250,252);
+        groupBox1.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox1.BackColor = Color.White;
         groupBox1.Cursor = global::System.Windows.Forms.Cursors.Default;
         groupBox1.TabIndex = 1;
         groupBox1.TabStop = false;
@@ -116,8 +116,8 @@ partial class frmThemNhomThuoc
         tableLayoutPanel2.AutoSize = false;
         tableLayoutPanel2.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel2.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel2.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel2.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel2.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel2.BackColor = Color.White;
         tableLayoutPanel2.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel2.TabIndex = 0;
         tableLayoutPanel2.TabStop = false;
@@ -147,8 +147,8 @@ partial class frmThemNhomThuoc
         tableLayoutPanel3.AutoSize = true;
         tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel3.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel3.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel3.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel3.BackColor = Color.White;
         tableLayoutPanel3.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel3.TabIndex = 0;
         tableLayoutPanel3.TabStop = false;
@@ -176,8 +176,8 @@ partial class frmThemNhomThuoc
         tableLayoutPanel4.AutoSize = false;
         tableLayoutPanel4.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel4.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel4.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel4.BackColor = Color.White;
         tableLayoutPanel4.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel4.TabIndex = 0;
         tableLayoutPanel4.TabStop = false;
@@ -205,8 +205,8 @@ partial class frmThemNhomThuoc
 
         label5.AutoSize = false;
         label5.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        label5.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        label5.BackColor = Color.FromArgb(248,250,252);
+        label5.ForeColor = Color.FromArgb(15, 23, 42);
+        label5.BackColor = Color.White;
         label5.Cursor = global::System.Windows.Forms.Cursors.Default;
         label5.TabIndex = 0;
         label5.TabStop = false;
@@ -258,7 +258,7 @@ partial class frmThemNhomThuoc
         lblLoi.AutoSize = false;
         lblLoi.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
         lblLoi.ForeColor = global::System.Drawing.Color.Firebrick;
-        lblLoi.BackColor = Color.FromArgb(248,250,252);
+        lblLoi.BackColor = Color.White;
         lblLoi.Cursor = global::System.Windows.Forms.Cursors.Default;
         lblLoi.TabIndex = 1;
         lblLoi.TabStop = false;
@@ -282,8 +282,8 @@ partial class frmThemNhomThuoc
         tableLayoutPanel6.AutoSize = true;
         tableLayoutPanel6.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         tableLayoutPanel6.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
-        tableLayoutPanel6.ForeColor = global::System.Drawing.SystemColors.ControlText;
-        tableLayoutPanel6.BackColor = Color.FromArgb(248,250,252);
+        tableLayoutPanel6.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel6.BackColor = Color.White;
         tableLayoutPanel6.Cursor = global::System.Windows.Forms.Cursors.Default;
         tableLayoutPanel6.TabIndex = 2;
         tableLayoutPanel6.TabStop = false;
@@ -312,7 +312,7 @@ partial class frmThemNhomThuoc
         btnLuu.AutoSize = false;
         btnLuu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnLuu.ForeColor = global::System.Drawing.SystemColors.ControlText;
+        btnLuu.ForeColor = Color.FromArgb(15, 23, 42);
         btnLuu.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
         
         btnLuu.TabIndex = 0;
@@ -338,7 +338,7 @@ partial class frmThemNhomThuoc
         btnHuy.AutoSize = false;
         btnHuy.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
         btnHuy.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
-        btnHuy.ForeColor = global::System.Drawing.SystemColors.ControlText;
+        btnHuy.ForeColor = Color.FromArgb(15, 23, 42);
         btnHuy.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
         
         btnHuy.TabIndex = 1;

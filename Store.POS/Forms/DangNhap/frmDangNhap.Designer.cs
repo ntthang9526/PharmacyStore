@@ -1,4 +1,4 @@
-﻿namespace Store.POS
+namespace Store.POS
 {
     partial class frmDangNhap
     {
@@ -41,7 +41,7 @@
             // 
             lblTieuDeDangNhap.AutoSize = true;
             lblTieuDeDangNhap.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTieuDeDangNhap.ForeColor = Color.Navy;
+            lblTieuDeDangNhap.ForeColor = Color.FromArgb(15, 118, 110);
             lblTieuDeDangNhap.Location = new Point(185, 19);
             lblTieuDeDangNhap.Name = "lblTieuDeDangNhap";
             lblTieuDeDangNhap.Size = new Size(230, 39);
@@ -127,7 +127,7 @@
             Controls.Add(lblTaiKhoan);
             Controls.Add(lblTieuDeDangNhap);
             Font = new Font("Segoe UI", 9F);
-            ForeColor = Color.Navy;
+            ForeColor = Color.FromArgb(15, 118, 110);
             MaximizeBox = false;
             Name = "frmDangNhap";
             ShowIcon = false;

@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 
 namespace Store.DAL
@@ -25,9 +25,9 @@ namespace Store.DAL
         public DataTable LayDanhSachHoaDon(DateTime tuNgay, DateTime denNgay)
         {
             const string sql = @"
-                SELECT o.PaymentMethod AS HinhThucThanhToan, o.Id AS MaHD, COALESCE(o.PaidAt,o.OrderDate) AS NgayLap, e.FullName AS NhanVien,
-                       COALESCE(c.FullName, N'Khách lẻ') AS KhachHang,
-                       ISNULL(v.Code, '') AS Voucher,
+                SELECT o.PaymentMethod AS HinhThucThanhToan, o.Id AS MaHD, COALESCE(o.PaidAt,o.OrderDate) AS NgayLap, COALESCE(o.EmployeeNameSnapshot,e.FullName) AS NhanVien,
+                       COALESCE(o.CustomerNameSnapshot,c.FullName, N'Khách lẻ') AS KhachHang,
+                       COALESCE(o.VoucherCodeSnapshot,v.Code, '') AS Voucher,
                        o.TotalAmount AS TongTien, o.DiscountAmount AS GiamGia,
                        o.TotalAmount - o.DiscountAmount AS ThucThu
                 FROM Orders o

@@ -134,7 +134,7 @@ namespace Store.POS.FormBanHang
                 if (this.IsDisposed) return;
 
                 MessageBox.Show(
-                    "Không tải được mã QR!\n\n" +
+                    "Không tải được mã QR.\n" +
                     ex.Message,
                     "Lỗi QR",
                     MessageBoxButtons.OK,

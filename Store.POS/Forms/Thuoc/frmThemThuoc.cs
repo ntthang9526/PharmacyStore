@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 namespace Store.POS;
 public partial class frmThemThuoc : Form
 {
@@ -41,7 +41,7 @@ public partial class frmThemThuoc : Form
         try
         {
             if(!new ThuocBLL().ThemNhanhThuoc(txtTen.Text,cboNhom.SelectedValue is int id?id:0,
-                supplierId,txtDonVi.Text,nudGiaBan.Value,out int created,out string error))
+                supplierId,txtDonVi.Text,nudGiaBan.Value,out int created,out string error,keDon:chkKeDon.Checked))
             {lblLoi.Text=error;return;}
             CreatedId=created;DialogResult=DialogResult.OK;
         }

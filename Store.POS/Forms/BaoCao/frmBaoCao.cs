@@ -47,7 +47,7 @@ namespace Store.POS
                 lblDoanhThu.Text = doanhThu.ToString("N0", vn) + " đ";
 
                 if (notifyEmpty && soHD == 0)
-                    MessageBox.Show("Không có hóa đơn nào trong khoảng ngày đã chọn.", "Thông báo",
+                    MessageBox.Show("Không có hóa đơn trong khoảng ngày này.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }

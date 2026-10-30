@@ -57,8 +57,10 @@ internal static partial class Program
             typeof(Control).GetMethod("OnMouseDown",PrivateInstance)!.Invoke(UiField<TextBox>(form,nameField),new object[]{new MouseEventArgs(MouseButtons.Left,1,1,1,0)});
             Check(UiField<TextBox>(form,nameField).Text==previous && UiField<TextBox>(form,nameField).Enabled,type.Name+": clicking editable input preserves data");
             ClickBackground(form);
-            Check(UiField<string>(form,"maDangChon")=="" && UiField<TextBox>(form,nameField).Text=="" && !UiField<TextBox>(form,nameField).Enabled,type.Name+": blank click resets fields and edit mode");
+            Check(UiField<TextBox>(form,nameField).Text==previous && UiField<TextBox>(form,nameField).Enabled && !grid.Enabled,type.Name+": blank click preserves unsaved editor input");
             Check(grid.SelectedRows.Count==0 && grid.CurrentCell==null,type.Name+": blank click also clears grid selection");
+            InvokePrivate(form,"ResetDetails",true);
+            Check(UiField<string>(form,"maDangChon")=="" && UiField<TextBox>(form,nameField).Text=="" && !UiField<TextBox>(form,nameField).Enabled && grid.Enabled,type.Name+": explicit discard resets fields and unlocks list");
             if(type==typeof(frmQuanLyThuoc))
             {
                 Check(UiField<ComboBox>(form,"cboNhomThuoc").SelectedIndex==-1 && UiField<ComboBox>(form,"cboNhaCungCap").SelectedIndex==-1 && UiField<TextBox>(form,"txtSoLuongTon").Text=="0","medicine reset restores all dropdown/default states");

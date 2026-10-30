@@ -1,4 +1,4 @@
-﻿using Store.Shared;
+using Store.Shared;
 using Store.BLL;
 using Store.DAL;
 using Store.POS.FormBanHang;
@@ -35,8 +35,10 @@ namespace Store.POS
         private decimal tongTien;
         private RowData? dongDangThaoTac;
         private readonly System.Windows.Forms.Timer timerAnPanelAction;
-        public frmBanHang()
+        public frmBanHang():this(null) {}
+        public frmBanHang(int? suaId)
         {
+            suaHoaDonId=suaId;
             InitializeComponent();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnLuuCho.Click+=(_,_)=>LuuHoaDon("Chưa xác định",true);
@@ -49,6 +51,8 @@ namespace Store.POS
                 foreach(Control child in control.Controls) WireActionHover(child);
             }
             WireActionHover(panelAction);
+            tableGioHang.CellFormatting+=(_,e)=> {if(e.RowIndex>=0 && tableGioHang.Columns[e.ColumnIndex].DataPropertyName=="Name" && tableGioHang.Rows[e.RowIndex].DataBoundItem is RowData row && row.IsPrescription) e.Value=row.Name+" [Kê đơn]";};
+            tableTimKiem.CellFormatting+=(_,e)=> {if(e.RowIndex>=0 && tableTimKiem.Columns[e.ColumnIndex].DataPropertyName=="Name" && tableTimKiem.Rows[e.RowIndex].DataBoundItem is Medicine m && m.IsPrescription) e.Value=m.Name+" [Kê đơn]";};
             tableGioHang.MouseLeave+=AnActionNeuChuotRaNgoai;
             tableGioHang.CellMouseLeave+=(_,_)=>AnActionNeuChuotRaNgoai(tableGioHang,EventArgs.Empty);
             btnNhapMaVoucher.Click += (_, _) => ApDungVoucher();
@@ -104,6 +108,8 @@ namespace Store.POS
             }
             tableGioHang.DataSource = gioHang;
             tableTimKiem.DataSource = timKiem;
+            try {NapHoaDonCho();}
+            catch(Exception ex) {MessageBox.Show(this,ex.Message,"Không mở được đơn chờ");BeginInvoke(new Action(Close));return;}
             CapNhatGiaTien();
             timerDateTime.Start();
             UpdateDateTime();
@@ -117,14 +123,6 @@ namespace Store.POS
             lblDateTime.Text = "Thời gian: " + DateTime.Now.ToString("HH:mm:ss") + " | " + DateTime.Now.ToString("dd/MM/yyyy");
         }
 
-        private void frmBanHang_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                e.SuppressKeyPress = true;
-                this.Close();
-            }
-        }
         private void tableGioHang_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             tableGioHang.ClearSelection();
@@ -283,10 +281,12 @@ namespace Store.POS
             if(row==null) return;
             var cell=tableGioHang.GetCellDisplayRectangle(tableGioHang.Columns["btnAction"].Index,row.Index,true);
             var rowPosition=PointToClient(tableGioHang.PointToScreen(cell.Location));
-            var paymentPosition=PointToClient(groupThanhToan.PointToScreen(Point.Empty));
-            int top=paymentPosition.Y+20;
-            int bottom=Math.Max(top,paymentPosition.Y+groupThanhToan.Height-panelAction.Height-4);
-            panelAction.Location=new Point(paymentPosition.X+4,Math.Clamp(rowPosition.Y,top,bottom));
+            var cartBounds=RectangleToClient(groupGioHang.RectangleToScreen(groupGioHang.ClientRectangle));
+            int left=Math.Clamp(rowPosition.X+cell.Width-panelAction.Width,cartBounds.Left+6,Math.Max(cartBounds.Left+6,cartBounds.Right-panelAction.Width-6));
+            int top=rowPosition.Y+cell.Height;
+            if(top+panelAction.Height>cartBounds.Bottom-8) top=rowPosition.Y-panelAction.Height;
+            top=Math.Clamp(top,cartBounds.Top+28,Math.Max(cartBounds.Top+28,cartBounds.Bottom-panelAction.Height-8));
+            panelAction.Location=new Point(left,top);
             panelAction.BringToFront();
         }
         private void AnThaoTacGioHang()
@@ -324,7 +324,7 @@ namespace Store.POS
                 e.SuppressKeyPress = true;
                 if (string.IsNullOrWhiteSpace(boxNhapSanPham.Text.Trim()))
                 {
-                    MessageBox.Show("Mã sản phẩm không được để trống!", "Cảnh báo");
+                    MessageBox.Show("Nhập mã thuốc hoặc mã vạch.", "Cảnh báo");
                     return;
                 }
                 NhapGioHang();
@@ -342,14 +342,14 @@ namespace Store.POS
         }
         private void ThemSanPhamVaoGioHang(Medicine medicine)
         {
-            try { medicineBLL.KiemTraSoLuongConHan(medicine, 1); }
+            try { if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(medicine, 1); }
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             var existingRow = gioHang.FirstOrDefault(row => row.Id == medicine.Id);
             if (existingRow != null)
             {
                 try
                 {
-                    medicineBLL.KiemTraSoLuongConHan(medicine, existingRow.Quantity + 1);
+                    if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(medicine, existingRow.Quantity + 1);
                     existingRow.Quantity++;
                     gioHang.ResetItem(gioHang.IndexOf(existingRow));
                 }
@@ -368,7 +368,7 @@ namespace Store.POS
                     Name = medicine.Name,
                     Unit = medicine.Unit,
                     Quantity = 1,
-                    Price = medicine.Price
+                    Price = medicine.Price, IsPrescription=medicine.IsPrescription
                 });
             }
         }
@@ -379,7 +379,7 @@ namespace Store.POS
             if(quantity==0) {AnThaoTacGioHang();gioHang.Remove(row);DemSoThuTu();return;}
             try
             {
-                medicineBLL.KiemTraSoLuongConHan(row.Id,quantity);
+                if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(row.Id,quantity);
                 row.Quantity=quantity;gioHang.ResetItem(gioHang.IndexOf(row));AnThaoTacGioHang();
             }
             catch(Exception ex) {MessageBox.Show(ex.Message,"Số lượng");}
@@ -391,7 +391,7 @@ namespace Store.POS
                 !string.IsNullOrWhiteSpace(m.BarCode) && string.Equals(m.BarCode.Trim(), text, StringComparison.OrdinalIgnoreCase)).ToList();
             if (barcodeMatches.Count > 1)
             {
-                MessageBox.Show("Mã vạch đang trùng ở nhiều thuốc. Hãy tìm và chọn đúng thuốc trong danh sách.", "Cảnh báo");
+                MessageBox.Show("Mã vạch bị trùng. Chọn thuốc trong danh sách.", "Cảnh báo");
                 boxTimKiem.Text = text;
                 boxTimKiem.Focus();
                 return;
@@ -400,7 +400,7 @@ namespace Store.POS
             if (medicine == null && int.TryParse(text, out int ma)) danhSachThuoc.TryGetValue(ma, out medicine);
             if (medicine == null)
             {
-                MessageBox.Show("Không tìm thấy thuốc theo mã thuốc hoặc mã vạch!", "Cảnh báo");
+                MessageBox.Show("Không tìm thấy thuốc với mã này.", "Cảnh báo");
                 boxNhapSanPham.SelectAll();
                 boxNhapSanPham.Focus();
                 return;
@@ -415,6 +415,7 @@ namespace Store.POS
         // Thanh toán
         public void CapNhatGiaTien()
         {
+            if(gioHang.Count==0) donThuoc=null;
             if(dongDangThaoTac!=null && !gioHang.Contains(dongDangThaoTac)) AnThaoTacGioHang();
             decimal subtotal = gioHang.Sum(row => row.Total);
             decimal discount = voucherApDung == null ? 0 : voucherBLL.TinhGiamGia(voucherApDung, subtotal);
@@ -424,6 +425,7 @@ namespace Store.POS
             labelTienTongTien.Text = $"{tongTien:N0} đ";
             boxTienKhach_TextChanged(this, EventArgs.Empty);
             KiemTraGioHangHienTai();
+            CapNhatNutDonThuoc();
         }
 
         private void ApDungVoucher()
@@ -449,7 +451,7 @@ namespace Store.POS
             try
             {
                 khachHang = customerDAL.GetCustomerByPhone(phone);
-                if (khachHang == null && MessageBox.Show("Không tìm thấy khách hàng. Mở quản lý để thêm mới?", "Khách hàng", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (khachHang == null && MessageBox.Show("Chưa có khách hàng này. Thêm mới?", "Khách hàng", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using var form = new frmKhachHang();
                     form.ShowDialog(this);
@@ -483,7 +485,8 @@ namespace Store.POS
 
         private void btnHuyHoaDon_Click(object sender, EventArgs e)
         {
-            DialogResult option = MessageBox.Show("Bạn có muốn hủy hóa đơn?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
+            if(suaHoaDonId.HasValue) {Close();return;}
+            DialogResult option = MessageBox.Show("Hủy giỏ hàng hiện tại?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
             if (option == DialogResult.Yes)
             {
                 LamMoiHoaDon();
@@ -524,30 +527,31 @@ namespace Store.POS
             try
             {
                 decimal previous=tongTien;LamMoiDuLieu();
-                if(previous!=tongTien) {MessageBox.Show("Giá thuốc hoặc voucher đã thay đổi. Hãy kiểm tra tổng tiền mới và bấm thanh toán lại.","Đã cập nhật dữ liệu");return;}
+                if(previous!=tongTien) {MessageBox.Show("Giá hoặc voucher đã đổi. Kiểm tra tổng tiền rồi thanh toán lại.","Đã cập nhật dữ liệu");return;}
                 if(gioHang.Count>0 && !btnThanhToan.Enabled) {MessageBox.Show(lblTinhTrangGioHang.Text,"Kiểm tra giỏ hàng");return;}
             }
             catch(Exception ex) {MessageBox.Show("Không kiểm tra được giỏ hàng: "+ex.Message);return;}
             if (gioHang.Count == 0)
             {
-                MessageBox.Show("Giỏ hàng đang trống!");
+                MessageBox.Show("Giỏ hàng trống.");
                 return;
             }
             if (radioChuyenKhoan.Checked == false && radioTienMat.Checked == false)
             {
-                MessageBox.Show("Chưa chọn phương thức thanh toán!");
+                MessageBox.Show("Chọn hình thức thanh toán.");
                 return;
             }
+            if(!ChuanBiDonThuoc()) return;
             if (radioTienMat.Checked == true)
             {
                 if (string.IsNullOrEmpty(boxTienKhach.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập số tiền!");
+                    MessageBox.Show("Nhập tiền khách đưa.");
                     return;
                 }
                 if (!decimal.TryParse(boxTienKhach.Text.Trim(), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out decimal received) || tongTien > received)
                 {
-                    MessageBox.Show("Chưa đủ tiền!");
+                    MessageBox.Show("Tiền khách đưa chưa đủ.");
                     return;
                 }
                 else
@@ -573,20 +577,27 @@ namespace Store.POS
         }
         private void LuuHoaDon(string method="Tiền mặt",bool pending=false)
         {
-            var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price }).ToList();
+            if(!pending && !ChuanBiDonThuoc()) return;
+            var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price,KeDon=row.IsPrescription,HuongDan=row.HuongDan }).ToList();
             if (!banHangBLL.ThanhToan(PhienDangNhap.NhanVienId, items, voucherApDung?.Code, khachHang?.Id, tongTien,
-                    out int orderId, out decimal subtotal, out decimal discount, out string error,method,pending))
+                    out int orderId, out decimal subtotal, out decimal discount, out string error,method,pending,suaHoaDonId,phienBanDonCho,gioHang.Any(r=>r.IsPrescription)?donThuoc:null))
             {
                 MessageBox.Show("Chưa lưu hóa đơn: " + error, "Thanh toán");
                 return;
             }
-            MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán. Chưa trừ kho và chưa tính doanh thu.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
+            if(suaHoaDonId.HasValue)
+            {
+                MessageBox.Show(this,$"Đã lưu thay đổi HD{orderId:D5}.","Đã lưu thay đổi");
+                DialogResult=DialogResult.OK;Close();return;
+            }
+            MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
             LamMoiHoaDon();
         }
 
         private void LamMoiHoaDon()
         {
             voucherApDung = null;
+            donThuoc=null;
             khachHang = null;
             gioHang.Clear();
             boxMaVoucher.Clear();

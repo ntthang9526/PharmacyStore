@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Store.BLL;
 using Store.DAL;
 namespace Store.POS;
@@ -13,7 +13,7 @@ public partial class frmBanHang
         {
             var row=gioHang[i];
             if(danhSachThuoc.TryGetValue(row.Id,out var medicine))
-                {row.Name=medicine.Name;row.Unit=medicine.Unit;row.Price=medicine.Price;gioHang.ResetItem(i);}
+                {row.Name=medicine.Name;row.Unit=medicine.Unit;row.Price=medicine.Price;row.IsPrescription |= medicine.IsPrescription;gioHang.ResetItem(i);}
         }
         if(voucherApDung!=null)
         {
@@ -43,5 +43,7 @@ public partial class frmBanHang
         }
         lblTinhTrangGioHang.Text=string.Join("; ",errors);
         btnThanhToan.Enabled=btnLuuCho.Enabled=gioHang.Count>0 && errors.Count==0;
+        if(suaHoaDonId.HasValue)
+            btnLuuCho.Enabled=gioHang.Count>0 && gioHang.All(row=>danhSachThuoc.ContainsKey(row.Id));
     }
 }

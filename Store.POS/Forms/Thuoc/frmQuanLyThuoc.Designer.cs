@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -30,6 +30,7 @@ partial class frmQuanLyThuoc
         lblTrangThaiBan = new Label();
         cboTrangThaiBan = new ComboBox();
         posLayout = new TableLayoutPanel();
+        chkKeDon=new CheckBox();chkKeDon.Name="chkKeDon";chkKeDon.Text="Thuốc kê đơn";chkKeDon.Margin=new Padding(0);chkKeDon.Font=new Font("Segoe UI",9.5F);chkKeDon.Dock=DockStyle.Fill;chkKeDon.Enabled=false;
         posHeading = new Label();
         excelActions = new FlowLayoutPanel();
         btnNhapExcel = new Button();
@@ -108,7 +109,7 @@ partial class frmQuanLyThuoc
         // 
         // posLayout
         // 
-        posLayout.BackColor = Color.FromArgb(248, 250, 252);
+        posLayout.BackColor = Color.FromArgb(242, 246, 248);
         posLayout.ColumnCount = 1;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         posLayout.Controls.Add(posHeading, 0, 0);
@@ -116,7 +117,7 @@ partial class frmQuanLyThuoc
         posLayout.Controls.Add(tableLayoutPanel1, 0, 2);
         posLayout.Dock = DockStyle.Fill;
         posLayout.Font = new Font("Segoe UI", 10.2F);
-        posLayout.ForeColor = SystemColors.ControlText;
+        posLayout.ForeColor = Color.FromArgb(15, 23, 42);
         posLayout.Location = new Point(0, 0);
         posLayout.Margin = new Padding(0);
         posLayout.Name = "posLayout";
@@ -130,10 +131,10 @@ partial class frmQuanLyThuoc
         // 
         // posHeading
         // 
-        posHeading.BackColor = Color.FromArgb(248, 250, 252);
+        posHeading.BackColor = Color.FromArgb(242, 246, 248);
         posHeading.Dock = DockStyle.Fill;
-        posHeading.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-        posHeading.ForeColor = SystemColors.ControlText;
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);
         posHeading.Location = new Point(15, 12);
         posHeading.Name = "posHeading";
         posHeading.Size = new Size(1152, 48);
@@ -189,7 +190,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel1
         // 
-        tableLayoutPanel1.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel1.BackColor = Color.FromArgb(242, 246, 248);
         tableLayoutPanel1.ColumnCount = 2;
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
@@ -197,7 +198,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel1.Controls.Add(groupBox6, 1, 0);
         tableLayoutPanel1.Dock = DockStyle.Fill;
         tableLayoutPanel1.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel1.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel1.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel1.Location = new Point(12, 106);
         tableLayoutPanel1.Margin = new Padding(0);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -208,11 +209,11 @@ partial class frmQuanLyThuoc
         // 
         // groupBox2
         // 
-        groupBox2.BackColor = Color.FromArgb(248, 250, 252);
+        groupBox2.BackColor = Color.White;
         groupBox2.Controls.Add(tableLayoutPanel3);
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        groupBox2.ForeColor = SystemColors.ControlText;
+        groupBox2.ForeColor = Color.FromArgb(15, 23, 42);
         groupBox2.Location = new Point(0, 0);
         groupBox2.Margin = new Padding(0, 0, 12, 0);
         groupBox2.Name = "groupBox2";
@@ -224,14 +225,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel3
         // 
-        tableLayoutPanel3.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel3.BackColor = Color.White;
         tableLayoutPanel3.ColumnCount = 1;
         tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
         tableLayoutPanel3.Controls.Add(dgvThuoc, 0, 1);
         tableLayoutPanel3.Dock = DockStyle.Fill;
         tableLayoutPanel3.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel3.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel3.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel3.Location = new Point(12, 25);
         tableLayoutPanel3.Margin = new Padding(0);
         tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -243,7 +244,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel4
         // 
-        tableLayoutPanel4.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel4.BackColor = Color.White;
         tableLayoutPanel4.ColumnCount = 3;
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
         tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -253,7 +254,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel4.Controls.Add(btnTimKiem, 2, 0);
         tableLayoutPanel4.Dock = DockStyle.Fill;
         tableLayoutPanel4.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel4.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel4.Location = new Point(0, 0);
         tableLayoutPanel4.Margin = new Padding(0, 0, 0, 12);
         tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -264,10 +265,10 @@ partial class frmQuanLyThuoc
         // 
         // label5
         // 
-        label5.BackColor = Color.FromArgb(248, 250, 252);
+        label5.BackColor = Color.White;
         label5.Dock = DockStyle.Fill;
         label5.Font = new Font("Segoe UI", 10.2F);
-        label5.ForeColor = SystemColors.ControlText;
+        label5.ForeColor = Color.FromArgb(15, 23, 42);
         label5.Location = new Point(3, 0);
         label5.Name = "label5";
         label5.Size = new Size(114, 44);
@@ -282,7 +283,7 @@ partial class frmQuanLyThuoc
         txtTimKiem.Cursor = Cursors.IBeam;
         txtTimKiem.Dock = DockStyle.Top;
         txtTimKiem.Font = new Font("Segoe UI", 10.2F);
-        txtTimKiem.ForeColor = SystemColors.ControlText;
+        txtTimKiem.ForeColor = Color.FromArgb(15, 23, 42);
         txtTimKiem.Location = new Point(120, 7);
         txtTimKiem.Margin = new Padding(0, 7, 12, 0);
         txtTimKiem.MaxLength = 200;
@@ -315,7 +316,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.AllowUserToDeleteRows = false;
         dgvThuoc.AllowUserToResizeColumns = false;
         dgvThuoc.AllowUserToResizeRows = false;
-        dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle1.BackColor = Color.FromArgb(242, 246, 248);
         dgvThuoc.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
         dgvThuoc.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         dgvThuoc.BackgroundColor = Color.White;
@@ -329,7 +330,7 @@ partial class frmQuanLyThuoc
         dgvThuoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
         dgvThuoc.ColumnHeadersHeight = 43;
         dgvThuoc.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, colTrangThaiBan, MaNhom, MaNCC, TenNhom, DonViTinh, DonGia, SoLuongTon, colTonCoTheBan, TenNCC, colMaVach });
+        dgvThuoc.Columns.AddRange(new DataGridViewColumn[] { MaThuoc, TenThuoc, DonGia, DonViTinh, colTonCoTheBan, colTrangThaiBan, MaNhom, MaNCC, TenNhom, SoLuongTon, TenNCC, colMaVach });
         dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
         dataGridViewCellStyle5.BackColor = Color.White;
         dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F);
@@ -342,14 +343,14 @@ partial class frmQuanLyThuoc
         dgvThuoc.Dock = DockStyle.Fill;
         dgvThuoc.EnableHeadersVisualStyles = false;
         dgvThuoc.Font = new Font("Segoe UI", 10.2F);
-        dgvThuoc.GridColor = SystemColors.ControlLight;
+        dgvThuoc.GridColor = Color.FromArgb(226, 232, 240);
         dgvThuoc.Location = new Point(0, 56);
         dgvThuoc.Margin = new Padding(0);
         dgvThuoc.MultiSelect = false;
         dgvThuoc.Name = "dgvThuoc";
         dgvThuoc.ReadOnly = true;
         dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        dataGridViewCellStyle6.BackColor = Color.FromArgb(248, 250, 252);
+        dataGridViewCellStyle6.BackColor = Color.FromArgb(242, 246, 248);
         dataGridViewCellStyle6.Font = new Font("Segoe UI", 10.2F);
         dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
@@ -369,22 +370,22 @@ partial class frmQuanLyThuoc
         MaThuoc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         MaThuoc.DataPropertyName = "MaThuoc";
         MaThuoc.HeaderText = "Mã thuốc";
-        MaThuoc.MinimumWidth = 6;
+        MaThuoc.MinimumWidth = 45;
         MaThuoc.Name = "MaThuoc";
         MaThuoc.ReadOnly = true;
         MaThuoc.Resizable = DataGridViewTriState.False;
-        MaThuoc.Width = 125;
+        MaThuoc.Width = 115;
         // 
         // TenThuoc
         // 
         TenThuoc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         TenThuoc.DataPropertyName = "TenThuoc";
         TenThuoc.HeaderText = "Tên thuốc";
-        TenThuoc.MinimumWidth = 6;
+        TenThuoc.MinimumWidth = 45;
         TenThuoc.Name = "TenThuoc";
         TenThuoc.ReadOnly = true;
         TenThuoc.Resizable = DataGridViewTriState.False;
-        TenThuoc.Width = 230;
+        TenThuoc.Width = 200;
         // 
         // MaNhom
         // 
@@ -426,11 +427,11 @@ partial class frmQuanLyThuoc
         DonViTinh.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         DonViTinh.DataPropertyName = "DonViTinh";
         DonViTinh.HeaderText = "Đơn vị";
-        DonViTinh.MinimumWidth = 6;
+        DonViTinh.MinimumWidth = 45;
         DonViTinh.Name = "DonViTinh";
         DonViTinh.ReadOnly = true;
         DonViTinh.Resizable = DataGridViewTriState.False;
-        DonViTinh.Width = 110;
+        DonViTinh.Width = 91;
         // 
         // DonGia
         // 
@@ -440,11 +441,11 @@ partial class frmQuanLyThuoc
         dataGridViewCellStyle3.Format = "N0";
         DonGia.DefaultCellStyle = dataGridViewCellStyle3;
         DonGia.HeaderText = "Đơn giá";
-        DonGia.MinimumWidth = 6;
+        DonGia.MinimumWidth = 45;
         DonGia.Name = "DonGia";
         DonGia.ReadOnly = true;
         DonGia.Resizable = DataGridViewTriState.False;
-        DonGia.Width = 125;
+        DonGia.Width = 105;
         // 
         // SoLuongTon
         // 
@@ -454,11 +455,11 @@ partial class frmQuanLyThuoc
         dataGridViewCellStyle4.Format = "N0";
         SoLuongTon.DefaultCellStyle = dataGridViewCellStyle4;
         SoLuongTon.HeaderText = "Tồn kho";
-        SoLuongTon.MinimumWidth = 6;
+        SoLuongTon.MinimumWidth = 45;
         SoLuongTon.Name = "SoLuongTon";
         SoLuongTon.ReadOnly = true;
         SoLuongTon.Resizable = DataGridViewTriState.False;
-        SoLuongTon.Width = 112;
+        SoLuongTon.Width = 104;
         // 
         // TenNCC
         // 
@@ -483,11 +484,11 @@ partial class frmQuanLyThuoc
         // 
         // groupBox6
         // 
-        groupBox6.BackColor = Color.FromArgb(248, 250, 252);
+        groupBox6.BackColor = Color.White;
         groupBox6.Controls.Add(tableLayoutPanel7);
         groupBox6.Dock = DockStyle.Fill;
         groupBox6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-        groupBox6.ForeColor = SystemColors.ControlText;
+        groupBox6.ForeColor = Color.FromArgb(15, 23, 42);
         groupBox6.Location = new Point(804, 0);
         groupBox6.Margin = new Padding(0);
         groupBox6.Name = "groupBox6";
@@ -499,14 +500,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel7
         // 
-        tableLayoutPanel7.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel7.BackColor = Color.White;
         tableLayoutPanel7.ColumnCount = 1;
         tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
         tableLayoutPanel7.Controls.Add(tableLayoutPanel25, 0, 2);
         tableLayoutPanel7.Dock = DockStyle.Fill;
         tableLayoutPanel7.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel7.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel7.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel7.Location = new Point(12, 25);
         tableLayoutPanel7.Margin = new Padding(0);
         tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -521,7 +522,7 @@ partial class frmQuanLyThuoc
         // 
         tableLayoutPanel8.AutoSize = true;
         tableLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        tableLayoutPanel8.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel8.BackColor = Color.White;
         tableLayoutPanel8.ColumnCount = 1;
         tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
@@ -532,7 +533,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel8.Controls.Add(stockStatusLayout,0,5);
         tableLayoutPanel8.Dock = DockStyle.Top;
         tableLayoutPanel8.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel8.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel8.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel8.Location = new Point(0, 0);
         tableLayoutPanel8.Margin = new Padding(0);
         tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -548,14 +549,17 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel11
         // 
-        tableLayoutPanel11.BackColor = Color.FromArgb(248, 250, 252);
-        tableLayoutPanel11.ColumnCount = 1;
-        tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel11.BackColor = Color.White;
+        tableLayoutPanel11.ColumnCount = 2;
+        tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50F));
+        tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50F));
+        tableLayoutPanel11.Controls.Add(chkKeDon,1,0);
+        tableLayoutPanel11.SetColumnSpan(txtTenThuoc,2);
         tableLayoutPanel11.Controls.Add(label12, 0, 0);
         tableLayoutPanel11.Controls.Add(txtTenThuoc, 0, 1);
         tableLayoutPanel11.Dock = DockStyle.Fill;
         tableLayoutPanel11.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel11.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel11.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel11.Location = new Point(0, 0);
         tableLayoutPanel11.Margin = new Padding(0);
         tableLayoutPanel11.Name = "tableLayoutPanel11";
@@ -567,10 +571,10 @@ partial class frmQuanLyThuoc
         // 
         // label12
         // 
-        label12.BackColor = Color.FromArgb(248, 250, 252);
+        label12.BackColor = Color.White;
         label12.Dock = DockStyle.Fill;
         label12.Font = new Font("Segoe UI", 10.2F);
-        label12.ForeColor = SystemColors.ControlText;
+        label12.ForeColor = Color.FromArgb(15, 23, 42);
         label12.Location = new Point(3, 0);
         label12.Name = "label12";
         label12.Size = new Size(324, 22);
@@ -586,7 +590,7 @@ partial class frmQuanLyThuoc
         txtTenThuoc.Dock = DockStyle.Top;
         txtTenThuoc.Enabled = false;
         txtTenThuoc.Font = new Font("Segoe UI", 10.2F);
-        txtTenThuoc.ForeColor = SystemColors.ControlText;
+        txtTenThuoc.ForeColor = Color.FromArgb(15, 23, 42);
         txtTenThuoc.Location = new Point(0, 23);
         txtTenThuoc.Margin = new Padding(0, 1, 0, 5);
         txtTenThuoc.Name = "txtTenThuoc";
@@ -595,14 +599,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel13
         // 
-        tableLayoutPanel13.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel13.BackColor = Color.White;
         tableLayoutPanel13.ColumnCount = 1;
         tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel13.Controls.Add(label14, 0, 0);
         tableLayoutPanel13.Controls.Add(tableLayoutPanel15, 0, 1);
         tableLayoutPanel13.Dock = DockStyle.Fill;
         tableLayoutPanel13.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel13.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel13.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel13.Location = new Point(0, 56);
         tableLayoutPanel13.Margin = new Padding(0);
         tableLayoutPanel13.Name = "tableLayoutPanel13";
@@ -614,10 +618,10 @@ partial class frmQuanLyThuoc
         // 
         // label14
         // 
-        label14.BackColor = Color.FromArgb(248, 250, 252);
+        label14.BackColor = Color.White;
         label14.Dock = DockStyle.Fill;
         label14.Font = new Font("Segoe UI", 10.2F);
-        label14.ForeColor = SystemColors.ControlText;
+        label14.ForeColor = Color.FromArgb(15, 23, 42);
         label14.Location = new Point(3, 0);
         label14.Name = "label14";
         label14.Size = new Size(324, 22);
@@ -627,7 +631,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel15
         // 
-        tableLayoutPanel15.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel15.BackColor = Color.White;
         tableLayoutPanel15.ColumnCount = 2;
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -635,7 +639,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel15.Controls.Add(btnThemNhom, 1, 0);
         tableLayoutPanel15.Dock = DockStyle.Top;
         tableLayoutPanel15.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel15.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel15.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel15.Location = new Point(0, 22);
         tableLayoutPanel15.Margin = new Padding(0);
         tableLayoutPanel15.Name = "tableLayoutPanel15";
@@ -651,7 +655,7 @@ partial class frmQuanLyThuoc
         cboNhomThuoc.DropDownWidth = 286;
         cboNhomThuoc.Enabled = false;
         cboNhomThuoc.Font = new Font("Segoe UI", 10.2F);
-        cboNhomThuoc.ForeColor = SystemColors.ControlText;
+        cboNhomThuoc.ForeColor = Color.FromArgb(15, 23, 42);
         cboNhomThuoc.Location = new Point(0, 0);
         cboNhomThuoc.Margin = new Padding(0, 0, 6, 0);
         cboNhomThuoc.Name = "cboNhomThuoc";
@@ -679,14 +683,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel16
         // 
-        tableLayoutPanel16.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel16.BackColor = Color.White;
         tableLayoutPanel16.ColumnCount = 1;
         tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel16.Controls.Add(label17, 0, 0);
         tableLayoutPanel16.Controls.Add(tableLayoutPanel18, 0, 1);
         tableLayoutPanel16.Dock = DockStyle.Fill;
         tableLayoutPanel16.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel16.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel16.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel16.Location = new Point(0, 112);
         tableLayoutPanel16.Margin = new Padding(0);
         tableLayoutPanel16.Name = "tableLayoutPanel16";
@@ -698,10 +702,10 @@ partial class frmQuanLyThuoc
         // 
         // label17
         // 
-        label17.BackColor = Color.FromArgb(248, 250, 252);
+        label17.BackColor = Color.White;
         label17.Dock = DockStyle.Fill;
         label17.Font = new Font("Segoe UI", 10.2F);
-        label17.ForeColor = SystemColors.ControlText;
+        label17.ForeColor = Color.FromArgb(15, 23, 42);
         label17.Location = new Point(3, 0);
         label17.Name = "label17";
         label17.Size = new Size(324, 22);
@@ -711,7 +715,7 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel18
         // 
-        tableLayoutPanel18.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel18.BackColor = Color.White;
         tableLayoutPanel18.ColumnCount = 2;
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
@@ -719,7 +723,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel18.Controls.Add(btnThemNCC, 1, 0);
         tableLayoutPanel18.Dock = DockStyle.Top;
         tableLayoutPanel18.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel18.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel18.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel18.Location = new Point(0, 22);
         tableLayoutPanel18.Margin = new Padding(0);
         tableLayoutPanel18.Name = "tableLayoutPanel18";
@@ -736,7 +740,7 @@ partial class frmQuanLyThuoc
         cboNhaCungCap.DropDownWidth = 286;
         cboNhaCungCap.Enabled = false;
         cboNhaCungCap.Font = new Font("Segoe UI", 10.2F);
-        cboNhaCungCap.ForeColor = SystemColors.ControlText;
+        cboNhaCungCap.ForeColor = Color.FromArgb(15, 23, 42);
         cboNhaCungCap.Location = new Point(0, 0);
         cboNhaCungCap.Margin = new Padding(0, 0, 6, 0);
         cboNhaCungCap.Name = "cboNhaCungCap";
@@ -764,14 +768,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel19
         // 
-        tableLayoutPanel19.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel19.BackColor = Color.White;
         tableLayoutPanel19.ColumnCount = 1;
         tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel19.Controls.Add(label20, 0, 0);
         tableLayoutPanel19.Controls.Add(cboDonViTinh, 0, 1);
         tableLayoutPanel19.Dock = DockStyle.Fill;
         tableLayoutPanel19.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel19.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel19.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel19.Location = new Point(0, 168);
         tableLayoutPanel19.Margin = new Padding(0);
         tableLayoutPanel19.Name = "tableLayoutPanel19";
@@ -783,10 +787,10 @@ partial class frmQuanLyThuoc
         // 
         // label20
         // 
-        label20.BackColor = Color.FromArgb(248, 250, 252);
+        label20.BackColor = Color.White;
         label20.Dock = DockStyle.Fill;
         label20.Font = new Font("Segoe UI", 10.2F);
-        label20.ForeColor = SystemColors.ControlText;
+        label20.ForeColor = Color.FromArgb(15, 23, 42);
         label20.Location = new Point(3, 0);
         label20.Name = "label20";
         label20.Size = new Size(324, 22);
@@ -801,7 +805,7 @@ partial class frmQuanLyThuoc
         cboDonViTinh.DropDownWidth = 330;
         cboDonViTinh.Enabled = false;
         cboDonViTinh.Font = new Font("Segoe UI", 10.2F);
-        cboDonViTinh.ForeColor = SystemColors.ControlText;
+        cboDonViTinh.ForeColor = Color.FromArgb(15, 23, 42);
         cboDonViTinh.Location = new Point(0, 23);
         cboDonViTinh.Margin = new Padding(0, 1, 0, 5);
         cboDonViTinh.Name = "cboDonViTinh";
@@ -810,14 +814,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel21
         // 
-        tableLayoutPanel21.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel21.BackColor = Color.White;
         tableLayoutPanel21.ColumnCount = 1;
         tableLayoutPanel21.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel21.Controls.Add(label22, 0, 0);
         tableLayoutPanel21.Controls.Add(txtDonGia, 0, 1);
         tableLayoutPanel21.Dock = DockStyle.Fill;
         tableLayoutPanel21.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel21.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel21.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel21.Location = new Point(0, 224);
         tableLayoutPanel21.Margin = new Padding(0);
         tableLayoutPanel21.Name = "tableLayoutPanel21";
@@ -829,10 +833,10 @@ partial class frmQuanLyThuoc
         // 
         // label22
         // 
-        label22.BackColor = Color.FromArgb(248, 250, 252);
+        label22.BackColor = Color.White;
         label22.Dock = DockStyle.Fill;
         label22.Font = new Font("Segoe UI", 10.2F);
-        label22.ForeColor = SystemColors.ControlText;
+        label22.ForeColor = Color.FromArgb(15, 23, 42);
         label22.Location = new Point(3, 0);
         label22.Name = "label22";
         label22.Size = new Size(324, 22);
@@ -848,7 +852,7 @@ partial class frmQuanLyThuoc
         txtDonGia.Dock = DockStyle.Top;
         txtDonGia.Enabled = false;
         txtDonGia.Font = new Font("Segoe UI", 10.2F);
-        txtDonGia.ForeColor = SystemColors.ControlText;
+        txtDonGia.ForeColor = Color.FromArgb(15, 23, 42);
         txtDonGia.Location = new Point(0, 23);
         txtDonGia.Margin = new Padding(0, 1, 0, 5);
         txtDonGia.Name = "txtDonGia";
@@ -857,14 +861,14 @@ partial class frmQuanLyThuoc
         // 
         // tableLayoutPanel23
         // 
-        tableLayoutPanel23.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel23.BackColor = Color.White;
         tableLayoutPanel23.ColumnCount = 1;
         tableLayoutPanel23.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel23.Controls.Add(label24, 0, 0);
         tableLayoutPanel23.Controls.Add(txtSoLuongTon, 0, 1);
         tableLayoutPanel23.Dock = DockStyle.Fill;
         tableLayoutPanel23.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel23.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel23.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel23.Location = new Point(0, 280);
         tableLayoutPanel23.Margin = new Padding(0);
         tableLayoutPanel23.Name = "tableLayoutPanel23";
@@ -876,10 +880,10 @@ partial class frmQuanLyThuoc
         // 
         // label24
         // 
-        label24.BackColor = Color.FromArgb(248, 250, 252);
+        label24.BackColor = Color.White;
         label24.Dock = DockStyle.Fill;
         label24.Font = new Font("Segoe UI", 10.2F);
-        label24.ForeColor = SystemColors.ControlText;
+        label24.ForeColor = Color.FromArgb(15, 23, 42);
         label24.Location = new Point(3, 0);
         label24.Name = "label24";
         label24.Size = new Size(324, 22);
@@ -895,7 +899,7 @@ partial class frmQuanLyThuoc
         txtSoLuongTon.Dock = DockStyle.Top;
         txtSoLuongTon.Enabled = false;
         txtSoLuongTon.Font = new Font("Segoe UI", 10.2F);
-        txtSoLuongTon.ForeColor = SystemColors.ControlText;
+        txtSoLuongTon.ForeColor = Color.FromArgb(15, 23, 42);
         txtSoLuongTon.Location = new Point(0, 23);
         txtSoLuongTon.Margin = new Padding(0, 1, 0, 5);
         txtSoLuongTon.Name = "txtSoLuongTon";
@@ -908,7 +912,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel25.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
         tableLayoutPanel25.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
         tableLayoutPanel25.WrapContents = true;
-        tableLayoutPanel25.BackColor = Color.FromArgb(248, 250, 252);
+        tableLayoutPanel25.BackColor = Color.White;
         tableLayoutPanel25.Controls.Add(btnThem);
         tableLayoutPanel25.Controls.Add(btnSua);
         tableLayoutPanel25.Controls.Add(btnXoa);
@@ -917,7 +921,7 @@ partial class frmQuanLyThuoc
         tableLayoutPanel25.Controls.Add(btnLamMoi);
         tableLayoutPanel25.Dock = global::System.Windows.Forms.DockStyle.Bottom;
         tableLayoutPanel25.Font = new Font("Segoe UI", 10.2F);
-        tableLayoutPanel25.ForeColor = SystemColors.ControlText;
+        tableLayoutPanel25.ForeColor = Color.FromArgb(15, 23, 42);
         tableLayoutPanel25.Location = new Point(0, 366);
         tableLayoutPanel25.Margin = new Padding(0);
         tableLayoutPanel25.Name = "tableLayoutPanel25";
@@ -974,7 +978,7 @@ partial class frmQuanLyThuoc
         btnXoa.Name = "btnXoa";
         btnXoa.Size = new global::System.Drawing.Size(156, 38);
         btnXoa.TabIndex = 15;
-        btnXoa.Text = "Xóa";
+        btnXoa.Text = "Ẩn thuốc";
         btnXoa.UseVisualStyleBackColor = false;
         btnXoa.Click += btnXoa_Click;
         // 
@@ -1077,16 +1081,16 @@ partial class frmQuanLyThuoc
         colTrangThaiBan.Name="colTrangThaiBan";
         colTrangThaiBan.DataPropertyName="TrangThaiBan";
         colTrangThaiBan.HeaderText="Trạng thái bán";
-        colTrangThaiBan.Width=165;
-        colTrangThaiBan.MinimumWidth=50;
+        colTrangThaiBan.Width=153;
+        colTrangThaiBan.MinimumWidth=45;
         colTrangThaiBan.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
         colTrangThaiBan.ReadOnly=true;
         colTrangThaiBan.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
         colTonCoTheBan.Name="colTonCoTheBan";
         colTonCoTheBan.DataPropertyName="TonCoTheBan";
         colTonCoTheBan.HeaderText="Tồn có thể bán";
-        colTonCoTheBan.Width=175;
-        colTonCoTheBan.MinimumWidth=50;
+        colTonCoTheBan.Width=158;
+        colTonCoTheBan.MinimumWidth=45;
         colTonCoTheBan.AutoSizeMode=global::System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
         colTonCoTheBan.ReadOnly=true;
         colTonCoTheBan.Resizable=global::System.Windows.Forms.DataGridViewTriState.False;
@@ -1131,6 +1135,7 @@ partial class frmQuanLyThuoc
     private TableLayoutPanel statusLayout;
     private Label lblTrangThaiBan;
     private ComboBox cboTrangThaiBan;
+    private CheckBox chkKeDon;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn colTrangThaiBan;
     private global::System.Windows.Forms.DataGridViewTextBoxColumn colTonCoTheBan;
     private global::System.Windows.Forms.TableLayoutPanel posLayout;

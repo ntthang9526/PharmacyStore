@@ -37,6 +37,27 @@ internal static partial class Program
                     }
                 }
                 Scan(form);
+                if(form is frmBaoCao)
+                {
+                    var summary=UiField<TableLayoutPanel>(form,"tableLayoutPanel7");
+                    int[] widths=summary.GetColumnWidths();
+                    Check(widths.Max()-widths.Min()<=2,"report summary gives each total equal readable space at "+size.Width);
+                    foreach(string name in new[]{"lblSoHD","lblTongTien","lblGiamGia","lblDoanhThu"})
+                    {
+                        var label=UiField<Label>(form,name);
+                        Check(TextRenderer.MeasureText(label.Text,label.Font).Width<=label.Width,"report total fits its summary card: "+name+" at "+size.Width);
+                    }
+                }
+                if(form is frmBanHang)
+                {
+                    var cart=UiField<DataGridView>(form,"tableGioHang");
+                    foreach(string name in new[]{"Quantity","Price","Total"})
+                    {
+                        var col=cart.Columns[name];
+                        var visible=cart.GetColumnDisplayRectangle(col.Index,true);
+                        Check(visible.Width>=col.Width-2,"cashier can read "+name+" without horizontal scrolling at "+size.Width);
+                    }
+                }
                 using var image=new Bitmap(main.Width,main.Height);main.DrawToBitmap(image,new Rectangle(0,0,image.Width,image.Height));
                 image.Save("artifacts/previews/layout-audit/"+type.Name+"-"+size.Width+".png");
             }

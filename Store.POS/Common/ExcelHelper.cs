@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Diagnostics;
 using ClosedXML.Excel;
 
@@ -36,9 +36,9 @@ namespace Store.POS.Common
         /// <summary>
         /// Hỏi mở file sau khi xuất thành công
         /// </summary>
-        public static void ThongBaoVaMoFile(string duongDan, string thongDiep = "Xuất Excel thành công!")
+        public static void ThongBaoVaMoFile(string duongDan, string thongDiep = "Đã xuất file Excel.")
         {
-            var dr = MessageBox.Show($"{thongDiep}\nBạn có muốn mở file ngay bây giờ không?", "Thành công",
+            var dr = MessageBox.Show($"{thongDiep}\nMở file ngay?", "Thành công",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dr == DialogResult.Yes)
             {
@@ -52,7 +52,7 @@ namespace Store.POS.Common
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Không thể mở file tự động: " + ex.Message, "Lỗi mở file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Không mở được file: " + ex.Message, "Lỗi mở file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -198,7 +198,7 @@ namespace Store.POS.Common
             ws2.Columns().AdjustToContents();
 
             workbook.SaveAs(duongDan);
-            if(notify) ThongBaoVaMoFile(duongDan, "Xuất báo cáo doanh thu ra Excel thành công!");
+            if(notify) ThongBaoVaMoFile(duongDan, "Đã xuất báo cáo Excel.");
         }
 
         /// <summary>
@@ -209,11 +209,12 @@ namespace Store.POS.Common
             string? path=ChonNoiLuuFile("DanhSachHoaDon.xlsx");if(path==null) return;
             ExcelTable.Luu(path,"DANH SÁCH HÓA ĐƠN",data,("MaHD","Mã HĐ"),("NgayLap","Ngày lập"),("KhachHang","Khách hàng"),
                 ("NhanVien","NV lập"),("NhanVienThuTien","NV thu tiền"),("TrangThai","Trạng thái"),("HinhThucThanhToan","Hình thức thanh toán"),
-                ("TongTien","Tiền hàng"),("GiamGia","Giảm giá"),("CanThanhToan","Cần thanh toán"),("ThucThu","Đã thu"));ThongBaoVaMoFile(path);
+                ("TongTien","Tiền hàng"),("GiamGia","Giảm giá"),("CanThanhToan","Cần thanh toán"),("ThucThu","Đã thu"),
+                ("ModifiedAt","Sửa lúc"),("NhanVienSua","NV sửa"),("CancelledAt","Hủy lúc"),("NhanVienHuy","NV hủy"),("CancelReason","Lý do hủy"),("NguonDauHoaDon","Nguồn thông tin đầu hóa đơn"));ThongBaoVaMoFile(path);
         }
 
         public static void XuatChiTietMotHoaDon(int maHD, string thongTinKhach, string nhanVien, DateTime ngayLap,
-            decimal tongTien, decimal giamGia, decimal thucThu, DataTable dtChiTiet,string status="Đã thanh toán",string method="Chưa xác định",string? outputPath=null,bool notify=true)
+            decimal tongTien, decimal giamGia, decimal thucThu, DataTable dtChiTiet,string status="Đã thanh toán",string method="Chưa xác định",string? outputPath=null,bool notify=true,string? headerSource=null)
         {
             string tenMacDinh = $"HoaDon_HD{maHD:D5}.xlsx";
             string? duongDan = outputPath ?? ChonNoiLuuFile(tenMacDinh);
@@ -250,7 +251,7 @@ namespace Store.POS.Common
 
             // Bảng danh sách mặt hàng
             rIdx += 2;
-            string[] headers = { "STT", "Tên thuốc", "Số lô", "ĐVT", "SL", "Đơn giá", "Thành tiền" };
+            string[] headers = { "STT", "Tên thuốc", "Số lô", "ĐVT", "SL", "Đơn giá", "Thành tiền", "Nguồn tên/đơn vị", "Hướng dẫn sử dụng" };
             for (int col = 0; col < headers.Length; col++)
             {
                 var cell = ws.Cell(rIdx, col + 1);
@@ -273,6 +274,9 @@ namespace Store.POS.Common
                 ws.Cell(rIdx, 5).Value = Convert.ToInt32(r["SoLuong"]);
                 ws.Cell(rIdx, 6).Value = Convert.ToDecimal(r["DonGia"]);
                 ws.Cell(rIdx, 7).Value = Convert.ToDecimal(r["ThanhTien"]);
+                ws.Cell(rIdx, 8).Value = r.Table.Columns.Contains("NguonThongTin") ? Convert.ToString(r["NguonThongTin"]) : "Chưa xác định nguồn";
+                ws.Cell(rIdx,9).Value=r.Table.Columns.Contains("HuongDan")?Convert.ToString(r["HuongDan"]):"";
+                ws.Cell(rIdx,9).Style.Alignment.WrapText=true;
 
                 ws.Cell(rIdx, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                 ws.Cell(rIdx, 3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
@@ -303,7 +307,7 @@ namespace Store.POS.Common
 
             if (rIdx >= startRow)
             {
-                var rangeData = ws.Range(startRow - 1, 1, rIdx, 7);
+                var rangeData = ws.Range(startRow - 1, 1, rIdx, 9);
                 rangeData.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
                 rangeData.Style.Border.SetOutsideBorder(XLBorderStyleValues.Medium);
             }
@@ -314,8 +318,9 @@ namespace Store.POS.Common
             ws.Range(rIdx, 1, rIdx, 7).Merge().Style.Font.SetItalic().Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
             ws.Columns().AdjustToContents();
+            if(!string.IsNullOrWhiteSpace(headerSource)) {rIdx+=2;ws.Cell(rIdx,1).Value="Thông tin đầu hóa đơn: "+headerSource;ws.Range(rIdx,1,rIdx,9).Merge().Style.Alignment.WrapText=true;ws.Row(rIdx).Height=32;}
             workbook.SaveAs(duongDan);
-            if(notify) ThongBaoVaMoFile(duongDan, $"Xuất hóa đơn HD{maHD:D5} ra Excel thành công!");
+            if(notify) ThongBaoVaMoFile(duongDan, $"Đã xuất HD{maHD:D5} ra Excel.");
         }
 
         /// <summary>
@@ -339,8 +344,8 @@ namespace Store.POS.Common
             string? path=outputPath ?? ChonNoiLuuFile("DanhSachThuoc.xlsx");if(path==null) return;
             using var book=new XLWorkbook();var sheet=book.AddWorksheet("Thuốc");
             sheet.Column(2).Style.NumberFormat.Format="@";
-            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan"};
-            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán"};
+            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan","KeDon"};
+            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán","Kê đơn"};
             for(int c=0;c<keys.Length;c++) sheet.Cell(1,c+1).Value=headings[c];
             for(int row=0;row<data.Rows.Count;row++) for(int col=0;col<keys.Length;col++)
             {
@@ -362,7 +367,7 @@ namespace Store.POS.Common
             var ws = workbook.Worksheets.Add("NhapThuoc");
             ws.ShowGridLines = true;
 
-            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp (*)", "Đơn vị tính (*)", "Giá bán (*)" };
+            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp (*)", "Đơn vị tính (*)", "Giá bán (*)", "Kê đơn (0/1)" };
             for (int col = 0; col < headers.Length; col++)
             {
                 var cell = ws.Cell(1, col + 1);
@@ -387,17 +392,18 @@ namespace Store.POS.Common
             ws.Cell(3, 4).Value = "Sanofi Việt Nam";
             ws.Cell(3, 5).Value = "Hộp";
             ws.Cell(3, 6).Value = 180000;
+            ws.Cell(2,7).Value=0;ws.Cell(3,7).Value=1;
 
             ws.Cell(2, 6).Style.NumberFormat.Format = "#,##0";
             ws.Cell(3, 6).Style.NumberFormat.Format = "#,##0";
 
-            var range = ws.Range(1, 1, 3, 6);
+            var range = ws.Range(1, 1, 3, 7);
             range.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
             range.Style.Border.SetOutsideBorder(XLBorderStyleValues.Medium);
 
             ws.Columns().AdjustToContents();
             workbook.SaveAs(duongDan);
-            if(notify) ThongBaoVaMoFile(duongDan, "Tạo file mẫu nhập thuốc thành công! Hãy mở file, điền dữ liệu và tiến hành Nhập Excel.");
+            if(notify) ThongBaoVaMoFile(duongDan, "Đã tạo file mẫu nhập thuốc.");
         }
 
         /// <summary>
@@ -418,7 +424,7 @@ namespace Store.POS.Common
             }
 
             if(!ws.Cell(1,1).GetString().Contains("Tên thuốc",StringComparison.OrdinalIgnoreCase) || !ws.Cell(1,6).GetString().Contains("Giá",StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("File không đúng mẫu danh mục thuốc. Hãy dùng File mẫu trên form Thuốc.");
+                throw new ArgumentException("File không đúng mẫu. Tải file mẫu ở màn hình Quản lý thuốc.");
             int lastRow = ws.LastRowUsed()?.RowNumber() ?? 0;
             if(lastRow>10001) throw new ArgumentException("Mỗi file tối đa 10.000 dòng dữ liệu.");
             if (lastRow < 2)
@@ -437,6 +443,11 @@ namespace Store.POS.Common
                 string tenNCC = ws.Cell(r, 4).GetString().Trim();
                 string dvt = ws.Cell(r, 5).GetString().Trim();
                 string giaStr = ws.Cell(r, 6).GetString().Trim();
+                int rxColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Kê đơn",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
+                string rx=rxColumn>0?ws.Cell(r,rxColumn).GetString().Trim():"0";
+                if(rx.Length==0) rx="0";
+                if(rx is not ("0" or "1") && !bool.TryParse(rx,out _)) {errors.Add($"Dòng {r}: Kê đơn phải là 0/1 hoặc True/False.");continue;}
+                bool keDon=rx=="1" || rx.Equals("True",StringComparison.OrdinalIgnoreCase);
 
                 if (string.IsNullOrWhiteSpace(tenNhom))
                 {
@@ -468,7 +479,7 @@ namespace Store.POS.Common
                     TenNhom = tenNhom,
                     TenNCC = tenNCC,
                     DonViTinh = dvt,
-                    GiaBan = giaBan
+                    GiaBan = giaBan,KeDon=keDon
                 });
             }
 
@@ -544,7 +555,7 @@ namespace Store.POS.Common
 
             ws.Columns().AdjustToContents();
             workbook.SaveAs(duongDan);
-            if(notify) ThongBaoVaMoFile(duongDan, "Tạo file mẫu nhập kho thành công!");
+            if(notify) ThongBaoVaMoFile(duongDan, "Đã tạo file mẫu nhập kho.");
         }
 
         /// <summary>
@@ -685,6 +696,7 @@ namespace Store.POS.Common
         public int RowIndex { get; set; }
         public string TenThuoc { get; set; } = "";
         public string? BarCode { get; set; }
+        public bool KeDon {get;set;}
         public string TenNhom { get; set; } = "";
         public string TenNCC { get; set; } = "";
         public string DonViTinh { get; set; } = "";

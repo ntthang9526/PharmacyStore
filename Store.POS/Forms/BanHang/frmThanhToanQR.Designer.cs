@@ -1,4 +1,4 @@
-﻿namespace Store.POS.FormBanHang
+namespace Store.POS.FormBanHang
 {
     partial class frmThanhToanQR
     {

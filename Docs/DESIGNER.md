@@ -21,7 +21,7 @@ Mở solution `PharmacyStore.slnx`, vào project `Store.POS/Forms`, mở file Fo
 
 - **Viền và ô nhập phẳng:**
   - Loại bỏ hoàn toàn tình trạng viền lồng viền. Ô nhập trong các panel gói sử dụng `Dock = Fill` và `BorderStyle = None` bên trong panel có viền, mang lại đường viền đơn nét, phẳng và hiện đại.
-  - Bố cục vùng thanh toán bên phải (`frmBanHang`) được căn chỉnh gọn gàng (chiều rộng 336px), các nút "Hủy", "Nhập", "Thanh toán" không bị đè hay tràn ra ngoài khung.
+  - Bố cục vùng thanh toán bên phải (`frmBanHang`) có chiều rộng 365px; các nút tra cứu, voucher, lưu đơn chờ và thanh toán nằm trong khung. Khi thiếu chiều cao, vùng thanh toán có thể cuộn.
 - **ComboBox:**
   - `FlatStyle` của các ComboBox (`cboNhomThuoc`, `cboNhaCungCap`, `cboDonViTinh`, `cboThuoc`, `cboLoai`,...) dùng `FlatStyle.Standard`.
   - ComboBox hiển thị rõ viền chuẩn và mũi tên chọn, không bị chìm/trùng màu nền trắng.
@@ -58,3 +58,26 @@ Mở solution `PharmacyStore.slnx`, vào project `Store.POS/Forms`, mở file Fo
 - Thuốc, Nhóm thuốc, Nhà cung cấp, Khách hàng và Voucher dùng FlowLayoutPanel ở đáy khung. Nút được xếp liên tiếp; nút bị ẩn theo quyền không chiếm ô trống.
 - Chỉnh Size và Margin của nút trong Designer; chỉnh FlowDirection/WrapContents của panel để thay đổi cách xếp. Hàng chứa nút dùng AutoSize, hàng trống phía trên dùng Percent 100 để giữ các nút sát đáy.
 - Phân quyền chỉ ẩn thao tác, gồm cả File mẫu ở Quản lý thuốc; không ghi đè kích thước hoặc vị trí đã thiết kế.
+
+## 7. Giao diện thống nhất toàn hệ thống (29/10/2026)
+
+- Nền trang xám nhạt, vùng nhập liệu trắng, màu chính xanh ngọc; cột tiền căn phải. Các thuộc tính màu, phông, khoảng cách và độ rộng cột nằm trong Designer.
+- Menu bên trái đánh dấu màn hình đang mở; tiêu đề phía trên thể hiện vị trí hiện tại. Hóa đơn có mục riêng và phím F3. Chuyển màn hình vẫn giữ giỏ hàng hoặc nội dung đang nhập.
+- Giỏ hàng ưu tiên tên thuốc, đơn vị, số lượng, đơn giá và thành tiền. Nút ⋯ mở thao tác tại dòng trong vùng giỏ, không che vùng thu tiền. Các cột khác vẫn có thể chỉnh trong Edit Columns.
+- Hóa đơn: thao tác thu tiền/sửa/hủy chỉ hiện khi chọn đơn chờ; nút xuất Excel nằm riêng. Cột Cần thu hiển thị số còn phải thu của đơn chờ, bằng 0 với đơn đã thanh toán hoặc hủy. Việc này chỉ thay đổi hiển thị; dữ liệu tiền hàng và lịch sử giữ nguyên.
+- Hóa đơn và phiếu nhập dùng toàn bộ chiều rộng; chọn một dòng mới hiện chi tiết bên dưới. Tỷ lệ hai vùng lấy từ RowStyles trong Designer, được khôi phục khi chọn chứng từ. Bấm vùng trống để bỏ chọn và thu gọn chi tiết.
+- Báo cáo đặt bảng theo ngày phía trên và bảng hóa đơn phía dưới; bốn số tổng hợp có cột riêng với độ rộng bằng nhau.
+- Đã kiểm tra bố cục 14 màn hình nhúng ở kích thước cửa sổ 1500×820, 1382×753 và 1100×700. Chưa xác nhận trên các mức DPI khác của Windows; nên kiểm tra lại khi thay máy hoặc đổi mức phóng đại màn hình.
+
+## 8. Đơn thuốc và bản in
+
+- `frmDonThuoc` có file Designer/resx riêng, cột thuốc và hướng dẫn dùng khai báo sẵn. Chỉnh bố cục bằng RowStyles/ColumnStyles; không dùng danh sách thuốc để tự sinh cột trong Designer.
+- Ô **Thuốc kê đơn** nằm cùng hàng tiêu đề tên thuốc trong editor danh mục, không tăng chiều cao khung nhập. Nút **Đơn thuốc** nằm ở hàng nhập mã dưới giỏ.
+- Nút **In / PDF** được khai báo trong Designer hóa đơn; chỉ bật khi chọn đơn đã thanh toán. `frmHoaDon.Print.cs` và `frmBanHang.Prescription.cs` là phần mã, không phải form độc lập.
+
+
+## Phím tắt thao tác
+
+- F1 Trang chủ; F2 Bán hàng; F3 Hóa đơn; F4 Quản lý thuốc; F5 Quản lý khác; F6 Nhập kho; F7 Cảnh báo; F8 Báo cáo. Phím tắt trùng với nhãn trên thanh bên và dùng được khi đang nhập liệu trong màn hình con.
+- Esc không đóng màn hình bán hàng hay hủy giỏ hàng. Chuyển màn hình vẫn giữ giỏ đang nhập.
+- Thông báo thao tác dùng câu ngắn; các xác nhận xóa, hủy và nhận tiền vẫn được giữ.

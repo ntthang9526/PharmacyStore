@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -27,7 +27,9 @@ partial class frmXemTruocExcel
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));layout.RowStyles.Add(new RowStyle(SizeType.Absolute,40));
         layout.RowStyles.Add(new RowStyle(SizeType.Percent,100));layout.RowStyles.Add(new RowStyle(SizeType.Absolute,100));layout.RowStyles.Add(new RowStyle(SizeType.Absolute,52));
         lblKetQua.Name="lblKetQua";lblKetQua.Dock=DockStyle.Fill;
-        dgvDuLieu.Name="dgvDuLieu";dgvDuLieu.Dock=DockStyle.Fill;dgvDuLieu.ReadOnly=true;dgvDuLieu.AllowUserToAddRows=false;dgvDuLieu.AllowUserToDeleteRows=false;
+        dgvDuLieu.Name="dgvDuLieu";
+        dgvDuLieu.GridColor = Color.FromArgb(226, 232, 240);
+        dgvDuLieu.BackgroundColor = Color.White;dgvDuLieu.Dock=DockStyle.Fill;dgvDuLieu.ReadOnly=true;dgvDuLieu.AllowUserToAddRows=false;dgvDuLieu.AllowUserToDeleteRows=false;
         dgvDuLieu.ShowCellToolTips = true;
         dgvDuLieu.DefaultCellStyle.WrapMode = DataGridViewTriState.False;dgvDuLieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         txtLoi.Name="txtLoi";txtLoi.Dock=DockStyle.Fill;txtLoi.Multiline=true;txtLoi.ReadOnly=true;txtLoi.ScrollBars=ScrollBars.Vertical;

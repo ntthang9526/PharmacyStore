@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -48,6 +48,7 @@ partial class frmMain
             btnNhapKho = new Button();
             btnCanhBao = new Button();
             btnBaoCao = new Button();
+            btnHoaDon = new Button();
             btnDangXuat = new Button();
             lblTitle = new Label();
             contentHost = new Panel();
@@ -135,7 +136,7 @@ partial class frmMain
             // shellLayout
             // 
             shellLayout.ColumnCount = 2;
-            shellLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 220F));
+            shellLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 196F));
             shellLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             shellLayout.Controls.Add(panelChucNang, 0, 0);
             shellLayout.Controls.Add(lblTitle, 1, 0);
@@ -156,7 +157,7 @@ partial class frmMain
             panelChucNang.Controls.Add(sideButtons);
             panelChucNang.Dock = DockStyle.Fill;
             panelChucNang.Font = new Font("Segoe UI", 9F);
-            panelChucNang.ForeColor = SystemColors.ControlText;
+            panelChucNang.ForeColor = Color.FromArgb(15, 23, 42);
             panelChucNang.Location = new Point(0, 0);
             panelChucNang.Margin = new Padding(0);
             panelChucNang.Name = "panelChucNang";
@@ -171,17 +172,19 @@ partial class frmMain
             sideButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             sideButtons.Controls.Add(btnTrangChu, 0, 0);
             sideButtons.Controls.Add(btnBanHang, 0, 1);
-            sideButtons.Controls.Add(btnQuanLyThuoc, 0, 2);
-            sideButtons.Controls.Add(btnQuanLyKhac, 0, 3);
-            sideButtons.Controls.Add(btnNhapKho, 0, 4);
-            sideButtons.Controls.Add(btnCanhBao, 0, 5);
-            sideButtons.Controls.Add(btnBaoCao, 0, 6);
-            sideButtons.Controls.Add(btnDangXuat, 0, 8);
+            sideButtons.Controls.Add(btnHoaDon, 0, 2);
+            sideButtons.Controls.Add(btnQuanLyThuoc, 0, 3);
+            sideButtons.Controls.Add(btnQuanLyKhac, 0, 4);
+            sideButtons.Controls.Add(btnNhapKho, 0, 5);
+            sideButtons.Controls.Add(btnCanhBao, 0, 6);
+            sideButtons.Controls.Add(btnBaoCao, 0, 7);
+            sideButtons.Controls.Add(btnDangXuat, 0, 9);
             sideButtons.Dock = DockStyle.Fill;
             sideButtons.Location = new Point(0, 0);
             sideButtons.Name = "sideButtons";
-            sideButtons.Padding = new Padding(12, 14, 12, 0);
-            sideButtons.RowCount = 9;
+            sideButtons.Padding = new Padding(10, 14, 10, 0);
+            sideButtons.RowCount = 10;
+            sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
             sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
             sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
             sideButtons.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
@@ -196,20 +199,22 @@ partial class frmMain
             // 
             // btnTrangChu
             // 
-            btnTrangChu.BackColor = Color.FromArgb(30, 41, 59);
+            btnTrangChu.BackColor = Color.FromArgb(15, 118, 110);
             btnTrangChu.Cursor = Cursors.Hand;
             btnTrangChu.Dock = DockStyle.Fill;
             btnTrangChu.FlatAppearance.BorderSize = 0;
             btnTrangChu.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnTrangChu.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnTrangChu.FlatStyle = FlatStyle.Flat;
-            btnTrangChu.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnTrangChu.Font = new Font("Segoe UI Semibold",9.5F);
             btnTrangChu.ForeColor = Color.FromArgb(241, 245, 249);
             btnTrangChu.Location = new Point(15, 17);
             btnTrangChu.Name = "btnTrangChu";
+            btnTrangChu.Padding = new Padding(10, 0, 0, 0);
+            btnTrangChu.TextAlign = ContentAlignment.MiddleLeft;
             btnTrangChu.Size = new Size(190, 52);
             btnTrangChu.TabIndex = 0;
-            btnTrangChu.Text = "Trang Chủ";
+            btnTrangChu.Text = "Trang chủ (F1)";
             btnTrangChu.UseVisualStyleBackColor = false;
             btnTrangChu.Click += btnTrangChu_Click;
             // 
@@ -222,13 +227,15 @@ partial class frmMain
             btnBanHang.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnBanHang.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnBanHang.FlatStyle = FlatStyle.Flat;
-            btnBanHang.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnBanHang.Font = new Font("Segoe UI Semibold",9.5F);
             btnBanHang.ForeColor = Color.FromArgb(241, 245, 249);
             btnBanHang.Location = new Point(15, 75);
             btnBanHang.Name = "btnBanHang";
+            btnBanHang.Padding = new Padding(10, 0, 0, 0);
+            btnBanHang.TextAlign = ContentAlignment.MiddleLeft;
             btnBanHang.Size = new Size(190, 52);
             btnBanHang.TabIndex = 0;
-            btnBanHang.Text = "Bán hàng (F1)";
+            btnBanHang.Text = "Bán hàng (F2)";
             btnBanHang.UseVisualStyleBackColor = false;
             btnBanHang.Click += btnBanHang_Click;
             // 
@@ -241,13 +248,15 @@ partial class frmMain
             btnQuanLyThuoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnQuanLyThuoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnQuanLyThuoc.FlatStyle = FlatStyle.Flat;
-            btnQuanLyThuoc.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnQuanLyThuoc.Font = new Font("Segoe UI Semibold",9.5F);
             btnQuanLyThuoc.ForeColor = Color.FromArgb(241, 245, 249);
             btnQuanLyThuoc.Location = new Point(15, 133);
             btnQuanLyThuoc.Name = "btnQuanLyThuoc";
+            btnQuanLyThuoc.Padding = new Padding(10, 0, 0, 0);
+            btnQuanLyThuoc.TextAlign = ContentAlignment.MiddleLeft;
             btnQuanLyThuoc.Size = new Size(190, 52);
             btnQuanLyThuoc.TabIndex = 1;
-            btnQuanLyThuoc.Text = "Quản lý thuốc (F2)";
+            btnQuanLyThuoc.Text = "Quản lý thuốc (F4)";
             btnQuanLyThuoc.UseVisualStyleBackColor = false;
             btnQuanLyThuoc.Click += btnQuanLyThuoc_Click;
             // 
@@ -260,13 +269,15 @@ partial class frmMain
             btnQuanLyKhac.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnQuanLyKhac.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnQuanLyKhac.FlatStyle = FlatStyle.Flat;
-            btnQuanLyKhac.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnQuanLyKhac.Font = new Font("Segoe UI Semibold",9.5F);
             btnQuanLyKhac.ForeColor = Color.FromArgb(241, 245, 249);
             btnQuanLyKhac.Location = new Point(15, 191);
             btnQuanLyKhac.Name = "btnQuanLyKhac";
+            btnQuanLyKhac.Padding = new Padding(10, 0, 0, 0);
+            btnQuanLyKhac.TextAlign = ContentAlignment.MiddleLeft;
             btnQuanLyKhac.Size = new Size(190, 52);
             btnQuanLyKhac.TabIndex = 4;
-            btnQuanLyKhac.Text = "Quản lý khác (F3)";
+            btnQuanLyKhac.Text = "Quản lý khác (F5)";
             btnQuanLyKhac.UseVisualStyleBackColor = false;
             btnQuanLyKhac.Click += btnQuanLyKhac_Click;
             // 
@@ -279,13 +290,15 @@ partial class frmMain
             btnNhapKho.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnNhapKho.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnNhapKho.FlatStyle = FlatStyle.Flat;
-            btnNhapKho.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnNhapKho.Font = new Font("Segoe UI Semibold",9.5F);
             btnNhapKho.ForeColor = Color.FromArgb(241, 245, 249);
             btnNhapKho.Location = new Point(15, 249);
             btnNhapKho.Name = "btnNhapKho";
+            btnNhapKho.Padding = new Padding(10, 0, 0, 0);
+            btnNhapKho.TextAlign = ContentAlignment.MiddleLeft;
             btnNhapKho.Size = new Size(190, 52);
             btnNhapKho.TabIndex = 5;
-            btnNhapKho.Text = "Nhập kho (F4)";
+            btnNhapKho.Text = "Nhập kho (F6)";
             btnNhapKho.UseVisualStyleBackColor = false;
             btnNhapKho.Click += btnNhapKho_Click;
             // 
@@ -298,13 +311,15 @@ partial class frmMain
             btnCanhBao.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnCanhBao.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnCanhBao.FlatStyle = FlatStyle.Flat;
-            btnCanhBao.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnCanhBao.Font = new Font("Segoe UI Semibold",9.5F);
             btnCanhBao.ForeColor = Color.FromArgb(241, 245, 249);
             btnCanhBao.Location = new Point(15, 307);
             btnCanhBao.Name = "btnCanhBao";
+            btnCanhBao.Padding = new Padding(10, 0, 0, 0);
+            btnCanhBao.TextAlign = ContentAlignment.MiddleLeft;
             btnCanhBao.Size = new Size(190, 52);
             btnCanhBao.TabIndex = 6;
-            btnCanhBao.Text = "Cảnh báo (F5)";
+            btnCanhBao.Text = "Cảnh báo (F7)";
             btnCanhBao.UseVisualStyleBackColor = false;
             btnCanhBao.Click += btnCanhBao_Click;
             // 
@@ -317,16 +332,36 @@ partial class frmMain
             btnBaoCao.FlatAppearance.MouseDownBackColor = Color.FromArgb(15, 23, 42);
             btnBaoCao.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
             btnBaoCao.FlatStyle = FlatStyle.Flat;
-            btnBaoCao.Font = new Font("Segoe UI Semibold", 10.2F);
+            btnBaoCao.Font = new Font("Segoe UI Semibold",9.5F);
             btnBaoCao.ForeColor = Color.FromArgb(241, 245, 249);
             btnBaoCao.Location = new Point(15, 365);
             btnBaoCao.Name = "btnBaoCao";
+            btnBaoCao.Padding = new Padding(10, 0, 0, 0);
+            btnBaoCao.TextAlign = ContentAlignment.MiddleLeft;
             btnBaoCao.Size = new Size(190, 52);
             btnBaoCao.TabIndex = 7;
-            btnBaoCao.Text = "Báo cáo (F6)";
+            btnBaoCao.Text = "Báo cáo (F8)";
             btnBaoCao.UseVisualStyleBackColor = false;
             btnBaoCao.Click += btnBaoCao_Click;
             // 
+
+            // btnHoaDon
+            btnHoaDon.Name = "btnHoaDon";
+            btnHoaDon.Text = "Hóa đơn (F3)";
+            btnHoaDon.Dock = DockStyle.Fill;
+            btnHoaDon.BackColor = Color.FromArgb(30, 41, 59);
+            btnHoaDon.ForeColor = Color.FromArgb(241, 245, 249);
+            btnHoaDon.FlatStyle = FlatStyle.Flat;
+            btnHoaDon.FlatAppearance.BorderSize = 0;
+            btnHoaDon.FlatAppearance.MouseOverBackColor = Color.FromArgb(51, 65, 85);
+            btnHoaDon.Font = new Font("Segoe UI Semibold", 9.5F);
+            btnHoaDon.Padding = new Padding(10, 0, 0, 0);
+            btnHoaDon.TextAlign = ContentAlignment.MiddleLeft;
+            btnHoaDon.Cursor = Cursors.Hand;
+            btnHoaDon.Size = new Size(170, 52);
+            btnHoaDon.TabIndex = 9;
+            btnHoaDon.Click += btnHoaDon_Click;
+
             // btnDangXuat
             // 
             btnDangXuat.BackColor = Color.FromArgb(190, 18, 60);
@@ -350,15 +385,16 @@ partial class frmMain
             // 
             lblTitle.BackColor = Color.FromArgb(15, 118, 110);
             lblTitle.Dock = DockStyle.Fill;
-            lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
+            lblTitle.Font = new Font("Segoe UI Semibold", 15F, FontStyle.Bold);
             lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(220, 0);
             lblTitle.Margin = new Padding(0);
             lblTitle.Name = "lblTitle";
+            lblTitle.Padding = new Padding(22, 0, 0, 0);
             lblTitle.Size = new Size(1280, 60);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "HỆ THỐNG QUẢN LÍ NHÀ THUỐC";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.Text = "QUẢN LÝ NHÀ THUỐC";
+            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
             lblTitle.UseCompatibleTextRendering = true;
             // 
             // contentHost
@@ -374,7 +410,7 @@ partial class frmMain
             // 
             // dashboard
             // 
-            dashboard.BackColor = Color.FromArgb(248, 250, 252);
+            dashboard.BackColor = Color.FromArgb(242, 246, 248);
             dashboard.ColumnCount = 1;
             dashboard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             dashboard.Controls.Add(tableLayoutPanel1, 0, 0);
@@ -384,7 +420,7 @@ partial class frmMain
             dashboard.Controls.Add(lblTongQuan, 0, 4);
             dashboard.Dock = DockStyle.Fill;
             dashboard.Font = new Font("Segoe UI", 9F);
-            dashboard.ForeColor = SystemColors.ControlText;
+            dashboard.ForeColor = Color.FromArgb(15, 23, 42);
             dashboard.Location = new Point(0, 0);
             dashboard.Margin = new Padding(0);
             dashboard.Name = "dashboard";
@@ -400,7 +436,7 @@ partial class frmMain
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.BackColor = Color.FromArgb(248, 250, 252);
+            tableLayoutPanel1.BackColor = Color.FromArgb(242, 246, 248);
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 140F));
@@ -408,7 +444,7 @@ partial class frmMain
             tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel1.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel1.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel1.Location = new Point(16, 8);
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -419,10 +455,10 @@ partial class frmMain
             // 
             // lblTieuDeTongQuan
             // 
-            lblTieuDeTongQuan.BackColor = Color.FromArgb(248, 250, 252);
+            lblTieuDeTongQuan.BackColor = Color.FromArgb(242, 246, 248);
             lblTieuDeTongQuan.Dock = DockStyle.Fill;
             lblTieuDeTongQuan.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
-            lblTieuDeTongQuan.ForeColor = SystemColors.ControlText;
+            lblTieuDeTongQuan.ForeColor = Color.FromArgb(15, 23, 42);
             lblTieuDeTongQuan.Location = new Point(0, 0);
             lblTieuDeTongQuan.Margin = new Padding(0, 0, 12, 0);
             lblTieuDeTongQuan.Name = "lblTieuDeTongQuan";
@@ -434,14 +470,14 @@ partial class frmMain
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.AutoSize = true;
-            tableLayoutPanel3.BackColor = Color.FromArgb(248, 250, 252);
+            tableLayoutPanel3.BackColor = Color.FromArgb(242, 246, 248);
             tableLayoutPanel3.ColumnCount = 2;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.Controls.Add(btnLamMoiTongQuan, 0, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel3.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel3.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel3.Location = new Point(1108, 0);
             tableLayoutPanel3.Margin = new Padding(0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -473,7 +509,7 @@ partial class frmMain
             // 
             // tableLayoutPanel4
             // 
-            tableLayoutPanel4.BackColor = Color.FromArgb(248, 250, 252);
+            tableLayoutPanel4.BackColor = Color.FromArgb(242, 246, 248);
             tableLayoutPanel4.ColumnCount = 4;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -485,7 +521,7 @@ partial class frmMain
             tableLayoutPanel4.Controls.Add(tableLayoutPanel14, 3, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel4.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel4.Location = new Point(16, 56);
             tableLayoutPanel4.Margin = new Padding(0);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -505,7 +541,7 @@ partial class frmMain
             tableLayoutPanel5.Cursor = Cursors.Hand;
             tableLayoutPanel5.Dock = DockStyle.Fill;
             tableLayoutPanel5.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel5.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel5.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel5.Location = new Point(0, 6);
             tableLayoutPanel5.Margin = new Padding(0, 6, 8, 8);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -549,7 +585,7 @@ partial class frmMain
             label7.Cursor = Cursors.Hand;
             label7.Dock = DockStyle.Fill;
             label7.Font = new Font("Segoe UI", 10.2F);
-            label7.ForeColor = SystemColors.ControlText;
+            label7.ForeColor = Color.FromArgb(15, 23, 42);
             label7.Location = new Point(15, 75);
             label7.Name = "label7";
             label7.Size = new Size(276, 23);
@@ -567,7 +603,7 @@ partial class frmMain
             tableLayoutPanel8.Cursor = Cursors.Hand;
             tableLayoutPanel8.Dock = DockStyle.Fill;
             tableLayoutPanel8.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel8.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel8.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel8.Location = new Point(312, 6);
             tableLayoutPanel8.Margin = new Padding(0, 6, 8, 8);
             tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -611,7 +647,7 @@ partial class frmMain
             label10.Cursor = Cursors.Hand;
             label10.Dock = DockStyle.Fill;
             label10.Font = new Font("Segoe UI", 10.2F);
-            label10.ForeColor = SystemColors.ControlText;
+            label10.ForeColor = Color.FromArgb(15, 23, 42);
             label10.Location = new Point(15, 75);
             label10.Name = "label10";
             label10.Size = new Size(276, 23);
@@ -629,7 +665,7 @@ partial class frmMain
             tableLayoutPanel11.Cursor = Cursors.Hand;
             tableLayoutPanel11.Dock = DockStyle.Fill;
             tableLayoutPanel11.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel11.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel11.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel11.Location = new Point(624, 6);
             tableLayoutPanel11.Margin = new Padding(0, 6, 8, 8);
             tableLayoutPanel11.Name = "tableLayoutPanel11";
@@ -673,7 +709,7 @@ partial class frmMain
             label13.Cursor = Cursors.Hand;
             label13.Dock = DockStyle.Fill;
             label13.Font = new Font("Segoe UI", 10.2F);
-            label13.ForeColor = SystemColors.ControlText;
+            label13.ForeColor = Color.FromArgb(15, 23, 42);
             label13.Location = new Point(15, 75);
             label13.Name = "label13";
             label13.Size = new Size(276, 23);
@@ -691,7 +727,7 @@ partial class frmMain
             tableLayoutPanel14.Cursor = Cursors.Hand;
             tableLayoutPanel14.Dock = DockStyle.Fill;
             tableLayoutPanel14.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel14.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel14.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel14.Location = new Point(936, 6);
             tableLayoutPanel14.Margin = new Padding(0, 6, 8, 8);
             tableLayoutPanel14.Name = "tableLayoutPanel14";
@@ -735,7 +771,7 @@ partial class frmMain
             label16.Cursor = Cursors.Hand;
             label16.Dock = DockStyle.Fill;
             label16.Font = new Font("Segoe UI", 10.2F);
-            label16.ForeColor = SystemColors.ControlText;
+            label16.ForeColor = Color.FromArgb(15, 23, 42);
             label16.Location = new Point(15, 75);
             label16.Name = "label16";
             label16.Size = new Size(276, 23);
@@ -744,7 +780,7 @@ partial class frmMain
             // 
             // tableLayoutPanel17
             // 
-            tableLayoutPanel17.BackColor = Color.FromArgb(248, 250, 252);
+            tableLayoutPanel17.BackColor = Color.FromArgb(242, 246, 248);
             tableLayoutPanel17.ColumnCount = 2;
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -752,7 +788,7 @@ partial class frmMain
             tableLayoutPanel17.Controls.Add(groupBox20, 1, 0);
             tableLayoutPanel17.Dock = DockStyle.Fill;
             tableLayoutPanel17.Font = new Font("Segoe UI", 10.2F);
-            tableLayoutPanel17.ForeColor = SystemColors.ControlText;
+            tableLayoutPanel17.ForeColor = Color.FromArgb(15, 23, 42);
             tableLayoutPanel17.Location = new Point(16, 174);
             tableLayoutPanel17.Margin = new Padding(0, 0, 0, 8);
             tableLayoutPanel17.Name = "tableLayoutPanel17";
@@ -763,11 +799,11 @@ partial class frmMain
             // 
             // groupBox18
             // 
-            groupBox18.BackColor = Color.FromArgb(248, 250, 252);
+            groupBox18.BackColor = Color.White;
             groupBox18.Controls.Add(panel19);
             groupBox18.Dock = DockStyle.Fill;
             groupBox18.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-            groupBox18.ForeColor = SystemColors.ControlText;
+            groupBox18.ForeColor = Color.FromArgb(15, 23, 42);
             groupBox18.Location = new Point(0, 0);
             groupBox18.Margin = new Padding(0, 0, 8, 0);
             groupBox18.Name = "groupBox18";
@@ -779,12 +815,12 @@ partial class frmMain
             // 
             // panel19
             // 
-            panel19.BackColor = Color.FromArgb(248, 250, 252);
+            panel19.BackColor = Color.White;
             panel19.Controls.Add(dgvSapHet);
             panel19.Controls.Add(lblKhongSapHet);
             panel19.Dock = DockStyle.Fill;
             panel19.Font = new Font("Segoe UI", 10.2F);
-            panel19.ForeColor = SystemColors.ControlText;
+            panel19.ForeColor = Color.FromArgb(15, 23, 42);
             panel19.Location = new Point(12, 25);
             panel19.Name = "panel19";
             panel19.Size = new Size(592, 228);
@@ -795,7 +831,7 @@ partial class frmMain
             dgvSapHet.AllowUserToAddRows = false;
             dgvSapHet.AllowUserToDeleteRows = false;
             dgvSapHet.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(242, 246, 248);
             dgvSapHet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvSapHet.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvSapHet.BackgroundColor = Color.White;
@@ -822,13 +858,13 @@ partial class frmMain
             dgvSapHet.Dock = DockStyle.Fill;
             dgvSapHet.EnableHeadersVisualStyles = false;
             dgvSapHet.Font = new Font("Segoe UI", 10.2F);
-            dgvSapHet.GridColor = SystemColors.ControlLight;
+            dgvSapHet.GridColor = Color.FromArgb(226, 232, 240);
             dgvSapHet.Location = new Point(0, 0);
             dgvSapHet.MultiSelect = false;
             dgvSapHet.Name = "dgvSapHet";
             dgvSapHet.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(242, 246, 248);
             dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.2F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
@@ -844,10 +880,10 @@ partial class frmMain
             // 
             // lblKhongSapHet
             // 
-            lblKhongSapHet.BackColor = Color.FromArgb(248, 250, 252);
+            lblKhongSapHet.BackColor = Color.White;
             lblKhongSapHet.Dock = DockStyle.Fill;
             lblKhongSapHet.Font = new Font("Segoe UI", 10.2F);
-            lblKhongSapHet.ForeColor = SystemColors.ControlText;
+            lblKhongSapHet.ForeColor = Color.FromArgb(15, 23, 42);
             lblKhongSapHet.Location = new Point(0, 0);
             lblKhongSapHet.Name = "lblKhongSapHet";
             lblKhongSapHet.Size = new Size(592, 228);
@@ -857,11 +893,11 @@ partial class frmMain
             // 
             // groupBox20
             // 
-            groupBox20.BackColor = Color.FromArgb(248, 250, 252);
+            groupBox20.BackColor = Color.White;
             groupBox20.Controls.Add(panel21);
             groupBox20.Dock = DockStyle.Fill;
             groupBox20.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-            groupBox20.ForeColor = SystemColors.ControlText;
+            groupBox20.ForeColor = Color.FromArgb(15, 23, 42);
             groupBox20.Location = new Point(624, 0);
             groupBox20.Margin = new Padding(0);
             groupBox20.Name = "groupBox20";
@@ -873,12 +909,12 @@ partial class frmMain
             // 
             // panel21
             // 
-            panel21.BackColor = Color.FromArgb(248, 250, 252);
+            panel21.BackColor = Color.White;
             panel21.Controls.Add(dgvSapHetHan);
             panel21.Controls.Add(lblKhongSapHetHan);
             panel21.Dock = DockStyle.Fill;
             panel21.Font = new Font("Segoe UI", 10.2F);
-            panel21.ForeColor = SystemColors.ControlText;
+            panel21.ForeColor = Color.FromArgb(15, 23, 42);
             panel21.Location = new Point(12, 25);
             panel21.Name = "panel21";
             panel21.Size = new Size(600, 228);
@@ -890,7 +926,7 @@ partial class frmMain
             dgvSapHetHan.AllowUserToDeleteRows = false;
             dgvSapHetHan.AllowUserToResizeColumns = false;
             dgvSapHetHan.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(242, 246, 248);
             dgvSapHetHan.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvSapHetHan.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvSapHetHan.BackgroundColor = Color.White;
@@ -917,13 +953,13 @@ partial class frmMain
             dgvSapHetHan.Dock = DockStyle.Fill;
             dgvSapHetHan.EnableHeadersVisualStyles = false;
             dgvSapHetHan.Font = new Font("Segoe UI", 10.2F);
-            dgvSapHetHan.GridColor = SystemColors.ControlLight;
+            dgvSapHetHan.GridColor = Color.FromArgb(226, 232, 240);
             dgvSapHetHan.Location = new Point(0, 0);
             dgvSapHetHan.MultiSelect = false;
             dgvSapHetHan.Name = "dgvSapHetHan";
             dgvSapHetHan.ReadOnly = true;
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(242, 246, 248);
             dataGridViewCellStyle11.Font = new Font("Segoe UI", 10.2F);
             dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
@@ -1014,10 +1050,10 @@ partial class frmMain
             // 
             // lblKhongSapHetHan
             // 
-            lblKhongSapHetHan.BackColor = Color.FromArgb(248, 250, 252);
+            lblKhongSapHetHan.BackColor = Color.White;
             lblKhongSapHetHan.Dock = DockStyle.Fill;
             lblKhongSapHetHan.Font = new Font("Segoe UI", 10.2F);
-            lblKhongSapHetHan.ForeColor = SystemColors.ControlText;
+            lblKhongSapHetHan.ForeColor = Color.FromArgb(15, 23, 42);
             lblKhongSapHetHan.Location = new Point(0, 0);
             lblKhongSapHetHan.Name = "lblKhongSapHetHan";
             lblKhongSapHetHan.Size = new Size(600, 228);
@@ -1027,11 +1063,11 @@ partial class frmMain
             // 
             // groupBox22
             // 
-            groupBox22.BackColor = Color.FromArgb(248, 250, 252);
+            groupBox22.BackColor = Color.White;
             groupBox22.Controls.Add(panel23);
             groupBox22.Dock = DockStyle.Fill;
             groupBox22.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
-            groupBox22.ForeColor = SystemColors.ControlText;
+            groupBox22.ForeColor = Color.FromArgb(15, 23, 42);
             groupBox22.Location = new Point(16, 447);
             groupBox22.Margin = new Padding(0);
             groupBox22.Name = "groupBox22";
@@ -1043,12 +1079,12 @@ partial class frmMain
             // 
             // panel23
             // 
-            panel23.BackColor = Color.FromArgb(248, 250, 252);
+            panel23.BackColor = Color.White;
             panel23.Controls.Add(dgvGanNhat);
             panel23.Controls.Add(lblKhongHoaDon);
             panel23.Dock = DockStyle.Fill;
             panel23.Font = new Font("Segoe UI", 10.2F);
-            panel23.ForeColor = SystemColors.ControlText;
+            panel23.ForeColor = Color.FromArgb(15, 23, 42);
             panel23.Location = new Point(12, 25);
             panel23.Name = "panel23";
             panel23.Size = new Size(1224, 236);
@@ -1060,7 +1096,7 @@ partial class frmMain
             dgvGanNhat.AllowUserToDeleteRows = false;
             dgvGanNhat.AllowUserToResizeColumns = false;
             dgvGanNhat.AllowUserToResizeRows = false;
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(242, 246, 248);
             dgvGanNhat.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
             dgvGanNhat.BackgroundColor = Color.White;
             dgvGanNhat.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -1086,13 +1122,13 @@ partial class frmMain
             dgvGanNhat.Dock = DockStyle.Fill;
             dgvGanNhat.EnableHeadersVisualStyles = false;
             dgvGanNhat.Font = new Font("Segoe UI", 10.2F);
-            dgvGanNhat.GridColor = SystemColors.ControlLight;
+            dgvGanNhat.GridColor = Color.FromArgb(226, 232, 240);
             dgvGanNhat.Location = new Point(0, 0);
             dgvGanNhat.MultiSelect = false;
             dgvGanNhat.Name = "dgvGanNhat";
             dgvGanNhat.ReadOnly = true;
             dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle20.BackColor = Color.FromArgb(242, 246, 248);
             dataGridViewCellStyle20.Font = new Font("Segoe UI", 10.2F);
             dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle20.SelectionBackColor = SystemColors.Highlight;
@@ -1212,10 +1248,10 @@ partial class frmMain
             // 
             // lblKhongHoaDon
             // 
-            lblKhongHoaDon.BackColor = Color.FromArgb(248, 250, 252);
+            lblKhongHoaDon.BackColor = Color.White;
             lblKhongHoaDon.Dock = DockStyle.Fill;
             lblKhongHoaDon.Font = new Font("Segoe UI", 10.2F);
-            lblKhongHoaDon.ForeColor = SystemColors.ControlText;
+            lblKhongHoaDon.ForeColor = Color.FromArgb(15, 23, 42);
             lblKhongHoaDon.Location = new Point(0, 0);
             lblKhongHoaDon.Name = "lblKhongHoaDon";
             lblKhongHoaDon.Size = new Size(1224, 236);
@@ -1226,10 +1262,10 @@ partial class frmMain
             // lblTongQuan
             // 
             lblTongQuan.AutoEllipsis = true;
-            lblTongQuan.BackColor = Color.FromArgb(248, 250, 252);
+            lblTongQuan.BackColor = Color.FromArgb(242, 246, 248);
             lblTongQuan.Dock = DockStyle.Fill;
             lblTongQuan.Font = new Font("Segoe UI", 10.2F);
-            lblTongQuan.ForeColor = SystemColors.ControlText;
+            lblTongQuan.ForeColor = Color.FromArgb(15, 23, 42);
             lblTongQuan.Location = new Point(19, 720);
             lblTongQuan.Name = "lblTongQuan";
             lblTongQuan.Size = new Size(1242, 30);
@@ -1293,7 +1329,7 @@ partial class frmMain
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
-            ClientSize = new Size(1500, 820);
+            ClientSize = new Size(1680, 900);
             Controls.Add(shellLayout);
             Font = new Font("Segoe UI", 9F);
             ForeColor = Color.FromArgb(15, 23, 42);
@@ -1331,6 +1367,7 @@ partial class frmMain
 
         private global::System.Windows.Forms.Panel panelChucNang;
     private global::System.Windows.Forms.Button btnBaoCao;
+    private Button btnHoaDon;
     private global::System.Windows.Forms.Button btnCanhBao;
     private global::System.Windows.Forms.Button btnNhapKho;
     private global::System.Windows.Forms.Button btnQuanLyKhac;

@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Store.BLL;
 namespace Store.POS;
 
@@ -13,6 +13,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
         InitializeComponent();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             PhanQuyenGiaoDien.Gan(this);
+        PosFormStyle.ConfigureRowNavigation(dgvNhanVien,Chon);
         PosFormStyle.ConfigureGridSelection(this,posLayout,() => ResetDetails(false));
         btnThem.Click+=(_,_)=> {ResetDetails();SetEditing(true);txtHoTen.Focus();};
         btnSua.Click+=(_,_)=> {if(selectedId.HasValue) {SetEditing(true);txtHoTen.Focus();} else BaoLoi("Chọn nhân viên trong bảng.");};
@@ -20,13 +21,14 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
         btnTimKiem.Click+=(_,_)=>TimKiem();btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();TimKiem();};
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
         dgvNhanVien.CellClick+=(_,e)=> {if(e.RowIndex>=0) Chon(dgvNhanVien.Rows[e.RowIndex]);};
-        dgvNhanVien.KeyUp+=(_,e)=> {if(e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End && dgvNhanVien.CurrentRow!=null) Chon(dgvNhanVien.CurrentRow);};
+        
         cboVaiTro.SelectedIndexChanged+=(_,_)=> {if(btnLuu.Enabled) CapNhatBaoVeAdmin();};
         txtTaiKhoan.TextChanged+=(_,_)=> {if(btnLuu.Enabled) CapNhatBaoVeAdmin();};
         Load+=(_,_)=>TimKiem();ResetDetails();
     }
     private void SetEditing(bool edit)
     {
+        dgvNhanVien.Enabled=!edit;
         txtHoTen.Enabled=txtTaiKhoan.Enabled=txtDienThoai.Enabled=txtMatKhau.Enabled=chkDangLam.Enabled=cboVaiTro.Enabled=edit;
         btnLuu.Enabled=btnHuy.Enabled=edit;btnThem.Enabled=!edit;
         btnSua.Enabled=!edit && selectedId.HasValue;
@@ -47,6 +49,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     }
     private void Chon(DataGridViewRow row)
     {
+        if(!dgvNhanVien.Enabled) return;
         if(row.DataBoundItem is not DataRowView data) return;
         selectedAdmin=(string)data["VaiTro"]=="ADMIN" || ((string)data["TaiKhoan"]).Equals("admin",StringComparison.OrdinalIgnoreCase);
         selectedId=(int)data["MaNV"];txtHoTen.Text=(string)data["HoTen"];
@@ -57,7 +60,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     private void TimKiem()
     {
         if(PosFormStyle.IsInDesigner(this)) return;
-        try {ResetDetails();dgvNhanVien.DataSource=bll.TimKiem(txtTimKiem.Text);lblTrangThai.Text=$"{dgvNhanVien.Rows.Count} nhân viên. Khóa tài khoản vẫn giữ lịch sử hóa đơn/nhập kho.";}
+        try {ResetDetails();dgvNhanVien.DataSource=bll.TimKiem(txtTimKiem.Text);lblTrangThai.Text=$"{dgvNhanVien.Rows.Count} nhân viên.";}
         catch(Exception ex) {BaoLoi(ex.Message);}
     }
     public void LamMoiDuLieu()
@@ -75,7 +78,7 @@ public partial class frmNhanVien : Form, ILamMoiDuLieu
     {
         if(!bll.Luu(selectedId,txtHoTen.Text,txtTaiKhoan.Text,txtMatKhau.Text,txtDienThoai.Text,chkDangLam.Checked,
             PhienDangNhap.NhanVienId,out _,out string error,cboVaiTro.SelectedIndex==1?"ADMIN":"STAFF")) {BaoLoi(error);return;}
-        TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã lưu nhân viên.";
+        ResetDetails(true);TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã lưu nhân viên.";
     }
     private void Khoa()
     {

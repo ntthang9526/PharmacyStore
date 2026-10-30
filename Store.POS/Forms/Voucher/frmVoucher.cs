@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Store.BLL;
 namespace Store.POS;
 public partial class frmVoucher : Form, ILamMoiDuLieu
@@ -28,6 +28,7 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
                 e.FormattingApplied = true;
             }
         };
+        PosFormStyle.ConfigureRowNavigation(dgvVoucher,Chon);
         PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         btnTimKiem.Click+=(_,_)=>TimKiem();
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
@@ -37,11 +38,12 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
         btnLuu.Click+=(_,_)=>Luu();btnXoa.Click+=(_,_)=>Xoa();
         btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();TimKiem();};
         dgvVoucher.CellClick+=(_,e)=> {if(e.RowIndex>=0) Chon(dgvVoucher.Rows[e.RowIndex]);};
-        dgvVoucher.KeyUp+=(_,e)=> {if(e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End && dgvVoucher.CurrentRow!=null) Chon(dgvVoucher.CurrentRow);};
+        
         ResetDetails();Load+=(_,_)=>TimKiem();
     }
     private void SetEditing(bool editing)
     {
+        dgvVoucher.Enabled=!editing;
         txtCode.Enabled=cboLoai.Enabled=nudGiaTri.Enabled=nudSoLuot.Enabled=chkHoatDong.Enabled=editing;
         btnLuu.Enabled=btnHuy.Enabled=editing;
         btnSua.Enabled=btnXoa.Enabled=!editing && selectedId.HasValue;
@@ -56,6 +58,7 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
     }
     private void Chon(DataGridViewRow row)
     {
+        if(!dgvVoucher.Enabled) return;
         if(row.DataBoundItem is not DataRowView data) return;
         selectedId=(int)data["Id"];originalQuantity=(int)data["Quantity"];
         txtCode.Text=(string)data["Code"];cboLoai.SelectedValue=(string)data["DiscountType"];
@@ -73,7 +76,7 @@ public partial class frmVoucher : Form, ILamMoiDuLieu
     {
         if(!bll.Luu(selectedId,txtCode.Text,cboLoai.SelectedValue as string??"",nudGiaTri.Value,(int)nudSoLuot.Value,
             chkHoatDong.Checked,originalQuantity,out string error)) {BaoLoi(error);return;}
-        TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã lưu voucher.";
+        ResetDetails(true);TimKiem();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã lưu voucher.";
     }
     private void Xoa()
     {

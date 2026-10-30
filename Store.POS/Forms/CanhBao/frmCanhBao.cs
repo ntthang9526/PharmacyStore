@@ -113,8 +113,8 @@ namespace Store.POS
                 if (r.Cells[colDaXuLy.Index].Value is not true) chuaXuLy++;
             }
             int soNgay = (int)nudSoNgay.Value;
-            grpSapHetHan.Text = $"Lô sắp / đã hết hạn (dưới {soNgay} ngày): {chuaXuLy} lô" +
-                (total - chuaXuLy > 0 ? $" (đã xử lý: {total - chuaXuLy})" : "");
+            grpSapHetHan.Text = $"Lô sắp / đã hết hạn (dưới {soNgay} ngày): {total} lô" +
+                (total - chuaXuLy > 0 ? $" (đã xem trong phiên: {total - chuaXuLy})" : "");
         }
 
         private void TauMauSapHetHan()

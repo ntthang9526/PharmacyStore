@@ -110,9 +110,10 @@ namespace Store.DAL
                         }
 
                         using (var cmdD = new SqlCommand(@"
-                            INSERT INTO StockInDetails(StockInId, BatchId, Quantity, UnitCost)
-                            VALUES(@p, @b, @q, @c)", conn, tran))
+                            INSERT INTO StockInDetails(StockInId, BatchId, Quantity, UnitCost, MedicineNameSnapshot, MedicineUnitSnapshot)
+                            SELECT @p, @b, @q, @c, Name, Unit FROM Medicines WHERE Id=@medicine", conn, tran))
                         {
+                            cmdD.Parameters.Add("@medicine",SqlDbType.Int).Value=it.MaThuoc;
                             cmdD.Parameters.Add("@p", SqlDbType.Int).Value = stockInId;
                             cmdD.Parameters.Add("@b", SqlDbType.Int).Value = batchId;
                             cmdD.Parameters.Add("@q", SqlDbType.Int).Value = it.SoLuong;

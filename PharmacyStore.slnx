@@ -17,5 +17,6 @@
     <File Path="README.md" />
     <File Path="Docs/MERGE-NOTES.md" />
     <File Path="Docs/SELLING-STATUS.md" />
+    <File Path="Docs/DOCUMENT-HISTORY.md" />
   </Folder>
 </Solution>

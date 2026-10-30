@@ -63,7 +63,7 @@ Các mục/nút không được cấp quyền sẽ ẩn. Nhân viên dùng Nhậ
 - File Excel tối đa 20 MB và khoảng 10.000 dòng dữ liệu. Dùng đúng file mẫu, giữ mã vạch ở dạng Text. Có xem trước và lỗi từng dòng; nhập danh mục lưu từng dòng hợp lệ và thông báo kết quả, các dòng lỗi không ghi dữ liệu.
 - Bán hàng → **Lưu chờ thanh toán**: lưu đơn, chưa giữ/trừ tồn, chưa trừ lượt voucher, chưa ghi doanh thu. Đơn chưa phân lô.
 - Quản lý khác → **Hóa đơn** → chọn đơn chờ → chọn Tiền mặt/Chuyển khoản QR → **Thanh toán**. Hệ thống kiểm tra lại hàng còn hạn/voucher, trừ tồn FEFO và chuyển sang Đã thanh toán trong một giao dịch. Không cho thanh toán hai lần. QR vẫn được nhân viên xác nhận thủ công, chưa kết nối đối soát ngân hàng.
-- Giá thuốc được chốt lúc lập đơn chờ; kiểm tra thuốc còn kinh doanh lúc thu tiền. Voucher phải còn hoạt động/lượt và giữ nguyên giá trị giảm đã chốt. Đơn thiếu hàng/voucher vẫn chờ. Chưa bổ sung hủy/sửa hóa đơn chờ hoặc hoàn tiền; có thể lập đơn mới nếu cần thay đổi.
+- Giá thuốc được chốt lúc lập đơn chờ; kiểm tra thuốc còn kinh doanh lúc thu tiền. Voucher phải còn hoạt động/lượt và giữ nguyên giá trị giảm đã chốt. Đơn thiếu hàng/voucher vẫn chờ. Cho phép sửa/hủy đơn chờ theo hướng dẫn dưới đây; chưa có hoàn tiền cho đơn đã thu.
 - Doanh thu theo ngày thu tiền; các hóa đơn cũ dùng ngày lập vì trước đây lưu ngay khi thu. Hóa đơn cũ được giữ là Đã thanh toán, hình thức Chưa xác định để không suy đoán dữ liệu.
 
 Database hiện tại đã được nâng cấp bằng `Store.DAL/Database/AddOrderPayments.sql`. Script chạy lại được, không tạo/xóa database. Thêm cột PaymentMethod, PaymentStatus, PaidAt, PaidEmployeeId và bảng OrderPendingItems để lưu chi tiết đơn chưa trừ tồn. Nếu dùng bản database thử khác, áp dụng script này trước khi chạy phiên bản mới; không chạy lại InitDatabase.sql trên database đang có.
@@ -73,3 +73,21 @@ Kiểm tra mới: `dotnet run --project Store.SmokeTests/Store.SmokeTests.csproj
 ## Trạng thái bán và khóa lô
 
 Xem [hướng dẫn trạng thái thuốc/lô](Docs/SELLING-STATUS.md). Database hiện tại đã bổ sung Medicines.IsSelling và Batches.IsBlocked bằng Store.DAL/Database/AddSellingStatus.sql; không thêm bảng hay database mới.
+
+## Bảo toàn tên và đơn vị trên chứng từ
+
+Xem [hướng dẫn lịch sử chứng từ](Docs/DOCUMENT-HISTORY.md). Đơn vị thuốc đã tạo không được sửa; hóa đơn/phiếu nhập mới lưu tên và đơn vị riêng. Database hiện tại đã nâng cấp bằng Store.DAL/Database/AddDocumentSnapshots.sql.
+
+## Sửa/hủy hóa đơn chưa thanh toán
+
+- **Quản lý khác → Hóa đơn → chọn đơn chờ → Sửa đơn**: mở giỏ riêng; thêm/bớt thuốc, sửa số lượng, chọn khách hoặc voucher; bấm **Lưu thay đổi** để cập nhật cùng mã hóa đơn. Giỏ bán hàng đang mở không bị thay thế.
+- Bản sửa dùng **giá và voucher hiện hành**, hiển thị tổng mới trước khi lưu. Voucher cũ không dùng được sẽ được thông báo và bỏ khỏi bản sửa. Đóng/bỏ thay đổi không sửa dữ liệu đã lưu.
+- Lưu bản sửa chưa giữ/trừ tồn, chưa tiêu voucher, chưa ghi doanh thu; có thể lưu đơn chờ thiếu tồn. Khi thu tiền vẫn kiểm tra lại tồn/lô và voucher.
+- **Hủy đơn** yêu cầu lý do; giữ lịch sử và chi tiết, lưu người/thời điểm hủy. Đơn **Đã hủy** không còn tiền phải thu, không nằm trong bộ lọc **Chỉ chờ**, không được sửa hoặc thanh toán lại.
+- Admin và Nhân viên có quyền bán hàng đều được sửa/hủy đơn chờ. Hóa đơn đã thu tiền không được sửa/hủy bằng luồng này. Nếu đơn vừa bị người khác sửa/thu/hủy, thao tác cũ bị từ chối và yêu cầu tải lại.
+- Áp dụng Store.DAL/Database/AddPendingOrderActions.sql trên database thử đang dùng trước khi chạy bản mới. Script chạy lại được; không chạy InitDatabase.sql trên database có sẵn.
+- Kiểm tra: dotnet run --project Store.SmokeTests -- --pending-actions.
+
+## Dấu đã xem cảnh báo
+
+Đổi “Đã xử lý” thành **Đã xem**. Dấu này chỉ nhớ trong phiên hiện tại, không khóa lô và không làm giảm số lô cảnh báo. Tạm khóa lô vẫn dùng màn hình Lô hàng.

@@ -6,7 +6,7 @@ public partial class frmNhapKho
         {
             if (cboNhaCungCap.SelectedValue is not int maNCC || maNCC <= 0)
             {
-                MessageBox.Show("Vui lòng chọn một Nhà cung cấp trước để hệ thống xuất mẫu kèm danh sách thuốc của nhà cung cấp đó.",
+                MessageBox.Show("Chọn nhà cung cấp trước khi tải file mẫu.",
                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -27,7 +27,7 @@ public partial class frmNhapKho
         {
             if (cboNhaCungCap.SelectedValue is not int maNCC || maNCC <= 0)
             {
-                MessageBox.Show("Vui lòng chọn Nhà cung cấp của phiếu trước khi nhập từ Excel.",
+                MessageBox.Show("Chọn nhà cung cấp trước khi nhập Excel.",
                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cboNhaCungCap.Focus();
                 return;
@@ -41,7 +41,7 @@ public partial class frmNhapKho
                 var dtThuocNCC = bll.LayThuocTheoNCC(maNCC);
                 if (dtThuocNCC.Rows.Count == 0)
                 {
-                    MessageBox.Show("Nhà cung cấp này hiện chưa có thuốc nào trong hệ thống. Hãy tạo thuốc trước.",
+                    MessageBox.Show("Nhà cung cấp chưa có thuốc. Thêm thuốc trước khi nhập Excel.",
                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -49,7 +49,7 @@ public partial class frmNhapKho
                 var danhSach = Store.POS.Common.ExcelHelper.DocDanhSachNhapKhoTuExcel(duongDan, dtThuocNCC, out var errors);
                 if (danhSach.Count == 0)
                 {
-                    string msg = "Không đọc được dòng mặt hàng nhập kho hợp lệ nào từ file Excel.";
+                    string msg = "File Excel chưa có dòng hợp lệ để nhập.";
                     if (errors.Count > 0)
                         msg += "\n\nChi tiết lỗi:\n" + string.Join("\n", errors.Take(8));
                     MessageBox.Show(msg, "Lỗi nhập file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -87,7 +87,7 @@ public partial class frmNhapKho
 
                 CapNhatTongVon();
 
-                string ketQua = $"Đã thêm {themThanhCong} mặt hàng từ file Excel vào phiếu nhập hiện tại.";
+                string ketQua = $"Đã thêm {themThanhCong} dòng vào phiếu nhập.";
                 if (errors.Count > 0)
                 {
                     ketQua += $"\n\nBỏ qua {errors.Count} dòng có lỗi:\n" + string.Join("\n", errors.Take(6));
@@ -96,13 +96,13 @@ public partial class frmNhapKho
                 }
                 else
                 {
-                    MessageBox.Show(ketQua + "\nHãy kiểm tra lại danh sách trên lưới và bấm 'LƯU PHIẾU' để hoàn tất.",
+                    MessageBox.Show(ketQua + "\nKiểm tra danh sách rồi bấm Lưu phiếu.",
                         "Nhập Excel thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi khi đọc file Excel nhập kho: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không đọc được file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

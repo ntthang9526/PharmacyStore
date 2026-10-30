@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 namespace Store.DAL;
 public partial class ThuocDAL
@@ -7,7 +7,7 @@ public partial class ThuocDAL
     private const string SelectSql = @"
         SELECT m.BarCode AS MaVach, m.Id AS MaThuoc, m.Name AS TenThuoc, m.CategoryId AS MaNhom,
                m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, ROUND(m.Price, 0) AS DonGia,
-               ISNULL(SUM(b.Stock), 0) AS SoLuongTon, gia.UnitCost AS GiaNhapGanNhat, m.IsSelling AS DangBan,
+               ISNULL(SUM(b.Stock), 0) AS SoLuongTon, gia.UnitCost AS GiaNhapGanNhat, m.IsSelling AS DangBan,m.IsPrescription AS KeDon, CAST(CASE WHEN COUNT(b.Id)>0 THEN 1 ELSE 0 END AS bit) AS KhoaNCC,
                CASE WHEN m.IsSelling=1 THEN N'Đang bán' ELSE N'Ngừng bán' END AS TrangThaiBan,
                ISNULL(SUM(CASE WHEN m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock ELSE 0 END),0) AS TonCoTheBan
         FROM Medicines m
@@ -18,21 +18,21 @@ public partial class ThuocDAL
                      JOIN StockIns i ON i.Id=d.StockInId JOIN Batches ib ON ib.Id=d.BatchId
                      WHERE ib.MedicineId=m.Id ORDER BY i.ImportDate DESC,i.Id DESC,d.Id DESC) gia
         WHERE m.IsActive = 1 {0}
-        GROUP BY m.BarCode, m.Id, m.Name, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price, m.IsSelling, gia.UnitCost ORDER BY m.Id";
+        GROUP BY m.BarCode, m.Id, m.Name, m.CategoryId, m.SupplierId, c.Name, s.Name, m.Unit, m.Price, m.IsSelling, m.IsPrescription, gia.UnitCost ORDER BY m.Id";
     public DataTable GetAllThuoc() => db.DocBang(string.Format(SelectSql, ""));
     public DataTable TimKiemThuoc(string keyword) => db.DocBang(
         string.Format(SelectSql, "AND (CAST(m.Id AS NVARCHAR(20)) LIKE @kw OR m.Name LIKE @kw OR c.Name LIKE @kw OR s.Name LIKE @kw OR m.BarCode LIKE @kw)"),
         new SqlParameter("@kw", SqlDbType.NVarChar, -1) { Value = DBConnection.LikePattern(keyword) });
 
     public bool InsertThuoc(string id, string name, string category, string unit, decimal price,
-                            int stock, int supplierId, out string error, bool dangBan=true)
-        => Save(true, id, name, category, unit, price, supplierId, out error, dangBan);
+                            int stock, int supplierId, out string error, bool dangBan=true,bool? keDon=null)
+        => Save(true, id, name, category, unit, price, supplierId, out error, dangBan,keDon);
     public bool UpdateThuoc(string id, string name, string category, string unit, decimal price,
-                            int stock, int supplierId, out string error, bool dangBan=true)
-        => Save(false, id, name, category, unit, price, supplierId, out error, dangBan);
+                            int stock, int supplierId, out string error, bool dangBan=true,bool? keDon=null)
+        => Save(false, id, name, category, unit, price, supplierId, out error, dangBan,keDon);
 
     private bool Save(bool insert, string id, string name, string category, string unit,
-                      decimal price, int supplierId, out string error, bool dangBan)
+                      decimal price, int supplierId, out string error, bool dangBan,bool? keDon)
     {
         error = "";
         if (string.IsNullOrWhiteSpace(name) || name.Length > 150 ||
@@ -42,8 +42,14 @@ public partial class ThuocDAL
         try
         {
             return db.CapNhatDuLieu(insert
-                ? "INSERT INTO Medicines(CategoryId,SupplierId,Name,Unit,Price,IsSelling) VALUES(@cat,@sup,@name,@unit,@price,@selling)"
-                : "UPDATE Medicines SET CategoryId=@cat,SupplierId=@sup,Name=@name,Unit=@unit,Price=@price,IsSelling=@selling WHERE Id=@id",
+                ? "INSERT INTO Medicines(CategoryId,SupplierId,Name,Unit,Price,IsSelling,IsPrescription) VALUES(@cat,@sup,@name,@unit,@price,@selling,COALESCE(@rx,0))"
+                : @"IF EXISTS(SELECT 1 FROM Medicines WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND Unit COLLATE Latin1_General_100_BIN2<>@unit COLLATE Latin1_General_100_BIN2)
+                      THROW 50014,N'Không được thay đổi đơn vị tính của thuốc đã tạo.',1;
+                    IF EXISTS(SELECT 1 FROM Medicines WITH (UPDLOCK,HOLDLOCK) WHERE Id=@id AND SupplierId<>@sup)
+                       AND EXISTS(SELECT 1 FROM Batches WITH (HOLDLOCK) WHERE MedicineId=@id)
+                      THROW 50015,N'Không được đổi nhà cung cấp của thuốc đã có lô hàng hoặc phiếu nhập.',1;
+                    UPDATE Medicines SET CategoryId=@cat,SupplierId=@sup,Name=@name,Price=@price,IsSelling=@selling,IsPrescription=COALESCE(@rx,IsPrescription) WHERE Id=@id",
+                new SqlParameter("@rx",SqlDbType.Bit) {Value=(object?)keDon??DBNull.Value},
                 new SqlParameter("@selling", SqlDbType.Bit) { Value = dangBan },
                 new SqlParameter("@id", SqlDbType.Int) { Value = insert ? 0 : int.Parse(id) },
                 new SqlParameter("@cat", SqlDbType.Int) { Value = categoryId },

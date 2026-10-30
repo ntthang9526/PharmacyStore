@@ -17,7 +17,14 @@ public partial class frmQuanLyThuoc
         var row=dgvThuoc.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>r.DataBoundItem is DataRowView data && Convert.ToString(data["MaThuoc"])==medicineId);
         if(row!=null)
         {
-            txtSoLuongTon.Text=Convert.ToString(((DataRowView)row.DataBoundItem)["SoLuongTon"]);
+            var record=(DataRowView)row.DataBoundItem;
+            txtSoLuongTon.Text=Convert.ToString(record["SoLuongTon"]);
+            khoaNhaCungCap=Convert.ToBoolean(record["KhoaNCC"]);
+            if(editing && !isThem && khoaNhaCungCap)
+            {
+                cboNhaCungCap.SelectedValue=record["MaNCC"];
+                cboNhaCungCap.Enabled=btnThemNCC.Enabled=false;
+            }
             if(!editing) dgvThuoc_CellClick(dgvThuoc,new DataGridViewCellEventArgs(0,row.Index));
         }
         else if(!editing && medicineId.Length>0) ResetDetails();

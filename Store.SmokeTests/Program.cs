@@ -38,6 +38,21 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
+        if(args.Contains("--close-confirmation"))
+        {
+            try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestMainCloseConfirmation();Console.WriteLine($"ALL {checks} MAIN CLOSE CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--review-fixes"))
+        {
+            try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestReviewFixes();Console.WriteLine($"ALL {checks} REVIEW FIX CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--prescriptions-pdf"))
+        {
+            try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestPrescriptionsPdf();Console.WriteLine($"ALL {checks} PRESCRIPTION/PDF CHECKS PASSED");return 0;}
+            catch(Exception ex) {Console.WriteLine(ex);return 1;}
+        }
         if(!args.Contains("--disabled-buttons") && !args.Contains("--designer-offline") && !args.Contains("--dashboard-headers") && !args.Contains("--measure-headers") && !args.Contains("--edit-columns") && !args.Contains("--designed-columns") && !args.Contains("--conditional-fill") && !args.Contains("--preserve-design") && !args.Contains("--fixed-columns")) SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));
         if(args.Contains("--cart-actions-live"))
         {
@@ -47,6 +62,21 @@ internal static partial class Program
                 medicineId=medicines.First(m=>new MedicineDAL().SoLuongConHan(m.Id)>=4).Id;
                 TestCartActions();Console.WriteLine($"ALL {checks} LIVE CART ACTION CHECKS PASSED");return 0;
             }
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--pending-actions"))
+        {
+            try {TestPendingActions();Console.WriteLine($"ALL {checks} PENDING ACTION CHECKS PASSED");return 0;}
+            catch(Exception ex) {Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--batch-supplier"))
+        {
+            try {TestBatchSupplier();Console.WriteLine($"ALL {checks} BATCH SUPPLIER CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--document-history"))
+        {
+            try {TestDocumentHistory();Console.WriteLine($"ALL {checks} DOCUMENT HISTORY CHECKS PASSED");return 0;}
             catch(Exception ex){Console.WriteLine(ex);return 1;}
         }
         if(args.Contains("--batch-action-focus"))

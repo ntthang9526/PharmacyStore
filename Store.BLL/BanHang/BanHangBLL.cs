@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Store.DAL;
 using Store.Shared;
 
@@ -16,7 +16,7 @@ namespace Store.BLL
 
         // Thanh toán: lấy giá từ DB (không tin giá phía client) -> tính tổng -> áp voucher -> lưu hóa đơn + trừ tồn kho
         public bool ThanhToan(int maNhanVien, List<CartItem> gioHang, string? maVoucher, int? customerId, decimal expectedPayable,
-                              out int maHoaDon, out decimal tongTien, out decimal giamGia, out string error,string paymentMethod="Tiền mặt",bool choThanhToan=false)
+                              out int maHoaDon, out decimal tongTien, out decimal giamGia, out string error,string paymentMethod="Tiền mặt",bool choThanhToan=false,int? suaHoaDonId=null,byte[]? expectedVersion=null,DonThuocInfo? donThuoc=null)
         {
             maHoaDon = 0;
             tongTien = 0;
@@ -39,11 +39,13 @@ namespace Store.BLL
                 error = "Thuốc và số lượng không hợp lệ!";
                 return false;
             }
+            if(gioHang.GroupBy(x=>x.MaThuoc).Any(g=>g.Select(x=>(x.HuongDan??"" ).Trim()).Distinct().Count()>1))
+            {error="Một thuốc có nhiều hướng dẫn khác nhau. Hãy gộp thành một dòng và kiểm tra lại.";return false;}
             // Gộp các dòng trùng thuốc
             List<CartItem> items = gioHang
                 .Where(x => x.SoLuong > 0)
                 .GroupBy(x => x.MaThuoc)
-                .Select(g => new CartItem { MaThuoc = g.Key, SoLuong = g.Sum(x => x.SoLuong) })
+                .Select(g => new CartItem { MaThuoc = g.Key, SoLuong = g.Sum(x => x.SoLuong), KeDon=g.Any(x=>x.KeDon), HuongDan=g.First().HuongDan })
                 .ToList();
 
             if (items.Count == 0)
@@ -82,7 +84,14 @@ namespace Store.BLL
                     error = "Giá thuốc hoặc voucher đã thay đổi. Vui lòng tải lại giỏ và áp dụng lại voucher.";
                     return false;
                 }
-                return dal.TaoHoaDon(maNhanVien, customerId, voucherId, tongTien, giamGia, items, out maHoaDon, out error,paymentMethod,choThanhToan);
+                if(suaHoaDonId.HasValue)
+                {
+                    if(!choThanhToan || expectedVersion==null) {error="Chỉ được sửa hóa đơn chờ đã tải.";return false;}
+                    bool saved=dal.SuaHoaDonCho(suaHoaDonId.Value,expectedVersion,maNhanVien,customerId,voucherId,tongTien,giamGia,items,out error,donThuoc);
+                    if(saved) maHoaDon=suaHoaDonId.Value;
+                    return saved;
+                }
+                return dal.TaoHoaDon(maNhanVien, customerId, voucherId, tongTien, giamGia, items, out maHoaDon, out error,paymentMethod,choThanhToan,donThuoc);
             }
             catch (Exception ex)
             {

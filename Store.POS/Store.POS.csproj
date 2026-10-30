@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -109,4 +109,19 @@
       <EmbeddedResource Remove="@(EmbeddedResource)" Condition="$([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Refresh')) Or $([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Excel')) Or $([System.String]::Copy('%(EmbeddedResource.Filename)').EndsWith('.Dashboard'))" />
     </ItemGroup>
   </Target>
+  <ItemGroup>
+    <Compile Update="Forms/BanHang/frmBanHang.Pending.cs"><SubType>Code</SubType><DependentUpon>frmBanHang.cs</DependentUpon></Compile>
+    <Compile Update="Forms/HoaDon/frmHoaDon.Pending.cs"><SubType>Code</SubType><DependentUpon>frmHoaDon.cs</DependentUpon></Compile>
+    <Compile Update="Forms/HoaDon/frmHuyHoaDonCho.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/HoaDon/frmHuyHoaDonCho.Designer.cs"><DependentUpon>frmHuyHoaDonCho.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms/TrangChu/frmMain.Navigation.cs"><SubType>Code</SubType><DependentUpon>frmMain.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms/BanHang/frmDonThuoc.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms/BanHang/frmDonThuoc.Designer.cs"><DependentUpon>frmDonThuoc.cs</DependentUpon></Compile>
+    <Compile Update="Forms/BanHang/frmBanHang.Prescription.cs"><SubType>Code</SubType><DependentUpon>frmBanHang.cs</DependentUpon></Compile>
+  </ItemGroup>
+  <ItemGroup><Compile Update="Forms/HoaDon/frmHoaDon.Print.cs"><SubType>Code</SubType><DependentUpon>frmHoaDon.cs</DependentUpon></Compile></ItemGroup>
 </Project>

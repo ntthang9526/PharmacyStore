@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Globalization;
 using Store.BLL;
 using Store.Shared;
@@ -20,6 +20,7 @@ namespace Store.POS
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
             btnNhapExcel.Click+=(_,_)=>NhapExcelPhieuNhap();btnMauExcel.Click+=(_,_)=>TaiFileMauNhapKho();
             PhanQuyenGiaoDien.Gan(this);
+            PosFormStyle.ConfigureRowNavigation(dgvPhieu,row=>dongPhieuDangChon=((DataRowView)row.DataBoundItem).Row);
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
             txtSoLo.MaxLength=50;
             cboNhaCungCap.SelectedIndexChanged += (_,_) => { if(!dangNapNCC) NapThuocTheoNCC(); };
@@ -32,12 +33,7 @@ namespace Store.POS
                 if (e.RowIndex >= 0 && dgvPhieu.Rows[e.RowIndex].DataBoundItem is DataRowView row)
                     dongPhieuDangChon = row.Row;
             };
-            dgvPhieu.KeyUp += (_, e) =>
-            {
-                if ((e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End or Keys.PageUp or Keys.PageDown) &&
-                    dgvPhieu.CurrentRow?.DataBoundItem is DataRowView row)
-                    dongPhieuDangChon = row.Row;
-            };
+
         }
 
         private void frmNhapKho_Load(object sender, EventArgs e)
@@ -136,31 +132,31 @@ namespace Store.POS
         {
             if (cboNhaCungCap.SelectedValue == null)
             {
-                MessageBox.Show("Vui lòng chọn nhà cung cấp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Chọn nhà cung cấp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (cboThuoc.SelectedItem is not DataRowView thuoc)
             {
-                MessageBox.Show("Nhà cung cấp này chưa có thuốc nào để nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhà cung cấp này chưa có thuốc để nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string soLo = txtSoLo.Text.Trim();
             if (soLo == "")
             {
-                MessageBox.Show("Vui lòng nhập số lô!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập số lô.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtSoLo.Focus();
                 return;
             }
             if (dtpHanDung.Value.Date <= DateTime.Today)
             {
-                MessageBox.Show("Hạn dùng phải sau ngày hôm nay!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Hạn dùng phải sau hôm nay.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpHanDung.Focus();
                 return;
             }
             if (nudGiaNhap.Value <= 0)
             {
-                MessageBox.Show("Giá nhập phải lớn hơn 0!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Giá nhập phải lớn hơn 0.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nudGiaNhap.Focus();
                 return;
             }
@@ -184,7 +180,7 @@ namespace Store.POS
         {
             if (dongPhieuDangChon == null || dongPhieuDangChon.RowState == DataRowState.Detached)
             {
-                MessageBox.Show("Vui lòng chọn dòng cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Chọn dòng cần xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             dtPhieu.Rows.Remove(dongPhieuDangChon);
@@ -195,7 +191,7 @@ namespace Store.POS
         private void btnXoaPhieu_Click(object sender, EventArgs e)
         {
             if (dtPhieu.Rows.Count == 0) return;
-            if (MessageBox.Show("Xóa toàn bộ các dòng trong phiếu nhập?", "Xác nhận",
+            if (MessageBox.Show("Xóa hết thuốc trong phiếu nhập?", "Xác nhận",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 LamMoiPhieu();
@@ -242,7 +238,7 @@ namespace Store.POS
         {
             if (cboNhaCungCap.SelectedValue == null || dtPhieu.Rows.Count == 0)
             {
-                MessageBox.Show("Phiếu nhập chưa có thuốc!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Phiếu nhập chưa có thuốc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -256,7 +252,7 @@ namespace Store.POS
                 GiaNhap = (decimal)r["GiaNhap"]
             }).ToList();
 
-            if (MessageBox.Show($"Lưu phiếu nhập với tổng tiền vốn {TinhTongVon().ToString("N0", vn)} đ ?",
+            if (MessageBox.Show($"Lưu phiếu nhập {TinhTongVon().ToString("N0", vn)} đ?",
                     "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
@@ -265,13 +261,13 @@ namespace Store.POS
                     out int maPhieu, out decimal tongVon, out string error))
             {
                 MessageBox.Show(
-                    $"Đã lưu phiếu nhập PN{maPhieu:D5}.\nTổng tiền vốn: {tongVon.ToString("N0", vn)} đ\nSố lượng thuốc đã được cộng dồn vào kho.",
+                    $"Đã lưu PN{maPhieu:D5}. Tổng tiền: {tongVon.ToString("N0", vn)} đ.",
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LamMoiPhieu();
             }
             else
             {
-                MessageBox.Show("Lưu phiếu nhập thất bại: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không lưu được phiếu nhập: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

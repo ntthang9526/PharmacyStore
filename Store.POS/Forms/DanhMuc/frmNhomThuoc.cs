@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Store.BLL;
 
 namespace Store.POS
@@ -20,6 +20,7 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; TimNhom(); }
             };
+            PosFormStyle.ConfigureRowNavigation(dgvNhomThuoc,row=>dgvNhomThuoc_CellClick(dgvNhomThuoc,new DataGridViewCellEventArgs(0,row.Index)));
             PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         }
         // Sự kiện khi Form load lên
@@ -50,6 +51,7 @@ namespace Store.POS
         }
         private void SetControlState(bool status)
         {
+            dgvNhomThuoc.Enabled=!status;
             txtTenNhom.Enabled = status;
 
             if (!status)
@@ -69,6 +71,7 @@ namespace Store.POS
         }
         private void dgvNhomThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(!dgvNhomThuoc.Enabled) return;
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvNhomThuoc.Rows[e.RowIndex];
@@ -95,7 +98,7 @@ namespace Store.POS
 
             if (string.IsNullOrWhiteSpace(txtTenNhom.Text))
             {
-                MessageBox.Show("Tên nhóm thuốc không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên nhóm thuốc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenNhom.Focus();
                 return;
             }
@@ -103,13 +106,13 @@ namespace Store.POS
             // Gọi BLL để thêm mới
             if (bll.ThemMoiNhom(maDangChon.Trim(), txtTenNhom.Text.Trim(), out string error))
             {
-                MessageBox.Show("Thêm nhóm thuốc thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã thêm nhóm thuốc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
                 SetControlState(false); // Thêm xong thì khóa lại
             }
             else
             {
-                MessageBox.Show("Lỗi (Có thể do trùng mã): " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không lưu được: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -118,16 +121,16 @@ namespace Store.POS
             string maNhom = maDangChon;
             if (string.IsNullOrEmpty(maNhom))
             {
-                MessageBox.Show("Vui lòng chọn nhóm thuốc cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Chọn nhóm thuốc cần xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn xóa nhóm thuốc này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Xóa nhóm thuốc này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
                 if (bll.XoaNhom(maNhom, out string error))
                 {
-                    MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                     btnLamMoi_Click(sender, e);
                 }
@@ -154,7 +157,7 @@ namespace Store.POS
             {
                 if (string.IsNullOrEmpty(maDangChon))
                 {
-                    MessageBox.Show("Vui lòng chọn nhóm thuốc cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Chọn nhóm thuốc cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -171,14 +174,14 @@ namespace Store.POS
 
             if (string.IsNullOrWhiteSpace(tenNhom))
             {
-                MessageBox.Show("Tên nhóm thuốc không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên nhóm thuốc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenNhom.Focus();
                 return;
             }
 
             if (bll.SuaNhom(maNhom, tenNhom, out string error))
             {
-                MessageBox.Show("Cập nhật nhóm thuốc thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã lưu nhóm thuốc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
                 SetControlState(false); // Lưu xong thì khóa lại
             }

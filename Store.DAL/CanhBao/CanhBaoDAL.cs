@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 
 namespace Store.DAL
@@ -33,13 +33,13 @@ namespace Store.DAL
         public DataTable LayLoSapHetHan(int soNgay, bool baoGomHetHan = false)
         {
             const string sql = @"
-                SELECT m.Id AS MaThuoc, m.Name AS TenThuoc, b.BatchNumber AS SoLo, b.ExpiryDate AS HanDung,
+                SELECT m.Id AS MaThuoc, m.Name+CASE WHEN m.IsActive=0 THEN N' [Đã ẩn]' ELSE N'' END AS TenThuoc, b.BatchNumber AS SoLo, b.ExpiryDate AS HanDung,
                        DATEDIFF(DAY, CAST(GETDATE() AS DATE), b.ExpiryDate) AS SoNgayConLai,
                        b.Stock AS TonLo,
-                       CASE WHEN b.ExpiryDate < CAST(GETDATE() AS DATE) THEN N'Hết hạn' ELSE N'Sắp hết hạn' END AS TrangThai
+                       CASE WHEN b.ExpiryDate < CAST(GETDATE() AS DATE) THEN N'Hết hạn' ELSE N'Sắp hết hạn' END+CASE WHEN m.IsActive=0 THEN N' · Đã ẩn' ELSE N'' END AS TrangThai
                 FROM Batches b
                 JOIN Medicines m ON m.Id = b.MedicineId
-                WHERE b.Stock > 0 AND m.IsActive = 1
+                WHERE b.Stock > 0
                   AND (@expired = 1 OR b.ExpiryDate >= CAST(GETDATE() AS DATE))
                   AND DATEDIFF(DAY, CAST(GETDATE() AS DATE), b.ExpiryDate) < @d
                 ORDER BY CASE WHEN b.ExpiryDate < CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END, b.ExpiryDate, m.Name, b.Id";

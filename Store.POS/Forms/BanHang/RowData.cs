@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +13,8 @@ namespace Store.POS.FormBanHang
         public string Name { get; set; } = "";
         public string Unit { get; set; } = "";
         public int Quantity { get; set; }
+        public bool IsPrescription {get;set;}
+        public string HuongDan {get;set;} = "";
         private decimal price;
         public decimal Price { get => price; set => price = Store.Shared.TienTe.LamTron(value); }
         public decimal Total => Price * Quantity;

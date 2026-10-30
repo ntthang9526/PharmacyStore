@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System;
@@ -57,7 +57,9 @@ partial class frmNhanVien
         posLayout.Name="posLayout";posLayout.Dock=DockStyle.Fill;posLayout.Padding=new Padding(12);posLayout.ColumnCount=1;posLayout.RowCount=3;
         posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
         posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,48F));posLayout.RowStyles.Add(new RowStyle(SizeType.Percent,100F));posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute,40F));
-        posHeading.Name="posHeading";posHeading.Text="Quản lý nhân viên";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI Semibold",18F,FontStyle.Bold);posHeading.TextAlign=ContentAlignment.MiddleLeft;
+        posHeading.Name="posHeading";
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);posHeading.Text="Quản lý nhân viên";posHeading.Dock=DockStyle.Fill;posHeading.Font=new Font("Segoe UI Semibold",16F,FontStyle.Bold);posHeading.TextAlign=ContentAlignment.MiddleLeft;
         content.Name="content";content.Dock=DockStyle.Fill;content.ColumnCount=2;content.RowCount=1;content.Margin=new Padding(0);
         content.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,65F));content.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,35F));content.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
         left.Name="left";left.Dock=DockStyle.Fill;left.ColumnCount=1;left.RowCount=2;left.Margin=new Padding(0,0,12,0);
@@ -65,13 +67,14 @@ partial class frmNhanVien
         search.Name="search";search.Dock=DockStyle.Fill;search.ColumnCount=3;search.RowCount=1;
         search.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100F));search.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,100F));search.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
         txtTimKiem.Name="txtTimKiem";txtTimKiem.Dock=DockStyle.Fill;txtTimKiem.MaxLength=200;txtTimKiem.PlaceholderText="Họ tên, tài khoản, điện thoại hoặc mã nhân viên";
-        dgvNhanVien.Name="dgvNhanVien";dgvNhanVien.Dock=DockStyle.Fill;
+        dgvNhanVien.Name="dgvNhanVien";
+        dgvNhanVien.GridColor = Color.FromArgb(226, 232, 240);dgvNhanVien.Dock=DockStyle.Fill;
         dgvNhanVien.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dgvNhanVien.AllowUserToAddRows=false;dgvNhanVien.AllowUserToDeleteRows=false;dgvNhanVien.ReadOnly=true;dgvNhanVien.RowHeadersVisible=false;
         dgvNhanVien.MultiSelect=false;dgvNhanVien.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvNhanVien.ShowCellToolTips = true;
         dgvNhanVien.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-        dgvNhanVien.BackgroundColor=SystemColors.ScrollBar;dgvNhanVien.RowTemplate.Height=34;dgvNhanVien.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.AllCells;
+        dgvNhanVien.BackgroundColor=Color.White;dgvNhanVien.RowTemplate.Height=34;dgvNhanVien.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.AllCells;
         
         
         
@@ -281,7 +284,7 @@ partial class frmNhanVien
         dgvNhanVien.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvNhanVien.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
         dgvNhanVien.DefaultCellStyle.BackColor=Color.White;dgvNhanVien.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
         dgvNhanVien.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvNhanVien.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
-        dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(248,250,252);
+        dgvNhanVien.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(242, 246, 248);
         dgvNhanVien.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
         dgvNhanVien.MultiSelect=false;
         dgvNhanVien.AllowUserToResizeColumns=false;

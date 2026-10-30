@@ -1,4 +1,4 @@
-﻿using Store.BLL;
+using Store.BLL;
 using System.Data;
 
 namespace Store.POS
@@ -20,6 +20,7 @@ namespace Store.POS
             {
                 if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnTimKiem_Click(this, EventArgs.Empty); }
             };
+            PosFormStyle.ConfigureRowNavigation(dgvNhaCungCap,row=>dgvNhaCungCap_CellClick(dgvNhaCungCap,new DataGridViewCellEventArgs(0,row.Index)));
             PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
         }
 
@@ -45,6 +46,7 @@ namespace Store.POS
 
         private void SetControlState(bool status)
         {
+            dgvNhaCungCap.Enabled=!status;
             txtTenNCC.Enabled = status;
             txtDienThoai.Enabled = status;
             txtDiaChi.Enabled = status;
@@ -66,6 +68,7 @@ namespace Store.POS
         }
         private void dgvNhaCungCap_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(!dgvNhaCungCap.Enabled) return;
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvNhaCungCap.Rows[e.RowIndex];
@@ -96,7 +99,7 @@ namespace Store.POS
 
             if (string.IsNullOrWhiteSpace(txtTenNCC.Text))
             {
-                MessageBox.Show("Tên nhà cung cấp không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên nhà cung cấp.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenNCC.Focus();
                 return;
             }
@@ -104,14 +107,14 @@ namespace Store.POS
             string dienThoai = txtDienThoai.Text.Trim();
             if (string.IsNullOrWhiteSpace(dienThoai))
             {
-                MessageBox.Show("Số điện thoại không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập số điện thoại.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }
 
             if (!dienThoai.All(char.IsDigit) || dienThoai.Length < 9 || dienThoai.Length > 11)
             {
-                MessageBox.Show("Số điện thoại phải là dãy số từ 9 đến 11 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số điện thoại phải có 9–11 chữ số.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }
@@ -119,7 +122,7 @@ namespace Store.POS
             string diaChi = txtDiaChi.Text.Trim();
             if (string.IsNullOrWhiteSpace(diaChi))
             {
-                MessageBox.Show("Địa chỉ không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập địa chỉ.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDiaChi.Focus();
                 return;
             }
@@ -127,14 +130,14 @@ namespace Store.POS
             // Gọi BLL để thêm mới
             if (bll.ThemMoiNCC(maDangChon.Trim(), txtTenNCC.Text.Trim(), dienThoai, diaChi, out string error))
             {
-                MessageBox.Show("Thêm nhà cung cấp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã thêm nhà cung cấp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
 
                 SetControlState(false); // Thêm xong thì khóa lại
             }
             else
             {
-                MessageBox.Show("Lỗi (Có thể do trùng mã): " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không lưu được: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -144,7 +147,7 @@ namespace Store.POS
             {
                 if (string.IsNullOrEmpty(maDangChon))
                 {
-                    MessageBox.Show("Vui lòng chọn nhà cung cấp cần sửa trên bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Chọn nhà cung cấp cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -158,7 +161,7 @@ namespace Store.POS
             // Trường hợp 2: Khi đã sửa xong thông tin trên ô, bấm nút Sửa lần nữa để LƯU xuống CSDL
             if (string.IsNullOrWhiteSpace(txtTenNCC.Text))
             {
-                MessageBox.Show("Tên nhà cung cấp không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nhập tên nhà cung cấp.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenNCC.Focus();
                 return;
             }
@@ -166,7 +169,7 @@ namespace Store.POS
             string dienThoai = txtDienThoai.Text.Trim();
             if (!string.IsNullOrEmpty(dienThoai) && (!dienThoai.All(char.IsDigit) || dienThoai.Length < 9 || dienThoai.Length > 11))
             {
-                MessageBox.Show("Số điện thoại phải là dãy số từ 9 đến 11 chữ số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số điện thoại phải có 9–11 chữ số.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDienThoai.Focus();
                 return;
             }
@@ -174,7 +177,7 @@ namespace Store.POS
             // Gọi hàm sửa trong BLL
             if (bll.SuaNCC(maDangChon.Trim(), txtTenNCC.Text.Trim(), dienThoai, txtDiaChi.Text.Trim(), out string error))
             {
-                MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã lưu thay đổi.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
 
                 SetControlState(false); // Lưu xong thì khóa lại
@@ -188,12 +191,12 @@ namespace Store.POS
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa nhà cung cấp này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Xóa nhà cung cấp này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
                 if (bll.XoaNCC(maDangChon, out string error))
                 {
-                    MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                     btnLamMoi_Click(sender, e);
                 }

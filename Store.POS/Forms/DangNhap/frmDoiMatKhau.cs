@@ -15,6 +15,6 @@ public partial class frmDoiMatKhau : Form
     {
         if(!new MatKhauBLL().Doi(txtCu.Text,txtMoi.Text,txtXacNhan.Text,out var error))
         {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text=error;return;}
-        Xoa();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã đổi mật khẩu. Dùng mật khẩu mới ở lần đăng nhập tiếp theo.";
+        Xoa();lblTrangThai.ForeColor=Color.DarkGreen;lblTrangThai.Text="Đã đổi mật khẩu.";
     }
 }

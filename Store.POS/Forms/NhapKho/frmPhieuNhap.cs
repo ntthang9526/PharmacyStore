@@ -1,21 +1,24 @@
-﻿using System.Data;
+using System.Data;
 using Store.BLL;
 namespace Store.POS;
 public partial class frmPhieuNhap : Form,ILamMoiDuLieu
 {
     private readonly PhieuNhapBLL bll=new();
     private int? selected;
+    private readonly (SizeType Type,float Height)[] detailRows;
     public frmPhieuNhap()
     {
         InitializeComponent();
-            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);PosFormStyle.ConfigureGridSelection(this,posLayout,XoaChiTiet);
+        detailRows=receiptColumns.RowStyles.Cast<RowStyle>().Select(style=>(style.SizeType,style.Height)).ToArray();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);PosFormStyle.ConfigureRowNavigation(dgvPhieuNhap,Chon);
+        PosFormStyle.ConfigureGridSelection(this,posLayout,XoaChiTiet);
         btnTimKiem.Click+=(_,_)=>TimKiem();btnLamMoi.Click+=(_,_)=> {txtTimKiem.Clear();dtpTuNgay.Checked=dtpDenNgay.Checked=false;TimKiem();};
         txtTimKiem.KeyDown+=(_,e)=> {if(e.KeyCode==Keys.Enter) {e.SuppressKeyPress=true;TimKiem();}};
         dgvPhieuNhap.CellClick+=(_,e)=> {if(e.RowIndex>=0) Chon(dgvPhieuNhap.Rows[e.RowIndex]);};
-        dgvPhieuNhap.KeyUp+=(_,e)=> {if(e.KeyCode is Keys.Up or Keys.Down or Keys.Home or Keys.End && dgvPhieuNhap.CurrentRow!=null) Chon(dgvPhieuNhap.CurrentRow);};
+        
         Load+=(_,_)=>TimKiem();
     }
-    private void XoaChiTiet() {selected=null;dgvChiTiet.DataSource=null;lblChiTiet.Text="Chọn phiếu để xem chi tiết nhập hàng.";}
+    private void XoaChiTiet() {selected=null;dgvChiTiet.DataSource=null;lblChiTiet.Text="Chọn phiếu để xem chi tiết nhập hàng.";HienVungChiTiet(false);}
     private void TimKiem()
     {
         if(PosFormStyle.IsInDesigner(this)) return;
@@ -33,9 +36,21 @@ public partial class frmPhieuNhap : Form,ILamMoiDuLieu
         try
         {
             selected=(int)data["MaPhieu"];dgvChiTiet.DataSource=bll.ChiTiet(selected.Value);
+            HienVungChiTiet(true);
             lblChiTiet.Text=$"PN{selected:D5} · {data["NgayNhap"]:dd/MM/yyyy HH:mm} · NV: {data["NhanVien"]} · NCC: {data["TenNCC"]}\nTổng tiền: {data["TongTien"]:N0} đ · Ghi chú: {data["GhiChu"]}";
         }
         catch(Exception ex) {XoaChiTiet();lblTrangThai.Text=ex.Message;}
+    }
+    private void HienVungChiTiet(bool visible)
+    {
+        receiptColumns.SuspendLayout();
+        grpChiTiet.Visible=visible;
+        for(int i=0;i<detailRows.Length;i++)
+        {
+            receiptColumns.RowStyles[i].SizeType=visible?detailRows[i].Type:SizeType.Percent;
+            receiptColumns.RowStyles[i].Height=visible?detailRows[i].Height:(i==0?100:0);
+        }
+        receiptColumns.ResumeLayout();
     }
     public void LamMoiDuLieu()
     {

@@ -6,6 +6,9 @@ internal static partial class Program
     static void TestDesignedColumns()
     {
         (string Form,string Grid,string Field,string Binding,string Header)[] expected={
+            ("frmHoaDon","dgvHoaDon","colCanThu","CanThanhToan","Cần thu"),
+            ("frmHoaDon","dgvChiTiet","colNguonThongTin","NguonThongTin","Nguồn tên/đơn vị"),
+            ("frmPhieuNhap","dgvChiTiet","colNguonThongTin","NguonThongTin","Nguồn tên/đơn vị"),
             ("frmLoHang","dgvLoHang","colTonCoTheBan","TonCoTheBan","Tồn có thể bán"),
             ("frmLoHang","dgvLoHang","colTrangThaiLo","TrangThaiLo","Trạng thái lô"),
             ("frmQuanLyThuoc","dgvThuoc","colTonCoTheBan","TonCoTheBan","Tồn có thể bán"),
@@ -44,7 +47,7 @@ internal static partial class Program
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn5","SoNgayConLai","Số ngày còn lại"),
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn6","TonLo","Tồn của lô"),
             ("frmCanhBao","dgvSapHetHan","dgvSapHetHanColumn7","TrangThai","Trạng thái"),
-            ("frmCanhBao","dgvSapHetHan","colDaXuLy","","Đã xử lý"),
+            ("frmCanhBao","dgvSapHetHan","colDaXuLy","","Đã xem"),
             ("frmKhachHang","dgvKhachHang","MaKH","MaKH","Mã khách hàng"),
             ("frmKhachHang","dgvKhachHang","TenKH","TenKH","Tên khách hàng"),
             ("frmKhachHang","dgvKhachHang","DienThoai","DienThoai","Số điện thoại"),
