@@ -772,7 +772,7 @@ partial class frmNhomThuoc
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Nhóm thuốc | Hiệu thuốc ABC";
+        Text = "Nhóm thuốc | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

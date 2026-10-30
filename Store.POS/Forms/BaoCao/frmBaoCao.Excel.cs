@@ -3,11 +3,11 @@ using Store.POS.Common;
 namespace Store.POS;
 public partial class frmBaoCao
 {
-    private void XuatExcel()
+    private async void XuatExcel()
     {
         try
         {
-            if(!XemBaoCao(false)) return;
+            if(!await XemBaoCaoAsync(false)) return;
             var daily=(DataTable)dgvTheoNgay.DataSource!;
             var orders=(DataTable)dgvHoaDon.DataSource!;
             int count=orders.Rows.Count;

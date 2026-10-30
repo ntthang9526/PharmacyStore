@@ -376,7 +376,7 @@ partial class frmThemNhomThuoc
         MaximizeBox = false;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Thêm nhóm thuốc | Hiệu thuốc ABC";
+        Text = "Thêm nhóm thuốc | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

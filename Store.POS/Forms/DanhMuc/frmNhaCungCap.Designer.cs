@@ -955,7 +955,7 @@ partial class frmNhaCungCap
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Nhà cung cấp | Hiệu thuốc ABC";
+        Text = "Nhà cung cấp | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

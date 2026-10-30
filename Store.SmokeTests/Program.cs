@@ -38,6 +38,16 @@ internal static partial class Program
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         renderUi = args.Contains("--ui-preview");
+        if(args.Contains("--background-ui"))
+        {
+            try {TestAsyncLoading();Console.WriteLine($"ALL {checks} BACKGROUND UI CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
+        if(args.Contains("--async-loading"))
+        {
+            try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestAsyncLoading();Console.WriteLine($"ALL {checks} ASYNC LOADING CHECKS PASSED");return 0;}
+            catch(Exception ex){Console.WriteLine(ex);return 1;}
+        }
         if(args.Contains("--close-confirmation"))
         {
             try {SetTestSession(Count("SELECT Id FROM Employees WHERE Username='admin'"));TestMainCloseConfirmation();Console.WriteLine($"ALL {checks} MAIN CLOSE CHECKS PASSED");return 0;}

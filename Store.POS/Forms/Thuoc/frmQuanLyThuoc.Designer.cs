@@ -1061,7 +1061,7 @@ partial class frmQuanLyThuoc
         MinimumSize = new Size(1060, 700);
         Name = "frmQuanLyThuoc";
         StartPosition = FormStartPosition.CenterParent;
-        Text = "Quản lý thuốc | Hiệu thuốc ABC";
+        Text = "Quản lý thuốc | Pharmacy";
         Load += frmQuanLyThuoc_Load;
         posLayout.ResumeLayout(false);
         excelActions.ResumeLayout(false);

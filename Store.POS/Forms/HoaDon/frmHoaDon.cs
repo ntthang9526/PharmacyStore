@@ -66,19 +66,31 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         lblTrangThai.Text=trangThaiDanhSach;
         HienVungChiTiet(false);
     }
-    private void TimKiem()
+    private bool timKiemLai;
+    private async void TimKiem()
     {
         if (PosFormStyle.IsInDesigner(this)) return;
-        try
+        if(!Enabled) {timKiemLai=true;return;}
+        timKiemLai=false;
+        string keyword=txtTimKiem.Text;
+        DateTime? from=dtpTuNgay.Checked?dtpTuNgay.Value:null,to=dtpDenNgay.Checked?dtpDenNgay.Value:null;
+        bool pending=chkChiCho.Checked;int? selected=hoaDonDangXem??maMoSan;
+        lblTrangThai.Text="Đang tải hóa đơn…";
+        await PosBackground.LoadAsync(this,()=>bll.TimKiem(keyword,from,to,pending),rows=>
         {
-            var rows=bll.TimKiem(txtTimKiem.Text,dtpTuNgay.Checked?dtpTuNgay.Value:null,dtpDenNgay.Checked?dtpDenNgay.Value:null,chkChiCho.Checked);
             XoaChiTiet();dgvHoaDon.DataSource=rows;
             decimal total=rows.Rows.Cast<DataRow>().Sum(row=>(decimal)row["ThucThu"]);
             lblTrangThai.Text=trangThaiDanhSach=$"{rows.Rows.Count} hóa đơn · Tổng thực thu: {total:N0} đ";
             lblTrangThai.ForeColor=SystemColors.ControlText;
-        }
-        catch(Exception ex) {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text=ex.Message;}
+            if(selected.HasValue)
+            {
+                var row=dgvHoaDon.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>(int)r.Cells["MaHD"].Value==selected.Value);
+                if(row!=null) HienChiTiet(row);
+            }
+        },error=> {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text="Không tải được hóa đơn: "+error.Message;});
+        if(!IsDisposed && timKiemLai) TimKiem();
     }
+
     private void HienChiTiet(DataGridViewRow row)
     {
         if(row.DataBoundItem is not DataRowView data) return;

@@ -132,7 +132,7 @@ namespace Store.POS
             Name = "frmDangNhap";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Hiệu thuốc ABC";
+            Text = "Pharmacy";
             
         BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
         btnDangNhap.BackColor=Color.FromArgb(15, 118, 110);

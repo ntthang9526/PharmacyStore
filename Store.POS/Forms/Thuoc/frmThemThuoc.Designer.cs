@@ -468,7 +468,7 @@ partial class frmThemThuoc
         MinimumSize = new Size(538, 537);
         Name = "frmThemThuoc";
         StartPosition = FormStartPosition.CenterParent;
-        Text = "Thêm thuốc | Hiệu thuốc ABC";
+        Text = "Thêm thuốc | Pharmacy";
         posLayout.ResumeLayout(false);
         groupBox1.ResumeLayout(false);
         tableLayoutPanel2.ResumeLayout(false);

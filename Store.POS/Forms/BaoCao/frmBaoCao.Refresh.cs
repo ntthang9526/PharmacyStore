@@ -5,8 +5,8 @@ namespace Store.POS;
 public partial class frmBaoCao
 {
 
-    public void LamMoiDuLieu()
+    public async void LamMoiDuLieu()
     {
-        if(!PosFormStyle.IsInDesigner(this)) XemBaoCao(false);
+        if(!PosFormStyle.IsInDesigner(this)) await XemBaoCaoAsync(false);
     }
 }

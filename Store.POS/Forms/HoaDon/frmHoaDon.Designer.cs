@@ -1121,7 +1121,7 @@ partial class frmHoaDon
             MinimumSize = new Size(1060, 700);
             Name = "frmHoaDon";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Xem hóa đơn | Hiệu thuốc ABC";
+            Text = "Xem hóa đơn | Pharmacy";
             posLayout.ResumeLayout(false);
             headingLayout.ResumeLayout(false);
             exportActions.ResumeLayout(false);

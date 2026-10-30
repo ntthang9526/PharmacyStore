@@ -14,7 +14,7 @@ internal static partial class Program
         Check(sidebar.Contains(UiField<Button>(main,"btnTrangChu")) && main.Controls.Find("btnCuaSo",true).Length==0,"sidebar keeps Home without redundant open-forms button");
         Form Open(Type type)
         {
-            typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();
+            typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();WaitForLoads();
             return UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[type];
         }
         void Preview(string name)
@@ -23,7 +23,7 @@ internal static partial class Program
             using var image=new Bitmap(main.Width,main.Height);main.DrawToBitmap(image,new Rectangle(0,0,image.Width,image.Height));
             image.Save("artifacts/previews/"+name+".png");
         }
-        main.ClientSize=new Size(1600,900);Application.DoEvents();
+        main.ClientSize=new Size(1600,900);Application.DoEvents();WaitForLoads();
         Check(sidebar.Top==0 && sidebar.Height==main.ClientSize.Height,"vertical navigation fills full window height");
         Check(dashboard.Dock==DockStyle.Fill && dashboard.Bounds==host.ClientRectangle,"dashboard fills content viewport");
         CheckLayout(dashboard,"responsive dashboard");
@@ -35,12 +35,12 @@ internal static partial class Program
         Check(!dashboard.Visible && sales.Visible,"content switches from dashboard to sale");
         UiField<TextBox>(sales,"boxMaVoucher").Text="DRAFT-NOT-APPLIED";
         var shortcut=new KeyEventArgs(Keys.F4);
-        typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(sales,new object[]{shortcut});Application.DoEvents();
+        typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(sales,new object[]{shortcut});Application.DoEvents();WaitForLoads();
         Check(shortcut.SuppressKeyPress && !sales.Visible,"F4 works from embedded sales without closing draft");
         var medicine=(frmQuanLyThuoc)Open(typeof(frmQuanLyThuoc));
         UiField<Button>(medicine,"btnThem").PerformClick();UiField<TextBox>(medicine,"txtTenThuoc").Text="Thuốc chưa lưu";
         Check(!sales.Visible && !sales.IsDisposed && medicine.Visible,"switching hides old form without disposing it");
-        UiField<Button>(main,"btnTrangChu").PerformClick();Application.DoEvents();
+        UiField<Button>(main,"btnTrangChu").PerformClick();Application.DoEvents();WaitForLoads();
         Check(dashboard.Visible && !medicine.Visible && !medicine.IsDisposed,"home shows dashboard and retains form draft");
         Check(ReferenceEquals(medicine,Open(typeof(frmQuanLyThuoc))) && UiField<TextBox>(medicine,"txtTenThuoc").Text=="Thuốc chưa lưu","opening same function restores draft instance");
         UiField<Button>(main,"btnTrangChu").PerformClick();
@@ -49,7 +49,7 @@ internal static partial class Program
         Check(UiField<TextBox>(sales,"boxMaVoucher").Text=="DRAFT-NOT-APPLIED","switching retains sale inputs");
         void SendKey(Control control, KeyEventArgs key)
         {
-            typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(control,new object[]{key});Application.DoEvents();
+            typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(control,new object[]{key});Application.DoEvents();WaitForLoads();
         }
         var escape=new KeyEventArgs(Keys.Escape);SendKey(sales,escape);
         Check(!sales.IsDisposed && sales.Visible && UiField<TextBox>(sales,"boxMaVoucher").Text=="DRAFT-NOT-APPLIED","Esc keeps the sales form and draft open");
@@ -84,15 +84,15 @@ internal static partial class Program
         var handled=new KeyEventArgs(Keys.F1){Handled=true};SendKey(main,handled);
         Check(sales.Visible,"already-handled keys do not trigger navigation twice");
         var invoiceShortcut=new KeyEventArgs(Keys.F3);
-        typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(sales,new object[]{invoiceShortcut});Application.DoEvents();
+        typeof(Control).GetMethod("OnKeyDown",PrivateInstance)!.Invoke(sales,new object[]{invoiceShortcut});Application.DoEvents();WaitForLoads();
         var invoices=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[typeof(frmHoaDon)];
         Check(invoiceShortcut.SuppressKeyPress && invoices.Visible && !sales.Visible,"F3 opens invoices from embedded sales");
         Check(UiField<Button>(main,"btnHoaDon").BackColor==Color.FromArgb(15,118,110) && title.Text.Contains("hóa đơn"),"active invoice navigation and breadcrumb agree");
-        UiField<Button>(main,"btnBanHang").PerformClick();Application.DoEvents();
+        UiField<Button>(main,"btnBanHang").PerformClick();Application.DoEvents();WaitForLoads();
         Check(sales.Visible && UiField<TextBox>(sales,"boxMaVoucher").Text=="DRAFT-NOT-APPLIED","invoice navigation retains the sale draft");
         foreach(var size in new[]{new Size(1600,900),new Size(1366,728),new Size(1100,700)})
         {
-            main.ClientSize=size;Application.DoEvents();
+            main.ClientSize=size;Application.DoEvents();WaitForLoads();
             var grid=UiField<DataGridView>(sales,"tableGioHang");var entry=UiField<TextBox>(sales,"boxNhapSanPham");
             Check(host.Right<=main.ClientSize.Width+1 && host.Bottom<=main.ClientSize.Height+1,"content fits resized home "+size);
             Check(grid.Width>200 && grid.Height>150 && entry.Width>80,"cart and barcode entry remain usable "+size);
@@ -101,10 +101,10 @@ internal static partial class Program
             Check(UiField<Button>(sales,"btnThanhToan").Visible && total.Visible,"payment controls remain present "+size);
             if(size.Width==1366) Preview("embedded-sales-laptop");
         }
-        main.ClientSize=new Size(1600,900);Application.DoEvents();
-        UiField<Panel>(sales,"panelTienMat").Visible=true;Application.DoEvents();
+        main.ClientSize=new Size(1600,900);Application.DoEvents();WaitForLoads();
+        UiField<Panel>(sales,"panelTienMat").Visible=true;Application.DoEvents();WaitForLoads();
         var scroll=UiField<Panel>(sales,"paymentScroll");var pay=UiField<Button>(sales,"btnThanhToan");
-        scroll.ScrollControlIntoView(pay);Application.DoEvents();
+        scroll.ScrollControlIntoView(pay);Application.DoEvents();WaitForLoads();
         Check(pay.Visible && UiField<TextBox>(sales,"boxTienKhach").Visible,"cash input and payment reachable through scroll");
         Preview("embedded-sales-cash");
         foreach(var type in new[]{typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmNhapKho),typeof(frmLoHang),typeof(frmVoucher),typeof(frmHoaDon),typeof(frmCanhBao),typeof(frmBaoCao),typeof(frmNhanVien)})
@@ -115,7 +115,7 @@ internal static partial class Program
             Check(UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo").Values.Count(f=>f.Visible)==1,"one active content view: "+type.Name);
         }
         Preview("embedded-employees");
-        var staff=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[typeof(frmNhanVien)];staff.Close();Application.DoEvents();
+        var staff=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[typeof(frmNhanVien)];staff.Close();Application.DoEvents();WaitForLoads();
         Check(dashboard.Visible,"closing active embedded form restores dashboard");
         foreach(var form in UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo").Values.ToArray()) form.Close();
     }

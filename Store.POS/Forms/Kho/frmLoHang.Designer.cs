@@ -661,7 +661,7 @@ partial class frmLoHang
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Lô hàng | Hiệu thuốc ABC";
+        Text = "Lô hàng | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

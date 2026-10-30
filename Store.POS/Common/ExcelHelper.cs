@@ -226,7 +226,7 @@ namespace Store.POS.Common
             ws.ShowGridLines = true;
 
             // Thông tin nhà thuốc
-            ws.Cell("A1").Value = "NHÀ THUỐC PHARMACY STORE";
+            ws.Cell("A1").Value = "PHARMACY";
             ws.Range("A1:F1").Merge().Style.Font.SetBold().Font.SetFontSize(16).Font.SetFontColor(PrimaryColor);
             ws.Cell("A1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 

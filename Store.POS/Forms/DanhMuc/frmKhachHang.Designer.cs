@@ -580,7 +580,7 @@ partial class frmKhachHang
         MinimumSize = new Size(1060, 700);
         Name = "frmKhachHang";
         StartPosition = FormStartPosition.CenterParent;
-        Text = "Khách hàng | Hiệu thuốc ABC";
+        Text = "Khách hàng | Pharmacy";
         Load += frmKhachHang_Load;
         posLayout.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);

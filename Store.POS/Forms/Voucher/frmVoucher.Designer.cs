@@ -1276,7 +1276,7 @@ partial class frmVoucher
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Quản lý voucher | Hiệu thuốc ABC";
+        Text = "Quản lý voucher | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

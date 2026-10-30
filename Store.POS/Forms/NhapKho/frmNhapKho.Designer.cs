@@ -1828,7 +1828,7 @@ partial class frmNhapKho
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Nhập kho | Hiệu thuốc ABC";
+        Text = "Nhập kho | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

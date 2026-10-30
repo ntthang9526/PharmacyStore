@@ -37,7 +37,7 @@ internal static class PdfInvoiceHelper
             page.Size(PageSizes.A5);page.Margin(22);page.DefaultTextStyle(x=>x.FontFamily("Arial").FontSize(9));
             page.Header().PaddingBottom(10).Column(col=>
             {
-                col.Item().Text("NHÀ THUỐC PHARMACY STORE").AlignCenter().Bold().FontSize(14).FontColor("#0F766E");
+                col.Item().Text("PHARMACY").AlignCenter().Bold().FontSize(14).FontColor("#0F766E");
                 col.Item().Text("HÓA ĐƠN BÁN THUỐC").AlignCenter().Bold().FontSize(12);
                 col.Item().Text("ĐÃ THANH TOÁN · HD"+((int)bill["MaHD"]).ToString("D5")).AlignCenter();
             });

@@ -1330,7 +1330,7 @@
             MaximizeBox = false;
             Name = "frmBanHang";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Bán hàng | Hiệu thuốc ABC";
+            Text = "Bán hàng | Pharmacy";
             FormClosing += frmBanHang_FormClosing;
             FormClosed += frmBanHang_FormClosed;
             salesLayout.ResumeLayout(false);

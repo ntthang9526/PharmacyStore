@@ -1194,7 +1194,7 @@ partial class frmBaoCao
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Báo cáo doanh thu | Hiệu thuốc ABC";
+        Text = "Báo cáo doanh thu | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

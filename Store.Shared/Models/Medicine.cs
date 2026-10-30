@@ -11,6 +11,9 @@ namespace Store.Shared.Models
     [Table("Medicines")]
     public class Medicine
     {
+        [NotMapped]
+        public int AvailableStock { get; set; }
+
         [Key]
         public int Id { get; set; }
 

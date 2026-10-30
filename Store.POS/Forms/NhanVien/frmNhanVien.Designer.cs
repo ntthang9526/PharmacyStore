@@ -147,7 +147,7 @@ partial class frmNhanVien
         posLayout.Controls.Add(posHeading, 0, 0);posLayout.Controls.Add(content,0,1);posLayout.Controls.Add(lblTrangThai,0,2);
         AutoScaleDimensions=new SizeF(8F,20F);AutoScaleMode=AutoScaleMode.Font;Font=new Font("Segoe UI",10.2F);
         ClientSize=new Size(1182,700);MinimumSize=new Size(1150,739);StartPosition=FormStartPosition.CenterScreen;
-        Name="frmNhanVien";Text="Quản lý nhân viên | Hiệu thuốc ABC";Controls.Add(posLayout);
+        Name="frmNhanVien";Text="Quản lý nhân viên | Pharmacy";Controls.Add(posLayout);
                 //
         // colVaiTro
         //

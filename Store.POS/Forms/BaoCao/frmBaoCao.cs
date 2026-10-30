@@ -17,49 +17,39 @@ namespace Store.POS
             PosFormStyle.ConfigureGridSelection(this, posLayout, null);
         }
 
-        private void frmBaoCao_Load(object sender, EventArgs e)
+        private async void frmBaoCao_Load(object sender, EventArgs e)
         {
             if (PosFormStyle.IsInDesigner(this)) return;
             DateTime homNay = DateTime.Today;
             dtpTuNgay.Value = homNay.AddDays(-30);   // Mặc định: 30 ngày gần nhất để luôn xem được các hóa đơn gần đây
             dtpDenNgay.Value = homNay;
-            XemBaoCao(false);
+            await XemBaoCaoAsync(false);
         }
 
-        private void btnXem_Click(object sender, EventArgs e)
+        private async void btnXem_Click(object sender, EventArgs e)
         {
-            XemBaoCao();
+            await XemBaoCaoAsync();
         }
 
-        private bool XemBaoCao(bool notifyEmpty=true)
+        private async Task<bool> XemBaoCaoAsync(bool notifyEmpty=true)
         {
-            if (bll.LayBaoCao(dtpTuNgay.Value, dtpDenNgay.Value,
-                    out DataTable theoNgay, out DataTable hoaDon,
-                    out int soHD, out decimal tongTien, out decimal giamGia, out decimal doanhThu,
-                    out string error))
+            DateTime from=dtpTuNgay.Value,to=dtpDenNgay.Value;
+            bool success=false;string caption=btnXem.Text;btnXem.Text="Đang tải…";
+            await PosBackground.LoadAsync(this,()=>
             {
-                dgvTheoNgay.DataSource = theoNgay;
-                dgvHoaDon.DataSource = hoaDon;
-
-                lblSoHD.Text = soHD.ToString("N0", vn);
-                lblTongTien.Text = tongTien.ToString("N0", vn) + " đ";
-                lblGiamGia.Text = giamGia.ToString("N0", vn) + " đ";
-                lblDoanhThu.Text = doanhThu.ToString("N0", vn) + " đ";
-
-                if (notifyEmpty && soHD == 0)
-                    MessageBox.Show("Không có hóa đơn trong khoảng ngày này.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return true;
-            }
-            else
+                bool ok=bll.LayBaoCao(from,to,out var daily,out var orders,out int count,out decimal total,out decimal discount,out decimal revenue,out string error);
+                return (ok,daily,orders,count,total,discount,revenue,error);
+            },data=>
             {
-                dgvTheoNgay.DataSource = null;
-                dgvHoaDon.DataSource = null;
-                lblSoHD.Text = lblTongTien.Text = lblGiamGia.Text = lblDoanhThu.Text = "—";
-                MessageBox.Show(error, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+                if(!data.ok) {MessageBox.Show(this,data.error,"Báo cáo");return;}
+                dgvTheoNgay.DataSource=data.daily;dgvHoaDon.DataSource=data.orders;
+                lblSoHD.Text=data.count.ToString("N0",vn);lblTongTien.Text=data.total.ToString("N0",vn)+" đ";
+                lblGiamGia.Text=data.discount.ToString("N0",vn)+" đ";lblDoanhThu.Text=data.revenue.ToString("N0",vn)+" đ";
+                success=true;
+                if(notifyEmpty && data.count==0) MessageBox.Show(this,"Không có hóa đơn trong khoảng ngày này.","Thông báo");
+            },error=>MessageBox.Show(this,"Không tải được báo cáo: "+error.Message,"Báo cáo"));
+            if(!IsDisposed) btnXem.Text=caption;
+            return success;
         }
-
     }
 }

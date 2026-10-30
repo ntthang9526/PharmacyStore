@@ -16,14 +16,29 @@ internal static partial class Program
     }
     static void InvokePrivate(object target, string name, params object[] args)
         => target.GetType().GetMethod(name, PrivateInstance)!.Invoke(target, args);
+    static void WaitForLoads()
+    {
+        bool Busy(Control c)=>c is Form f && f.UseWaitCursor || c.Controls.Cast<Control>().Any(Busy);
+        var deadline=DateTime.UtcNow.AddSeconds(30);
+        while(Application.OpenForms.Cast<Form>().Any(Busy))
+        {
+            if(DateTime.UtcNow>deadline) throw new TimeoutException("Background loading did not finish.");
+            Application.DoEvents();Thread.Sleep(5);
+        }
+        Application.DoEvents();
+    }
     static void Offscreen(Form form)
     {
         if(form is frmMain) form.WindowState=FormWindowState.Normal;
         form.ShowInTaskbar = false;
         form.StartPosition = FormStartPosition.Manual;
         form.Location = new Point(-20000, -20000);
+        // This harness pumps messages manually instead of Application.Run.
+        if(SynchronizationContext.Current is not WindowsFormsSynchronizationContext)
+            SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
         form.Show();
-        Application.DoEvents();
+        Application.DoEvents();WaitForLoads();
+        SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
     }
     static void ClickBackground(Form form)
     {

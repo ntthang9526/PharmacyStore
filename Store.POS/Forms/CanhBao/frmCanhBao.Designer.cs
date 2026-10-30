@@ -767,7 +767,7 @@ partial class frmCanhBao
         MaximizeBox = true;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Cảnh báo tồn kho và hạn dùng | Hiệu thuốc ABC";
+        Text = "Cảnh báo tồn kho và hạn dùng | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

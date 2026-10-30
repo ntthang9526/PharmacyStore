@@ -15,7 +15,7 @@ namespace Store.DAL
         {
             Dictionary<int, Medicine> list = new();
 
-            string sql = "select * from Medicines where IsActive = 1 AND IsSelling = 1";
+            string sql = "SELECT m.*,COALESCE(b.AvailableStock,0) AS AvailableStock FROM Medicines m LEFT JOIN (SELECT MedicineId,SUM(Stock) AS AvailableStock FROM Batches WHERE IsBlocked=0 AND ExpiryDate>=CAST(GETDATE() AS date) GROUP BY MedicineId) b ON b.MedicineId=m.Id WHERE m.IsActive=1 AND m.IsSelling=1";
             using var connection = DBConnection.GetDbConnection();
             using var command = new SqlCommand(sql, connection);
 
@@ -25,6 +25,7 @@ namespace Store.DAL
             {
                 Medicine medicine = new Medicine
                 {
+                    AvailableStock = reader.GetInt32(reader.GetOrdinal("AvailableStock")),
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
                     CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),

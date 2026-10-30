@@ -556,7 +556,7 @@ partial class frmThemDanhMuc
         MaximizeBox = false;
         MinimizeBox = true;
         StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
-        Text = "Thêm nhà cung cấp | Hiệu thuốc ABC";
+        Text = "Thêm nhà cung cấp | Pharmacy";
         KeyPreview = false;
         ShowIcon = true;
         ShowInTaskbar = true;

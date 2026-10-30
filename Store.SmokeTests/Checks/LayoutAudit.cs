@@ -9,10 +9,10 @@ internal static partial class Program
         var types=new[]{typeof(frmQuanLyThuoc),typeof(frmNhanVien),typeof(frmNhapKho),typeof(frmLoHang),typeof(frmPhieuNhap),typeof(frmHoaDon),typeof(frmNhomThuoc),typeof(frmNhaCungCap),typeof(frmKhachHang),typeof(frmVoucher),typeof(frmBaoCao),typeof(frmCanhBao),typeof(frmDoiMatKhau),typeof(frmBanHang)};
         foreach(var size in new[]{new Size(1500,820),new Size(1382,753),new Size(1100,700)})
         {
-            main.ClientSize=size;Application.DoEvents();
+            main.ClientSize=size;Application.DoEvents();WaitForLoads();
             foreach(var type in types)
             {
-                typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();
+                typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();WaitForLoads();
                 var form=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[type];
                 Console.WriteLine("FORM "+type.Name+" "+size+" viewport "+form.ClientSize);
                 void Scan(Control parent)

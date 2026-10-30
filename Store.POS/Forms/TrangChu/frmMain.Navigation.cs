@@ -21,7 +21,7 @@ public partial class frmMain
             button.BackColor=active?Color.FromArgb(15,118,110):Color.FromArgb(30,41,59);
             button.FlatAppearance.MouseOverBackColor=active?Color.FromArgb(13,148,136):Color.FromArgb(51,65,85);
         }
-        lblTitle.Text="NHÀ THUỐC  /  "+(form==null?"Tổng quan":form.Text.Split('|')[0].Trim());
+        lblTitle.Text="PHARMACY  /  "+(form==null?"Tổng quan":form.Text.Split('|')[0].Trim());
     }
 }
 

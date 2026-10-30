@@ -38,8 +38,9 @@ internal static partial class Program
             using var reportForm=new frmBaoCao();Offscreen(reportForm);
             UiField<DateTimePicker>(reportForm,"dtpTuNgay").Value=date;
             UiField<DateTimePicker>(reportForm,"dtpDenNgay").Value=date;
-            var refresh=typeof(frmBaoCao).GetMethod("XemBaoCao",PrivateInstance)!;
-            Check((bool)refresh.Invoke(reportForm,new object[]{false})!,"report refresh supports the selected export dates");
+            var refresh=typeof(frmBaoCao).GetMethod("XemBaoCaoAsync",PrivateInstance)!;
+            var refreshTask=(Task<bool>)refresh.Invoke(reportForm,new object[]{false})!;WaitForLoads();
+            Check(refreshTask.GetAwaiter().GetResult(),"report refresh supports the selected export dates");
             Check(((DataTable)UiField<DataGridView>(reportForm,"dgvHoaDon").DataSource!).Rows.Count==count,"visible invoice list uses refreshed report result");
             Check(UiField<Label>(reportForm,"lblDoanhThu").Text==revenue.ToString("N0",new System.Globalization.CultureInfo("vi-VN"))+" đ","visible revenue matches refreshed invoice result");
         }
@@ -52,7 +53,7 @@ internal static partial class Program
             main.ClientSize=size;
             foreach(var type in types)
             {
-                typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();
+                typeof(frmMain).GetMethod("MoForm",PrivateInstance)!.MakeGenericMethod(type).Invoke(main,null);Application.DoEvents();WaitForLoads();
                 var form=UiField<Dictionary<Type,Form>>(main,"cuaSoDangMo")[type];
                 foreach(var grid in UiGrids(form))
                 {
@@ -72,7 +73,7 @@ internal static partial class Program
                     if(list.Rows.Count>0)
                     {
                         typeof(DataGridView).GetMethod("OnCellClick",PrivateInstance)!.Invoke(list,new object[]{new DataGridViewCellEventArgs(0,0)});
-                        Application.DoEvents();
+                        Application.DoEvents();WaitForLoads();
                         var a=list.RectangleToScreen(list.ClientRectangle);var b=detail.RectangleToScreen(detail.ClientRectangle);
                         Check(detail.Visible && a.Bottom<b.Top && Math.Abs(a.Width-b.Width)<8,type.Name+" shows full-width list and details at "+size.Width);
                         var label=UiField<Label>(form,"lblChiTiet");

@@ -23,7 +23,6 @@ namespace Store.POS
         private readonly BindingList<RowData> gioHang = new();
         private readonly BindingList<Medicine> timKiem = new();
         private readonly MedicineDAL medicineDAL = new();
-        private readonly MedicineBLL medicineBLL = new();
         private readonly BatchDAL batchDAL = new();
         private Dictionary<int, Medicine> danhSachThuoc = new();
         private readonly Dictionary<Medicine, int> danhSachGioHang = new();
@@ -96,11 +95,12 @@ namespace Store.POS
                 CapNhatThongTinVoucher();
             }
         }
-        private void frmBanHang_Load(object? sender, EventArgs e)
+        private async void frmBanHang_Load(object? sender, EventArgs e)
         {
             if (PosFormStyle.IsInDesigner(this)) return;
             labelNhanVien.Text = "Nhân viên: " + PhienDangNhap.HoTen;
-            danhSachThuoc = medicineDAL.GetMedicines();
+            lblTinhTrangGioHang.Text="Đang tải thuốc…";
+            if(!await PosBackground.LoadAsync(this,medicineDAL.GetMedicines,data=>danhSachThuoc=data,error=>MessageBox.Show(this,"Không tải được thuốc: "+error.Message,"Bán hàng"))) return;
             if (danhSachThuoc == null)
             {
                 MessageBox.Show("Không tải được danh sách thuốc.");
@@ -350,14 +350,14 @@ namespace Store.POS
         }
         private void ThemSanPhamVaoGioHang(Medicine medicine)
         {
-            try { if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(medicine, 1); }
+            try { if(!suaHoaDonId.HasValue) KiemTraTonTrongGio(medicine.Id,1); }
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             var existingRow = gioHang.FirstOrDefault(row => row.Id == medicine.Id);
             if (existingRow != null)
             {
                 try
                 {
-                    if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(medicine, existingRow.Quantity + 1);
+                    if(!suaHoaDonId.HasValue) KiemTraTonTrongGio(medicine.Id,existingRow.Quantity+1);
                     existingRow.Quantity++;
                     gioHang.ResetItem(gioHang.IndexOf(existingRow));
                 }
@@ -387,7 +387,7 @@ namespace Store.POS
             if(quantity==0) {AnThaoTacGioHang();gioHang.Remove(row);DemSoThuTu();return;}
             try
             {
-                if(!suaHoaDonId.HasValue) medicineBLL.KiemTraSoLuongConHan(row.Id,quantity);
+                if(!suaHoaDonId.HasValue) KiemTraTonTrongGio(row.Id,quantity);
                 row.Quantity=quantity;gioHang.ResetItem(gioHang.IndexOf(row));AnThaoTacGioHang();
             }
             catch(Exception ex) {MessageBox.Show(ex.Message,"Số lượng");}
@@ -533,11 +533,11 @@ namespace Store.POS
             }
         }
 
-        private void btnThanhToan_Click(object sender, EventArgs e)
+        private async void btnThanhToan_Click(object sender, EventArgs e)
         {
             try
             {
-                decimal previous=tongTien;LamMoiDuLieu();
+                decimal previous=tongTien;if(!await LamMoiDuLieuAsync()) return;
                 if(previous!=tongTien) {MessageBox.Show("Giá hoặc voucher đã đổi. Kiểm tra tổng tiền rồi thanh toán lại.","Đã cập nhật dữ liệu");return;}
                 if(gioHang.Count>0 && !btnThanhToan.Enabled) {MessageBox.Show(lblTinhTrangGioHang.Text,"Kiểm tra giỏ hàng");return;}
             }

@@ -31,7 +31,7 @@ public partial class frmMain
 
     private void TaiTongQuan()
     {
-        if (PosFormStyle.IsInDesigner(this)) return;
+        if (PosFormStyle.IsInDesigner(this) || !dashboard.Visible) return;
         lblTieuDeTongQuan.Text = "Tổng quan · " + DateTime.Today.ToString("dd/MM/yyyy");
         try
         {

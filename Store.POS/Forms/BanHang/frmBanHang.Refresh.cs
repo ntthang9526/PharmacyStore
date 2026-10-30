@@ -5,29 +5,40 @@ namespace Store.POS;
 public partial class frmBanHang
 {
 
-    public void LamMoiDuLieu()
+    public async void LamMoiDuLieu()=>await LamMoiDuLieuAsync();
+    private Task<bool> LamMoiDuLieuAsync()
     {
-        if(PosFormStyle.IsInDesigner(this)) return;
-        danhSachThuoc=medicineDAL.GetMedicines();
-        for(int i=0;i<gioHang.Count;i++)
+        if(PosFormStyle.IsInDesigner(this)) return Task.FromResult(false);
+        string? code=voucherApDung?.Code;int? customerId=khachHang?.Id;
+        return PosBackground.LoadAsync(this,()=>
         {
-            var row=gioHang[i];
-            if(danhSachThuoc.TryGetValue(row.Id,out var medicine))
-                {row.Name=medicine.Name;row.Unit=medicine.Unit;row.Price=medicine.Price;row.IsPrescription |= medicine.IsPrescription;gioHang.ResetItem(i);}
-        }
-        if(voucherApDung!=null)
+            var catalog=medicineDAL.GetMedicines();
+            Store.Shared.VoucherInfo? voucher=null;
+            if(code!=null) voucherBLL.KiemTra(code,out voucher,out _);
+            var customer=customerId.HasValue?customerDAL.GetCustomerById(customerId.Value):null;
+            return (catalog,voucher,customer);
+        },data=>
         {
-            voucherApDung=voucherBLL.KiemTra(voucherApDung.Code,out var freshVoucher,out _)?freshVoucher:null;
-            CapNhatThongTinVoucher();
-        }
-        if(khachHang!=null)
-        {
-            var customer=customerDAL.GetCustomerById(khachHang.Id);
-            if(customer!=null) boxMaKhachHang.Text=customer.Phone;
-            khachHang=customer;CapNhatThongTinKhachHang();
-        }
-        labelNhanVien.Text="Nhân viên: "+PhienDangNhap.HoTen;
-        boxTimKiem_TextChanged(this,EventArgs.Empty);CapNhatGiaTien();
+            danhSachThuoc=data.catalog;
+            for(int i=0;i<gioHang.Count;i++)
+            {
+                var row=gioHang[i];
+                if(danhSachThuoc.TryGetValue(row.Id,out var medicine))
+                {row.Name=medicine.Name;row.Unit=medicine.Unit;row.Price=medicine.Price;row.IsPrescription|=medicine.IsPrescription;gioHang.ResetItem(i);}
+            }
+            voucherApDung=data.voucher;
+            khachHang=data.customer;
+            if(khachHang!=null) boxMaKhachHang.Text=khachHang.Phone;
+            CapNhatThongTinKhachHang();CapNhatThongTinVoucher();
+            labelNhanVien.Text="Nhân viên: "+PhienDangNhap.HoTen;
+            boxTimKiem_TextChanged(this,EventArgs.Empty);CapNhatGiaTien();
+        },error=>MessageBox.Show(this,"Không tải lại được giỏ hàng: "+error.Message,"Bán hàng"));
+    }
+    private void KiemTraTonTrongGio(int id,int quantity)
+    {
+        if(quantity<=0) throw new InvalidOperationException("Số lượng phải lớn hơn 0.");
+        if(!danhSachThuoc.TryGetValue(id,out var medicine) || medicine.AvailableStock<quantity)
+            throw new InvalidOperationException("Không đủ tồn có thể bán. Bấm Làm mới để cập nhật.");
     }
     private void KiemTraGioHangHienTai()
     {
@@ -37,7 +48,7 @@ public partial class frmBanHang
             if(!danhSachThuoc.ContainsKey(row.Id)) errors.Add(row.Name+" đã ngừng bán");
             else
             {
-                int stock=medicineDAL.SoLuongConHan(row.Id);
+                int stock=danhSachThuoc[row.Id].AvailableStock;
                 if(row.Quantity>stock) errors.Add(row.Name+" chỉ còn "+stock);
             }
         }
