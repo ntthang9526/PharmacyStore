@@ -1,5 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using ClosedXML.Excel;
 
 namespace Store.POS.Common
@@ -10,8 +12,46 @@ namespace Store.POS.Common
         {
             value=0;
             if(cell.DataType==XLDataType.Number) return cell.TryGetValue(out value);
-            return decimal.TryParse(cell.GetString().Trim(),System.Globalization.NumberStyles.Number,
-                System.Globalization.CultureInfo.CurrentCulture,out value);
+            string text=cell.GetString().Trim();
+            // Text prices use whole dong; separators must form complete groups of three digits.
+            if(!Regex.IsMatch(text,@"\A[+-]?(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+|[0-9]{1,3}(?:,[0-9]{3})+)\z")) return false;
+            return decimal.TryParse(text.Replace(".","").Replace(",",""),NumberStyles.AllowLeadingSign,
+                CultureInfo.InvariantCulture,out value);
+        }
+
+        private static string TieuDe(IXLCell cell) => Regex.Replace(
+            Regex.Replace(cell.GetString(),@"\s*\([^)]*\)",""),@"\s+"," ").Trim();
+
+        private static void KiemTraTieuDe(IXLWorksheet sheet,int row,params string[] headers)
+        {
+            for(int column=0;column<headers.Length;column++)
+                if(!TieuDe(sheet.Cell(row,column+1)).Equals(headers[column],StringComparison.OrdinalIgnoreCase))
+                    throw new ArgumentException($"Cột {column+1} phải là '{headers[column]}'. Hãy dùng đúng file mẫu.");
+        }
+
+        private static int TimCot(IXLWorksheet sheet,string header)
+        {
+            var cells=sheet.Row(1).CellsUsed().Where(c=>TieuDe(c).Equals(header,StringComparison.OrdinalIgnoreCase)).ToArray();
+            if(cells.Length>1) throw new ArgumentException($"File có nhiều cột '{header}'. Hãy kiểm tra lại tiêu đề.");
+            return cells.Length==0?0:cells[0].Address.ColumnNumber;
+        }
+
+        public static bool GanNhaCungCap(MedicineImportRow row,DataTable suppliers,out string error)
+        {
+            error="";
+            var matches=suppliers.Rows.Cast<DataRow>().Where(s=>row.MaNCC.HasValue
+                ? Convert.ToInt32(s["MaNCC"])==row.MaNCC.Value
+                : string.Equals(Convert.ToString(s["TenNCC"])?.Trim(),row.TenNCC.Trim(),StringComparison.OrdinalIgnoreCase)).ToArray();
+            if(matches.Length!=1)
+            {
+                error=matches.Length>1?"NCC trùng tên. Nhập Mã NCC để phân biệt.":"Không tìm thấy nhà cung cấp theo mã hoặc tên đã nhập.";
+                return false;
+            }
+            string name=Convert.ToString(matches[0]["TenNCC"])!.Trim();
+            if(row.MaNCC.HasValue && row.TenNCC.Length>0 && !name.Equals(row.TenNCC.Trim(),StringComparison.OrdinalIgnoreCase))
+            {error="Mã NCC và tên nhà cung cấp không khớp.";return false;}
+            row.MaNCC=Convert.ToInt32(matches[0]["MaNCC"]);row.TenNCC=name;
+            return true;
         }
 
         private static readonly XLColor PrimaryColor = XLColor.FromHtml("#166534"); // Xanh lá dược phẩm đậm
@@ -345,12 +385,12 @@ namespace Store.POS.Common
             string? path=outputPath ?? ChonNoiLuuFile("DanhSachThuoc.xlsx");if(path==null) return;
             using var book=new XLWorkbook();var sheet=book.AddWorksheet("Thuốc");
             sheet.Column(2).Style.NumberFormat.Format="@";
-            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan","KeDon","HoatChat"};
-            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán","Kê đơn","Hoạt chất"};
+            string[] keys={"TenThuoc","MaVach","TenNhom","TenNCC","DonViTinh","DonGia","TrangThaiBan","SoLuongTon","TonCoTheBan","KeDon","HoatChat","MaNCC"};
+            string[] headings={"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán","Trạng thái bán","Tồn thực tế","Tồn có thể bán","Kê đơn","Hoạt chất","Mã NCC"};
             for(int c=0;c<keys.Length;c++) sheet.Cell(1,c+1).Value=headings[c];
             for(int row=0;row<data.Rows.Count;row++) for(int col=0;col<keys.Length;col++)
             {
-                object v=data.Rows[row][keys[col]];
+                object v=keys[col]=="MaNCC" && !data.Columns.Contains("MaNCC")?DBNull.Value:data.Rows[row][keys[col]];
                 if(v is decimal price) {sheet.Cell(row+2,col+1).Value=price;sheet.Cell(row+2,col+1).Style.NumberFormat.Format="#,##0";}
                 else if(v is int count) sheet.Cell(row+2,col+1).Value=count;
                 else sheet.Cell(row+2,col+1).Value=v==DBNull.Value?"":v.ToString()??"";
@@ -368,7 +408,7 @@ namespace Store.POS.Common
             var ws = workbook.Worksheets.Add("NhapThuoc");
             ws.ShowGridLines = true;
 
-            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp (*)", "Đơn vị tính (*)", "Giá bán (*)", "Kê đơn (0/1)", "Hoạt chất (không bắt buộc)" };
+            string[] headers = { "Tên thuốc (*)", "Mã vạch (Barcode)", "Nhóm thuốc (*)", "Nhà cung cấp", "Đơn vị tính (*)", "Giá bán (*)", "Kê đơn (0/1)", "Hoạt chất (không bắt buộc)", "Mã NCC" };
             for (int col = 0; col < headers.Length; col++)
             {
                 var cell = ws.Cell(1, col + 1);
@@ -396,6 +436,8 @@ namespace Store.POS.Common
             ws.Cell(2,7).Value=0;ws.Cell(3,7).Value=1;
             ws.Cell(1,2).CreateComment().AddText("Không bắt buộc. Giữ định dạng Text để không mất số 0 ở đầu; tối đa 50 ký tự, không có khoảng trắng.");
             ws.Cell(1,8).CreateComment().AddText("Có thể để trống; nhập đúng hoạt chất theo nhãn thuốc, tối đa 150 ký tự.");
+            ws.Cell(1,9).CreateComment().AddText("Nhập mã như NCC264 hoặc 264 khi NCC trùng tên. Có mã thì tên NCC có thể để trống; nếu nhập cả hai, mã và tên phải khớp.");
+            ws.Cell(1,6).CreateComment().AddText("Dùng ô số hoặc số nguyên như 12500, 12.500, 12,500. Ô chữ có phần thập phân không được chấp nhận.");
             ws.SheetView.FreezeRows(1);
 
             ws.Cell(2, 6).Style.NumberFormat.Format = "#,##0";
@@ -427,8 +469,7 @@ namespace Store.POS.Common
                 return result;
             }
 
-            if(!ws.Cell(1,1).GetString().Contains("Tên thuốc",StringComparison.OrdinalIgnoreCase) || !ws.Cell(1,6).GetString().Contains("Giá",StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("File không đúng mẫu. Tải file mẫu ở màn hình Quản lý thuốc.");
+            KiemTraTieuDe(ws,1,"Tên thuốc","Mã vạch","Nhóm thuốc","Nhà cung cấp","Đơn vị tính","Giá bán");
             int lastRow = ws.LastRowUsed()?.RowNumber() ?? 0;
             if(lastRow>10001) throw new ArgumentException("Mỗi file tối đa 10.000 dòng dữ liệu.");
             if (lastRow < 2)
@@ -437,8 +478,7 @@ namespace Store.POS.Common
                 return result;
             }
 
-            int rxColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Kê đơn",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
-            int ingredientColumn=ws.Row(1).CellsUsed().FirstOrDefault(c=>c.GetString().StartsWith("Hoạt chất",StringComparison.OrdinalIgnoreCase))?.Address.ColumnNumber??0;
+            int rxColumn=TimCot(ws,"Kê đơn"),ingredientColumn=TimCot(ws,"Hoạt chất"),supplierColumn=TimCot(ws,"Mã NCC");
             for (int r = 2; r <= lastRow; r++)
             {
                 string tenThuoc = ws.Cell(r, 1).GetString().Trim();
@@ -447,8 +487,16 @@ namespace Store.POS.Common
                 string barcode = ws.Cell(r, 2).GetString().Trim();
                 string tenNhom = ws.Cell(r, 3).GetString().Trim();
                 string tenNCC = ws.Cell(r, 4).GetString().Trim();
+                int? maNCC=null;
+                string supplierCode=supplierColumn>0?ws.Cell(r,supplierColumn).GetString().Trim():"";
+                if(supplierCode.Length>0)
+                {
+                    if(supplierCode.StartsWith("NCC",StringComparison.OrdinalIgnoreCase)) supplierCode=supplierCode[3..].Trim();
+                    if(!int.TryParse(supplierCode,NumberStyles.None,CultureInfo.InvariantCulture,out int id) || id<=0)
+                    {errors.Add($"Dòng {r}: Mã NCC không hợp lệ. Nhập mã như NCC264 hoặc 264.");continue;}
+                    maNCC=id;
+                }
                 string dvt = ws.Cell(r, 5).GetString().Trim();
-                string giaStr = ws.Cell(r, 6).GetString().Trim();
                 string hoatChat=ingredientColumn>0?ws.Cell(r,ingredientColumn).GetString().Trim():"";
                 if(hoatChat.Length>150 || hoatChat.Any(char.IsControl)) {errors.Add($"Dòng {r}: Hoạt chất tối đa 150 ký tự, không chứa ký tự điều khiển.");continue;}
                 if(barcode.Length>50 || barcode.Any(c=>c<'!' || c>'~')) {errors.Add($"Dòng {r}: Mã vạch tối đa 50 ký tự không dấu, không chứa khoảng trắng hoặc ký tự điều khiển.");continue;}
@@ -462,9 +510,9 @@ namespace Store.POS.Common
                     errors.Add($"Dòng {r}: Tên nhóm thuốc không được để trống.");
                     continue;
                 }
-                if (string.IsNullOrWhiteSpace(tenNCC))
+                if (string.IsNullOrWhiteSpace(tenNCC) && !maNCC.HasValue)
                 {
-                    errors.Add($"Dòng {r}: Nhà cung cấp không được để trống.");
+                    errors.Add($"Dòng {r}: Nhập tên nhà cung cấp hoặc Mã NCC.");
                     continue;
                 }
                 if (string.IsNullOrWhiteSpace(dvt))
@@ -475,7 +523,7 @@ namespace Store.POS.Common
 
                 if (!DocSoTien(ws.Cell(r,6),out decimal giaBan) || giaBan < 0)
                 {
-                    errors.Add($"Dòng {r}: Giá bán '{giaStr}' không hợp lệ.");
+                    errors.Add($"Dòng {r}: Giá bán không hợp lệ. Nhập ô số hoặc số nguyên như 12500, 12.500.");
                     continue;
                 }
 
@@ -486,6 +534,7 @@ namespace Store.POS.Common
                     BarCode = string.IsNullOrWhiteSpace(barcode) ? null : barcode,
                     TenNhom = tenNhom,
                     TenNCC = tenNCC,
+                    MaNCC = maNCC,
                     DonViTinh = dvt,
                     GiaBan = giaBan,KeDon=keDon,HoatChat=string.IsNullOrEmpty(hoatChat)?null:hoatChat
                 });
@@ -523,6 +572,7 @@ namespace Store.POS.Common
             }
 
             int startRow = rIdx + 1;
+            ws.Cell(3,6).CreateComment().AddText("Dùng ô số hoặc số nguyên như 12500, 12.500, 12,500. Giữ nguyên thứ tự các cột trong file mẫu.");
             DateTime hanDungMacDinh = DateTime.Today.AddYears(1);
 
             if (dsThuocNCC != null && dsThuocNCC.Rows.Count > 0)
@@ -604,8 +654,7 @@ namespace Store.POS.Common
             int headerRow = 0;
             for (int r = 1; r <= Math.Min(10, lastRow); r++)
             {
-                string text = ws.Cell(r, 1).GetString();
-                if (text.Contains("Mã thuốc", StringComparison.OrdinalIgnoreCase))
+                if (TieuDe(ws.Cell(r,1)).Equals("Mã thuốc",StringComparison.OrdinalIgnoreCase))
                 {
                     headerRow = r;
                     break;
@@ -613,6 +662,7 @@ namespace Store.POS.Common
             }
 
             if(headerRow==0) throw new ArgumentException("Không tìm thấy tiêu đề Mã thuốc. Hãy dùng File mẫu nhập kho.");
+            KiemTraTieuDe(ws,headerRow,"Mã thuốc","Tên thuốc","Số lô","Hạn dùng","Số lượng","Giá nhập");
             for (int r = headerRow + 1; r <= lastRow; r++)
             {
                 string maStr = ws.Cell(r, 1).GetString().Trim();
@@ -620,7 +670,6 @@ namespace Store.POS.Common
                 string soLo = ws.Cell(r, 3).GetString().Trim();
                 string hanDungStr = ws.Cell(r, 4).GetString().Trim();
                 string soLuongStr = ws.Cell(r, 5).GetString().Trim();
-                string giaNhapStr = ws.Cell(r, 6).GetString().Trim();
 
                 if (string.IsNullOrWhiteSpace(maStr) && string.IsNullOrWhiteSpace(tenStr)) continue;
 
@@ -679,7 +728,7 @@ namespace Store.POS.Common
 
                 if (!DocSoTien(ws.Cell(r,6),out decimal giaNhap) || Store.Shared.TienTe.LamTron(giaNhap) <= 0)
                 {
-                    errors.Add($"Dòng {r}: Giá nhập '{giaNhapStr}' phải > 0.");
+                    errors.Add($"Dòng {r}: Giá nhập phải lớn hơn 0. Nhập ô số hoặc số nguyên như 12500, 12.500.");
                     continue;
                 }
 
@@ -708,6 +757,7 @@ namespace Store.POS.Common
         public string? HoatChat {get;set;}
         public string TenNhom { get; set; } = "";
         public string TenNCC { get; set; } = "";
+        public int? MaNCC {get;set;}
         public string DonViTinh { get; set; } = "";
         public decimal GiaBan { get; set; }
     }
