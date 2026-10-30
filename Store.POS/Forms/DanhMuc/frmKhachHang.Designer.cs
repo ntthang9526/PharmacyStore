@@ -1,0 +1,768 @@
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
+namespace Store.POS
+{
+
+partial class frmKhachHang
+{
+    private global::System.ComponentModel.IContainer components = null;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) components?.Dispose();
+        base.Dispose(disposing);
+    }
+
+    private void InitializeComponent()
+    {
+        this.MaKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.TenKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.DienThoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.Diem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+        posHeading = new Label();
+        posLayout = new TableLayoutPanel();
+        tableLayoutPanel1 = new TableLayoutPanel();
+        groupBox2 = new GroupBox();
+        tableLayoutPanel3 = new TableLayoutPanel();
+        tableLayoutPanel4 = new TableLayoutPanel();
+        label5 = new Label();
+        txtTimKiem = new TextBox();
+        btnTimKiem = new Button();
+        dgvKhachHang = new DataGridView();
+        
+        
+
+        groupBox6 = new GroupBox();
+        tableLayoutPanel7 = new TableLayoutPanel();
+        tableLayoutPanel8 = new TableLayoutPanel();
+        tableLayoutPanel11 = new TableLayoutPanel();
+        label12 = new Label();
+        txtTenKH = new TextBox();
+        tableLayoutPanel13 = new TableLayoutPanel();
+        label14 = new Label();
+        txtDienThoai = new TextBox();
+        tableLayoutPanel15 = new TableLayoutPanel();
+        label16 = new Label();
+        txtDiem = new TextBox();
+        tableLayoutPanel17 = new FlowLayoutPanel();
+        btnThem = new Button();
+        btnSua = new Button();
+        btnXoa = new Button();
+        btnLamMoi = new Button();
+        posLayout.SuspendLayout();
+        tableLayoutPanel1.SuspendLayout();
+        groupBox2.SuspendLayout();
+        tableLayoutPanel3.SuspendLayout();
+        tableLayoutPanel4.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)dgvKhachHang).BeginInit();
+        groupBox6.SuspendLayout();
+        tableLayoutPanel7.SuspendLayout();
+        tableLayoutPanel8.SuspendLayout();
+        tableLayoutPanel11.SuspendLayout();
+        tableLayoutPanel13.SuspendLayout();
+        tableLayoutPanel15.SuspendLayout();
+        tableLayoutPanel17.SuspendLayout();
+        SuspendLayout();
+        // 
+        // 
+        // 
+        // posHeading
+        // 
+        posHeading.BackColor = Color.FromArgb(242, 246, 248);
+        posHeading.Dock = DockStyle.Fill;
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);
+        posHeading.Location = new Point(3, 0);
+        posHeading.Name = "posHeading";
+        posHeading.Size = new Size(1026, 48);
+        posHeading.TabIndex = 0;
+        posHeading.Text = "Khách hàng";
+        posHeading.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // 
+        // 
+        // posLayout
+        // 
+        posLayout.BackColor = Color.FromArgb(242, 246, 248);
+        posLayout.ColumnCount = 1;
+        posLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        posLayout.Controls.Add(posHeading, 0, 0);
+        posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
+        posLayout.Dock = DockStyle.Fill;
+        posLayout.Font = new Font("Segoe UI", 10.2F);
+        posLayout.ForeColor = Color.FromArgb(15, 23, 42);
+        posLayout.Location = new Point(0, 0);
+        posLayout.Margin = new Padding(0);
+        posLayout.Name = "posLayout";
+        posLayout.Padding = new Padding(12);
+        posLayout.RowCount = 2;
+        posLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
+        posLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        posLayout.Size = new Size(1182, 653);
+        posLayout.TabIndex = 0;
+        // 
+        // tableLayoutPanel1
+        // 
+        tableLayoutPanel1.BackColor = Color.FromArgb(242, 246, 248);
+        tableLayoutPanel1.ColumnCount = 2;
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
+        tableLayoutPanel1.Controls.Add(groupBox2, 0, 0);
+        tableLayoutPanel1.Controls.Add(groupBox6, 1, 0);
+        tableLayoutPanel1.Dock = DockStyle.Fill;
+        tableLayoutPanel1.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel1.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel1.Location = new Point(12, 60);
+        tableLayoutPanel1.Margin = new Padding(0);
+        tableLayoutPanel1.Name = "tableLayoutPanel1";
+        tableLayoutPanel1.RowCount = 1;
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel1.Size = new Size(1158, 581);
+        tableLayoutPanel1.TabIndex = 1;
+        // 
+        // groupBox2
+        // 
+        groupBox2.BackColor = Color.White;
+        groupBox2.Controls.Add(tableLayoutPanel3);
+        groupBox2.Dock = DockStyle.Fill;
+        groupBox2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        groupBox2.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox2.Location = new Point(0, 0);
+        groupBox2.Margin = new Padding(0, 0, 12, 0);
+        groupBox2.Name = "groupBox2";
+        groupBox2.Padding = new Padding(12, 2, 12, 12);
+        groupBox2.Size = new Size(792, 581);
+        groupBox2.TabIndex = 0;
+        groupBox2.TabStop = false;
+        groupBox2.Text = "Danh sách khách hàng";
+        // 
+        // tableLayoutPanel3
+        // 
+        tableLayoutPanel3.BackColor = Color.White;
+        tableLayoutPanel3.ColumnCount = 1;
+        tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
+        tableLayoutPanel3.Controls.Add(dgvKhachHang, 0, 1);
+        tableLayoutPanel3.Dock = DockStyle.Fill;
+        tableLayoutPanel3.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel3.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel3.Location = new Point(12, 25);
+        tableLayoutPanel3.Margin = new Padding(0);
+        tableLayoutPanel3.Name = "tableLayoutPanel3";
+        tableLayoutPanel3.RowCount = 2;
+        tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel3.Size = new Size(768, 544);
+        tableLayoutPanel3.TabIndex = 0;
+        // 
+        // tableLayoutPanel4
+        // 
+        tableLayoutPanel4.BackColor = Color.White;
+        tableLayoutPanel4.ColumnCount = 3;
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
+        tableLayoutPanel4.Controls.Add(label5, 0, 0);
+        tableLayoutPanel4.Controls.Add(txtTimKiem, 1, 0);
+        tableLayoutPanel4.Controls.Add(btnTimKiem, 2, 0);
+        tableLayoutPanel4.Dock = DockStyle.Fill;
+        tableLayoutPanel4.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel4.Location = new Point(0, 0);
+        tableLayoutPanel4.Margin = new Padding(0, 0, 0, 12);
+        tableLayoutPanel4.Name = "tableLayoutPanel4";
+        tableLayoutPanel4.RowCount = 1;
+        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel4.Size = new Size(768, 44);
+        tableLayoutPanel4.TabIndex = 0;
+        // 
+        // label5
+        // 
+        label5.BackColor = Color.White;
+        label5.Dock = DockStyle.Fill;
+        label5.Font = new Font("Segoe UI", 10.2F);
+        label5.ForeColor = Color.FromArgb(15, 23, 42);
+        label5.Location = new Point(3, 0);
+        label5.Name = "label5";
+        label5.Size = new Size(114, 44);
+        label5.TabIndex = 0;
+        label5.Text = "Khách hàng";
+        label5.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // txtTimKiem
+        // 
+        txtTimKiem.BackColor=Color.White;
+        txtTimKiem.BorderStyle=BorderStyle.FixedSingle;
+        txtTimKiem.Cursor = Cursors.IBeam;
+        txtTimKiem.Dock = DockStyle.Top;
+        txtTimKiem.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTimKiem.ForeColor=Color.FromArgb(15,23,42);
+        txtTimKiem.Location = new Point(120, 7);
+        txtTimKiem.Margin = new Padding(0, 7, 12, 0);
+        txtTimKiem.MaxLength = 200;
+        txtTimKiem.Name = "txtTimKiem";
+        txtTimKiem.PlaceholderText = "Tên hoặc số điện thoại";
+        txtTimKiem.Size = new Size(516, 30);
+        txtTimKiem.TabIndex = 2;
+        // 
+        // btnTimKiem
+        // 
+        btnTimKiem.BackColor = SystemColors.ControlLight;
+        btnTimKiem.Dock = DockStyle.Fill;
+        btnTimKiem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnTimKiem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnTimKiem.ForeColor = Color.FromArgb(15, 23, 42);
+        btnTimKiem.Location = new Point(648, 2);
+        btnTimKiem.Margin = new Padding(0, 2, 0, 2);
+        btnTimKiem.Name = "btnTimKiem";
+        btnTimKiem.Size = new Size(120, 40);
+        btnTimKiem.TabIndex = 0;
+        btnTimKiem.Text = "Tìm kiếm";
+        btnTimKiem.Click += btnTimKiem_Click;
+        // 
+        // dgvKhachHang
+        // 
+        dgvKhachHang.AllowUserToAddRows = false;
+        dgvKhachHang.AllowUserToDeleteRows = false;
+        dgvKhachHang.AllowUserToResizeRows = false;
+        dataGridViewCellStyle1.BackColor = Color.White;
+        dgvKhachHang.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+        
+        
+        
+        dgvKhachHang.ShowCellToolTips = true;
+        dgvKhachHang.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        dgvKhachHang.BackgroundColor = Color.White;
+        dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        dataGridViewCellStyle2.BackColor = Color.FromArgb(242, 246, 248);
+        dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle2.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+        dgvKhachHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle3.BackColor = Color.White;
+        dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle3.ForeColor = Color.FromArgb(15, 23, 42);
+        dataGridViewCellStyle3.Padding = new Padding(4);
+        dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientActiveCaption;
+        dataGridViewCellStyle3.SelectionForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+        dgvKhachHang.DefaultCellStyle = dataGridViewCellStyle3;
+        dgvKhachHang.Dock = DockStyle.Fill;
+        dgvKhachHang.EnableHeadersVisualStyles = false;
+        dgvKhachHang.Font = new Font("Segoe UI", 10.2F);
+        dgvKhachHang.GridColor = Color.FromArgb(226, 232, 240);
+        dgvKhachHang.Location = new Point(0, 56);
+        dgvKhachHang.Margin = new Padding(0);
+        dgvKhachHang.MultiSelect = false;
+        dgvKhachHang.Name = "dgvKhachHang";
+        dgvKhachHang.ReadOnly = true;
+        dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        dataGridViewCellStyle4.BackColor = Color.FromArgb(242, 246, 248);
+        dataGridViewCellStyle4.Font = new Font("Segoe UI", 10.2F);
+        dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+        dgvKhachHang.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+        dgvKhachHang.RowHeadersVisible = false;
+        dgvKhachHang.RowHeadersWidth = 51;
+        dgvKhachHang.RowTemplate.Height = 34;
+        dgvKhachHang.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvKhachHang.Size = new Size(768, 488);
+        dgvKhachHang.TabIndex = 4;
+        dgvKhachHang.CellClick += dgvKhachHang_CellClick;
+        // 
+        // groupBox6
+        // 
+        groupBox6.BackColor = Color.White;
+        groupBox6.Controls.Add(tableLayoutPanel7);
+        groupBox6.Dock = DockStyle.Fill;
+        groupBox6.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        groupBox6.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox6.Location = new Point(804, 0);
+        groupBox6.Margin = new Padding(0);
+        groupBox6.Name = "groupBox6";
+        groupBox6.Padding = new Padding(12, 2, 12, 12);
+        groupBox6.Size = new Size(354, 581);
+        groupBox6.TabIndex = 1;
+        groupBox6.TabStop = false;
+        groupBox6.Text = "Thông tin chi tiết";
+        // 
+        // tableLayoutPanel7
+        // 
+        tableLayoutPanel7.BackColor = Color.White;
+        tableLayoutPanel7.ColumnCount = 1;
+        tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel7.Controls.Add(tableLayoutPanel8, 0, 0);
+        tableLayoutPanel7.Controls.Add(tableLayoutPanel17, 0, 2);
+        tableLayoutPanel7.Dock = DockStyle.Fill;
+        tableLayoutPanel7.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel7.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel7.Location = new Point(12, 25);
+        tableLayoutPanel7.Margin = new Padding(0);
+        tableLayoutPanel7.Name = "tableLayoutPanel7";
+        tableLayoutPanel7.RowCount = 3;
+        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 168F));
+        tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.AutoSize));
+        tableLayoutPanel7.Size = new Size(330, 544);
+        tableLayoutPanel7.TabIndex = 0;
+        // 
+        // tableLayoutPanel8
+        // 
+        tableLayoutPanel8.AutoSize = true;
+        tableLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel8.BackColor = Color.White;
+        tableLayoutPanel8.ColumnCount = 1;
+        tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel8.Controls.Add(tableLayoutPanel11);
+        tableLayoutPanel8.Controls.Add(tableLayoutPanel13);
+        tableLayoutPanel8.Controls.Add(tableLayoutPanel15);
+        tableLayoutPanel8.Dock = DockStyle.Top;
+        tableLayoutPanel8.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel8.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel8.Location = new Point(0, 0);
+        tableLayoutPanel8.Margin = new Padding(0);
+        tableLayoutPanel8.Name = "tableLayoutPanel8";
+        tableLayoutPanel8.RowCount = 3;
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+        tableLayoutPanel8.Size = new Size(330, 224);
+        tableLayoutPanel8.TabIndex = 0;
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // tableLayoutPanel11
+        // 
+        tableLayoutPanel11.BackColor = Color.White;
+        tableLayoutPanel11.ColumnCount = 1;
+        tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel11.Controls.Add(label12, 0, 0);
+        tableLayoutPanel11.Controls.Add(txtTenKH, 0, 1);
+        tableLayoutPanel11.Dock = DockStyle.Fill;
+        tableLayoutPanel11.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel11.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel11.Location = new Point(0, 56);
+        tableLayoutPanel11.Margin = new Padding(0);
+        tableLayoutPanel11.Name = "tableLayoutPanel11";
+        tableLayoutPanel11.RowCount = 2;
+        tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
+        tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+        tableLayoutPanel11.Size = new Size(330, 56);
+        tableLayoutPanel11.TabIndex = 1;
+        // 
+        // label12
+        // 
+        label12.BackColor = Color.White;
+        label12.Dock = DockStyle.Fill;
+        label12.Font = new Font("Segoe UI", 10.2F);
+        label12.ForeColor = Color.FromArgb(15, 23, 42);
+        label12.Location = new Point(3, 0);
+        label12.Name = "label12";
+        label12.Size = new Size(324, 22);
+        label12.TabIndex = 0;
+        label12.Text = "Tên khách hàng";
+        label12.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // txtTenKH
+        // 
+        txtTenKH.BackColor=Color.White;
+        txtTenKH.BorderStyle=BorderStyle.FixedSingle;
+        txtTenKH.Cursor = Cursors.IBeam;
+        txtTenKH.Dock = DockStyle.Top;
+        txtTenKH.Enabled = false;
+        txtTenKH.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtTenKH.ForeColor=Color.FromArgb(15,23,42);
+        txtTenKH.Location = new Point(0, 23);
+        txtTenKH.Margin = new Padding(0, 1, 0, 5);
+        txtTenKH.Name = "txtTenKH";
+        txtTenKH.Size = new Size(330, 30);
+        txtTenKH.TabIndex = 3;
+        // 
+        // tableLayoutPanel13
+        // 
+        tableLayoutPanel13.BackColor = Color.White;
+        tableLayoutPanel13.ColumnCount = 1;
+        tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel13.Controls.Add(label14, 0, 0);
+        tableLayoutPanel13.Controls.Add(txtDienThoai, 0, 1);
+        tableLayoutPanel13.Dock = DockStyle.Fill;
+        tableLayoutPanel13.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel13.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel13.Location = new Point(0, 112);
+        tableLayoutPanel13.Margin = new Padding(0);
+        tableLayoutPanel13.Name = "tableLayoutPanel13";
+        tableLayoutPanel13.RowCount = 2;
+        tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
+        tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+        tableLayoutPanel13.Size = new Size(330, 56);
+        tableLayoutPanel13.TabIndex = 2;
+        // 
+        // label14
+        // 
+        label14.BackColor = Color.White;
+        label14.Dock = DockStyle.Fill;
+        label14.Font = new Font("Segoe UI", 10.2F);
+        label14.ForeColor = Color.FromArgb(15, 23, 42);
+        label14.Location = new Point(3, 0);
+        label14.Name = "label14";
+        label14.Size = new Size(324, 22);
+        label14.TabIndex = 0;
+        label14.Text = "Số điện thoại";
+        label14.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // txtDienThoai
+        // 
+        txtDienThoai.BackColor=Color.White;
+        txtDienThoai.BorderStyle=BorderStyle.FixedSingle;
+        txtDienThoai.Cursor = Cursors.IBeam;
+        txtDienThoai.Dock = DockStyle.Top;
+        txtDienThoai.Enabled = false;
+        txtDienThoai.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtDienThoai.ForeColor=Color.FromArgb(15,23,42);
+        txtDienThoai.Location = new Point(0, 23);
+        txtDienThoai.Margin = new Padding(0, 1, 0, 5);
+        txtDienThoai.MaxLength = 10;
+        txtDienThoai.Name = "txtDienThoai";
+        txtDienThoai.Size = new Size(330, 30);
+        txtDienThoai.TabIndex = 8;
+        // 
+        // tableLayoutPanel15
+        // 
+        tableLayoutPanel15.BackColor = Color.White;
+        tableLayoutPanel15.ColumnCount = 1;
+        tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel15.Controls.Add(label16, 0, 0);
+        tableLayoutPanel15.Controls.Add(txtDiem, 0, 1);
+        tableLayoutPanel15.Dock = DockStyle.Fill;
+        tableLayoutPanel15.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel15.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel15.Location = new Point(0, 168);
+        tableLayoutPanel15.Margin = new Padding(0);
+        tableLayoutPanel15.Name = "tableLayoutPanel15";
+        tableLayoutPanel15.RowCount = 2;
+        tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
+        tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+        tableLayoutPanel15.Size = new Size(330, 56);
+        tableLayoutPanel15.TabIndex = 3;
+        // 
+        // label16
+        // 
+        label16.BackColor = Color.White;
+        label16.Dock = DockStyle.Fill;
+        label16.Font = new Font("Segoe UI", 10.2F);
+        label16.ForeColor = Color.FromArgb(15, 23, 42);
+        label16.Location = new Point(3, 0);
+        label16.Name = "label16";
+        label16.Size = new Size(324, 22);
+        label16.TabIndex = 0;
+        label16.Text = "Điểm tích lũy";
+        label16.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // txtDiem
+        // 
+        txtDiem.BackColor=Color.White;
+        txtDiem.BorderStyle=BorderStyle.FixedSingle;
+        txtDiem.Cursor = Cursors.IBeam;
+        txtDiem.Dock = DockStyle.Top;
+        txtDiem.Enabled = false;
+        txtDiem.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtDiem.ForeColor=Color.FromArgb(15,23,42);
+        txtDiem.Location = new Point(0, 23);
+        txtDiem.Margin = new Padding(0, 1, 0, 5);
+        txtDiem.Name = "txtDiem";
+        txtDiem.Size = new Size(330, 30);
+        txtDiem.TabIndex = 7;
+        // 
+        // tableLayoutPanel17
+        // 
+        tableLayoutPanel17.AutoSize = true;
+        tableLayoutPanel17.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel17.FlowDirection = global::System.Windows.Forms.FlowDirection.LeftToRight;
+        tableLayoutPanel17.WrapContents = true;
+        tableLayoutPanel17.BackColor = Color.White;
+        tableLayoutPanel17.Controls.Add(btnThem);
+        tableLayoutPanel17.Controls.Add(btnSua);
+        tableLayoutPanel17.Controls.Add(btnXoa);
+        tableLayoutPanel17.Controls.Add(btnLamMoi);
+        tableLayoutPanel17.Dock = global::System.Windows.Forms.DockStyle.Bottom;
+        tableLayoutPanel17.Font = new Font("Segoe UI", 10.2F);
+        tableLayoutPanel17.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel17.Location = new Point(0, 412);
+        tableLayoutPanel17.Margin = new Padding(0);
+        tableLayoutPanel17.Name = "tableLayoutPanel17";
+        tableLayoutPanel17.Size = new Size(330, 88);
+        tableLayoutPanel17.TabIndex = 1;
+        // 
+        // btnThem
+        // 
+        btnThem.BackColor = Color.FromArgb(192, 255, 192);
+        btnThem.Dock = global::System.Windows.Forms.DockStyle.None;
+        btnThem.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnThem.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnThem.ForeColor = Color.FromArgb(15, 23, 42);
+        btnThem.Location = new Point(0, 4);
+        btnThem.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
+        btnThem.Name = "btnThem";
+        btnThem.Size = new global::System.Drawing.Size(156, 38);
+        btnThem.TabIndex = 10;
+        btnThem.Text = "Thêm";
+        btnThem.Click += btnThem_Click;
+        // 
+        // btnSua
+        // 
+        btnSua.BackColor = SystemColors.ControlLight;
+        btnSua.Dock = global::System.Windows.Forms.DockStyle.None;
+        btnSua.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnSua.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnSua.ForeColor = Color.FromArgb(15, 23, 42);
+        btnSua.Location = new Point(169, 4);
+        btnSua.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
+        btnSua.Name = "btnSua";
+        btnSua.Size = new global::System.Drawing.Size(156, 38);
+        btnSua.TabIndex = 11;
+        btnSua.Text = "Sửa";
+        btnSua.Click += btnSua_Click;
+        // 
+        // btnXoa
+        // 
+        btnXoa.BackColor = Color.FromArgb(255, 192, 192);
+        btnXoa.Dock = global::System.Windows.Forms.DockStyle.None;
+        btnXoa.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnXoa.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnXoa.ForeColor = Color.FromArgb(15, 23, 42);
+        btnXoa.Location = new Point(0, 48);
+        btnXoa.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
+        btnXoa.Name = "btnXoa";
+        btnXoa.Size = new global::System.Drawing.Size(156, 38);
+        btnXoa.TabIndex = 12;
+        btnXoa.Text = "Xóa";
+        btnXoa.Click += btnXoa_Click;
+        // 
+        // btnLamMoi
+        // 
+        btnLamMoi.BackColor = SystemColors.ControlLight;
+        btnLamMoi.Dock = global::System.Windows.Forms.DockStyle.None;
+        btnLamMoi.FlatAppearance.BorderColor = SystemColors.ActiveBorder;
+        btnLamMoi.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+        btnLamMoi.ForeColor = Color.FromArgb(15, 23, 42);
+        btnLamMoi.Location = new Point(169, 48);
+        btnLamMoi.Margin = new global::System.Windows.Forms.Padding(0, 4, 8, 0);
+        btnLamMoi.Name = "btnLamMoi";
+        btnLamMoi.Size = new global::System.Drawing.Size(156, 38);
+        btnLamMoi.TabIndex = 13;
+        btnLamMoi.Text = "Làm mới";
+        btnLamMoi.Click += btnLamMoi_Click;
+        // 
+        // frmKhachHang
+        // 
+        AutoScaleDimensions = new SizeF(120F, 120F);
+        AutoScaleMode = AutoScaleMode.Dpi;
+        BackColor = Color.FromArgb(248,250,252);
+        ClientSize = new Size(1182, 653);
+        Controls.Add(posLayout);
+        Font = new Font("Segoe UI", 10.2F);
+        ForeColor = SystemColors.ControlText;
+        MinimumSize = new Size(1060, 700);
+        Name = "frmKhachHang";
+        StartPosition = FormStartPosition.CenterParent;
+        Text = "Khách hàng | Pharmacy";
+        Load += frmKhachHang_Load;
+        posLayout.ResumeLayout(false);
+        tableLayoutPanel1.ResumeLayout(false);
+        groupBox2.ResumeLayout(false);
+        tableLayoutPanel3.ResumeLayout(false);
+        tableLayoutPanel4.ResumeLayout(false);
+        tableLayoutPanel4.PerformLayout();
+                //
+        // MaKH
+        //
+        this.MaKH.Name = "MaKH";
+        this.MaKH.DataPropertyName = "MaKH";
+        this.MaKH.HeaderText = "Mã khách hàng";
+        this.MaKH.ReadOnly = true;
+        this.MaKH.Resizable = DataGridViewTriState.False;
+        this.MaKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.MaKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.MaKH.MinimumWidth = 5;
+        this.MaKH.Width = 168;
+        this.MaKH.FillWeight = 128F;
+        //
+        // TenKH
+        //
+        this.TenKH.Name = "TenKH";
+        this.TenKH.DataPropertyName = "TenKH";
+        this.TenKH.HeaderText = "Tên khách hàng";
+        this.TenKH.ReadOnly = true;
+        this.TenKH.Resizable = DataGridViewTriState.False;
+        this.TenKH.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.TenKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.TenKH.MinimumWidth = 5;
+        this.TenKH.Width = 200;
+        this.TenKH.FillWeight = 220F;
+        //
+        // DienThoai
+        //
+        this.DienThoai.Name = "DienThoai";
+        this.DienThoai.DataPropertyName = "DienThoai";
+        this.DienThoai.HeaderText = "Số điện thoại";
+        this.DienThoai.ReadOnly = true;
+        this.DienThoai.Resizable = DataGridViewTriState.False;
+        this.DienThoai.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.DienThoai.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.DienThoai.MinimumWidth = 5;
+        this.DienThoai.Width = 151;
+        this.DienThoai.FillWeight = 104F;
+        //
+        // Diem
+        //
+        this.Diem.Name = "Diem";
+        this.Diem.DataPropertyName = "Diem";
+        this.Diem.HeaderText = "Điểm tích lũy";
+        this.Diem.ReadOnly = true;
+        this.Diem.Resizable = DataGridViewTriState.False;
+        this.Diem.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.Diem.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.Diem.MinimumWidth = 5;
+        this.Diem.Width = 150;
+        this.Diem.FillWeight = 56F;
+
+        this.dgvKhachHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+        this.dgvKhachHang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.MaKH, this.TenKH, this.DienThoai, this.Diem });
+        ((System.ComponentModel.ISupportInitialize)dgvKhachHang).EndInit();
+        groupBox6.ResumeLayout(false);
+        tableLayoutPanel7.ResumeLayout(false);
+        tableLayoutPanel7.PerformLayout();
+        tableLayoutPanel8.ResumeLayout(false);
+        tableLayoutPanel11.ResumeLayout(false);
+        tableLayoutPanel11.PerformLayout();
+        tableLayoutPanel13.ResumeLayout(false);
+        tableLayoutPanel13.PerformLayout();
+        tableLayoutPanel15.ResumeLayout(false);
+        tableLayoutPanel15.PerformLayout();
+        tableLayoutPanel17.ResumeLayout(false);
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnTimKiem.BackColor=Color.FromArgb(15, 118, 110);
+        btnTimKiem.FlatStyle = FlatStyle.Flat;
+        btnTimKiem.FlatAppearance.BorderSize = 0;
+        btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnTimKiem.Cursor = Cursors.Hand;
+        btnTimKiem.UseVisualStyleBackColor = false;btnTimKiem.ForeColor=Color.White;
+        btnThem.BackColor=Color.FromArgb(22, 101, 52);
+        btnThem.FlatStyle = FlatStyle.Flat;
+        btnThem.FlatAppearance.BorderSize = 0;
+        btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnThem.Cursor = Cursors.Hand;
+        btnThem.UseVisualStyleBackColor = false;btnThem.ForeColor=Color.White;
+        btnSua.BackColor=Color.FromArgb(15, 118, 110);
+        btnSua.FlatStyle = FlatStyle.Flat;
+        btnSua.FlatAppearance.BorderSize = 0;
+        btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnSua.Cursor = Cursors.Hand;
+        btnSua.UseVisualStyleBackColor = false;btnSua.ForeColor=Color.White;
+        btnXoa.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoa.FlatStyle = FlatStyle.Flat;
+        btnXoa.FlatAppearance.BorderSize = 0;
+        btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoa.Cursor = Cursors.Hand;
+        btnXoa.UseVisualStyleBackColor = false;btnXoa.ForeColor=Color.White;
+        btnLamMoi.BackColor=Color.FromArgb(15, 118, 110);
+        btnLamMoi.FlatStyle = FlatStyle.Flat;
+        btnLamMoi.FlatAppearance.BorderSize = 0;
+        btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnLamMoi.Cursor = Cursors.Hand;
+        btnLamMoi.UseVisualStyleBackColor = false;btnLamMoi.ForeColor=Color.White;
+        dgvKhachHang.BackgroundColor=Color.White;dgvKhachHang.EnableHeadersVisualStyles=false;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvKhachHang.DefaultCellStyle.BackColor=Color.White;dgvKhachHang.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvKhachHang.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvKhachHang.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvKhachHang.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(242, 246, 248);
+        dgvKhachHang.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvKhachHang.MultiSelect=false;
+        dgvKhachHang.AllowUserToResizeColumns=false;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvKhachHang.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvKhachHang.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvKhachHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvKhachHang.ColumnHeadersHeight=38;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                txtTimKiem.AutoSize=false;
+        txtTenKH.AutoSize=false;
+        txtDienThoai.AutoSize=false;
+        txtDiem.AutoSize=false;
+                dgvKhachHang.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvKhachHang.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvKhachHang.ColumnHeadersHeight=43;
+        
+        
+        
+        
+        ResumeLayout(false);
+    }
+
+    private global::System.Windows.Forms.TableLayoutPanel posLayout;
+    private global::System.Windows.Forms.Label posHeading;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+    private global::System.Windows.Forms.GroupBox groupBox2;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+    private global::System.Windows.Forms.Label label5;
+    private global::System.Windows.Forms.TextBox txtTimKiem;
+    private global::System.Windows.Forms.Button btnTimKiem;
+    private global::System.Windows.Forms.DataGridView dgvKhachHang;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn MaKH;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn TenKH;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn DienThoai;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn Diem;
+    private global::System.Windows.Forms.GroupBox groupBox6;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+    private global::System.Windows.Forms.Label label12;
+    private global::System.Windows.Forms.TextBox txtTenKH;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
+    private global::System.Windows.Forms.Label label14;
+    private global::System.Windows.Forms.TextBox txtDienThoai;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+    private global::System.Windows.Forms.Label label16;
+    private global::System.Windows.Forms.TextBox txtDiem;
+    private global::System.Windows.Forms.FlowLayoutPanel tableLayoutPanel17;
+    private global::System.Windows.Forms.Button btnThem;
+    private global::System.Windows.Forms.Button btnSua;
+    private global::System.Windows.Forms.Button btnXoa;
+    private global::System.Windows.Forms.Button btnLamMoi;
+    private global::System.Windows.Forms.Button btnLamLai => btnLamMoi;
+}
+
+}

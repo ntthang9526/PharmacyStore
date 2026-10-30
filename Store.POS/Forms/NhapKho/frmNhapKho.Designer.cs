@@ -1,0 +1,2225 @@
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System;
+#nullable disable
+namespace Store.POS
+{
+
+partial class frmNhapKho
+{
+    private global::System.ComponentModel.IContainer components = null;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) components?.Dispose();
+        base.Dispose(disposing);
+    }
+
+    private void InitializeComponent()
+    {
+        this.dgvPhieuColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        this.dgvPhieuColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+        components = new global::System.ComponentModel.Container();
+        posLayout = new global::System.Windows.Forms.TableLayoutPanel();
+        posHeading = new global::System.Windows.Forms.Label();
+        tableLayoutPanel1 = new global::System.Windows.Forms.TableLayoutPanel();
+        groupBox2 = new global::System.Windows.Forms.GroupBox();
+        tableLayoutPanel3 = new global::System.Windows.Forms.TableLayoutPanel();
+        dgvPhieu = new global::System.Windows.Forms.DataGridView();
+        
+        
+        
+        
+        tableLayoutPanel4 = new global::System.Windows.Forms.TableLayoutPanel();
+        btnXoaDong = new global::System.Windows.Forms.Button();
+        btnXoaPhieu = new global::System.Windows.Forms.Button();
+        tableLayoutPanel5 = new global::System.Windows.Forms.TableLayoutPanel();
+        groupBox6 = new global::System.Windows.Forms.GroupBox();
+        tableLayoutPanel7 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel8 = new global::System.Windows.Forms.TableLayoutPanel();
+        label9 = new global::System.Windows.Forms.Label();
+        tableLayoutPanel10 = new global::System.Windows.Forms.TableLayoutPanel();
+        cboNhaCungCap = new global::System.Windows.Forms.ComboBox();
+        btnThemNCC = new global::System.Windows.Forms.Button();
+        tableLayoutPanel11 = new global::System.Windows.Forms.TableLayoutPanel();
+        label12 = new global::System.Windows.Forms.Label();
+        txtGhiChu = new global::System.Windows.Forms.TextBox();
+        lblNgayNhapGiaTri = new global::System.Windows.Forms.Label();
+        groupBox13 = new global::System.Windows.Forms.GroupBox();
+        tableLayoutPanel14 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel15 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel16 = new global::System.Windows.Forms.TableLayoutPanel();
+        label17 = new global::System.Windows.Forms.Label();
+        tableLayoutPanel18 = new global::System.Windows.Forms.TableLayoutPanel();
+        cboThuoc = new global::System.Windows.Forms.ComboBox();
+        btnTaoThuoc = new global::System.Windows.Forms.Button();
+        tableLayoutPanel19 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel20 = new global::System.Windows.Forms.TableLayoutPanel();
+        label21 = new global::System.Windows.Forms.Label();
+        txtSoLo = new global::System.Windows.Forms.TextBox();
+        tableLayoutPanel22 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel23 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel24 = new global::System.Windows.Forms.TableLayoutPanel();
+        label25 = new global::System.Windows.Forms.Label();
+        dtpHanDung = new global::System.Windows.Forms.DateTimePicker();
+        tableLayoutPanel26 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel27 = new global::System.Windows.Forms.TableLayoutPanel();
+        label28 = new global::System.Windows.Forms.Label();
+        nudSoLuong = new global::System.Windows.Forms.NumericUpDown();
+        tableLayoutPanel29 = new global::System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel30 = new global::System.Windows.Forms.TableLayoutPanel();
+        label31 = new global::System.Windows.Forms.Label();
+        nudGiaNhap = new global::System.Windows.Forms.NumericUpDown();
+        tableLayoutPanel32 = new global::System.Windows.Forms.TableLayoutPanel();
+        btnCapNhatDong = new global::System.Windows.Forms.Button();
+        btnThemThuoc = new global::System.Windows.Forms.Button();
+        tableLayoutPanel33 = new global::System.Windows.Forms.TableLayoutPanel();
+        lblTongVonText = new global::System.Windows.Forms.Label();
+        lblTongVon = new global::System.Windows.Forms.Label();
+        tableLayoutPanel34 = new global::System.Windows.Forms.TableLayoutPanel();
+        btnLuu = new global::System.Windows.Forms.Button();
+        posLayout.SuspendLayout();
+        tableLayoutPanel1.SuspendLayout();
+        groupBox2.SuspendLayout();
+        tableLayoutPanel3.SuspendLayout();
+        ((global::System.ComponentModel.ISupportInitialize)dgvPhieu).BeginInit();
+        tableLayoutPanel4.SuspendLayout();
+        tableLayoutPanel5.SuspendLayout();
+        groupBox6.SuspendLayout();
+        tableLayoutPanel7.SuspendLayout();
+        tableLayoutPanel8.SuspendLayout();
+        tableLayoutPanel10.SuspendLayout();
+        tableLayoutPanel11.SuspendLayout();
+        groupBox13.SuspendLayout();
+        tableLayoutPanel14.SuspendLayout();
+        tableLayoutPanel15.SuspendLayout();
+        tableLayoutPanel16.SuspendLayout();
+        tableLayoutPanel18.SuspendLayout();
+        tableLayoutPanel19.SuspendLayout();
+        tableLayoutPanel20.SuspendLayout();
+        tableLayoutPanel22.SuspendLayout();
+        tableLayoutPanel23.SuspendLayout();
+        tableLayoutPanel24.SuspendLayout();
+        tableLayoutPanel26.SuspendLayout();
+        tableLayoutPanel27.SuspendLayout();
+        ((global::System.ComponentModel.ISupportInitialize)nudSoLuong).BeginInit();
+        tableLayoutPanel29.SuspendLayout();
+        tableLayoutPanel30.SuspendLayout();
+        ((global::System.ComponentModel.ISupportInitialize)nudGiaNhap).BeginInit();
+        tableLayoutPanel32.SuspendLayout();
+        tableLayoutPanel33.SuspendLayout();
+        tableLayoutPanel34.SuspendLayout();
+        SuspendLayout();
+
+        // posLayout
+        posLayout.Name = "posLayout";
+        posLayout.Text = "";
+        posLayout.Location = new global::System.Drawing.Point(0, 0);
+        posLayout.Size = new global::System.Drawing.Size(1182, 653);
+        posLayout.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        posLayout.Padding = new global::System.Windows.Forms.Padding(12, 12, 12, 12);
+        posLayout.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        posLayout.AutoSize = false;
+        posLayout.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        posLayout.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        posLayout.ForeColor = Color.FromArgb(15, 23, 42);
+        posLayout.BackColor = Color.FromArgb(242, 246, 248);
+        posLayout.Cursor = global::System.Windows.Forms.Cursors.Default;
+        posLayout.TabIndex = 0;
+        posLayout.TabStop = false;
+        posLayout.AccessibleName = null;
+        posLayout.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        posLayout.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        posLayout.RowCount = 2;
+        posLayout.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        posLayout.AutoScroll = false;
+        posLayout.Visible = true;
+        posLayout.ColumnCount = 1;
+        posLayout.Enabled = true;
+        posLayout.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        posLayout.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 48F));
+        posLayout.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // posHeading
+        posHeading.Name = "posHeading";
+        posHeading.Text = "Nhập kho";
+        posHeading.Location = new global::System.Drawing.Point(15, 12);
+        posHeading.Size = new global::System.Drawing.Size(1152, 48);
+        posHeading.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        posHeading.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        posHeading.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        posHeading.AutoSize = false;
+        posHeading.Font = new Font("Segoe UI Semibold",16F,FontStyle.Bold);
+        posHeading.ForeColor = Color.FromArgb(15,23,42);
+        posHeading.BackColor = Color.FromArgb(242, 246, 248);
+        posHeading.Cursor = global::System.Windows.Forms.Cursors.Default;
+        posHeading.TabIndex = 0;
+        posHeading.TabStop = false;
+        posHeading.AccessibleName = null;
+        posHeading.AutoEllipsis = false;
+        posHeading.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        posHeading.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        posHeading.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        posHeading.Visible = true;
+        posHeading.Enabled = true;
+
+        // tableLayoutPanel1
+        tableLayoutPanel1.Name = "tableLayoutPanel1";
+        tableLayoutPanel1.Text = "";
+        tableLayoutPanel1.Location = new global::System.Drawing.Point(12, 60);
+        tableLayoutPanel1.Size = new global::System.Drawing.Size(1158, 581);
+        tableLayoutPanel1.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel1.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel1.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel1.AutoSize = false;
+        tableLayoutPanel1.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel1.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel1.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel1.BackColor = Color.FromArgb(242, 246, 248);
+        tableLayoutPanel1.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel1.TabIndex = 1;
+        tableLayoutPanel1.TabStop = false;
+        tableLayoutPanel1.AccessibleName = null;
+        tableLayoutPanel1.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel1.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel1.RowCount = 1;
+        tableLayoutPanel1.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel1.AutoScroll = false;
+        tableLayoutPanel1.Visible = true;
+        tableLayoutPanel1.ColumnCount = 2;
+        tableLayoutPanel1.Enabled = true;
+        tableLayoutPanel1.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 370F));
+        tableLayoutPanel1.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // groupBox2
+        groupBox2.Name = "groupBox2";
+        groupBox2.Text = "Chi tiết phiếu nhập";
+        groupBox2.Location = new global::System.Drawing.Point(0, 0);
+        groupBox2.Size = new global::System.Drawing.Size(776, 581);
+        groupBox2.Margin = new global::System.Windows.Forms.Padding(0, 0, 12, 0);
+        groupBox2.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
+        groupBox2.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        groupBox2.AutoSize = false;
+        groupBox2.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        groupBox2.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        groupBox2.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox2.BackColor = Color.White;
+        groupBox2.Cursor = global::System.Windows.Forms.Cursors.Default;
+        groupBox2.TabIndex = 0;
+        groupBox2.TabStop = false;
+        groupBox2.AccessibleName = null;
+        groupBox2.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        groupBox2.Visible = true;
+        groupBox2.Enabled = true;
+
+        // tableLayoutPanel3
+        tableLayoutPanel3.Name = "tableLayoutPanel3";
+        tableLayoutPanel3.Text = "";
+        tableLayoutPanel3.Location = new global::System.Drawing.Point(12, 25);
+        tableLayoutPanel3.Size = new global::System.Drawing.Size(752, 544);
+        tableLayoutPanel3.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel3.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel3.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel3.AutoSize = false;
+        tableLayoutPanel3.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel3.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel3.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel3.BackColor = Color.White;
+        tableLayoutPanel3.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel3.TabIndex = 0;
+        tableLayoutPanel3.TabStop = false;
+        tableLayoutPanel3.AccessibleName = null;
+        tableLayoutPanel3.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel3.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel3.RowCount = 2;
+        tableLayoutPanel3.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel3.AutoScroll = false;
+        tableLayoutPanel3.Visible = true;
+        tableLayoutPanel3.ColumnCount = 1;
+        tableLayoutPanel3.Enabled = true;
+        tableLayoutPanel3.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel3.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel3.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 48F));
+
+        // dgvPhieu
+        dgvPhieu.Name = "dgvPhieu";
+        dgvPhieu.Text = "";
+        dgvPhieu.Location = new global::System.Drawing.Point(3, 4);
+        dgvPhieu.Size = new global::System.Drawing.Size(746, 488);
+        dgvPhieu.Margin = new global::System.Windows.Forms.Padding(3, 4, 3, 4);
+        dgvPhieu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieu.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        dgvPhieu.AutoSize = false;
+        dgvPhieu.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        dgvPhieu.ForeColor = Color.FromArgb(15, 23, 42);
+        dgvPhieu.BackColor = Color.White;
+        dgvPhieu.Cursor = global::System.Windows.Forms.Cursors.Default;
+        dgvPhieu.TabIndex = 0;
+        dgvPhieu.TabStop = true;
+        dgvPhieu.AccessibleName = null;
+        dgvPhieu.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
+        dgvPhieu.ReadOnly = true;
+        dgvPhieu.ScrollBars = global::System.Windows.Forms.ScrollBars.Both;
+        dgvPhieu.AllowUserToAddRows = false;
+        dgvPhieu.AllowUserToDeleteRows = false;
+        dgvPhieu.AllowUserToResizeRows = false;
+        dgvPhieu.AllowUserToResizeColumns = true;
+        dgvPhieu.RowHeadersVisible = false;
+        dgvPhieu.MultiSelect = false;
+        dgvPhieu.SelectionMode = global::System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+        dgvPhieu.ShowCellToolTips = true;
+        dgvPhieu.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        dgvPhieu.AutoSizeRowsMode = global::System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
+        dgvPhieu.BackgroundColor = Color.White;
+        dgvPhieu.GridColor = Color.FromArgb(226, 232, 240);
+        dgvPhieu.CellBorderStyle = global::System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+        dgvPhieu.EnableHeadersVisualStyles = false;
+        dgvPhieu.ColumnHeadersHeight = 59;
+        dgvPhieu.ColumnHeadersHeightSizeMode = global::System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dgvPhieu.ColumnHeadersVisible = true;
+        dgvPhieu.Visible = true;
+        dgvPhieu.Enabled = true;
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+        dgvPhieuDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
+        dgvPhieuDefaultCellStyle.ForeColor = Color.FromArgb(15, 23, 42);
+        dgvPhieuDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.GradientActiveCaption;
+        dgvPhieuDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.ControlText;
+        dgvPhieuDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        dgvPhieuDefaultCellStyle.Format = "";
+        dgvPhieuDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(4, 4, 4, 4);
+        dgvPhieuDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.False;
+        dgvPhieuDefaultCellStyle.NullValue = "";
+        dgvPhieu.DefaultCellStyle = dgvPhieuDefaultCellStyle;
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumnHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumnHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(242, 246, 248);
+        dgvPhieuColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(15, 23, 42);
+        dgvPhieuColumnHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumnHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumnHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        dgvPhieuColumnHeadersDefaultCellStyle.Format = "";
+        dgvPhieuColumnHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumnHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
+        dgvPhieuColumnHeadersDefaultCellStyle.NullValue = "";
+        dgvPhieu.ColumnHeadersDefaultCellStyle = dgvPhieuColumnHeadersDefaultCellStyle;
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuAlternatingRowsDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuAlternatingRowsDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuAlternatingRowsDefaultCellStyle.BackColor = global::System.Drawing.Color.White;
+        dgvPhieuAlternatingRowsDefaultCellStyle.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuAlternatingRowsDefaultCellStyle.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuAlternatingRowsDefaultCellStyle.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuAlternatingRowsDefaultCellStyle.Font = null;
+        dgvPhieuAlternatingRowsDefaultCellStyle.Format = "";
+        dgvPhieuAlternatingRowsDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuAlternatingRowsDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuAlternatingRowsDefaultCellStyle.NullValue = "";
+        dgvPhieu.AlternatingRowsDefaultCellStyle = dgvPhieuAlternatingRowsDefaultCellStyle;
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuRowHeadersDefaultCellStyle = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuRowHeadersDefaultCellStyle.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+        dgvPhieuRowHeadersDefaultCellStyle.BackColor = Color.FromArgb(242, 246, 248);
+        dgvPhieuRowHeadersDefaultCellStyle.ForeColor = global::System.Drawing.SystemColors.WindowText;
+        dgvPhieuRowHeadersDefaultCellStyle.SelectionBackColor = global::System.Drawing.SystemColors.Highlight;
+        dgvPhieuRowHeadersDefaultCellStyle.SelectionForeColor = global::System.Drawing.SystemColors.HighlightText;
+        dgvPhieuRowHeadersDefaultCellStyle.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        dgvPhieuRowHeadersDefaultCellStyle.Format = "";
+        dgvPhieuRowHeadersDefaultCellStyle.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuRowHeadersDefaultCellStyle.WrapMode = global::System.Windows.Forms.DataGridViewTriState.True;
+        dgvPhieuRowHeadersDefaultCellStyle.NullValue = "";
+        dgvPhieu.RowHeadersDefaultCellStyle = dgvPhieuRowHeadersDefaultCellStyle;
+        dgvPhieu.RowTemplate.Height = 34;
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn1Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn1Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn1Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn1Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn1Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn1Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn1Style.Font = null;
+        dgvPhieuColumn1Style.Format = "";
+        dgvPhieuColumn1Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn1Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn1Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn2Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn2Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn2Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn2Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn2Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn2Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn2Style.Font = null;
+        dgvPhieuColumn2Style.Format = "";
+        dgvPhieuColumn2Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn2Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn2Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn3Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn3Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn3Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn3Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn3Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn3Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn3Style.Font = null;
+        dgvPhieuColumn3Style.Format = "";
+        dgvPhieuColumn3Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn3Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn3Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn4Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn4Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn4Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn4Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn4Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn4Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn4Style.Font = null;
+        dgvPhieuColumn4Style.Format = "";
+        dgvPhieuColumn4Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn4Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn4Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn5Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn5Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn5Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn5Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn5Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn5Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn5Style.Font = null;
+        dgvPhieuColumn5Style.Format = "dd/MM/yyyy";
+        dgvPhieuColumn5Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn5Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn5Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn6Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn6Style.Alignment = global::System.Windows.Forms.DataGridViewContentAlignment.NotSet;
+        dgvPhieuColumn6Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn6Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn6Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn6Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn6Style.Font = null;
+        dgvPhieuColumn6Style.Format = "";
+        dgvPhieuColumn6Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn6Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn6Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn7Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn7Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+        dgvPhieuColumn7Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn7Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn7Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn7Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn7Style.Font = null;
+        dgvPhieuColumn7Style.Format = "N0";
+        dgvPhieuColumn7Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn7Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn7Style.NullValue = "";
+        
+        
+
+        
+        global::System.Windows.Forms.DataGridViewCellStyle dgvPhieuColumn8Style = new global::System.Windows.Forms.DataGridViewCellStyle();
+        dgvPhieuColumn8Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+        dgvPhieuColumn8Style.BackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn8Style.ForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn8Style.SelectionBackColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn8Style.SelectionForeColor = global::System.Drawing.Color.Empty;
+        dgvPhieuColumn8Style.Font = null;
+        dgvPhieuColumn8Style.Format = "N0";
+        dgvPhieuColumn8Style.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dgvPhieuColumn8Style.WrapMode = global::System.Windows.Forms.DataGridViewTriState.NotSet;
+        dgvPhieuColumn8Style.NullValue = "";
+        
+
+        // tableLayoutPanel4
+        tableLayoutPanel4.Name = "tableLayoutPanel4";
+        tableLayoutPanel4.Text = "";
+        tableLayoutPanel4.Location = new global::System.Drawing.Point(0, 496);
+        tableLayoutPanel4.Size = new global::System.Drawing.Size(752, 48);
+        tableLayoutPanel4.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel4.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel4.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel4.AutoSize = true;
+        tableLayoutPanel4.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel4.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel4.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel4.BackColor = Color.White;
+        tableLayoutPanel4.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel4.TabIndex = 1;
+        tableLayoutPanel4.TabStop = false;
+        tableLayoutPanel4.AccessibleName = null;
+        tableLayoutPanel4.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel4.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel4.RowCount = 1;
+        tableLayoutPanel4.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel4.AutoScroll = false;
+        tableLayoutPanel4.Visible = true;
+        tableLayoutPanel4.ColumnCount = 2;
+        tableLayoutPanel4.Enabled = true;
+        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel4.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel4.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
+
+        // btnXoaDong
+        btnXoaDong.Name = "btnXoaDong";
+        btnXoaDong.Text = "Xóa dòng";
+        btnXoaDong.Location = new global::System.Drawing.Point(0, 4);
+        btnXoaDong.Size = new global::System.Drawing.Size(372, 44);
+        btnXoaDong.Margin = new global::System.Windows.Forms.Padding(0, 4, 4, 0);
+        btnXoaDong.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnXoaDong.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        btnXoaDong.AutoSize = false;
+        btnXoaDong.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnXoaDong.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnXoaDong.ForeColor = Color.FromArgb(15, 23, 42);
+        btnXoaDong.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
+        btnXoaDong.TabIndex = 1;
+        btnXoaDong.TabStop = true;
+        btnXoaDong.AccessibleName = null;
+        btnXoaDong.AutoEllipsis = false;
+        btnXoaDong.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnXoaDong.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnXoaDong.Visible = true;
+        btnXoaDong.Enabled = true;
+        btnXoaDong.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        // btnXoaPhieu
+        btnXoaPhieu.Name = "btnXoaPhieu";
+        btnXoaPhieu.Text = "Bỏ phiếu nháp";
+        btnXoaPhieu.Location = new global::System.Drawing.Point(380, 4);
+        btnXoaPhieu.Size = new global::System.Drawing.Size(372, 44);
+        btnXoaPhieu.Margin = new global::System.Windows.Forms.Padding(4, 4, 0, 0);
+        btnXoaPhieu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnXoaPhieu.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        btnXoaPhieu.AutoSize = false;
+        btnXoaPhieu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnXoaPhieu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnXoaPhieu.ForeColor = Color.FromArgb(15, 23, 42);
+        btnXoaPhieu.BackColor = global::System.Drawing.Color.FromArgb(255, 255, 192, 192);
+        btnXoaPhieu.TabIndex = 2;
+        btnXoaPhieu.TabStop = true;
+        btnXoaPhieu.AccessibleName = null;
+        btnXoaPhieu.AutoEllipsis = false;
+        btnXoaPhieu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnXoaPhieu.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnXoaPhieu.Visible = true;
+        btnXoaPhieu.Enabled = true;
+        btnXoaPhieu.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        // tableLayoutPanel5
+        tableLayoutPanel5.Name = "tableLayoutPanel5";
+        tableLayoutPanel5.Text = "";
+        tableLayoutPanel5.Location = new global::System.Drawing.Point(788, 0);
+        tableLayoutPanel5.Size = new global::System.Drawing.Size(370, 581);
+        tableLayoutPanel5.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel5.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel5.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel5.AutoSize = false;
+        tableLayoutPanel5.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel5.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel5.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel5.BackColor = Color.FromArgb(242, 246, 248);
+        tableLayoutPanel5.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel5.TabIndex = 1;
+        tableLayoutPanel5.TabStop = false;
+        tableLayoutPanel5.AccessibleName = null;
+        tableLayoutPanel5.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel5.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel5.RowCount = 3;
+        tableLayoutPanel5.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel5.AutoScroll = false;
+        tableLayoutPanel5.Visible = true;
+        tableLayoutPanel5.ColumnCount = 1;
+        tableLayoutPanel5.Enabled = true;
+        tableLayoutPanel5.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 150F));
+        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 306F));
+        tableLayoutPanel5.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // groupBox6
+        groupBox6.Name = "groupBox6";
+        groupBox6.Text = "Thông tin phiếu nhập";
+        groupBox6.Location = new global::System.Drawing.Point(0, 0);
+        groupBox6.Size = new global::System.Drawing.Size(370, 150);
+        groupBox6.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        groupBox6.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
+        groupBox6.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        groupBox6.AutoSize = false;
+        groupBox6.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        groupBox6.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        groupBox6.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox6.BackColor = Color.White;
+        groupBox6.Cursor = global::System.Windows.Forms.Cursors.Default;
+        groupBox6.TabIndex = 0;
+        groupBox6.TabStop = false;
+        groupBox6.AccessibleName = null;
+        groupBox6.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        groupBox6.Visible = true;
+        groupBox6.Enabled = true;
+
+        // tableLayoutPanel7
+        tableLayoutPanel7.Name = "tableLayoutPanel7";
+        tableLayoutPanel7.Text = "";
+        tableLayoutPanel7.Location = new global::System.Drawing.Point(12, 25);
+        tableLayoutPanel7.Size = new global::System.Drawing.Size(346, 113);
+        tableLayoutPanel7.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel7.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel7.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel7.AutoSize = true;
+        tableLayoutPanel7.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel7.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel7.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel7.BackColor = Color.White;
+        tableLayoutPanel7.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel7.TabIndex = 0;
+        tableLayoutPanel7.TabStop = false;
+        tableLayoutPanel7.AccessibleName = null;
+        tableLayoutPanel7.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel7.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel7.RowCount = 2;
+        tableLayoutPanel7.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel7.AutoScroll = false;
+        tableLayoutPanel7.Visible = true;
+        tableLayoutPanel7.ColumnCount = 1;
+        tableLayoutPanel7.Enabled = true;
+        tableLayoutPanel7.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+        tableLayoutPanel7.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel8
+        tableLayoutPanel8.Name = "tableLayoutPanel8";
+        tableLayoutPanel8.Text = "";
+        tableLayoutPanel8.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel8.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel8.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel8.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel8.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel8.AutoSize = false;
+        tableLayoutPanel8.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel8.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel8.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel8.BackColor = Color.White;
+        tableLayoutPanel8.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel8.TabIndex = 0;
+        tableLayoutPanel8.TabStop = false;
+        tableLayoutPanel8.AccessibleName = null;
+        tableLayoutPanel8.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel8.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel8.RowCount = 2;
+        tableLayoutPanel8.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel8.AutoScroll = false;
+        tableLayoutPanel8.Visible = true;
+        tableLayoutPanel8.ColumnCount = 1;
+        tableLayoutPanel8.Enabled = true;
+        tableLayoutPanel8.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel8.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label9
+        label9.Name = "label9";
+        label9.Text = "Nhà cung cấp";
+        label9.Location = new global::System.Drawing.Point(3, 0);
+        label9.Size = new global::System.Drawing.Size(340, 22);
+        label9.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label9.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label9.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label9.AutoSize = false;
+        label9.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label9.ForeColor = Color.FromArgb(15, 23, 42);
+        label9.BackColor = Color.White;
+        label9.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label9.TabIndex = 0;
+        label9.TabStop = false;
+        label9.AccessibleName = null;
+        label9.AutoEllipsis = false;
+        label9.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label9.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label9.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label9.Visible = true;
+        label9.Enabled = true;
+
+        // tableLayoutPanel10
+        tableLayoutPanel10.Name = "tableLayoutPanel10";
+        tableLayoutPanel10.Text = "";
+        tableLayoutPanel10.Location = new global::System.Drawing.Point(0, 22);
+        tableLayoutPanel10.Size = new global::System.Drawing.Size(346, 32);
+        tableLayoutPanel10.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel10.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel10.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        tableLayoutPanel10.AutoSize = false;
+        tableLayoutPanel10.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel10.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel10.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel10.BackColor = Color.White;
+        tableLayoutPanel10.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel10.TabIndex = 1;
+        tableLayoutPanel10.TabStop = false;
+        tableLayoutPanel10.AccessibleName = null;
+        tableLayoutPanel10.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel10.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel10.RowCount = 1;
+        tableLayoutPanel10.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel10.AutoScroll = false;
+        tableLayoutPanel10.Visible = true;
+        tableLayoutPanel10.ColumnCount = 2;
+        tableLayoutPanel10.Enabled = true;
+        tableLayoutPanel10.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel10.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 38F));
+        tableLayoutPanel10.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // cboNhaCungCap
+        cboNhaCungCap.Name = "cboNhaCungCap";
+        cboNhaCungCap.Text = "";
+        cboNhaCungCap.Location = new global::System.Drawing.Point(0, 0);
+        cboNhaCungCap.Size = new global::System.Drawing.Size(302, 31);
+        cboNhaCungCap.Margin = new global::System.Windows.Forms.Padding(0, 0, 6, 0);
+        cboNhaCungCap.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        cboNhaCungCap.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        cboNhaCungCap.AutoSize = false;
+        cboNhaCungCap.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        cboNhaCungCap.ForeColor=Color.FromArgb(15,23,42);
+        cboNhaCungCap.BackColor=Color.White;
+        cboNhaCungCap.Cursor = global::System.Windows.Forms.Cursors.Default;
+        cboNhaCungCap.TabIndex = 1;
+        cboNhaCungCap.TabStop = true;
+        cboNhaCungCap.AccessibleName = null;
+        cboNhaCungCap.FlatStyle=FlatStyle.Standard;
+        cboNhaCungCap.MaxLength = 0;
+        cboNhaCungCap.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
+        cboNhaCungCap.DropDownWidth = 302;
+        cboNhaCungCap.DropDownHeight = 106;
+        cboNhaCungCap.IntegralHeight = true;
+        cboNhaCungCap.Visible = true;
+        cboNhaCungCap.Enabled = true;
+
+        // btnThemNCC
+        btnThemNCC.Name = "btnThemNCC";
+        btnThemNCC.Text = "+";
+        btnThemNCC.Location = new global::System.Drawing.Point(308, 0);
+        btnThemNCC.Size = new global::System.Drawing.Size(38, 31);
+        btnThemNCC.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnThemNCC.Padding = new global::System.Windows.Forms.Padding(0, 1, 0, 0);
+        btnThemNCC.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        btnThemNCC.AutoSize = false;
+        btnThemNCC.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnThemNCC.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnThemNCC.ForeColor = Color.FromArgb(15, 23, 42);
+        btnThemNCC.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
+        btnThemNCC.TabIndex = 2;
+        btnThemNCC.TabStop = true;
+        btnThemNCC.AccessibleName = "Thêm nhà cung cấp";
+        btnThemNCC.AutoEllipsis = false;
+        btnThemNCC.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnThemNCC.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnThemNCC.Visible = true;
+        btnThemNCC.Enabled = true;
+        btnThemNCC.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        // tableLayoutPanel11
+        tableLayoutPanel11.Name = "tableLayoutPanel11";
+        tableLayoutPanel11.Text = "";
+        tableLayoutPanel11.Location = new global::System.Drawing.Point(0, 56);
+        tableLayoutPanel11.Size = new global::System.Drawing.Size(346, 57);
+        tableLayoutPanel11.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel11.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel11.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel11.AutoSize = false;
+        tableLayoutPanel11.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel11.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel11.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel11.BackColor = Color.White;
+        tableLayoutPanel11.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel11.TabIndex = 1;
+        tableLayoutPanel11.TabStop = false;
+        tableLayoutPanel11.AccessibleName = null;
+        tableLayoutPanel11.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel11.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel11.RowCount = 2;
+        tableLayoutPanel11.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel11.AutoScroll = false;
+        tableLayoutPanel11.Visible = true;
+        tableLayoutPanel11.ColumnCount = 1;
+        tableLayoutPanel11.Enabled = true;
+        tableLayoutPanel11.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel11.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel11.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label12
+        label12.Name = "label12";
+        label12.Text = "Ghi chú phiếu nhập";
+        label12.Location = new global::System.Drawing.Point(3, 0);
+        label12.Size = new global::System.Drawing.Size(340, 22);
+        label12.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label12.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label12.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label12.AutoSize = false;
+        label12.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label12.ForeColor = Color.FromArgb(15, 23, 42);
+        label12.BackColor = Color.White;
+        label12.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label12.TabIndex = 0;
+        label12.TabStop = false;
+        label12.AccessibleName = null;
+        label12.AutoEllipsis = false;
+        label12.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label12.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label12.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label12.Visible = true;
+        label12.Enabled = true;
+
+        // txtGhiChu
+        txtGhiChu.Name = "txtGhiChu";
+        txtGhiChu.Text = "";
+        txtGhiChu.Location = new global::System.Drawing.Point(0, 23);
+        txtGhiChu.Size = new global::System.Drawing.Size(346, 30);
+        txtGhiChu.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
+        txtGhiChu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        txtGhiChu.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        txtGhiChu.AutoSize=false;
+        txtGhiChu.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtGhiChu.ForeColor=Color.FromArgb(15,23,42);
+        txtGhiChu.BackColor=Color.White;
+        txtGhiChu.Cursor = global::System.Windows.Forms.Cursors.IBeam;
+        txtGhiChu.TabIndex = 5;
+        txtGhiChu.TabStop = true;
+        txtGhiChu.AccessibleName = null;
+        txtGhiChu.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
+        txtGhiChu.BorderStyle=BorderStyle.FixedSingle;
+        txtGhiChu.Multiline = false;
+        txtGhiChu.ReadOnly = false;
+        txtGhiChu.MaxLength = 250;
+        txtGhiChu.PlaceholderText = "";
+        txtGhiChu.CharacterCasing = global::System.Windows.Forms.CharacterCasing.Normal;
+        txtGhiChu.ScrollBars = global::System.Windows.Forms.ScrollBars.None;
+        txtGhiChu.Visible = true;
+        txtGhiChu.Enabled = true;
+
+        // lblNgayNhapGiaTri
+        lblNgayNhapGiaTri.Name = "lblNgayNhapGiaTri";
+        lblNgayNhapGiaTri.Text = "dd/MM/yyyy";
+        lblNgayNhapGiaTri.Location = new global::System.Drawing.Point(583, 40);
+        lblNgayNhapGiaTri.Size = new global::System.Drawing.Size(103, 31);
+        lblNgayNhapGiaTri.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        lblNgayNhapGiaTri.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        lblNgayNhapGiaTri.Dock = global::System.Windows.Forms.DockStyle.None;
+        lblNgayNhapGiaTri.Anchor = global::System.Windows.Forms.AnchorStyles.Top | global::System.Windows.Forms.AnchorStyles.Left;
+        lblNgayNhapGiaTri.AutoSize = false;
+        lblNgayNhapGiaTri.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        lblNgayNhapGiaTri.ForeColor = Color.FromArgb(15, 23, 42);
+        lblNgayNhapGiaTri.BackColor = Color.White;
+        lblNgayNhapGiaTri.Cursor = global::System.Windows.Forms.Cursors.Default;
+        lblNgayNhapGiaTri.TabIndex = 3;
+        lblNgayNhapGiaTri.TabStop = false;
+        lblNgayNhapGiaTri.AccessibleName = null;
+        lblNgayNhapGiaTri.AutoEllipsis = false;
+        lblNgayNhapGiaTri.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        lblNgayNhapGiaTri.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        lblNgayNhapGiaTri.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        lblNgayNhapGiaTri.Visible = false;
+        lblNgayNhapGiaTri.Enabled = true;
+
+        // groupBox13
+        groupBox13.Name = "groupBox13";
+        groupBox13.Text = "Thêm thuốc vào phiếu";
+        groupBox13.Location = new global::System.Drawing.Point(0, 150);
+        groupBox13.Size = new global::System.Drawing.Size(370, 306);
+        groupBox13.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        groupBox13.Padding = new global::System.Windows.Forms.Padding(12, 2, 12, 12);
+        groupBox13.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        groupBox13.AutoSize = false;
+        groupBox13.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        groupBox13.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        groupBox13.ForeColor = Color.FromArgb(15, 23, 42);
+        groupBox13.BackColor = Color.White;
+        groupBox13.Cursor = global::System.Windows.Forms.Cursors.Default;
+        groupBox13.TabIndex = 1;
+        groupBox13.TabStop = false;
+        groupBox13.AccessibleName = null;
+        groupBox13.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        groupBox13.Visible = true;
+        groupBox13.Enabled = true;
+
+        // tableLayoutPanel14
+        tableLayoutPanel14.Name = "tableLayoutPanel14";
+        tableLayoutPanel14.Text = "";
+        tableLayoutPanel14.Location = new global::System.Drawing.Point(12, 25);
+        tableLayoutPanel14.Size = new global::System.Drawing.Size(346, 269);
+        tableLayoutPanel14.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel14.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel14.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel14.AutoSize = false;
+        tableLayoutPanel14.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel14.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel14.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel14.BackColor = Color.White;
+        tableLayoutPanel14.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel14.TabIndex = 0;
+        tableLayoutPanel14.TabStop = false;
+        tableLayoutPanel14.AccessibleName = null;
+        tableLayoutPanel14.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel14.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel14.RowCount = 5;
+        tableLayoutPanel14.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel14.AutoScroll = false;
+        tableLayoutPanel14.Visible = true;
+        tableLayoutPanel14.ColumnCount = 1;
+        tableLayoutPanel14.Enabled = true;
+        tableLayoutPanel14.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+        tableLayoutPanel14.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
+
+        // tableLayoutPanel15
+        tableLayoutPanel15.Name = "tableLayoutPanel15";
+        tableLayoutPanel15.Text = "";
+        tableLayoutPanel15.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel15.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel15.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel15.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel15.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        tableLayoutPanel15.AutoSize = true;
+        tableLayoutPanel15.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel15.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel15.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel15.BackColor = Color.White;
+        tableLayoutPanel15.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel15.TabIndex = 0;
+        tableLayoutPanel15.TabStop = false;
+        tableLayoutPanel15.AccessibleName = null;
+        tableLayoutPanel15.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel15.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel15.RowCount = 1;
+        tableLayoutPanel15.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel15.AutoScroll = false;
+        tableLayoutPanel15.Visible = true;
+        tableLayoutPanel15.ColumnCount = 1;
+        tableLayoutPanel15.Enabled = true;
+        tableLayoutPanel15.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel15.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel16
+        tableLayoutPanel16.Name = "tableLayoutPanel16";
+        tableLayoutPanel16.Text = "";
+        tableLayoutPanel16.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel16.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel16.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel16.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel16.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel16.AutoSize = false;
+        tableLayoutPanel16.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel16.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel16.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel16.BackColor = Color.White;
+        tableLayoutPanel16.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel16.TabIndex = 0;
+        tableLayoutPanel16.TabStop = false;
+        tableLayoutPanel16.AccessibleName = null;
+        tableLayoutPanel16.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel16.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel16.RowCount = 2;
+        tableLayoutPanel16.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel16.AutoScroll = false;
+        tableLayoutPanel16.Visible = true;
+        tableLayoutPanel16.ColumnCount = 1;
+        tableLayoutPanel16.Enabled = true;
+        tableLayoutPanel16.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel16.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel16.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label17
+        label17.Name = "label17";
+        label17.Text = "Thuốc";
+        label17.Location = new global::System.Drawing.Point(3, 0);
+        label17.Size = new global::System.Drawing.Size(340, 22);
+        label17.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label17.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label17.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label17.AutoSize = false;
+        label17.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label17.ForeColor = Color.FromArgb(15, 23, 42);
+        label17.BackColor = Color.White;
+        label17.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label17.TabIndex = 0;
+        label17.TabStop = false;
+        label17.AccessibleName = null;
+        label17.AutoEllipsis = false;
+        label17.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label17.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label17.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label17.Visible = true;
+        label17.Enabled = true;
+
+        // tableLayoutPanel18
+        tableLayoutPanel18.Name = "tableLayoutPanel18";
+        tableLayoutPanel18.Text = "";
+        tableLayoutPanel18.Location = new global::System.Drawing.Point(0, 22);
+        tableLayoutPanel18.Size = new global::System.Drawing.Size(346, 32);
+        tableLayoutPanel18.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel18.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel18.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        tableLayoutPanel18.AutoSize = false;
+        tableLayoutPanel18.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel18.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel18.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel18.BackColor = Color.White;
+        tableLayoutPanel18.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel18.TabIndex = 1;
+        tableLayoutPanel18.TabStop = false;
+        tableLayoutPanel18.AccessibleName = null;
+        tableLayoutPanel18.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel18.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel18.RowCount = 1;
+        tableLayoutPanel18.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel18.AutoScroll = false;
+        tableLayoutPanel18.Visible = true;
+        tableLayoutPanel18.ColumnCount = 2;
+        tableLayoutPanel18.Enabled = true;
+        tableLayoutPanel18.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel18.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 38F));
+        tableLayoutPanel18.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // cboThuoc
+        cboThuoc.Name = "cboThuoc";
+        cboThuoc.Text = "";
+        cboThuoc.Location = new global::System.Drawing.Point(0, 0);
+        cboThuoc.Size = new global::System.Drawing.Size(302, 31);
+        cboThuoc.Margin = new global::System.Windows.Forms.Padding(0, 0, 6, 0);
+        cboThuoc.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        cboThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        cboThuoc.AutoSize = false;
+        cboThuoc.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        cboThuoc.ForeColor=Color.FromArgb(15,23,42);
+        cboThuoc.BackColor=Color.White;
+        cboThuoc.Cursor = global::System.Windows.Forms.Cursors.Default;
+        cboThuoc.TabIndex = 1;
+        cboThuoc.TabStop = true;
+        cboThuoc.AccessibleName = null;
+        cboThuoc.FlatStyle=FlatStyle.Standard;
+        cboThuoc.MaxLength = 0;
+        cboThuoc.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
+        cboThuoc.DropDownWidth = 302;
+        cboThuoc.DropDownHeight = 106;
+        cboThuoc.IntegralHeight = true;
+        cboThuoc.Visible = true;
+        cboThuoc.Enabled = false;
+
+        // btnTaoThuoc
+        btnTaoThuoc.Name = "btnTaoThuoc";
+        btnTaoThuoc.Text = "+";
+        btnTaoThuoc.Location = new global::System.Drawing.Point(308, 0);
+        btnTaoThuoc.Size = new global::System.Drawing.Size(38, 31);
+        btnTaoThuoc.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnTaoThuoc.Padding = new global::System.Windows.Forms.Padding(0, 1, 0, 0);
+        btnTaoThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        btnTaoThuoc.AutoSize = false;
+        btnTaoThuoc.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnTaoThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        btnTaoThuoc.ForeColor = Color.FromArgb(15, 23, 42);
+        btnTaoThuoc.BackColor = global::System.Drawing.SystemColors.ControlLight;
+        btnTaoThuoc.TabIndex = 2;
+        btnTaoThuoc.TabStop = true;
+        btnTaoThuoc.AccessibleName = "Thêm thuốc mới";
+        btnTaoThuoc.AutoEllipsis = false;
+        btnTaoThuoc.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnTaoThuoc.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnTaoThuoc.Visible = true;
+        btnTaoThuoc.Enabled = false;
+        btnTaoThuoc.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        // tableLayoutPanel19
+        tableLayoutPanel19.Name = "tableLayoutPanel19";
+        tableLayoutPanel19.Text = "";
+        tableLayoutPanel19.Location = new global::System.Drawing.Point(0, 56);
+        tableLayoutPanel19.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel19.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel19.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel19.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        tableLayoutPanel19.AutoSize = true;
+        tableLayoutPanel19.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel19.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel19.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel19.BackColor = Color.White;
+        tableLayoutPanel19.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel19.TabIndex = 1;
+        tableLayoutPanel19.TabStop = false;
+        tableLayoutPanel19.AccessibleName = null;
+        tableLayoutPanel19.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel19.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel19.RowCount = 1;
+        tableLayoutPanel19.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel19.AutoScroll = false;
+        tableLayoutPanel19.Visible = true;
+        tableLayoutPanel19.ColumnCount = 1;
+        tableLayoutPanel19.Enabled = true;
+        tableLayoutPanel19.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel19.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel20
+        tableLayoutPanel20.Name = "tableLayoutPanel20";
+        tableLayoutPanel20.Text = "";
+        tableLayoutPanel20.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel20.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel20.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel20.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel20.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel20.AutoSize = false;
+        tableLayoutPanel20.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel20.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel20.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel20.BackColor = Color.White;
+        tableLayoutPanel20.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel20.TabIndex = 0;
+        tableLayoutPanel20.TabStop = false;
+        tableLayoutPanel20.AccessibleName = null;
+        tableLayoutPanel20.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel20.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel20.RowCount = 2;
+        tableLayoutPanel20.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel20.AutoScroll = false;
+        tableLayoutPanel20.Visible = true;
+        tableLayoutPanel20.ColumnCount = 1;
+        tableLayoutPanel20.Enabled = true;
+        tableLayoutPanel20.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel20.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel20.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label21
+        label21.Name = "label21";
+        label21.Text = "Số lô";
+        label21.Location = new global::System.Drawing.Point(3, 0);
+        label21.Size = new global::System.Drawing.Size(340, 22);
+        label21.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label21.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label21.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label21.AutoSize = false;
+        label21.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label21.ForeColor = Color.FromArgb(15, 23, 42);
+        label21.BackColor = Color.White;
+        label21.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label21.TabIndex = 0;
+        label21.TabStop = false;
+        label21.AccessibleName = null;
+        label21.AutoEllipsis = false;
+        label21.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label21.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label21.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label21.Visible = true;
+        label21.Enabled = true;
+
+        // txtSoLo
+        txtSoLo.Name = "txtSoLo";
+        txtSoLo.Text = "";
+        txtSoLo.Location = new global::System.Drawing.Point(0, 23);
+        txtSoLo.Size = new global::System.Drawing.Size(346, 30);
+        txtSoLo.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
+        txtSoLo.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        txtSoLo.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        txtSoLo.AutoSize=false;
+        txtSoLo.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        txtSoLo.ForeColor=Color.FromArgb(15,23,42);
+        txtSoLo.BackColor=Color.White;
+        txtSoLo.Cursor = global::System.Windows.Forms.Cursors.IBeam;
+        txtSoLo.TabIndex = 3;
+        txtSoLo.TabStop = true;
+        txtSoLo.AccessibleName = null;
+        txtSoLo.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Left;
+        txtSoLo.BorderStyle=BorderStyle.FixedSingle;
+        txtSoLo.Multiline = false;
+        txtSoLo.ReadOnly = false;
+        txtSoLo.MaxLength = 50;
+        txtSoLo.PlaceholderText = "";
+        txtSoLo.CharacterCasing = global::System.Windows.Forms.CharacterCasing.Normal;
+        txtSoLo.ScrollBars = global::System.Windows.Forms.ScrollBars.None;
+        txtSoLo.Visible = true;
+        txtSoLo.Enabled = false;
+
+        // tableLayoutPanel22
+        tableLayoutPanel22.Name = "tableLayoutPanel22";
+        tableLayoutPanel22.Text = "";
+        tableLayoutPanel22.Location = new global::System.Drawing.Point(0, 112);
+        tableLayoutPanel22.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel22.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel22.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel22.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel22.AutoSize = false;
+        tableLayoutPanel22.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel22.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel22.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel22.BackColor = Color.White;
+        tableLayoutPanel22.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel22.TabIndex = 2;
+        tableLayoutPanel22.TabStop = false;
+        tableLayoutPanel22.AccessibleName = null;
+        tableLayoutPanel22.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel22.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel22.RowCount = 1;
+        tableLayoutPanel22.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel22.AutoScroll = false;
+        tableLayoutPanel22.Visible = true;
+        tableLayoutPanel22.ColumnCount = 2;
+        tableLayoutPanel22.Enabled = true;
+        tableLayoutPanel22.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel22.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Absolute, 122F));
+        tableLayoutPanel22.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+
+        // tableLayoutPanel23
+        tableLayoutPanel23.Name = "tableLayoutPanel23";
+        tableLayoutPanel23.Text = "";
+        tableLayoutPanel23.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel23.Size = new global::System.Drawing.Size(212, 56);
+        tableLayoutPanel23.Margin = new global::System.Windows.Forms.Padding(0, 0, 12, 0);
+        tableLayoutPanel23.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel23.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel23.AutoSize = true;
+        tableLayoutPanel23.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel23.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel23.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel23.BackColor = Color.White;
+        tableLayoutPanel23.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel23.TabIndex = 0;
+        tableLayoutPanel23.TabStop = false;
+        tableLayoutPanel23.AccessibleName = null;
+        tableLayoutPanel23.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel23.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel23.RowCount = 1;
+        tableLayoutPanel23.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel23.AutoScroll = false;
+        tableLayoutPanel23.Visible = true;
+        tableLayoutPanel23.ColumnCount = 1;
+        tableLayoutPanel23.Enabled = true;
+        tableLayoutPanel23.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel23.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel24
+        tableLayoutPanel24.Name = "tableLayoutPanel24";
+        tableLayoutPanel24.Text = "";
+        tableLayoutPanel24.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel24.Size = new global::System.Drawing.Size(212, 56);
+        tableLayoutPanel24.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel24.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel24.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel24.AutoSize = false;
+        tableLayoutPanel24.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel24.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel24.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel24.BackColor = Color.White;
+        tableLayoutPanel24.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel24.TabIndex = 0;
+        tableLayoutPanel24.TabStop = false;
+        tableLayoutPanel24.AccessibleName = null;
+        tableLayoutPanel24.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel24.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel24.RowCount = 2;
+        tableLayoutPanel24.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel24.AutoScroll = false;
+        tableLayoutPanel24.Visible = true;
+        tableLayoutPanel24.ColumnCount = 1;
+        tableLayoutPanel24.Enabled = true;
+        tableLayoutPanel24.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel24.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel24.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label25
+        label25.Name = "label25";
+        label25.Text = "Hạn dùng";
+        label25.Location = new global::System.Drawing.Point(3, 0);
+        label25.Size = new global::System.Drawing.Size(206, 22);
+        label25.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label25.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label25.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label25.AutoSize = false;
+        label25.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label25.ForeColor = Color.FromArgb(15, 23, 42);
+        label25.BackColor = Color.White;
+        label25.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label25.TabIndex = 0;
+        label25.TabStop = false;
+        label25.AccessibleName = null;
+        label25.AutoEllipsis = false;
+        label25.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label25.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label25.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label25.Visible = true;
+        label25.Enabled = true;
+
+        // dtpHanDung
+        dtpHanDung.Name = "dtpHanDung";
+        dtpHanDung.Text = "";
+        dtpHanDung.Location = new global::System.Drawing.Point(0, 23);
+        dtpHanDung.Size = new global::System.Drawing.Size(212, 30);
+        dtpHanDung.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
+        dtpHanDung.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        dtpHanDung.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        dtpHanDung.AutoSize = false;
+        dtpHanDung.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        dtpHanDung.ForeColor=Color.FromArgb(15,23,42);
+        dtpHanDung.BackColor = global::System.Drawing.SystemColors.Window;
+        dtpHanDung.Cursor = global::System.Windows.Forms.Cursors.Default;
+        dtpHanDung.TabIndex = 5;
+        dtpHanDung.TabStop = true;
+        dtpHanDung.AccessibleName = null;
+        dtpHanDung.Checked = true;
+        dtpHanDung.Format = global::System.Windows.Forms.DateTimePickerFormat.Custom;
+        dtpHanDung.CustomFormat = "dd/MM/yyyy";
+        dtpHanDung.ShowCheckBox = false;
+        dtpHanDung.Visible = true;
+        dtpHanDung.Enabled = true;
+        dtpHanDung.Value = new global::System.DateTime(2026, 10, 22);
+
+        // tableLayoutPanel26
+        tableLayoutPanel26.Name = "tableLayoutPanel26";
+        tableLayoutPanel26.Text = "";
+        tableLayoutPanel26.Location = new global::System.Drawing.Point(224, 0);
+        tableLayoutPanel26.Size = new global::System.Drawing.Size(122, 56);
+        tableLayoutPanel26.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel26.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel26.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel26.AutoSize = true;
+        tableLayoutPanel26.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel26.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel26.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel26.BackColor = Color.White;
+        tableLayoutPanel26.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel26.TabIndex = 1;
+        tableLayoutPanel26.TabStop = false;
+        tableLayoutPanel26.AccessibleName = null;
+        tableLayoutPanel26.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel26.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel26.RowCount = 1;
+        tableLayoutPanel26.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel26.AutoScroll = false;
+        tableLayoutPanel26.Visible = true;
+        tableLayoutPanel26.ColumnCount = 1;
+        tableLayoutPanel26.Enabled = true;
+        tableLayoutPanel26.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel26.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel27
+        tableLayoutPanel27.Name = "tableLayoutPanel27";
+        tableLayoutPanel27.Text = "";
+        tableLayoutPanel27.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel27.Size = new global::System.Drawing.Size(122, 56);
+        tableLayoutPanel27.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel27.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel27.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel27.AutoSize = false;
+        tableLayoutPanel27.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel27.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel27.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel27.BackColor = Color.White;
+        tableLayoutPanel27.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel27.TabIndex = 0;
+        tableLayoutPanel27.TabStop = false;
+        tableLayoutPanel27.AccessibleName = null;
+        tableLayoutPanel27.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel27.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel27.RowCount = 2;
+        tableLayoutPanel27.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel27.AutoScroll = false;
+        tableLayoutPanel27.Visible = true;
+        tableLayoutPanel27.ColumnCount = 1;
+        tableLayoutPanel27.Enabled = true;
+        tableLayoutPanel27.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel27.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel27.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label28
+        label28.Name = "label28";
+        label28.Text = "Số lượng";
+        label28.Location = new global::System.Drawing.Point(3, 0);
+        label28.Size = new global::System.Drawing.Size(116, 22);
+        label28.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label28.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label28.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label28.AutoSize = false;
+        label28.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label28.ForeColor = Color.FromArgb(15, 23, 42);
+        label28.BackColor = Color.White;
+        label28.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label28.TabIndex = 0;
+        label28.TabStop = false;
+        label28.AccessibleName = null;
+        label28.AutoEllipsis = false;
+        label28.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label28.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label28.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label28.Visible = true;
+        label28.Enabled = true;
+
+        // nudSoLuong
+        nudSoLuong.Minimum = 1M;
+        nudSoLuong.Maximum = 1000000M;
+        nudSoLuong.DecimalPlaces = 0;
+        nudSoLuong.Name = "nudSoLuong";
+        nudSoLuong.Text = "1";
+        nudSoLuong.Location = new global::System.Drawing.Point(0, 23);
+        nudSoLuong.Size = new global::System.Drawing.Size(122, 30);
+        nudSoLuong.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
+        nudSoLuong.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        nudSoLuong.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        nudSoLuong.AutoSize = false;
+        nudSoLuong.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        nudSoLuong.ForeColor=Color.FromArgb(15,23,42);
+        nudSoLuong.BackColor=Color.White;
+        nudSoLuong.Cursor = global::System.Windows.Forms.Cursors.Default;
+        nudSoLuong.TabIndex = 7;
+        nudSoLuong.TabStop = true;
+        nudSoLuong.AccessibleName = null;
+        nudSoLuong.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Right;
+        nudSoLuong.BorderStyle=BorderStyle.FixedSingle;
+        nudSoLuong.ReadOnly = false;
+        nudSoLuong.ThousandsSeparator = true;
+        nudSoLuong.Increment = 1M;
+        nudSoLuong.AutoScroll = false;
+        nudSoLuong.Visible = true;
+        nudSoLuong.Enabled = true;
+        nudSoLuong.Value = 1M;
+
+        // tableLayoutPanel29
+        tableLayoutPanel29.Name = "tableLayoutPanel29";
+        tableLayoutPanel29.Text = "";
+        tableLayoutPanel29.Location = new global::System.Drawing.Point(0, 168);
+        tableLayoutPanel29.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel29.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel29.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel29.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        tableLayoutPanel29.AutoSize = true;
+        tableLayoutPanel29.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        tableLayoutPanel29.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel29.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel29.BackColor = Color.White;
+        tableLayoutPanel29.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel29.TabIndex = 3;
+        tableLayoutPanel29.TabStop = false;
+        tableLayoutPanel29.AccessibleName = null;
+        tableLayoutPanel29.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel29.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel29.RowCount = 1;
+        tableLayoutPanel29.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel29.AutoScroll = false;
+        tableLayoutPanel29.Visible = true;
+        tableLayoutPanel29.ColumnCount = 1;
+        tableLayoutPanel29.Enabled = true;
+        tableLayoutPanel29.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel29.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 56F));
+
+        // tableLayoutPanel30
+        tableLayoutPanel30.Name = "tableLayoutPanel30";
+        tableLayoutPanel30.Text = "";
+        tableLayoutPanel30.Location = new global::System.Drawing.Point(0, 0);
+        tableLayoutPanel30.Size = new global::System.Drawing.Size(346, 56);
+        tableLayoutPanel30.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel30.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel30.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel30.AutoSize = false;
+        tableLayoutPanel30.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel30.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel30.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel30.BackColor = Color.White;
+        tableLayoutPanel30.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel30.TabIndex = 0;
+        tableLayoutPanel30.TabStop = false;
+        tableLayoutPanel30.AccessibleName = null;
+        tableLayoutPanel30.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel30.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel30.RowCount = 2;
+        tableLayoutPanel30.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel30.AutoScroll = false;
+        tableLayoutPanel30.Visible = true;
+        tableLayoutPanel30.ColumnCount = 1;
+        tableLayoutPanel30.Enabled = true;
+        tableLayoutPanel30.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel30.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 22F));
+        tableLayoutPanel30.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+
+        // label31
+        label31.Name = "label31";
+        label31.Text = "Giá nhập / đơn vị";
+        label31.Location = new global::System.Drawing.Point(3, 0);
+        label31.Size = new global::System.Drawing.Size(340, 22);
+        label31.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        label31.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        label31.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        label31.AutoSize = false;
+        label31.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        label31.ForeColor = Color.FromArgb(15, 23, 42);
+        label31.BackColor = Color.White;
+        label31.Cursor = global::System.Windows.Forms.Cursors.Default;
+        label31.TabIndex = 0;
+        label31.TabStop = false;
+        label31.AccessibleName = null;
+        label31.AutoEllipsis = false;
+        label31.TextAlign = global::System.Drawing.ContentAlignment.MiddleLeft;
+        label31.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        label31.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        label31.Visible = true;
+        label31.Enabled = true;
+
+        // nudGiaNhap
+        nudGiaNhap.Minimum = 0M;
+        nudGiaNhap.Maximum = 1000000000M;
+        nudGiaNhap.DecimalPlaces = 0;
+        nudGiaNhap.Name = "nudGiaNhap";
+        nudGiaNhap.Text = "0";
+        nudGiaNhap.Location = new global::System.Drawing.Point(0, 23);
+        nudGiaNhap.Size = new global::System.Drawing.Size(346, 30);
+        nudGiaNhap.Margin = new global::System.Windows.Forms.Padding(0, 1, 0, 5);
+        nudGiaNhap.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        nudGiaNhap.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        nudGiaNhap.AutoSize = false;
+        nudGiaNhap.Font=new Font("Segoe UI",10.5F,FontStyle.Regular);
+        nudGiaNhap.ForeColor=Color.FromArgb(15,23,42);
+        nudGiaNhap.BackColor=Color.White;
+        nudGiaNhap.Cursor = global::System.Windows.Forms.Cursors.Default;
+        nudGiaNhap.TabIndex = 9;
+        nudGiaNhap.TabStop = true;
+        nudGiaNhap.AccessibleName = null;
+        nudGiaNhap.TextAlign = global::System.Windows.Forms.HorizontalAlignment.Right;
+        nudGiaNhap.BorderStyle=BorderStyle.FixedSingle;
+        nudGiaNhap.ReadOnly = false;
+        nudGiaNhap.ThousandsSeparator = true;
+        nudGiaNhap.Increment = 1000M;
+        nudGiaNhap.AutoScroll = false;
+        nudGiaNhap.Visible = true;
+        nudGiaNhap.Enabled = true;
+        nudGiaNhap.Value = 0M;
+
+        // tableLayoutPanel32
+        tableLayoutPanel32.Name = "tableLayoutPanel32";
+        tableLayoutPanel32.Text = "";
+        tableLayoutPanel32.Location = new global::System.Drawing.Point(0, 224);
+        tableLayoutPanel32.Size = new global::System.Drawing.Size(346, 45);
+        tableLayoutPanel32.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel32.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel32.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel32.AutoSize = true;
+        tableLayoutPanel32.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel32.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel32.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel32.BackColor = Color.White;
+        tableLayoutPanel32.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel32.TabIndex = 4;
+        tableLayoutPanel32.TabStop = false;
+        tableLayoutPanel32.AccessibleName = null;
+        tableLayoutPanel32.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel32.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel32.RowCount = 1;
+        tableLayoutPanel32.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel32.AutoScroll = false;
+        tableLayoutPanel32.Visible = true;
+        tableLayoutPanel32.ColumnCount = 2;
+        tableLayoutPanel32.Enabled = true;
+        tableLayoutPanel32.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel32.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel32.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
+
+        // btnThemThuoc
+        btnThemThuoc.Name = "btnThemThuoc";
+        btnThemThuoc.Text = "Thêm vào phiếu";
+        btnThemThuoc.Location = new global::System.Drawing.Point(0, 4);
+        btnThemThuoc.Size = new global::System.Drawing.Size(342, 41);
+        btnThemThuoc.Margin = new global::System.Windows.Forms.Padding(0, 4, 0, 0);
+        btnThemThuoc.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnThemThuoc.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        btnThemThuoc.AutoSize = false;
+        btnThemThuoc.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnThemThuoc.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        btnThemThuoc.ForeColor = Color.FromArgb(15, 23, 42);
+        btnThemThuoc.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
+        btnThemThuoc.TabIndex = 10;
+        btnThemThuoc.TabStop = true;
+        btnThemThuoc.AccessibleName = null;
+        btnThemThuoc.AutoEllipsis = false;
+        btnThemThuoc.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnThemThuoc.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnThemThuoc.Visible = true;
+        btnThemThuoc.Enabled = false;
+        btnThemThuoc.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        // tableLayoutPanel33
+        tableLayoutPanel33.Name = "tableLayoutPanel33";
+        tableLayoutPanel33.Text = "";
+        tableLayoutPanel33.Location = new global::System.Drawing.Point(0, 456);
+        tableLayoutPanel33.Size = new global::System.Drawing.Size(370, 125);
+        tableLayoutPanel33.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel33.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel33.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel33.AutoSize = false;
+        tableLayoutPanel33.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel33.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel33.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel33.BackColor = Color.FromArgb(242, 246, 248);
+        tableLayoutPanel33.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel33.TabIndex = 2;
+        tableLayoutPanel33.TabStop = false;
+        tableLayoutPanel33.AccessibleName = null;
+        tableLayoutPanel33.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel33.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel33.RowCount = 3;
+        tableLayoutPanel33.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel33.AutoScroll = false;
+        tableLayoutPanel33.Visible = true;
+        tableLayoutPanel33.ColumnCount = 1;
+        tableLayoutPanel33.Enabled = true;
+        tableLayoutPanel33.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 100F));
+        tableLayoutPanel33.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 26F));
+        tableLayoutPanel33.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 34F));
+        tableLayoutPanel33.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 46F));
+
+        // lblTongVonText
+        lblTongVonText.Name = "lblTongVonText";
+        lblTongVonText.Text = "Tổng tiền vốn:";
+        lblTongVonText.Location = new global::System.Drawing.Point(3, 0);
+        lblTongVonText.Size = new global::System.Drawing.Size(364, 26);
+        lblTongVonText.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        lblTongVonText.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        lblTongVonText.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        lblTongVonText.AutoSize = false;
+        lblTongVonText.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        lblTongVonText.ForeColor = Color.FromArgb(15, 23, 42);
+        lblTongVonText.BackColor = Color.FromArgb(242, 246, 248);
+        lblTongVonText.Cursor = global::System.Windows.Forms.Cursors.Default;
+        lblTongVonText.TabIndex = 3;
+        lblTongVonText.TabStop = false;
+        lblTongVonText.AccessibleName = null;
+        lblTongVonText.AutoEllipsis = false;
+        lblTongVonText.TextAlign = global::System.Drawing.ContentAlignment.MiddleRight;
+        lblTongVonText.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        lblTongVonText.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        lblTongVonText.Visible = true;
+        lblTongVonText.Enabled = true;
+
+        // lblTongVon
+        lblTongVon.Name = "lblTongVon";
+        lblTongVon.Text = "0 đ";
+        lblTongVon.Location = new global::System.Drawing.Point(3, 26);
+        lblTongVon.Size = new global::System.Drawing.Size(364, 34);
+        lblTongVon.Margin = new global::System.Windows.Forms.Padding(3, 0, 3, 0);
+        lblTongVon.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        lblTongVon.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        lblTongVon.AutoSize = false;
+        lblTongVon.Font = new global::System.Drawing.Font("Segoe UI Semibold", 13.8F, global::System.Drawing.FontStyle.Bold, global::System.Drawing.GraphicsUnit.Point);
+        lblTongVon.ForeColor = Color.FromArgb(15, 23, 42);
+        lblTongVon.BackColor = Color.FromArgb(242, 246, 248);
+        lblTongVon.Cursor = global::System.Windows.Forms.Cursors.Default;
+        lblTongVon.TabIndex = 4;
+        lblTongVon.TabStop = false;
+        lblTongVon.AccessibleName = null;
+        lblTongVon.AutoEllipsis = false;
+        lblTongVon.TextAlign = global::System.Drawing.ContentAlignment.MiddleRight;
+        lblTongVon.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        lblTongVon.FlatStyle = global::System.Windows.Forms.FlatStyle.Standard;
+        lblTongVon.Visible = true;
+        lblTongVon.Enabled = true;
+
+        // tableLayoutPanel34
+        tableLayoutPanel34.Name = "tableLayoutPanel34";
+        tableLayoutPanel34.Text = "";
+        tableLayoutPanel34.Location = new global::System.Drawing.Point(0, 60);
+        tableLayoutPanel34.Size = new global::System.Drawing.Size(370, 65);
+        tableLayoutPanel34.Margin = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel34.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        tableLayoutPanel34.Dock = global::System.Windows.Forms.DockStyle.Fill;
+
+        tableLayoutPanel34.AutoSize = true;
+        tableLayoutPanel34.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        tableLayoutPanel34.Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        tableLayoutPanel34.ForeColor = Color.FromArgb(15, 23, 42);
+        tableLayoutPanel34.BackColor = Color.FromArgb(242, 246, 248);
+        tableLayoutPanel34.Cursor = global::System.Windows.Forms.Cursors.Default;
+        tableLayoutPanel34.TabIndex = 5;
+        tableLayoutPanel34.TabStop = false;
+        tableLayoutPanel34.AccessibleName = null;
+        tableLayoutPanel34.BorderStyle = global::System.Windows.Forms.BorderStyle.None;
+        tableLayoutPanel34.CellBorderStyle = global::System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+        tableLayoutPanel34.RowCount = 1;
+        tableLayoutPanel34.GrowStyle = global::System.Windows.Forms.TableLayoutPanelGrowStyle.AddRows;
+        tableLayoutPanel34.AutoScroll = false;
+        tableLayoutPanel34.Visible = true;
+        tableLayoutPanel34.ColumnCount = 2;
+        tableLayoutPanel34.Enabled = true;
+        tableLayoutPanel34.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel34.ColumnStyles.Add(new global::System.Windows.Forms.ColumnStyle(global::System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel34.RowStyles.Add(new global::System.Windows.Forms.RowStyle(global::System.Windows.Forms.SizeType.Absolute, 44F));
+
+        // btnLuu
+        btnLuu.Name = "btnLuu";
+        btnLuu.Text = "LƯU PHIẾU";
+        btnLuu.Location = new global::System.Drawing.Point(0, 4);
+        btnLuu.Size = new global::System.Drawing.Size(366, 44);
+        btnLuu.Margin = new global::System.Windows.Forms.Padding(0, 4, 0, 0);
+        btnLuu.Padding = new global::System.Windows.Forms.Padding(0, 0, 0, 0);
+        btnLuu.Dock = global::System.Windows.Forms.DockStyle.Top;
+
+        btnLuu.AutoSize = false;
+        btnLuu.AutoSizeMode = global::System.Windows.Forms.AutoSizeMode.GrowOnly;
+        btnLuu.Font = new global::System.Drawing.Font("Segoe UI Semibold", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        btnLuu.ForeColor = Color.FromArgb(15, 23, 42);
+        btnLuu.BackColor = global::System.Drawing.Color.FromArgb(255, 192, 255, 192);
+        btnLuu.TabIndex = 5;
+        btnLuu.TabStop = true;
+        btnLuu.AccessibleName = null;
+        btnLuu.AutoEllipsis = false;
+        btnLuu.TextAlign = global::System.Drawing.ContentAlignment.MiddleCenter;
+
+        btnLuu.DialogResult = global::System.Windows.Forms.DialogResult.None;
+        btnLuu.Visible = true;
+        btnLuu.Enabled = false;
+        btnLuu.FlatAppearance.BorderColor = global::System.Drawing.SystemColors.ActiveBorder;
+
+        this.Controls.Add(posLayout);
+        excelActions=new FlowLayoutPanel();excelActions.Name="excelActions";excelActions.Dock=DockStyle.Fill;excelActions.Margin=Padding.Empty;excelActions.WrapContents=false;
+
+        stockHeader=new TableLayoutPanel();stockHeader.Name="stockHeader";stockHeader.Dock=DockStyle.Fill;stockHeader.Margin=Padding.Empty;
+        stockHeader.ColumnCount=2;stockHeader.RowCount=1;stockHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100F));
+        stockHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,250F));stockHeader.RowStyles.Add(new RowStyle(SizeType.Percent,100F));
+        stockHeader.Controls.Add(posHeading,0,0);posLayout.Controls.Add(stockHeader,0,0);
+        btnNhapExcel=new Button();btnNhapExcel.Name="btnNhapExcel";btnNhapExcel.Text="Nhập Excel";btnNhapExcel.Size=new Size(120,38);btnNhapExcel.Margin=new Padding(3);excelActions.Controls.Add(btnNhapExcel);
+        btnMauExcel=new Button();btnMauExcel.Name="btnMauExcel";btnMauExcel.Text="File mẫu";btnMauExcel.Size=new Size(120,38);btnMauExcel.Margin=new Padding(3);excelActions.Controls.Add(btnMauExcel);
+
+        stockHeader.Controls.Add(excelActions,1,0);
+
+        posLayout.Controls.Add(tableLayoutPanel1, 0, 1);
+        tableLayoutPanel1.Controls.Add(groupBox2, 0, 0);
+        groupBox2.Controls.Add(tableLayoutPanel3);
+        tableLayoutPanel3.Controls.Add(dgvPhieu, 0, 0);
+        tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 1);
+        tableLayoutPanel4.Controls.Add(btnXoaDong, 0, 0);
+        tableLayoutPanel4.Controls.Add(btnXoaPhieu, 1, 0);
+        tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 1, 0);
+        tableLayoutPanel5.Controls.Add(groupBox6, 0, 0);
+        groupBox6.Controls.Add(tableLayoutPanel7);
+        tableLayoutPanel7.Controls.Add(tableLayoutPanel8, -1, -1);
+        tableLayoutPanel8.Controls.Add(label9, 0, 0);
+        tableLayoutPanel8.Controls.Add(tableLayoutPanel10, 0, 1);
+        tableLayoutPanel10.Controls.Add(cboNhaCungCap, 0, 0);
+        tableLayoutPanel10.Controls.Add(btnThemNCC, 1, 0);
+        tableLayoutPanel7.Controls.Add(tableLayoutPanel11, -1, -1);
+        tableLayoutPanel11.Controls.Add(label12, 0, 0);
+        tableLayoutPanel11.Controls.Add(txtGhiChu, 0, 1);
+        tableLayoutPanel7.Controls.Add(lblNgayNhapGiaTri, -1, -1);
+        tableLayoutPanel5.Controls.Add(groupBox13, 0, 1);
+        groupBox13.Controls.Add(tableLayoutPanel14);
+        tableLayoutPanel14.Controls.Add(tableLayoutPanel15, 0, 0);
+        tableLayoutPanel15.Controls.Add(tableLayoutPanel16, -1, -1);
+        tableLayoutPanel16.Controls.Add(label17, 0, 0);
+        tableLayoutPanel16.Controls.Add(tableLayoutPanel18, 0, 1);
+        tableLayoutPanel18.Controls.Add(cboThuoc, 0, 0);
+        tableLayoutPanel18.Controls.Add(btnTaoThuoc, 1, 0);
+        tableLayoutPanel14.Controls.Add(tableLayoutPanel19, 0, 1);
+        tableLayoutPanel19.Controls.Add(tableLayoutPanel20, -1, -1);
+        tableLayoutPanel20.Controls.Add(label21, 0, 0);
+        tableLayoutPanel20.Controls.Add(txtSoLo, 0, 1);
+        tableLayoutPanel14.Controls.Add(tableLayoutPanel22, 0, 2);
+        tableLayoutPanel22.Controls.Add(tableLayoutPanel23, 0, 0);
+        tableLayoutPanel23.Controls.Add(tableLayoutPanel24, -1, -1);
+        tableLayoutPanel24.Controls.Add(label25, 0, 0);
+        tableLayoutPanel24.Controls.Add(dtpHanDung, 0, 1);
+        tableLayoutPanel22.Controls.Add(tableLayoutPanel26, 1, 0);
+        tableLayoutPanel26.Controls.Add(tableLayoutPanel27, -1, -1);
+        tableLayoutPanel27.Controls.Add(label28, 0, 0);
+        tableLayoutPanel27.Controls.Add(nudSoLuong, 0, 1);
+        tableLayoutPanel14.Controls.Add(tableLayoutPanel29, 0, 3);
+        tableLayoutPanel29.Controls.Add(tableLayoutPanel30, -1, -1);
+        tableLayoutPanel30.Controls.Add(label31, 0, 0);
+        tableLayoutPanel30.Controls.Add(nudGiaNhap, 0, 1);
+        tableLayoutPanel14.Controls.Add(tableLayoutPanel32, 0, 4);
+        tableLayoutPanel32.Controls.Add(btnThemThuoc, 0, 0);
+        tableLayoutPanel32.Controls.Add(btnCapNhatDong,1,0);
+        tableLayoutPanel5.Controls.Add(tableLayoutPanel33, 0, 2);
+        tableLayoutPanel33.Controls.Add(lblTongVonText, 0, 0);
+        tableLayoutPanel33.Controls.Add(lblTongVon, 0, 1);
+        tableLayoutPanel33.Controls.Add(tableLayoutPanel34, 0, 2);
+        tableLayoutPanel34.Controls.Add(btnLuu, 0, 0);
+        tableLayoutPanel34.SetColumnSpan(btnLuu, 2);
+        AutoScaleDimensions = new global::System.Drawing.SizeF(120F, 120F);
+        AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Dpi;
+        BackColor = Color.FromArgb(248,250,252);
+        ForeColor = global::System.Drawing.SystemColors.ControlText;
+        Font = new global::System.Drawing.Font("Segoe UI", 10.2F, global::System.Drawing.FontStyle.Regular, global::System.Drawing.GraphicsUnit.Point);
+        ClientSize = new global::System.Drawing.Size(1182, 653);
+        MinimumSize = new global::System.Drawing.Size(1060, 700);
+        MaximumSize = new global::System.Drawing.Size(0, 0);
+        FormBorderStyle = global::System.Windows.Forms.FormBorderStyle.Sizable;
+        MaximizeBox = true;
+        MinimizeBox = true;
+        StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
+        Text = "Nhập kho | Pharmacy";
+        KeyPreview = false;
+        ShowIcon = true;
+        ShowInTaskbar = true;
+        Name = "frmNhapKho";
+        btnThemThuoc.Click += btnThemThuoc_Click;
+        btnCapNhatDong.Click += btnCapNhatDong_Click;
+        btnXoaDong.Click += btnXoaDong_Click;
+        btnXoaPhieu.Click += btnXoaPhieu_Click;
+        btnLuu.Click += btnLuu_Click;
+        Load += frmNhapKho_Load;
+        tableLayoutPanel34.ResumeLayout(false);
+        tableLayoutPanel34.PerformLayout();
+        tableLayoutPanel33.ResumeLayout(false);
+        tableLayoutPanel33.PerformLayout();
+        tableLayoutPanel32.ResumeLayout(false);
+        tableLayoutPanel32.PerformLayout();
+        ((global::System.ComponentModel.ISupportInitialize)nudGiaNhap).EndInit();
+        tableLayoutPanel30.ResumeLayout(false);
+        tableLayoutPanel30.PerformLayout();
+        tableLayoutPanel29.ResumeLayout(false);
+        tableLayoutPanel29.PerformLayout();
+        ((global::System.ComponentModel.ISupportInitialize)nudSoLuong).EndInit();
+        tableLayoutPanel27.ResumeLayout(false);
+        tableLayoutPanel27.PerformLayout();
+        tableLayoutPanel26.ResumeLayout(false);
+        tableLayoutPanel26.PerformLayout();
+        tableLayoutPanel24.ResumeLayout(false);
+        tableLayoutPanel24.PerformLayout();
+        tableLayoutPanel23.ResumeLayout(false);
+        tableLayoutPanel23.PerformLayout();
+        tableLayoutPanel22.ResumeLayout(false);
+        tableLayoutPanel22.PerformLayout();
+        tableLayoutPanel20.ResumeLayout(false);
+        tableLayoutPanel20.PerformLayout();
+        tableLayoutPanel19.ResumeLayout(false);
+        tableLayoutPanel19.PerformLayout();
+        tableLayoutPanel18.ResumeLayout(false);
+        tableLayoutPanel18.PerformLayout();
+        tableLayoutPanel16.ResumeLayout(false);
+        tableLayoutPanel16.PerformLayout();
+        tableLayoutPanel15.ResumeLayout(false);
+        tableLayoutPanel15.PerformLayout();
+        tableLayoutPanel14.ResumeLayout(false);
+        tableLayoutPanel14.PerformLayout();
+        groupBox13.ResumeLayout(false);
+        groupBox13.PerformLayout();
+        tableLayoutPanel11.ResumeLayout(false);
+        tableLayoutPanel11.PerformLayout();
+        tableLayoutPanel10.ResumeLayout(false);
+        tableLayoutPanel10.PerformLayout();
+        tableLayoutPanel8.ResumeLayout(false);
+        tableLayoutPanel8.PerformLayout();
+        tableLayoutPanel7.ResumeLayout(false);
+        tableLayoutPanel7.PerformLayout();
+        groupBox6.ResumeLayout(false);
+        groupBox6.PerformLayout();
+        tableLayoutPanel5.ResumeLayout(false);
+        tableLayoutPanel5.PerformLayout();
+        tableLayoutPanel4.ResumeLayout(false);
+        tableLayoutPanel4.PerformLayout();
+                //
+        // dgvPhieuColumn1
+        //
+        this.dgvPhieuColumn1.Name = "MaThuoc";
+        this.dgvPhieuColumn1.HeaderText = "Mã thuốc";
+        this.dgvPhieuColumn1.Visible = true;
+        this.dgvPhieuColumn1.ReadOnly = true;
+        this.dgvPhieuColumn1.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn1.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn1.DataPropertyName = "MaThuoc";
+        this.dgvPhieuColumn1.DefaultCellStyle = dgvPhieuColumn1Style;
+        this.dgvPhieuColumn1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn1.MinimumWidth = 45;
+        this.dgvPhieuColumn1.Width = 115;
+        this.dgvPhieuColumn1.FillWeight = 48F;
+        //
+        // dgvPhieuColumn2
+        //
+        this.dgvPhieuColumn2.Name = "TenThuoc";
+        this.dgvPhieuColumn2.HeaderText = "Tên thuốc";
+        this.dgvPhieuColumn2.Visible = true;
+        this.dgvPhieuColumn2.ReadOnly = true;
+        this.dgvPhieuColumn2.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn2.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn2.DataPropertyName = "TenThuoc";
+        this.dgvPhieuColumn2.DefaultCellStyle = dgvPhieuColumn2Style;
+        this.dgvPhieuColumn2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn2.MinimumWidth = 45;
+        this.dgvPhieuColumn2.Width = 180;
+        this.dgvPhieuColumn2.FillWeight = 220F;
+        //
+        // dgvPhieuColumn3
+        //
+        this.dgvPhieuColumn3.Name = "DonViTinh";
+        this.dgvPhieuColumn3.HeaderText = "Đơn vị tính";
+        this.dgvPhieuColumn3.Visible = true;
+        this.dgvPhieuColumn3.ReadOnly = true;
+        this.dgvPhieuColumn3.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn3.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn3.DataPropertyName = "DonViTinh";
+        this.dgvPhieuColumn3.DefaultCellStyle = dgvPhieuColumn3Style;
+        this.dgvPhieuColumn3.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn3.MinimumWidth = 45;
+        this.dgvPhieuColumn3.Width = 126;
+        this.dgvPhieuColumn3.FillWeight = 48F;
+        //
+        // dgvPhieuColumn4
+        //
+        this.dgvPhieuColumn4.Name = "SoLo";
+        this.dgvPhieuColumn4.HeaderText = "Số lô";
+        this.dgvPhieuColumn4.Visible = true;
+        this.dgvPhieuColumn4.ReadOnly = true;
+        this.dgvPhieuColumn4.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn4.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn4.DataPropertyName = "SoLo";
+        this.dgvPhieuColumn4.DefaultCellStyle = dgvPhieuColumn4Style;
+        this.dgvPhieuColumn4.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn4.MinimumWidth = 45;
+        this.dgvPhieuColumn4.Width = 110;
+        this.dgvPhieuColumn4.FillWeight = 64F;
+        //
+        // dgvPhieuColumn5
+        //
+        this.dgvPhieuColumn5.Name = "HanDung";
+        this.dgvPhieuColumn5.HeaderText = "Hạn sử dụng";
+        this.dgvPhieuColumn5.Visible = true;
+        this.dgvPhieuColumn5.ReadOnly = true;
+        this.dgvPhieuColumn5.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn5.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn5.DataPropertyName = "HanDung";
+        this.dgvPhieuColumn5.DefaultCellStyle = dgvPhieuColumn5Style;
+        this.dgvPhieuColumn5.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn5.MinimumWidth = 45;
+        this.dgvPhieuColumn5.Width = 140;
+        this.dgvPhieuColumn5.FillWeight = 88F;
+        //
+        // dgvPhieuColumn6
+        //
+        this.dgvPhieuColumn6.Name = "SoLuong";
+        this.dgvPhieuColumn6.HeaderText = "Số lượng";
+        this.dgvPhieuColumn6.Visible = true;
+        this.dgvPhieuColumn6.ReadOnly = true;
+        this.dgvPhieuColumn6.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn6.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn6.DataPropertyName = "SoLuong";
+        this.dgvPhieuColumn6.DefaultCellStyle = dgvPhieuColumn6Style;
+        this.dgvPhieuColumn6.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn6.MinimumWidth = 45;
+        this.dgvPhieuColumn6.Width = 110;
+        this.dgvPhieuColumn6.FillWeight = 88F;
+        //
+        // dgvPhieuColumn7
+        //
+        this.dgvPhieuColumn7.Name = "GiaNhap";
+        this.dgvPhieuColumn7.HeaderText = "Giá nhập";
+        this.dgvPhieuColumn7.Visible = true;
+        this.dgvPhieuColumn7.ReadOnly = true;
+        this.dgvPhieuColumn7.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn7.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn7.DataPropertyName = "GiaNhap";
+        this.dgvPhieuColumn7.DefaultCellStyle = dgvPhieuColumn7Style;
+        this.dgvPhieuColumn7.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn7.MinimumWidth = 45;
+        this.dgvPhieuColumn7.Width = 111;
+        this.dgvPhieuColumn7.FillWeight = 88F;
+        //
+        // dgvPhieuColumn8
+        //
+        this.dgvPhieuColumn8.Name = "ThanhTien";
+        this.dgvPhieuColumn8.HeaderText = "Thành tiền";
+        this.dgvPhieuColumn8.Visible = true;
+        this.dgvPhieuColumn8.ReadOnly = true;
+        this.dgvPhieuColumn8.SortMode = global::System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+        this.dgvPhieuColumn8.Resizable = DataGridViewTriState.False;
+        this.dgvPhieuColumn8.DataPropertyName = "ThanhTien";
+        this.dgvPhieuColumn8.DefaultCellStyle = dgvPhieuColumn8Style;
+        this.dgvPhieuColumn8.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        this.dgvPhieuColumn8.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        this.dgvPhieuColumn8.MinimumWidth = 45;
+        this.dgvPhieuColumn8.Width = 124;
+        this.dgvPhieuColumn8.FillWeight = 104F;
+
+        this.dgvPhieu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+        this.dgvPhieu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.dgvPhieuColumn2, this.dgvPhieuColumn6, this.dgvPhieuColumn7, this.dgvPhieuColumn8, this.dgvPhieuColumn4, this.dgvPhieuColumn5, this.dgvPhieuColumn3, this.dgvPhieuColumn1 });
+        ((global::System.ComponentModel.ISupportInitialize)dgvPhieu).EndInit();
+        tableLayoutPanel3.ResumeLayout(false);
+        tableLayoutPanel3.PerformLayout();
+        groupBox2.ResumeLayout(false);
+        groupBox2.PerformLayout();
+        tableLayoutPanel1.ResumeLayout(false);
+        tableLayoutPanel1.PerformLayout();
+        posLayout.ResumeLayout(false);
+        posLayout.PerformLayout();
+        posLayout.RowCount=2;posLayout.SetRow(tableLayoutPanel1,1);
+        BackColor=Color.FromArgb(248,250,252);ForeColor=Color.FromArgb(15,23,42);
+        btnXoaDong.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoaDong.FlatStyle = FlatStyle.Flat;
+        btnXoaDong.FlatAppearance.BorderSize = 0;
+        btnXoaDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoaDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoaDong.Cursor = Cursors.Hand;
+        btnXoaDong.UseVisualStyleBackColor = false;btnXoaDong.ForeColor=Color.White;
+        btnXoaPhieu.BackColor=Color.FromArgb(225, 29, 72);
+        btnXoaPhieu.FlatStyle = FlatStyle.Flat;
+        btnXoaPhieu.FlatAppearance.BorderSize = 0;
+        btnXoaPhieu.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 63, 94);
+        btnXoaPhieu.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 18, 60);
+        btnXoaPhieu.Cursor = Cursors.Hand;
+        btnXoaPhieu.UseVisualStyleBackColor = false;btnXoaPhieu.ForeColor=Color.White;
+        btnThemNCC.BackColor=Color.FromArgb(22, 101, 52);
+        btnThemNCC.FlatStyle = FlatStyle.Flat;
+        btnThemNCC.FlatAppearance.BorderSize = 0;
+        btnThemNCC.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnThemNCC.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnThemNCC.Cursor = Cursors.Hand;
+        btnThemNCC.UseVisualStyleBackColor = false;btnThemNCC.ForeColor=Color.White;
+        btnTaoThuoc.BackColor=Color.FromArgb(22, 101, 52);
+        btnTaoThuoc.FlatStyle = FlatStyle.Flat;
+        btnTaoThuoc.FlatAppearance.BorderSize = 0;
+        btnTaoThuoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnTaoThuoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnTaoThuoc.Cursor = Cursors.Hand;
+        btnTaoThuoc.UseVisualStyleBackColor = false;btnTaoThuoc.ForeColor=Color.White;
+        btnThemThuoc.BackColor=Color.FromArgb(22, 101, 52);btnThemThuoc.ForeColor=Color.White;
+        btnLuu.BackColor=Color.FromArgb(22, 101, 52);btnLuu.ForeColor=Color.White;
+        btnNhapExcel.BackColor=Color.FromArgb(22, 101, 52);
+        btnNhapExcel.FlatStyle = FlatStyle.Flat;
+        btnNhapExcel.FlatAppearance.BorderSize = 0;
+        btnNhapExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(21, 128, 61);
+        btnNhapExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(14, 66, 34);
+        btnNhapExcel.Cursor = Cursors.Hand;
+        btnNhapExcel.UseVisualStyleBackColor = false;btnNhapExcel.ForeColor=Color.White;
+        btnMauExcel.BackColor=Color.FromArgb(15, 118, 110);
+        btnMauExcel.FlatStyle = FlatStyle.Flat;
+        btnMauExcel.FlatAppearance.BorderSize = 0;
+        btnMauExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 148, 136);
+        btnMauExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(17, 94, 89);
+        btnMauExcel.Cursor = Cursors.Hand;
+        btnMauExcel.UseVisualStyleBackColor = false;btnMauExcel.ForeColor=Color.White;
+        dgvPhieu.BackgroundColor=Color.White;dgvPhieu.EnableHeadersVisualStyles=false;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(15,118,110);dgvPhieu.ColumnHeadersDefaultCellStyle.ForeColor=Color.White;
+        dgvPhieu.DefaultCellStyle.BackColor=Color.White;dgvPhieu.DefaultCellStyle.ForeColor=Color.FromArgb(15,23,42);
+        dgvPhieu.DefaultCellStyle.SelectionBackColor=Color.FromArgb(204,251,241);dgvPhieu.DefaultCellStyle.SelectionForeColor=Color.FromArgb(15,23,42);
+        dgvPhieu.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(242, 246, 248);
+        btnLuu.BackColor=Color.FromArgb(204,251,241);
+        btnLuu.FlatStyle = FlatStyle.Flat;
+        btnLuu.FlatAppearance.BorderSize = 0;
+        btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 246, 228);
+        btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(94, 234, 212);
+        btnLuu.Cursor = Cursors.Hand;
+        btnLuu.UseVisualStyleBackColor = false;btnLuu.ForeColor=Color.FromArgb(19, 78, 74);
+        btnThemThuoc.BackColor=Color.FromArgb(204,251,241);
+        btnThemThuoc.FlatStyle = FlatStyle.Flat;
+        btnThemThuoc.FlatAppearance.BorderSize = 0;
+        btnThemThuoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 246, 228);
+        btnThemThuoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(94, 234, 212);
+        btnThemThuoc.Cursor = Cursors.Hand;
+        btnThemThuoc.UseVisualStyleBackColor = false;btnThemThuoc.ForeColor=Color.FromArgb(19, 78, 74);
+        dgvPhieu.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
+        dgvPhieu.MultiSelect=false;
+        dgvPhieu.AllowUserToResizeColumns=false;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.DefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionBackColor=dgvPhieu.ColumnHeadersDefaultCellStyle.BackColor;
+        dgvPhieu.ColumnHeadersDefaultCellStyle.SelectionForeColor=dgvPhieu.ColumnHeadersDefaultCellStyle.ForeColor;
+        dgvPhieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvPhieu.ColumnHeadersHeight=38;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                dgvPhieu.ColumnHeadersDefaultCellStyle.WrapMode=DataGridViewTriState.False;
+        dgvPhieu.ColumnHeadersHeightSizeMode=DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        dgvPhieu.ColumnHeadersHeight=43;
+        
+        
+        
+        
+        
+        
+        
+        
+        btnThemThuoc.Margin=new Padding(0,4,4,0);
+        btnCapNhatDong.Name="btnCapNhatDong";
+        btnCapNhatDong.Text="Cập nhật dòng";
+        btnCapNhatDong.Dock=DockStyle.Fill;
+        btnCapNhatDong.Margin=new Padding(4,4,0,0);
+        btnCapNhatDong.Font=new Font("Segoe UI Semibold",10.2F);
+        btnCapNhatDong.BackColor=Color.FromArgb(15,118,110);
+        btnCapNhatDong.ForeColor=Color.White;
+        btnCapNhatDong.FlatStyle=FlatStyle.Flat;
+        btnCapNhatDong.FlatAppearance.BorderSize=0;
+        btnCapNhatDong.UseVisualStyleBackColor=false;
+        btnCapNhatDong.Enabled=false;
+        btnCapNhatDong.TabIndex=11;
+        ResumeLayout(false);
+        PerformLayout();
+    }
+
+    private global::System.Windows.Forms.TableLayoutPanel posLayout;
+    private global::System.Windows.Forms.Label posHeading;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+    private global::System.Windows.Forms.GroupBox groupBox2;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+    private global::System.Windows.Forms.DataGridView dgvPhieu;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn1;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn2;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn3;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn4;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn5;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn6;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn7;
+    private global::System.Windows.Forms.DataGridViewTextBoxColumn dgvPhieuColumn8;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+    private global::System.Windows.Forms.Button btnXoaDong;
+    private global::System.Windows.Forms.Button btnXoaPhieu;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+    private global::System.Windows.Forms.GroupBox groupBox6;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+    private global::System.Windows.Forms.Label label9;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+    private global::System.Windows.Forms.ComboBox cboNhaCungCap;
+    private global::System.Windows.Forms.Button btnThemNCC;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+    private global::System.Windows.Forms.Label label12;
+    private global::System.Windows.Forms.TextBox txtGhiChu;
+    private global::System.Windows.Forms.Label lblNgayNhapGiaTri;
+    private global::System.Windows.Forms.GroupBox groupBox13;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+    private global::System.Windows.Forms.Label label17;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel18;
+    private global::System.Windows.Forms.ComboBox cboThuoc;
+    private global::System.Windows.Forms.Button btnTaoThuoc;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel19;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel20;
+    private global::System.Windows.Forms.Label label21;
+    private global::System.Windows.Forms.TextBox txtSoLo;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel22;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel23;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel24;
+    private global::System.Windows.Forms.Label label25;
+    private global::System.Windows.Forms.DateTimePicker dtpHanDung;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel26;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel27;
+    private global::System.Windows.Forms.Label label28;
+    private global::System.Windows.Forms.NumericUpDown nudSoLuong;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel29;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel30;
+    private global::System.Windows.Forms.Label label31;
+    private global::System.Windows.Forms.NumericUpDown nudGiaNhap;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel32;
+    private global::System.Windows.Forms.Button btnThemThuoc;
+    private global::System.Windows.Forms.Button btnCapNhatDong;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel33;
+    private global::System.Windows.Forms.Label lblTongVonText;
+    private global::System.Windows.Forms.Label lblTongVon;
+    private global::System.Windows.Forms.TableLayoutPanel tableLayoutPanel34;
+    private global::System.Windows.Forms.Button btnLuu;
+    private FlowLayoutPanel excelActions;
+    private Button btnNhapExcel,btnMauExcel;
+    private TableLayoutPanel stockHeader;
+}
+
+}

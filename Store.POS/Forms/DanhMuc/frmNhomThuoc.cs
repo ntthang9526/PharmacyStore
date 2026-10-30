@@ -1,0 +1,196 @@
+using System.Data;
+using Store.BLL;
+
+namespace Store.POS
+{
+    public partial class frmNhomThuoc : Form, ILamMoiDuLieu
+    {
+        private string maDangChon="";
+        private NhomThuocBLL bll = new NhomThuocBLL();
+        private bool isThem = false;
+        private bool isSua = false;
+
+        public frmNhomThuoc()
+        {
+            InitializeComponent();
+            global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
+            PhanQuyenGiaoDien.Gan(this);
+            btnTimNhom.Click += (_, _) => TimNhom();
+            txtTimNhom.KeyDown += (_, e) =>
+            {
+                if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; TimNhom(); }
+            };
+            PosFormStyle.ConfigureRowNavigation(dgvNhomThuoc,row=>dgvNhomThuoc_CellClick(dgvNhomThuoc,new DataGridViewCellEventArgs(0,row.Index)));
+            PosFormStyle.ConfigureGridSelection(this, posLayout, () => ResetDetails(false));
+        }
+        // Sự kiện khi Form load lên
+        private void TimNhom()
+        {
+            try { ResetDetails(); dgvNhomThuoc.DataSource = bll.TimKiemNhom(txtTimNhom.Text.Trim()); }
+            catch (Exception ex) { MessageBox.Show("Không tìm được nhóm thuốc: " + ex.Message, "Lỗi"); }
+        }
+
+        private void ResetDetails(bool force = false)
+        {
+            if (!force && txtTenNhom.Enabled) return;
+            SetControlState(false);
+            maDangChon=""; txtTenNhom.Clear();
+        }
+
+        private void frmNhomThuoc_Load(object sender, EventArgs e)
+        {
+            if (PosFormStyle.IsInDesigner(this)) return;
+            LoadData();
+            SetControlState(false);
+            ResetDetails();
+        }
+        // Hàm tải dữ liệu lên DataGridView
+        private void LoadData()
+        {
+            dgvNhomThuoc.DataSource = bll.GetAllNhomThuoc();
+        }
+        private void SetControlState(bool status)
+        {
+            dgvNhomThuoc.Enabled=!status;
+            txtTenNhom.Enabled = status;
+
+            if (!status)
+            {
+                isThem = false;
+                isSua = false;
+                btnThem.Enabled = true;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+            }
+            else
+            {
+                btnThem.Enabled = isThem;
+                btnSua.Enabled = isSua;
+                btnXoa.Enabled = false;
+            }
+        }
+        private void dgvNhomThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(!dgvNhomThuoc.Enabled) return;
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvNhomThuoc.Rows[e.RowIndex];
+                maDangChon = row.Cells["MaNhom"].Value.ToString()??"";
+                txtTenNhom.Text = row.Cells["TenNhom"].Value.ToString();
+                SetControlState(false);
+            }
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            if (!txtTenNhom.Enabled)
+            {
+                isThem = true;
+                isSua = false;
+                SetControlState(true); // Mở khóa các ô, tắt sửa và xóa
+                maDangChon="";
+                txtTenNhom.Clear();
+                txtTenNhom.Focus();
+                return;
+            }
+
+            // Trường hợp 2: Khi người dùng đã nhập xong và bấm Thêm lần nữa để lưu xuống CSDL
+
+            if (string.IsNullOrWhiteSpace(txtTenNhom.Text))
+            {
+                MessageBox.Show("Nhập tên nhóm thuốc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenNhom.Focus();
+                return;
+            }
+
+            // Gọi BLL để thêm mới
+            if (bll.ThemMoiNhom(maDangChon.Trim(), txtTenNhom.Text.Trim(), out string error))
+            {
+                MessageBox.Show("Đã thêm nhóm thuốc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadData();
+                SetControlState(false); // Thêm xong thì khóa lại
+            }
+            else
+            {
+                MessageBox.Show("Không lưu được: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            string maNhom = maDangChon;
+            if (string.IsNullOrEmpty(maNhom))
+            {
+                MessageBox.Show("Chọn nhóm thuốc cần xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult dr = MessageBox.Show("Xóa nhóm thuốc này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                if (bll.XoaNhom(maNhom, out string error))
+                {
+                    MessageBox.Show("Đã xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                    btnLamMoi_Click(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi: " + error, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnLamMoi_Click(object sender, EventArgs e)
+        {
+            txtTimNhom.Clear();
+            maDangChon="";
+            txtTenNhom.Clear();
+            SetControlState(false);
+            LoadData();
+            txtTenNhom.Focus();
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            if (!txtTenNhom.Enabled)
+            {
+                if (string.IsNullOrEmpty(maDangChon))
+                {
+                    MessageBox.Show("Chọn nhóm thuốc cần sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                isThem = false;
+                isSua = true;
+                SetControlState(true);  // Mở khóa các ô để sửa thông tin, tắt thêm và xóa
+                txtTenNhom.Focus();
+                return;
+            }
+
+            // Trường hợp 2: Khi đã sửa xong thông tin trên ô, bấm nút Sửa lần nữa để LƯU xuống CSDL
+            string maNhom = maDangChon.Trim();
+            string tenNhom = txtTenNhom.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(tenNhom))
+            {
+                MessageBox.Show("Nhập tên nhóm thuốc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenNhom.Focus();
+                return;
+            }
+
+            if (bll.SuaNhom(maNhom, tenNhom, out string error))
+            {
+                MessageBox.Show("Đã lưu nhóm thuốc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadData();
+                SetControlState(false); // Lưu xong thì khóa lại
+            }
+            else
+            {
+                MessageBox.Show("Lỗi: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+    }
+}
