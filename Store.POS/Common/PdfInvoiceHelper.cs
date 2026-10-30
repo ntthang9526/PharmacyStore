@@ -10,6 +10,19 @@ internal static class PdfInvoiceHelper
 {
     private static readonly CultureInfo vn=CultureInfo.GetCultureInfo("vi-VN");
     static PdfInvoiceHelper() => QuestPDF.Settings.License=LicenseType.Community;
+    public static async Task HoiInSauThanhToanAsync(Form owner,int orderId,decimal amount)
+    {
+        if(owner.IsDisposed || owner.Disposing) return;
+        if(MessageBox.Show(owner,$"Đã thanh toán HD{orderId:D5} ({amount:N0} đ).\nBạn có muốn in hóa đơn không?",
+            "Thanh toán",MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2)!=DialogResult.Yes) return;
+        DataSet? data=null;
+        bool loaded=await PosBackground.LoadAsync(owner,()=>new Store.BLL.HoaDonBLL().LayBanIn(orderId),
+            result=>data=result,error=>MessageBox.Show(owner,"Hóa đơn đã thanh toán nhưng chưa in được: "+error.Message,"In hóa đơn"));
+        if(!loaded || owner.IsDisposed || owner.Disposing) return;
+        try {XuatHoaDon(data!,owner);}
+        catch(Exception ex) {MessageBox.Show(owner,"Hóa đơn đã thanh toán nhưng chưa in được: "+ex.Message,"In hóa đơn");}
+    }
+
     public static void XuatHoaDon(DataSet data,IWin32Window owner)
     {
         byte[] pdf=TaoBanIn(data);int id=(int)data.Tables[0].Rows[0]["MaHD"];

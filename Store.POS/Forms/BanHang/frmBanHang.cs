@@ -40,7 +40,7 @@ namespace Store.POS
             suaHoaDonId=suaId;
             InitializeComponent();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
-            btnLuuCho.Click+=(_,_)=>LuuHoaDon("Chưa xác định",true);
+            btnLuuCho.Click+=async(_,_)=>await LuuHoaDonAsync("Chưa xác định",true);
             timerAnPanelAction=new System.Windows.Forms.Timer(components ??= new Container()) {Interval=180};
             timerAnPanelAction.Tick+=(_,_)=> {timerAnPanelAction.Stop();KiemTraAnPanelAction(Cursor.Position);};
             void WireActionHover(Control control)
@@ -568,7 +568,7 @@ namespace Store.POS
                 }
                 else
                 {
-                    LuuHoaDon("Tiền mặt");
+                    await LuuHoaDonAsync("Tiền mặt");
                 }
             }
             if (radioChuyenKhoan.Checked == true)
@@ -577,7 +577,7 @@ namespace Store.POS
                 {
                     if (frmQR.ShowDialog(this) == DialogResult.OK)
                     {
-                        LuuHoaDon("Chuyển khoản QR");
+                        await LuuHoaDonAsync("Chuyển khoản QR");
                     }
                     else
                     {
@@ -587,7 +587,7 @@ namespace Store.POS
             }
 
         }
-        private void LuuHoaDon(string method="Tiền mặt",bool pending=false)
+        private async Task LuuHoaDonAsync(string method="Tiền mặt",bool pending=false)
         {
             if(!pending && !ChuanBiDonThuoc()) return;
             var items = gioHang.Select(row => new CartItem { MaThuoc = row.Id, TenThuoc = row.Name, SoLuong = row.Quantity, DonGia = row.Price,KeDon=row.IsPrescription,HuongDan=row.HuongDan }).ToList();
@@ -602,8 +602,9 @@ namespace Store.POS
                 MessageBox.Show(this,$"Đã lưu thay đổi HD{orderId:D5}.","Đã lưu thay đổi");
                 DialogResult=DialogResult.OK;Close();return;
             }
-            MessageBox.Show(pending?$"Đã lưu HD{orderId:D5} chờ thanh toán.":$"Đã thanh toán HD{orderId:D5} ({method}). Thực thu: {subtotal-discount:N0} đ", "Thành công");
             LamMoiHoaDon();
+            if(pending) MessageBox.Show(this,$"Đã lưu HD{orderId:D5} chờ thanh toán.","Thành công");
+            else await Store.POS.Common.PdfInvoiceHelper.HoiInSauThanhToanAsync(this,orderId,subtotal-discount);
         }
 
         private void LamMoiHoaDon()

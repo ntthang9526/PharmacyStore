@@ -5,7 +5,8 @@ namespace Store.POS;
 public partial class frmHoaDon
 {
     private DataRow? DongDangXem() => (dgvHoaDon.DataSource as DataTable)?.Rows.Cast<DataRow>().FirstOrDefault(r=>(int)r["MaHD"]==hoaDonDangXem);
-    private void ThanhToanCho()
+    private async void ThanhToanCho()=>await ThanhToanChoAsync();
+    private async Task ThanhToanChoAsync()
     {
         var row=DongDangXem();if(row==null || (string)row["PaymentStatus"]!="PENDING") return;
         string method=cboHinhThuc.SelectedItem as string??"";decimal due=(decimal)row["CanThanhToan"];
@@ -23,10 +24,11 @@ public partial class frmHoaDon
         btnThanhToanCho.Enabled=false;
         try
         {
-            if(!bll.ThanhToanCho(id,method,due,out string error,version)) {MessageBox.Show(this,error,"Chưa thanh toán");LamMoiDuLieu();return;}
-            LamMoiDuLieu();MessageBox.Show(this,"Đã thanh toán hóa đơn.","Thành công");
+            if(!bll.ThanhToanCho(id,method,due,out string error,version)) {MessageBox.Show(this,error,"Chưa thanh toán");await LamMoiDuLieuAsync();return;}
+            await LamMoiDuLieuAsync();
+            await PdfInvoiceHelper.HoiInSauThanhToanAsync(this,id,due);
         }
-        finally {btnThanhToanCho.Enabled=true;}
+        finally {if(!IsDisposed && !Disposing) btnThanhToanCho.Enabled=true;}
     }
     private void XuatDanhSachExcel()
     {

@@ -10,6 +10,7 @@ namespace Store.POS
         private readonly NhapKhoBLL bll = new NhapKhoBLL();
         private static readonly CultureInfo vn = new CultureInfo("vi-VN");
         private bool dangNapNCC;
+        private bool loiTaiThuoc;
 
         private DataRow? dongPhieuDangChon;
         private DataTable dtPhieu = new DataTable();   // Các dòng của phiếu nhập
@@ -69,8 +70,12 @@ namespace Store.POS
             dangNapNCC=true;
             try
             {
-                cboNhaCungCap.DisplayMember="TenNCC";cboNhaCungCap.ValueMember="MaNCC";
-                cboNhaCungCap.DataSource=bll.LayNhaCungCap();
+                var suppliers=bll.LayNhaCungCap();
+                suppliers.Columns.Add("TenHienThi",typeof(string));
+                foreach(DataRow row in suppliers.Rows)
+                    row["TenHienThi"]=$"{row["TenNCC"]} (NCC{Convert.ToInt32(row["MaNCC"]):D3})";
+                cboNhaCungCap.DisplayMember="TenHienThi";cboNhaCungCap.ValueMember="MaNCC";
+                cboNhaCungCap.DataSource=suppliers;
                 cboNhaCungCap.SelectedIndex=-1;
                 if(selected.HasValue)
                 {
@@ -84,6 +89,7 @@ namespace Store.POS
 
         private void NapThuocTheoNCC(bool throwOnError=false)
         {
+            loiTaiThuoc=false;
             txtSoLo.Clear();
             cboThuoc.DataSource=null;
             if(cboNhaCungCap.SelectedValue is int id && id>0)
@@ -94,7 +100,7 @@ namespace Store.POS
                     cboThuoc.DataSource=bll.LayThuocTheoNCC(id);
                     cboThuoc.SelectedIndex=-1;
                 }
-                catch(Exception ex) {if(throwOnError) throw;MessageBox.Show("Không tải được thuốc: "+ex.Message,"Lỗi");}
+                catch(Exception ex) {loiTaiThuoc=true;CapNhatNhapLo();if(throwOnError) throw;MessageBox.Show("Không tải được thuốc: "+ex.Message,"Lỗi");}
             }
             CapNhatNhapLo();
         }
@@ -102,8 +108,11 @@ namespace Store.POS
         private void CapNhatNhapLo()
         {
             bool coNCC=cboNhaCungCap.SelectedValue is int id && id>0;
-            cboThuoc.Enabled=coNCC;
-            btnTaoThuoc.Enabled=coNCC;
+            bool coThuoc=cboThuoc.Items.Count>0;
+            cboThuoc.Enabled=coNCC && coThuoc && !loiTaiThuoc;
+            btnTaoThuoc.Enabled=coNCC && !loiTaiThuoc && PhienDangNhap.LaAdmin;
+            label17.Text=coNCC && loiTaiThuoc?"Chưa tải được thuốc":coNCC && !coThuoc
+                ? (PhienDangNhap.LaAdmin?"Chưa có thuốc · bấm + để thêm":"Chưa có thuốc · nhờ Admin thêm") : "Thuốc";
             txtSoLo.Enabled=coNCC && cboThuoc.SelectedItem is DataRowView;
             txtSoLo.BackColor=txtSoLo.Enabled?Color.White:SystemColors.ControlLight;
             btnThemThuoc.Enabled=txtSoLo.Enabled;
@@ -162,7 +171,8 @@ namespace Store.POS
             }
             if (cboThuoc.SelectedItem is not DataRowView thuoc)
             {
-                MessageBox.Show("Nhà cung cấp này chưa có thuốc để nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(loiTaiThuoc?"Chưa tải được danh sách thuốc.":cboThuoc.Items.Count==0
+                    ?"Nhà cung cấp này chưa có thuốc để nhập.":"Chọn thuốc cần nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
