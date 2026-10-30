@@ -12,7 +12,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+#Hi
+/Docs/
+/Store.SmokeTests/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
