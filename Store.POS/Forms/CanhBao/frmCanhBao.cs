@@ -61,7 +61,7 @@ namespace Store.POS
             catch (Exception ex) { MessageBox.Show(this, "Không lưu được ngưỡng tồn: " + ex.Message, "Lỗi"); }
         }
 
-        private void LocCanhBao()
+        private void LocCanhBao(bool throwOnError=false)
         {
             try
             {
@@ -80,6 +80,7 @@ namespace Store.POS
             }
             catch (Exception ex)
             {
+                if(throwOnError) throw;
                 MessageBox.Show("Không tải được dữ liệu cảnh báo: " + ex.Message, "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

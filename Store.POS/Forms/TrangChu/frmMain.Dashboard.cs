@@ -29,9 +29,9 @@ public partial class frmMain
         Shown+=(_,_)=>TaiTongQuan();
     }
 
-    private void TaiTongQuan()
+    private bool TaiTongQuan()
     {
-        if (PosFormStyle.IsInDesigner(this) || !dashboard.Visible) return;
+        if (PosFormStyle.IsInDesigner(this) || !dashboard.Visible) return true;
         lblTieuDeTongQuan.Text = "Tổng quan · " + DateTime.Today.ToString("dd/MM/yyyy");
         try
         {
@@ -50,7 +50,8 @@ public partial class frmMain
             dgvGanNhat.Visible=recent.Rows.Count>0;lblKhongHoaDon.Visible=!dgvGanNhat.Visible;
             lblTongQuan.ForeColor=Color.DimGray;
             lblTongQuan.Text=$"{(string.IsNullOrWhiteSpace(PhienDangNhap.HoTen)?"Nhân viên":PhienDangNhap.HoTen)} · {(PhienDangNhap.LaAdmin?"Admin":"Nhân viên")} · Cập nhật lúc {DateTime.Now:HH:mm:ss}";
+            return true;
         }
-        catch(Exception ex) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải được tổng quan. Bấm Làm mới để thử lại. "+ex.Message;}
+        catch(Exception ex) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải được tổng quan. Bấm Làm mới để thử lại. "+ex.Message;return false;}
     }
 }

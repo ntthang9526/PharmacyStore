@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Store.BLL;
 using Store.DAL;
 namespace Store.POS;
@@ -6,7 +6,7 @@ public partial class frmBanHang
 {
 
     public async void LamMoiDuLieu()=>await LamMoiDuLieuAsync();
-    private Task<bool> LamMoiDuLieuAsync()
+    public Task<bool> LamMoiDuLieuAsync()
     {
         if(PosFormStyle.IsInDesigner(this)) return Task.FromResult(false);
         string? code=voucherApDung?.Code;int? customerId=khachHang?.Id;

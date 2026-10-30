@@ -37,7 +37,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         btnXuatExcel.Click+=(_,_)=>XuatDanhSachExcel();btnXuatChiTietExcel.Click+=(_,_)=>XuatChiTietExcel();
         btnThanhToanCho.Click+=(_,_)=>ThanhToanCho();chkChiCho.CheckedChanged+=(_,_)=>TimKiem();
         btnSuaCho.Click+=(_,_)=>SuaDonCho();btnHuyCho.Click+=(_,_)=>HuyDonCho();
-        PosFormStyle.ConfigureRowNavigation(dgvHoaDon,HienChiTiet);
+        PosFormStyle.ConfigureRowNavigation(dgvHoaDon,row=>HienChiTiet(row));
         PosFormStyle.ConfigureGridSelection(this, posLayout, XoaChiTiet);
         dgvHoaDon.CellClick+=(_,e)=> {if(e.RowIndex>=0) HienChiTiet(dgvHoaDon.Rows[e.RowIndex]);};
         
@@ -67,16 +67,17 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
         HienVungChiTiet(false);
     }
     private bool timKiemLai;
-    private async void TimKiem()
+    private async void TimKiem()=>await TimKiemAsync();
+    private async Task<bool> TimKiemAsync()
     {
-        if (PosFormStyle.IsInDesigner(this)) return;
-        if(!Enabled) {timKiemLai=true;return;}
+        if (PosFormStyle.IsInDesigner(this)) return false;
+        if(!Enabled) {timKiemLai=true;return false;}
         timKiemLai=false;
         string keyword=txtTimKiem.Text;
         DateTime? from=dtpTuNgay.Checked?dtpTuNgay.Value:null,to=dtpDenNgay.Checked?dtpDenNgay.Value:null;
         bool pending=chkChiCho.Checked;int? selected=hoaDonDangXem??maMoSan;
         lblTrangThai.Text="Đang tải hóa đơn…";
-        await PosBackground.LoadAsync(this,()=>bll.TimKiem(keyword,from,to,pending),rows=>
+        bool success=await PosBackground.LoadAsync(this,()=>bll.TimKiem(keyword,from,to,pending),rows=>
         {
             XoaChiTiet();dgvHoaDon.DataSource=rows;
             decimal total=rows.Rows.Cast<DataRow>().Sum(row=>(decimal)row["ThucThu"]);
@@ -85,13 +86,14 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
             if(selected.HasValue)
             {
                 var row=dgvHoaDon.Rows.Cast<DataGridViewRow>().FirstOrDefault(r=>(int)r.Cells["MaHD"].Value==selected.Value);
-                if(row!=null) HienChiTiet(row);
+                if(row!=null) HienChiTiet(row,throwOnError:true);
             }
         },error=> {lblTrangThai.ForeColor=Color.Firebrick;lblTrangThai.Text="Không tải được hóa đơn: "+error.Message;});
-        if(!IsDisposed && timKiemLai) TimKiem();
+        if(!IsDisposed && timKiemLai) return await TimKiemAsync();
+        return success;
     }
 
-    private void HienChiTiet(DataGridViewRow row)
+    private void HienChiTiet(DataGridViewRow row,bool throwOnError=false)
     {
         if(row.DataBoundItem is not DataRowView data) return;
         try
@@ -123,7 +125,7 @@ public partial class frmHoaDon : Form, ILamMoiDuLieu
             else if(!data.Row.IsNull("ModifiedAt"))
                 lblChiTiet.Text+=$"\nSửa: {data["NhanVienSua"]} · {data["ModifiedAt"]:dd/MM/yyyy HH:mm}";
         }
-        catch(Exception ex) {XoaChiTiet();lblTrangThai.Text="Không tải được chi tiết: "+ex.Message;}
+        catch(Exception ex) {if(throwOnError) throw;XoaChiTiet();lblTrangThai.Text="Không tải được chi tiết: "+ex.Message;}
     }
 
     private void HienVungChiTiet(bool visible)

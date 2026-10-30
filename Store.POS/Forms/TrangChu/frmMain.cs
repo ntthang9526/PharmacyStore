@@ -17,6 +17,7 @@ namespace Store.POS
         private long phienBanDuLieu = Store.DAL.DBConnection.DataVersion;
         private long phienBanDatabase;
         private bool dangDongBo;
+        private DateTime thuLaiDongBoSau;
         private bool dangKiemTraDatabase;
 
         public frmMain()
@@ -131,19 +132,21 @@ namespace Store.POS
                 if(IsDisposed || Disposing || !dbVersion.HasValue || dangDongBo || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
                 if(dbVersion.Value>phienBanDatabase)
                 {
-                    DongBoDuLieu(force:true);
-                    phienBanDatabase=dbVersion.Value;
+                    if(await DongBoDuLieuAsync(force:true)) phienBanDatabase=dbVersion.Value;
                 }
             }
             catch { }
             finally {dangKiemTraDatabase=false;}
         }
 
-        private void DongBoDuLieu(bool force=false)
+        private async void DongBoDuLieu(bool force=false)=>await DongBoDuLieuAsync(force);
+
+        private async Task<bool> DongBoDuLieuAsync(bool force=false)
         {
-            if(PosFormStyle.IsInDesigner(this) || dangDongBo || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return;
+            if(IsDisposed || Disposing || PosFormStyle.IsInDesigner(this) || dangDongBo || !Enabled || cuaSoDangMo.Values.Any(f=>!f.IsDisposed && !f.Enabled)) return false;
             long version=Store.DAL.DBConnection.DataVersion;
-            if(!force && version==phienBanDuLieu) return;
+            if(!force && version==phienBanDuLieu) return true;
+            if(!force && DateTime.UtcNow<thuLaiDongBoSau) return false;
             dangDongBo=true;
             var errors=new List<string>();
             try
@@ -151,15 +154,25 @@ namespace Store.POS
                 CapNhatQuyen();
                 foreach(var form in cuaSoDangMo.Values.ToArray())
                     if(!form.IsDisposed && form is ILamMoiDuLieu data)
-                        try {data.LamMoiDuLieu();} catch(Exception ex) {errors.Add(form.Text+": "+ex.Message);}
-                TaiTongQuan();
-                phienBanDuLieu=version;
+                        try
+                        {
+                            if(!await data.LamMoiDuLieuAsync()) errors.Add(form.Text);
+                            if(IsDisposed || Disposing) return false;
+                        }
+                        catch(Exception ex) {errors.Add(form.Text+": "+ex.Message);}
+                if(!TaiTongQuan()) errors.Add("Tổng quan");
+                if(errors.Count==0) phienBanDuLieu=version;
+                thuLaiDongBoSau=errors.Count==0?DateTime.MinValue:DateTime.UtcNow.AddSeconds(15);
                 if(errors.Count>0) {lblTongQuan.ForeColor=Color.Firebrick;lblTongQuan.Text="Chưa tải lại được một số màn hình. Bấm Làm mới để thử lại. "+string.Join("; ",errors);}
+                return errors.Count==0;
             }
             catch(Exception ex)
             {
-                phienBanDuLieu=version;lblTongQuan.ForeColor=Color.Firebrick;
+                if(IsDisposed || Disposing) return false;
+                thuLaiDongBoSau=DateTime.UtcNow.AddSeconds(15);
+                lblTongQuan.ForeColor=Color.Firebrick;
                 lblTongQuan.Text="Chưa cập nhật được dữ liệu. Bấm Làm mới để thử lại. "+ex.Message;
+                return false;
             }
             finally {dangDongBo=false;}
         }

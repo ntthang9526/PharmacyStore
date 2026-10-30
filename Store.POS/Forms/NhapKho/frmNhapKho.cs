@@ -64,7 +64,7 @@ namespace Store.POS
             CapNhatTongVon();
         }
 
-        private void NapNhaCungCap(int? selected=null)
+        private void NapNhaCungCap(int? selected=null,bool throwOnError=false)
         {
             dangNapNCC=true;
             try
@@ -79,10 +79,10 @@ namespace Store.POS
                 }
             }
             finally {dangNapNCC=false;}
-            NapThuocTheoNCC();
+            NapThuocTheoNCC(throwOnError);
         }
 
-        private void NapThuocTheoNCC()
+        private void NapThuocTheoNCC(bool throwOnError=false)
         {
             txtSoLo.Clear();
             cboThuoc.DataSource=null;
@@ -94,7 +94,7 @@ namespace Store.POS
                     cboThuoc.DataSource=bll.LayThuocTheoNCC(id);
                     cboThuoc.SelectedIndex=-1;
                 }
-                catch(Exception ex) {MessageBox.Show("Không tải được thuốc: "+ex.Message,"Lỗi");}
+                catch(Exception ex) {if(throwOnError) throw;MessageBox.Show("Không tải được thuốc: "+ex.Message,"Lỗi");}
             }
             CapNhatNhapLo();
         }

@@ -7,6 +7,6 @@ public partial class frmCanhBao
 
     public void LamMoiDuLieu()
     {
-        if(!PosFormStyle.IsInDesigner(this)) LocCanhBao();
+        if(!PosFormStyle.IsInDesigner(this)) LocCanhBao(throwOnError:true);
     }
 }

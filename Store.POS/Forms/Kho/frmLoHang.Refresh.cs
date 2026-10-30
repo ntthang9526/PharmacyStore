@@ -5,5 +5,5 @@ namespace Store.POS;
 public partial class frmLoHang
 {
 
-    public void LamMoiDuLieu() => TimKiem();
+    public void LamMoiDuLieu() => TimKiem(throwOnError:true);
 }

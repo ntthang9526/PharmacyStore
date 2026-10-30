@@ -11,7 +11,7 @@ public partial class frmNhapKho
         int? supplier=cboNhaCungCap.SelectedValue is int sup?sup:null;
         int? medicine=cboThuoc.SelectedValue is int med?med:null;
         string lot=txtSoLo.Text;
-        NapNhaCungCap(supplier);
+        NapNhaCungCap(supplier,throwOnError:true);
         if(medicine.HasValue)
         {
             cboThuoc.SelectedValue=medicine.Value;

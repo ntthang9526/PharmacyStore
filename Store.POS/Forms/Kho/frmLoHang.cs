@@ -22,7 +22,7 @@ public partial class frmLoHang : Form, ILamMoiDuLieu
         Load += (_, _) => TimKiem();
     }
 
-    private void TimKiem()
+    private void TimKiem(bool throwOnError=false)
     {
         if (PosFormStyle.IsInDesigner(this)) return;
         try
@@ -31,7 +31,7 @@ public partial class frmLoHang : Form, ILamMoiDuLieu
             dgvLoHang.DataSource = data;
             lblKetQua.Text = $"{data.Rows.Count} lô hàng. Tồn có thể bán đã loại lô hết hạn/bị khóa và thuốc ngừng bán.";
         }
-        catch (Exception ex) { MessageBox.Show("Không tải được lô hàng: " + ex.Message, "Lỗi"); }
+        catch (Exception ex) { if(throwOnError) throw; MessageBox.Show("Không tải được lô hàng: " + ex.Message, "Lỗi"); }
     }
 
     private DataRowView? LoDangChon => dgvLoHang.SelectedRows.Count==1 ? dgvLoHang.SelectedRows[0].DataBoundItem as DataRowView : null;
