@@ -7,7 +7,7 @@
     var newOrdersCount = Db.Orders.Count(o => o.OrderStatus == "NEW");
 }
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,8 +31,8 @@
 <body style="font-family: var(--font-sans); background-color: var(--color-bg-page);">
 
     <div class="admin-shell" id="adminShell">
-        <!-- Mobile Drawer Backdrop -->
-        <div id="adminMobileBackdrop" class="mobile-drawer-backdrop d-lg-none" onclick="toggleAdminMobileSidebar(false)"></div>
+        <!-- Mobile Drawer Backdrop (Hidden by default to prevent blocking UI on mobile) -->
+        <div id="adminMobileBackdrop" class="mobile-drawer-backdrop d-lg-none" style="display: none;" onclick="toggleAdminMobileSidebar(false)"></div>
 
         <!-- Admin Sidebar (_AdminSidebar.cshtml) -->
         <aside id="adminSidebar" class="admin-sidebar" aria-label="Menu Quản trị">
@@ -113,7 +113,7 @@
             <!-- Admin Topbar (_AdminTopbar.cshtml) -->
             <header class="admin-topbar">
                 <div class="d-flex align-items-center gap-2 min-w-0">
-                    <button type="button" class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleAdminMobileSidebar(true)" aria-label="Mở menu quản trị">
+                    <button type="button" class="btn btn-sm btn-outline-secondary d-lg-none" id="adminMobileToggleBtn" onclick="toggleAdminMobileSidebar(true)" aria-label="Mở menu quản trị" aria-controls="adminSidebar" aria-expanded="false">
                         <i class="bi bi-list fs-5"></i>
                     </button>
                     <nav aria-label="breadcrumb" class="min-w-0">
@@ -186,14 +186,37 @@
         function toggleAdminMobileSidebar(open) {
             const sidebar = document.getElementById('adminSidebar');
             const backdrop = document.getElementById('adminMobileBackdrop');
+            const toggleBtn = document.getElementById('adminMobileToggleBtn');
             if (sidebar) {
-                if (open) sidebar.classList.add('mobile-open');
-                else sidebar.classList.remove('mobile-open');
+                if (open) {
+                    sidebar.classList.add('mobile-open');
+                    sidebar.setAttribute('aria-hidden', 'false');
+                } else {
+                    sidebar.classList.remove('mobile-open');
+                    sidebar.setAttribute('aria-hidden', 'true');
+                }
+            }
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
             }
             if (backdrop) {
                 backdrop.style.display = open ? 'block' : 'none';
             }
         }
+
+        // Close mobile drawer on Escape key press
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleAdminMobileSidebar(false);
+            }
+        });
+
+        // Close mobile drawer when window resizes back to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992) {
+                toggleAdminMobileSidebar(false);
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const toastElList = [].slice.call(document.querySelectorAll('.toast'));

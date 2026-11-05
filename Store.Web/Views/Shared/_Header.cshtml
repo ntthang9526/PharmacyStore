@@ -11,69 +11,65 @@
     var currentUser = await UserManager.GetUserAsync(User);
     var isAdmin = User.IsInRole("Admin");
     var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+    var isEn = currentCulture.StartsWith("en");
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
-<header class="store-header sticky-top" style="z-index: 1020;">
-    <!-- 1. Dải thông tin trên cùng (Top Strip) -->
-    <div class="lc-top-strip d-none d-md-block">
+<header class="store-header">
+    <!-- 1. Dải thông tin trên cùng (Top Strip) - Chỉ hiện trên màn hình lớn (>= 992px) để không chiếm chỗ mobile/tablet -->
+    <div class="lc-top-strip d-none d-lg-block">
         <div class="container-xxl px-3 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
-                <span><i class="bi bi-shield-check me-1"></i> Hệ thống Nhà thuốc Chính hãng • Dược sĩ tư vấn tận tâm</span>
+                <span><i class="bi bi-shield-check me-1"></i> @(isEn ? "Authentic Pharmacy • Dedicated Pharmacists" : "Hệ thống Nhà thuốc Chính hãng • Dược sĩ tư vấn tận tâm")</span>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <span>Tổng đài tư vấn: <strong>1800 6928</strong> (Miễn phí)</span>
+                <span>@(isEn ? "Hotline" : "Tổng đài tư vấn"): <strong>1800 6928</strong> (@(isEn ? "Toll-free" : "Miễn phí"))</span>
                 <span>•</span>
-                <a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-white-50 hover-white">Chính sách &amp; Hỗ trợ</a>
-                <span>•</span>
+                <a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-white-50 hover-white">@(isEn ? "Policies & Support" : "Chính sách & Hỗ trợ")</a>
                 @if (isAdmin)
                 {
+                    <span>•</span>
                     <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="text-decoration-none fw-semibold d-inline-flex align-items-center gap-1" style="color: #CCFBF1;">
-                        <i class="bi bi-speedometer2"></i> <span>Khu vực Quản trị</span>
-                    </a>
-                }
-                else
-                {
-                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="text-decoration-none fw-semibold d-inline-flex align-items-center gap-1" style="color: #CCFBF1;" title="Chuyển sang trang Quản trị">
-                        <i class="bi bi-shield-lock"></i> <span>Quản trị</span>
+                        <i class="bi bi-speedometer2"></i> <span>@(isEn ? "Admin Portal" : "Khu vực Quản trị")</span>
                     </a>
                 }
             </div>
         </div>
     </div>
 
-    <!-- 2. Header Teal POS chủ đạo (Bố cục chuẩn Nhà thuốc Long Châu) -->
+    <!-- 2. Header Teal POS chủ đạo (Bố cục gọn gàng, tự co giãn trên mobile/tablet) -->
     <div class="lc-main-header">
-        <div class="container-xxl px-3 py-3">
+        <div class="container-xxl px-3 py-2 py-lg-3">
             <div class="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-between gap-2 gap-xl-3">
-                <!-- Brand Logo -->
+                <!-- Brand Logo (Hàng 1 bên trái) -->
                 <a asp-controller="Home" asp-action="Index" class="brand-mark flex-shrink-0 text-decoration-none">
                     <span class="brand-icon-box">
                         <i class="bi bi-capsule fs-4"></i>
                     </span>
                     <div>
                         <div class="brand-title">Pharmacy</div>
-                        <div class="brand-subtitle d-none d-sm-block">Hệ thống Nhà thuốc &amp; Dược phẩm</div>
+                        <div class="brand-subtitle d-none d-sm-block">@(isEn ? "Pharmacy & Dispensary System" : "Hệ thống Nhà thuốc & Dược phẩm")</div>
                     </div>
                 </a>
 
-                <!-- Thanh tìm kiếm viên thuốc (Pill Search) + Từ khóa gợi ý -->
-                <form asp-controller="Products" asp-action="Index" method="get" class="search-box-wrapper order-3 order-lg-2">
+                <!-- Thanh tìm kiếm viên thuốc (Pill Search) - Trên mobile nằm ở hàng 2 gọn gàng -->
+                <form asp-controller="Products" asp-action="Index" method="get" class="search-box-wrapper order-3 order-lg-2 w-100 flex-lg-grow-1">
                     <div class="search-box-field">
-                        <label for="globalSearchInput" class="visually-hidden">Tìm kiếm thuốc</label>
+                        <label for="globalSearchInput" class="visually-hidden">@(isEn ? "Search medicine" : "Tìm kiếm thuốc")</label>
                         <span class="search-box-icon"><i class="bi bi-search"></i></span>
                         <input
                             id="globalSearchInput"
                             type="search"
                             name="Keyword"
                             class="search-box-input"
-                            placeholder="Tìm tên thuốc, hoạt chất, triệu chứng..."
+                            placeholder="@(isEn ? "Search medicine, ingredient, symptoms..." : "Tìm tên thuốc, hoạt chất, triệu chứng...")"
                             value="@Context.Request.Query["Keyword"]"
                         />
-                        <button type="submit" class="search-box-btn">Tìm kiếm</button>
+                        <button type="submit" class="search-box-btn">@(isEn ? "Search" : "Tìm kiếm")</button>
                     </div>
-                    <div class="lc-search-keywords d-none d-md-flex" aria-label="Từ khóa tìm kiếm phổ biến">
+                    <!-- Từ khóa gợi ý (Chỉ hiện trên desktop để không gây vỡ dòng mobile/tablet) -->
+                    <div class="lc-search-keywords d-none d-xl-flex" aria-label="Từ khóa tìm kiếm phổ biến">
                         <a asp-controller="Products" asp-action="Index" asp-route-Keyword="Panadol" class="lc-keyword-chip">Panadol Extra</a>
                         <a asp-controller="Products" asp-action="Index" asp-route-Keyword="Oresol" class="lc-keyword-chip">Oresol bù nước</a>
                         <a asp-controller="Products" asp-action="Index" asp-route-Keyword="Vitamin" class="lc-keyword-chip">Vitamin C 500mg</a>
@@ -82,29 +78,29 @@
                     </div>
                 </form>
 
-                <!-- Cụm nút chức năng bên phải -->
-                <div class="d-flex align-items-center gap-2 order-2 order-lg-3 flex-shrink-0">
+                <!-- Cụm nút chức năng bên phải (Hàng 1 bên phải) -->
+                <div class="d-flex align-items-center gap-1 gap-sm-2 order-2 order-lg-3 flex-shrink-0">
                     <!-- Ngôn ngữ VI / EN -->
                     <form asp-controller="Home" asp-action="SetLanguage" method="post" class="m-0 d-inline">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                        <input type="hidden" name="culture" value="@(currentCulture.StartsWith("vi") ? "en-US" : "vi-VN")" />
-                        <button type="submit" class="lc-header-btn" title="Chuyển đổi ngôn ngữ Việt / Anh">
-                            <i class="bi bi-globe"></i> <span>@(currentCulture.StartsWith("vi") ? "VI" : "EN")</span>
+                        <input type="hidden" name="culture" value="@(isEn ? "vi-VN" : "en-US")" />
+                        <button type="submit" class="lc-header-btn p-1 px-2" title="@(isEn ? "Switch to Vietnamese" : "Chuyển sang Tiếng Anh")" aria-label="@(isEn ? "Switch to Vietnamese" : "Chuyển sang Tiếng Anh")">
+                            <i class="bi bi-globe"></i> <span>@(isEn ? "EN" : "VI")</span>
                         </button>
                     </form>
 
                     <!-- Account / My Orders -->
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <a asp-controller="MyOrders" asp-action="Index" class="lc-header-btn d-none d-sm-inline-flex">
-                            <i class="bi bi-box-seam"></i> <span class="d-none d-md-inline">Đơn của tôi</span>
+                        <a asp-controller="MyOrders" asp-action="Index" class="lc-header-btn d-none d-sm-inline-flex" title="@(isEn ? "My Orders" : "Đơn của tôi")">
+                            <i class="bi bi-box-seam"></i> <span class="d-none d-md-inline">@(isEn ? "Orders" : "Đơn của tôi")</span>
                         </a>
 
                         <div class="dropdown">
-                            <button class="lc-header-btn dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
+                            <button class="lc-header-btn dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle"></i>
-                                <span>@(currentUser?.FullName?.Split(' ').LastOrDefault() ?? "Tài khoản")</span>
+                                <span class="d-none d-sm-inline">@(currentUser?.FullName?.Split(' ').LastOrDefault() ?? (isEn ? "Account" : "Tài khoản"))</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
                                 <li class="px-3 py-2 bg-light border-bottom">
@@ -115,20 +111,20 @@
                                 {
                                     <li>
                                         <a class="dropdown-item text-primary fw-semibold" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                            <i class="bi bi-speedometer2 me-2"></i>Khu Vực Quản Trị
+                                            <i class="bi bi-speedometer2 me-2"></i>@(isEn ? "Admin Portal" : "Khu Vực Quản Trị")
                                         </a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                 }
-                                <li><a class="dropdown-item" asp-controller="MyOrders" asp-action="Index"><i class="bi bi-box-seam me-2"></i>Đơn hàng của tôi</a></li>
-                                <li><a class="dropdown-item" asp-controller="PrescriptionRequest" asp-action="Index"><i class="bi bi-file-earmark-medical me-2"></i>Đơn thuốc tư vấn</a></li>
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile"><i class="bi bi-person-gear me-2"></i>Hồ sơ &amp; Đổi mật khẩu</a></li>
+                                <li><a class="dropdown-item" asp-controller="MyOrders" asp-action="Index"><i class="bi bi-box-seam me-2"></i>@(isEn ? "My Orders" : "Đơn hàng của tôi")</a></li>
+                                <li><a class="dropdown-item" asp-controller="PrescriptionRequest" asp-action="Index"><i class="bi bi-file-earmark-medical me-2"></i>@(isEn ? "Prescription Requests" : "Đơn thuốc tư vấn")</a></li>
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile"><i class="bi bi-person-gear me-2"></i>@(isEn ? "Profile & Security" : "Hồ sơ & Đổi mật khẩu")</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="dropdown-item text-danger">
-                                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                            <i class="bi bi-box-arrow-right me-2"></i>@(isEn ? "Sign Out" : "Đăng xuất")
                                         </button>
                                     </form>
                                 </li>
@@ -138,19 +134,22 @@
                     else
                     {
                         <a asp-controller="Account" asp-action="Login" class="lc-header-btn">
-                            <i class="bi bi-person"></i> <span>Đăng nhập</span>
+                            <i class="bi bi-person"></i> <span>@(isEn ? "Sign In" : "Đăng nhập")</span>
                         </a>
                     }
 
-                    <!-- Admin Portal Button -->
-                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="lc-header-btn" title="Khu vực Quản trị &amp; Dược sĩ">
-                        <i class="bi bi-shield-lock"></i> <span>Quản trị</span>
-                    </a>
+                    <!-- Admin Portal Button (Chỉ hiển thị khi tài khoản có quyền Admin) -->
+                    @if (isAdmin)
+                    {
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="lc-header-btn" title="Khu vực Quản trị">
+                            <i class="bi bi-shield-lock"></i> <span class="d-none d-md-inline">@(isEn ? "Admin" : "Quản trị")</span>
+                        </a>
+                    }
 
                     <!-- Cart Pill -->
                     <a asp-controller="Cart" asp-action="Index" class="lc-cart-pill text-decoration-none">
                         <i class="bi bi-cart3 fs-6"></i>
-                        <span class="d-none d-sm-inline">Giỏ hàng</span>
+                        <span class="d-none d-sm-inline">@(isEn ? "Cart" : "Giỏ hàng")</span>
                         <span class="lc-cart-badge tabular-nums" id="headerCartCount">@cartCount</span>
                     </a>
                 </div>
@@ -158,32 +157,32 @@
         </div>
     </div>
 
-    <!-- 3. Dải Danh mục Nền trắng Chuẩn Long Châu -->
+    <!-- 3. Dải Danh mục Nền trắng Chuẩn Long Châu (Cuộn ngang êm ái trên mobile) -->
     <nav class="category-nav-strip" aria-label="Danh mục nhóm thuốc">
         <div class="container-xxl px-3 py-1 d-flex align-items-center gap-1 overflow-auto">
             <a asp-controller="Home" asp-action="Index" class="category-nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
-                Trang chủ
+                @(isEn ? "Home" : "Trang chủ")
             </a>
             <a asp-controller="Products" asp-action="Index" class="category-nav-link @(currentController == "Products" && string.IsNullOrEmpty(Context.Request.Query["DirectPurchaseOnly"]) && string.IsNullOrEmpty(Context.Request.Query["CategoryId"]) ? "active" : "")">
-                Tất cả thuốc
+                @(isEn ? "All Medicines" : "Tất cả thuốc")
             </a>
             <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="category-nav-link @(Context.Request.Query["DirectPurchaseOnly"] == "true" ? "active" : "")">
-                Mua trực tiếp
+                @(isEn ? "Direct Purchase" : "Mua trực tiếp")
             </a>
             <a asp-controller="PrescriptionRequest" asp-action="Index" class="category-nav-link @(currentController == "PrescriptionRequest" ? "active" : "")">
-                Gửi đơn thuốc
+                @(isEn ? "Submit Prescription" : "Gửi đơn thuốc")
             </a>
             <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="1" class="category-nav-link @(Context.Request.Query["CategoryId"] == "1" ? "active" : "")">
-                Hạ sốt - Giảm đau
+                @(isEn ? "Fever & Pain" : "Hạ sốt - Giảm đau")
             </a>
             <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="category-nav-link @(Context.Request.Query["CategoryId"] == "3" ? "active" : "")">
-                Vitamin &amp; Đề kháng
+                @(isEn ? "Vitamins" : "Vitamin & Đề kháng")
             </a>
             <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="4" class="category-nav-link @(Context.Request.Query["CategoryId"] == "4" ? "active" : "")">
-                Tiêu hóa - Dạ dày
+                @(isEn ? "Digestion" : "Tiêu hóa - Dạ dày")
             </a>
             <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="6" class="category-nav-link @(Context.Request.Query["CategoryId"] == "6" ? "active" : "")">
-                Vật tư y tế
+                @(isEn ? "Medical Supplies" : "Vật tư y tế")
             </a>
         </div>
     </nav>

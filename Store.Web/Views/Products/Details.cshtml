@@ -129,13 +129,13 @@
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="medicineId" value="@Model.Id" />
 
-                            <div class="d-flex align-items-center border rounded-pill p-1 bg-white" style="width: 130px;">
-                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none px-2" onclick="let input=this.nextElementSibling; if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">
-                                    <i class="bi bi-dash"></i>
+                            <div class="d-flex align-items-center border rounded-pill p-1 bg-white" style="width: 140px;">
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Giảm số lượng" title="Giảm số lượng" onclick="let input=this.nextElementSibling; if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">
+                                    <i class="bi bi-dash fs-5"></i>
                                 </button>
-                                <input type="number" name="quantity" value="1" min="1" max="@Model.AvailableStock" class="form-control form-control-sm border-0 text-center fw-bold p-0 shadow-none" style="width: 50px;" />
-                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none px-2" onclick="let input=this.previousElementSibling; if(parseInt(input.value)<@Model.AvailableStock) input.value=parseInt(input.value)+1;">
-                                    <i class="bi bi-plus"></i>
+                                <input type="number" name="quantity" value="1" min="1" max="@Model.AvailableStock" class="form-control form-control-sm border-0 text-center fw-bold p-0 shadow-none" style="width: 50px;" aria-label="Số lượng sản phẩm" />
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Tăng số lượng" title="Tăng số lượng" onclick="let input=this.previousElementSibling; if(parseInt(input.value)<@Model.AvailableStock) input.value=parseInt(input.value)+1;">
+                                    <i class="bi bi-plus fs-5"></i>
                                 </button>
                             </div>
 
