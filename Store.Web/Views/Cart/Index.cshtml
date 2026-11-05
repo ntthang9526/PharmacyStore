@@ -1,0 +1,230 @@
+@model PharmacyWeb.Models.ViewModels.CartViewModel
+@{
+    ViewData["Title"] = "Giỏ Hàng";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Giỏ hàng của bạn</li>
+        </ol>
+    </nav>
+
+    <h3 class="fw-bold text-dark mb-4">
+        <i class="bi bi-cart3 me-2 text-teal"></i>Giỏ hàng (@Model.Items.Sum(i => i.Quantity) sản phẩm)
+    </h3>
+
+    @if (!Model.Items.Any())
+    {
+        <div class="card border-0 rounded-4 shadow-sm p-5 bg-white text-center">
+            <div class="mb-3">
+                <i class="bi bi-cart-x text-muted display-3"></i>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">Giỏ hàng của bạn đang trống</h4>
+            <p class="text-secondary small mb-4">Hãy khám phá danh mục thuốc chất lượng cao và chọn sản phẩm cần mua.</p>
+            <div>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                    <i class="bi bi-arrow-left me-1"></i> Khám phá sản phẩm
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <!-- Left: Cart Items List -->
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden mb-3">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th class="ps-4" style="min-width: 250px;">Sản phẩm</th>
+                                    <th style="min-width: 100px;">Đơn giá</th>
+                                    <th style="min-width: 120px;">Số lượng</th>
+                                    <th style="min-width: 110px;">Thành tiền</th>
+                                    <th class="pe-4 text-end" style="width: 50px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr class="@(item.HasStockShortage ? "table-danger" : "")">
+                                        <!-- Product Info -->
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="rounded-3 bg-light p-1 border text-center flex-shrink-0" style="width: 54px; height: 54px;">
+                                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                                    {
+                                                        <img src="@item.ImageUrl" alt="@item.MedicineName" class="img-fluid h-100 object-fit-contain" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="bi bi-capsule text-teal fs-4"></i>
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <a asp-controller="Products" asp-action="Details" asp-route-slug="@item.Slug" class="fw-bold text-dark text-decoration-none d-block hover-teal">
+                                                        @item.MedicineName
+                                                    </a>
+                                                    <span class="badge rounded-pill px-2 py-0" style="background-color: var(--color-primary-soft); color: var(--color-primary-soft-fg); font-size: 0.75rem;">
+                                                        @item.Unit
+                                                    </span>
+
+                                                    @if (item.HasStockShortage)
+                                                    {
+                                                        <div class="text-danger small fw-semibold mt-1">
+                                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                                            @if (!item.IsSelling || !item.IsActive)
+                                                            {
+                                                                <span>Sản phẩm hiện ngừng kinh doanh</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>Kho chỉ còn @item.AvailableStock @item.Unit có thể bán</span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <!-- Unit Price -->
+                                        <td class="fw-semibold text-secondary" style="font-variant-numeric: tabular-nums;">
+                                            @item.Price.ToString("N0") ₫
+                                        </td>
+
+                                        <!-- Quantity Form -->
+                                        <td>
+                                            <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center border rounded-pill p-1 bg-light" style="width: 105px;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="medicineId" value="@item.MedicineId" />
+                                                <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-sm btn-link text-dark p-0 px-2 text-decoration-none">
+                                                    <i class="bi bi-dash"></i>
+                                                </button>
+                                                <span class="fw-bold text-center flex-grow-1 small" style="font-variant-numeric: tabular-nums;">@item.Quantity</span>
+                                                <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-sm btn-link text-dark p-0 px-2 text-decoration-none">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+
+                                        <!-- Item Total -->
+                                        <td class="fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
+                                            @item.TotalPrice.ToString("N0") ₫
+                                        </td>
+
+                                        <!-- Remove Action -->
+                                        <td class="pe-4 text-end">
+                                            <form asp-action="Remove" method="post" class="m-0">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="medicineId" value="@item.MedicineId" />
+                                                <button type="submit" class="btn btn-link text-danger p-0 text-decoration-none" title="Xóa khỏi giỏ">
+                                                    <i class="bi bi-trash3 fs-6"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a asp-controller="Products" asp-action="Index" class="text-decoration-none small fw-semibold text-teal">
+                        <i class="bi bi-arrow-left me-1"></i> Tiếp tục tìm kiếm thuốc
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary & Voucher -->
+            <div class="col-lg-4">
+                <div class="card border-0 rounded-4 shadow-sm bg-white p-4 sticky-top" style="top: 80px;">
+                    <h5 class="fw-bold text-dark mb-3">Tóm tắt đơn hàng</h5>
+
+                    <!-- Voucher Input -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Mã giảm giá</label>
+                        <form asp-action="ApplyVoucher" method="post" class="input-group">
+                            @Html.AntiForgeryToken()
+                            <input type="text" name="voucherCode" class="form-control form-control-sm rounded-pill-start text-uppercase" placeholder="vd: GIAM10K, PH10..." value="@Model.AppliedVoucherCode" />
+                            <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill-end px-3" style="border-color: var(--color-primary); color: var(--color-primary);">
+                                Áp dụng
+                            </button>
+                        </form>
+
+                        @if (!string.IsNullOrEmpty(Model.AppliedVoucherCode))
+                        {
+                            <div class="d-flex justify-content-between align-items-center mt-2 p-2 rounded-3 bg-light border">
+                                <span class="badge bg-success"><i class="bi bi-tag-fill me-1"></i>@Model.AppliedVoucherCode</span>
+                                <form asp-action="RemoveVoucher" method="post" class="m-0">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-link text-danger p-0 small text-decoration-none">
+                                        <i class="bi bi-x-circle me-1"></i>Hủy mã
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+
+                    <hr class="text-muted my-3 opacity-25" />
+
+                    <!-- Calculation Lines -->
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span class="text-secondary">Tạm tính tiền hàng:</span>
+                        <span class="fw-bold" style="font-variant-numeric: tabular-nums;">@Model.SubtotalAmount.ToString("N0") ₫</span>
+                    </div>
+
+                    @if (Model.DiscountAmount > 0)
+                    {
+                        <div class="d-flex justify-content-between mb-2 small text-success">
+                            <span>Giảm giá:</span>
+                            <span class="fw-bold" style="font-variant-numeric: tabular-nums;">-@Model.DiscountAmount.ToString("N0") ₫</span>
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-between mb-3 small">
+                        <span class="text-secondary">Phí giao hàng:</span>
+                        <span class="fw-bold @(Model.ShippingFee == 0 ? "text-success" : "")" style="font-variant-numeric: tabular-nums;">
+                            @(Model.ShippingFee == 0 ? "Miễn phí" : $"{Model.ShippingFee:N0} ₫")
+                        </span>
+                    </div>
+
+                    @if (Model.ShippingFee > 0)
+                    {
+                        <div class="alert alert-info py-1 px-2 small border-0 mb-3" style="font-size: 0.75rem;">
+                            <i class="bi bi-truck me-1"></i> Mua thêm <strong>@((100000m - Model.SubtotalAmount).ToString("N0")) ₫</strong> để được Miễn phí giao hàng.
+                        </div>
+                    }
+
+                    <hr class="text-muted my-3 opacity-25" />
+
+                    <!-- Total Final -->
+                    <div class="d-flex justify-content-between align-items-baseline mb-4">
+                        <span class="fw-bold text-dark fs-6">Tổng thanh toán:</span>
+                        <span class="display-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
+                            @Model.TotalAmount.ToString("N0") ₫
+                        </span>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    @if (Model.CanCheckout)
+                    {
+                        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                            Tiến hành đặt hàng <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary w-100 rounded-pill py-2" disabled>
+                            Không thể đặt hàng (Vui lòng kiểm tra tồn kho)
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

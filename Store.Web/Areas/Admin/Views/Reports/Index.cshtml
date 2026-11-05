@@ -1,0 +1,96 @@
+@model PharmacyWeb.Models.ViewModels.RevenueReportViewModel
+@{
+    ViewData["Title"] = "Báo Cáo Doanh Thu Thực Thu";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Báo Cáo Doanh Thu Đã Thu</h4>
+        <span class="text-muted small">Ghi nhận dòng tiền các đơn hàng đã thanh toán thành công (không tính đơn hủy hay chờ xử lý)</span>
+    </div>
+    <a asp-action="ExportCsv" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")" class="btn btn-outline-success rounded-pill btn-sm px-3 shadow-sm">
+        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Xuất dữ liệu CSV
+    </a>
+</div>
+
+<!-- Date Filter Card -->
+<div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-4">
+    <form asp-action="Index" method="get" class="row g-2 align-items-center">
+        <div class="col-md-4">
+            <div class="input-group input-group-sm">
+                <span class="input-group-text bg-light text-muted">Từ ngày</span>
+                <input type="date" name="fromDate" class="form-control" value="@Model.FromDate.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group input-group-sm">
+                <span class="input-group-text bg-light text-muted">Đến ngày</span>
+                <input type="date" name="toDate" class="form-control" value="@Model.ToDate.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary rounded-pill btn-sm w-100" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-funnel me-1"></i> Xem báo cáo
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Summary Metric Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+            <span class="text-muted small fw-semibold">Tổng doanh thu thực thu:</span>
+            <h2 class="display-6 fw-bold text-success my-2" style="font-variant-numeric: tabular-nums;">
+                @Model.TotalCollectedRevenue.ToString("N0") ₫
+            </h2>
+            <span class="small text-muted">Từ @Model.FromDate.ToString("dd/MM/yyyy") đến @Model.ToDate.ToString("dd/MM/yyyy")</span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+            <span class="text-muted small fw-semibold">Số lượng giao dịch thành công:</span>
+            <h2 class="display-6 fw-bold text-teal my-2" style="color: var(--color-primary);">
+                @Model.TotalPaidOrders đơn
+            </h2>
+            <span class="small text-muted">Đã xác nhận thanh toán thành công</span>
+        </div>
+    </div>
+</div>
+
+<!-- Report Table -->
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Mã đơn</th>
+                    <th>Thời gian đặt</th>
+                    <th>Thời gian thu tiền</th>
+                    <th>Khách hàng</th>
+                    <th>Phương thức</th>
+                    <th class="text-end">Số tiền thực thu</th>
+                    <th class="pe-4">Người xác nhận</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Model.Orders)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@o.OrderCode</td>
+                        <td>@o.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="text-success fw-semibold">
+                            @(o.PaidAt.HasValue ? o.PaidAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-")
+                        </td>
+                        <td class="fw-semibold">@o.CustomerName</td>
+                        <td><span class="badge bg-light text-dark border">@o.PaymentMethod</span></td>
+                        <td class="text-end fw-bold text-success fs-6" style="font-variant-numeric: tabular-nums;">
+                            @o.TotalAmount.ToString("N0") ₫
+                        </td>
+                        <td class="pe-4 text-muted">@o.PaidBy</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

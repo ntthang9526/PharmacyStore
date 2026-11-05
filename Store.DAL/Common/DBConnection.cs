@@ -68,7 +68,7 @@ public class DBConnection
         }
         catch
         {
-            // Không làm gián đoạn nghiệp vụ khi mất kết nối mạng tạm thời hoặc chạy offline
+            
         }
     }
 

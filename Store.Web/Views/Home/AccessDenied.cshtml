@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "403 - Không Đủ Quyền Truy Cập";
+}
+
+<div class="container py-5 text-center" style="max-width: 600px;">
+    <div class="card border-0 shadow-sm rounded-4 p-5 bg-white">
+        <div class="mb-4">
+            <div class="rounded-circle bg-danger-subtle text-danger mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-shield-lock-fill display-4"></i>
+            </div>
+        </div>
+        <h3 class="fw-bold text-dark mb-2">403 — Không Đủ Quyền Truy Cập</h3>
+        <p class="text-secondary mb-4">
+            Khu vực bạn vừa truy cập dành riêng cho vai trò <strong>Quản Trị Viên (Admin)</strong> của Nhà thuốc Pharmacy.
+            Tài khoản hiện tại của bạn không có thẩm quyền truy cập tài nguyên này.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-house me-1"></i> Quay về trang chủ
+            </a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary rounded-pill px-4 text-teal" style="background-color: var(--color-primary); border-color: var(--color-primary); color: white !important;">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập tài khoản khác
+            </a>
+        </div>
+    </div>
+</div>

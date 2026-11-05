@@ -1,0 +1,110 @@
+@model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Data.Entities.Batch>
+@{
+    ViewData["Title"] = "Quản Lý Kho & Lô Hàng";
+    var filterType = ViewBag.FilterType as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Quản Lý Kho &amp; Lô Hàng</h4>
+        <span class="text-muted small">Kiểm soát hạn dùng, khóa lô không đạt tiêu chuẩn và đối chiếu lượng đã giữ</span>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="StockInHistory" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-clock-history me-1"></i> Lịch sử phiếu nhập
+        </a>
+        <a asp-action="StockIn" class="btn btn-primary rounded-pill btn-sm px-3" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+            <i class="bi bi-plus-circle me-1"></i> Lập phiếu nhập kho
+        </a>
+    </div>
+</div>
+
+<!-- Filter Pills -->
+<div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Index" class="btn btn-sm rounded-pill @(string.IsNullOrEmpty(filterType) ? "btn-primary text-teal" : "btn-light border")" style="@(string.IsNullOrEmpty(filterType) ? "background-color: var(--color-primary); border-color: var(--color-primary); color: white !important;" : "")">
+            Tất cả lô hàng (@Model.TotalItems)
+        </a>
+        <a asp-action="Index" asp-route-filterType="EXPIRING_SOON" class="btn btn-sm rounded-pill @(filterType == "EXPIRING_SOON" ? "btn-warning" : "btn-light border")">
+            <i class="bi bi-hourglass-split me-1 text-warning"></i> Sắp hết hạn (< 90 ngày)
+        </a>
+        <a asp-action="Index" asp-route-filterType="EXPIRED" class="btn btn-sm rounded-pill @(filterType == "EXPIRED" ? "btn-danger" : "btn-light border")">
+            <i class="bi bi-slash-circle me-1 text-danger"></i> Đã hết hạn
+        </a>
+        <a asp-action="Index" asp-route-filterType="LOW_STOCK" class="btn btn-sm rounded-pill @(filterType == "LOW_STOCK" ? "btn-danger" : "btn-light border")">
+            <i class="bi bi-exclamation-triangle me-1 text-danger"></i> Tồn thấp (&le; 5)
+        </a>
+        <a asp-action="Index" asp-route-filterType="BLOCKED" class="btn btn-sm rounded-pill @(filterType == "BLOCKED" ? "btn-secondary" : "btn-light border")">
+            <i class="bi bi-lock me-1"></i> Đang tạm khóa
+        </a>
+    </div>
+</div>
+
+<!-- Batches Table -->
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Tên thuốc</th>
+                    <th>Số lô (Batch)</th>
+                    <th>Hạn dùng (Expiry)</th>
+                    <th class="text-center">Tồn thực tế</th>
+                    <th class="text-center">Đang giữ cho đơn</th>
+                    <th class="text-center">Có thể bán</th>
+                    <th>Trạng thái lô</th>
+                    <th class="pe-4 text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var b in Model.Items)
+                {
+                    var isExpired = b.ExpiryDate <= DateTime.UtcNow.Date;
+                    var isExpiringSoon = !isExpired && b.ExpiryDate <= DateTime.UtcNow.Date.AddDays(90);
+
+                    <tr class="@(b.IsBlocked ? "table-secondary" : isExpired ? "table-danger" : "")">
+                        <td class="ps-4 py-3 fw-bold text-dark">
+                            @b.Medicine?.Name
+                        </td>
+                        <td class="font-monospace fw-bold">@b.BatchNumber</td>
+                        <td>
+                            @b.ExpiryDate.ToString("dd/MM/yyyy")
+                            @if (isExpired)
+                            {
+                                <span class="badge bg-danger ms-1">Hết hạn</span>
+                            }
+                            else if (isExpiringSoon)
+                            {
+                                <span class="badge bg-warning text-dark ms-1">Sắp hết hạn</span>
+                            }
+                        </td>
+                        <td class="text-center fw-bold">@b.Stock</td>
+                        <td class="text-center text-muted">@b.ReservedQuantity</td>
+                        <td class="text-center fw-bold @(b.AvailableStock <= 0 ? "text-danger" : "text-success")">
+                            @b.AvailableStock
+                        </td>
+                        <td>
+                            @if (b.IsBlocked)
+                            {
+                                <span class="badge bg-danger"><i class="bi bi-lock-fill me-1"></i>Tạm khóa</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success"><i class="bi bi-unlock me-1"></i>Xuất bán</span>
+                            }
+                        </td>
+                        <td class="pe-4 text-end">
+                            <form asp-action="ToggleLock" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="batchId" value="@b.Id" />
+                                <button type="submit" class="btn btn-sm @(b.IsBlocked ? "btn-outline-success" : "btn-outline-danger") rounded-pill py-0 px-2" style="font-size: 0.75rem;">
+                                    @(b.IsBlocked ? "Mở khóa lô" : "Tạm khóa lô")
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

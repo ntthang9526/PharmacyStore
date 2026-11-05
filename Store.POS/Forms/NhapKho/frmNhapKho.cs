@@ -19,15 +19,15 @@ namespace Store.POS
         {
             InitializeComponent();
             global::Store.POS.PosFormStyle.ConfigureDisabledButtons(this);
-            btnNhapExcel.Click+=(_,_)=>NhapExcelPhieuNhap();btnMauExcel.Click+=(_,_)=>TaiFileMauNhapKho();
+            btnNhapExcel.Click += (_, _) => NhapExcelPhieuNhap(); btnMauExcel.Click += (_, _) => TaiFileMauNhapKho();
             PhanQuyenGiaoDien.Gan(this);
-            PosFormStyle.ConfigureRowNavigation(dgvPhieu,row=>NapDongPhieu(((DataRowView)row.DataBoundItem).Row));
-            PosFormStyle.ConfigureGridSelection(this, posLayout, null,clearSelectionOnLeave:false);
-            txtSoLo.MaxLength=50;
-            cboNhaCungCap.SelectedIndexChanged += (_,_) => { if(!dangNapNCC) NapThuocTheoNCC(); };
-            cboThuoc.SelectedIndexChanged += (_,_) => { txtSoLo.Clear(); CapNhatNhapLo(); };
-            btnThemNCC.Click += (_,_) => ThemNCC();
-            btnTaoThuoc.Click += (_,_) => TaoThuoc();
+            PosFormStyle.ConfigureRowNavigation(dgvPhieu, row => NapDongPhieu(((DataRowView)row.DataBoundItem).Row));
+            PosFormStyle.ConfigureGridSelection(this, posLayout, null, clearSelectionOnLeave: false);
+            txtSoLo.MaxLength = 50;
+            cboNhaCungCap.SelectedIndexChanged += (_, _) => { if (!dangNapNCC) NapThuocTheoNCC(); };
+            cboThuoc.SelectedIndexChanged += (_, _) => { txtSoLo.Clear(); CapNhatNhapLo(); };
+            btnThemNCC.Click += (_, _) => ThemNCC();
+            btnTaoThuoc.Click += (_, _) => TaoThuoc();
             CapNhatNhapLo();
             dgvPhieu.CellClick += (_, e) =>
             {
@@ -65,103 +65,103 @@ namespace Store.POS
             CapNhatTongVon();
         }
 
-        private void NapNhaCungCap(int? selected=null,bool throwOnError=false)
+        private void NapNhaCungCap(int? selected = null, bool throwOnError = false)
         {
-            dangNapNCC=true;
+            dangNapNCC = true;
             try
             {
-                var suppliers=bll.LayNhaCungCap();
-                suppliers.Columns.Add("TenHienThi",typeof(string));
-                foreach(DataRow row in suppliers.Rows)
-                    row["TenHienThi"]=$"{row["TenNCC"]} (NCC{Convert.ToInt32(row["MaNCC"]):D3})";
-                cboNhaCungCap.DisplayMember="TenHienThi";cboNhaCungCap.ValueMember="MaNCC";
-                cboNhaCungCap.DataSource=suppliers;
-                cboNhaCungCap.SelectedIndex=-1;
-                if(selected.HasValue)
+                var suppliers = bll.LayNhaCungCap();
+                suppliers.Columns.Add("TenHienThi", typeof(string));
+                foreach (DataRow row in suppliers.Rows)
+                    row["TenHienThi"] = $"{row["TenNCC"]} (NCC{Convert.ToInt32(row["MaNCC"]):D3})";
+                cboNhaCungCap.DisplayMember = "TenHienThi"; cboNhaCungCap.ValueMember = "MaNCC";
+                cboNhaCungCap.DataSource = suppliers;
+                cboNhaCungCap.SelectedIndex = -1;
+                if (selected.HasValue)
                 {
-                    cboNhaCungCap.SelectedValue=selected.Value;
-                    if(cboNhaCungCap.SelectedValue is not int id || id!=selected.Value) cboNhaCungCap.SelectedIndex=-1;
+                    cboNhaCungCap.SelectedValue = selected.Value;
+                    if (cboNhaCungCap.SelectedValue is not int id || id != selected.Value) cboNhaCungCap.SelectedIndex = -1;
                 }
             }
-            finally {dangNapNCC=false;}
+            finally { dangNapNCC = false; }
             NapThuocTheoNCC(throwOnError);
         }
 
-        private void NapThuocTheoNCC(bool throwOnError=false)
+        private void NapThuocTheoNCC(bool throwOnError = false)
         {
-            loiTaiThuoc=false;
+            loiTaiThuoc = false;
             txtSoLo.Clear();
-            cboThuoc.DataSource=null;
-            if(cboNhaCungCap.SelectedValue is int id && id>0)
+            cboThuoc.DataSource = null;
+            if (cboNhaCungCap.SelectedValue is int id && id > 0)
             {
                 try
                 {
-                    cboThuoc.DisplayMember="TenThuoc";cboThuoc.ValueMember="MaThuoc";
-                    cboThuoc.DataSource=bll.LayThuocTheoNCC(id);
-                    cboThuoc.SelectedIndex=-1;
+                    cboThuoc.DisplayMember = "TenThuoc"; cboThuoc.ValueMember = "MaThuoc";
+                    cboThuoc.DataSource = bll.LayThuocTheoNCC(id);
+                    cboThuoc.SelectedIndex = -1;
                 }
-                catch(Exception ex) {loiTaiThuoc=true;CapNhatNhapLo();if(throwOnError) throw;MessageBox.Show("Không tải được thuốc: "+ex.Message,"Lỗi");}
+                catch (Exception ex) { loiTaiThuoc = true; CapNhatNhapLo(); if (throwOnError) throw; MessageBox.Show("Không tải được thuốc: " + ex.Message, "Lỗi"); }
             }
             CapNhatNhapLo();
         }
 
         private void CapNhatNhapLo()
         {
-            bool coNCC=cboNhaCungCap.SelectedValue is int id && id>0;
-            bool coThuoc=cboThuoc.Items.Count>0;
-            cboThuoc.Enabled=coNCC && coThuoc && !loiTaiThuoc;
-            btnTaoThuoc.Enabled=coNCC && !loiTaiThuoc && PhienDangNhap.LaAdmin;
-            label17.Text=coNCC && loiTaiThuoc?"Chưa tải được thuốc":coNCC && !coThuoc
-                ? (PhienDangNhap.LaAdmin?"Chưa có thuốc · bấm + để thêm":"Chưa có thuốc · nhờ Admin thêm") : "Thuốc";
-            txtSoLo.Enabled=coNCC && cboThuoc.SelectedItem is DataRowView;
-            txtSoLo.BackColor=txtSoLo.Enabled?Color.White:SystemColors.ControlLight;
-            btnThemThuoc.Enabled=txtSoLo.Enabled;
-            btnCapNhatDong.Enabled=txtSoLo.Enabled && dongPhieuDangChon is {RowState:not DataRowState.Detached};
+            bool coNCC = cboNhaCungCap.SelectedValue is int id && id > 0;
+            bool coThuoc = cboThuoc.Items.Count > 0;
+            cboThuoc.Enabled = coNCC && coThuoc && !loiTaiThuoc;
+            btnTaoThuoc.Enabled = coNCC && !loiTaiThuoc && PhienDangNhap.LaAdmin;
+            label17.Text = coNCC && loiTaiThuoc ? "Chưa tải được thuốc" : coNCC && !coThuoc
+                ? (PhienDangNhap.LaAdmin ? "Chưa có thuốc · bấm + để thêm" : "Chưa có thuốc · nhờ Admin thêm") : "Thuốc";
+            txtSoLo.Enabled = coNCC && cboThuoc.SelectedItem is DataRowView;
+            txtSoLo.BackColor = txtSoLo.Enabled ? Color.White : SystemColors.ControlLight;
+            btnThemThuoc.Enabled = txtSoLo.Enabled;
+            btnCapNhatDong.Enabled = txtSoLo.Enabled && dongPhieuDangChon is { RowState: not DataRowState.Detached };
         }
 
         private void ThemNCC()
         {
-            if(dtPhieu.Rows.Count>0) return;
-            using var dialog=new frmThemDanhMuc();
-            if(dialog.ShowDialog(this)!=DialogResult.OK) return;
-            try {NapNhaCungCap(dialog.CreatedId);}
-            catch(Exception ex) {MessageBox.Show("Không tải được NCC mới: "+ex.Message,"Lỗi");}
+            if (dtPhieu.Rows.Count > 0) return;
+            using var dialog = new frmThemDanhMuc();
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
+            try { NapNhaCungCap(dialog.CreatedId); }
+            catch (Exception ex) { MessageBox.Show("Không tải được NCC mới: " + ex.Message, "Lỗi"); }
         }
 
         private void TaoThuoc()
         {
-            if(cboNhaCungCap.SelectedValue is not int id) return;
-            using var dialog=new frmThemThuoc(id,cboNhaCungCap.Text);
-            if(dialog.ShowDialog(this)!=DialogResult.OK) return;
+            if (cboNhaCungCap.SelectedValue is not int id) return;
+            using var dialog = new frmThemThuoc(id, cboNhaCungCap.Text);
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
             NapThuocTheoNCC();
-            cboThuoc.SelectedValue=dialog.CreatedId;
+            cboThuoc.SelectedValue = dialog.CreatedId;
             CapNhatNhapLo();
         }
 
         private void NapDongPhieu(DataRow row)
         {
-            dongPhieuDangChon=row;
-            cboThuoc.SelectedValue=row["MaThuoc"];
-            txtSoLo.Text=Convert.ToString(row["SoLo"]);
-            dtpHanDung.Value=(DateTime)row["HanDung"];
-            nudSoLuong.Value=(int)row["SoLuong"];
-            nudGiaNhap.Value=(decimal)row["GiaNhap"];
+            dongPhieuDangChon = row;
+            cboThuoc.SelectedValue = row["MaThuoc"];
+            txtSoLo.Text = Convert.ToString(row["SoLo"]);
+            dtpHanDung.Value = (DateTime)row["HanDung"];
+            nudSoLuong.Value = (int)row["SoLuong"];
+            nudGiaNhap.Value = (decimal)row["GiaNhap"];
             CapNhatNhapLo();
         }
 
         private void BoChonDongPhieu()
         {
-            dongPhieuDangChon=null;
-            btnCapNhatDong.Enabled=false;
+            dongPhieuDangChon = null;
+            btnCapNhatDong.Enabled = false;
         }
 
         private void btnThemThuoc_Click(object sender, EventArgs e) => LuuDongPhieu(false);
         private void btnCapNhatDong_Click(object sender, EventArgs e) => LuuDongPhieu(true);
         private void LuuDongPhieu(bool capNhat)
         {
-            if(capNhat && (dongPhieuDangChon==null || dongPhieuDangChon.RowState==DataRowState.Detached))
+            if (capNhat && (dongPhieuDangChon == null || dongPhieuDangChon.RowState == DataRowState.Detached))
             {
-                MessageBox.Show("Chọn dòng phiếu nhập cần cập nhật.","Thông báo");
+                MessageBox.Show("Chọn dòng phiếu nhập cần cập nhật.", "Thông báo");
                 return;
             }
             if (cboNhaCungCap.SelectedValue == null)
@@ -171,13 +171,13 @@ namespace Store.POS
             }
             if (cboThuoc.SelectedItem is not DataRowView thuoc)
             {
-                MessageBox.Show(loiTaiThuoc?"Chưa tải được danh sách thuốc.":cboThuoc.Items.Count==0
-                    ?"Nhà cung cấp này chưa có thuốc để nhập.":"Chọn thuốc cần nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(loiTaiThuoc ? "Chưa tải được danh sách thuốc." : cboThuoc.Items.Count == 0
+                    ? "Nhà cung cấp này chưa có thuốc để nhập." : "Chọn thuốc cần nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string soLo = txtSoLo.Text.Trim();
-            if (soLo.Length==0 || soLo.Length>50 || soLo.Any(char.IsControl))
+            if (soLo.Length == 0 || soLo.Length > 50 || soLo.Any(char.IsControl))
             {
                 MessageBox.Show("Số lô không được trống, tối đa 50 ký tự và không chứa ký tự điều khiển.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtSoLo.Focus();
@@ -189,14 +189,14 @@ namespace Store.POS
                 dtpHanDung.Focus();
                 return;
             }
-            if (nudSoLuong.Value<1 || Store.Shared.TienTe.LamTron(nudGiaNhap.Value)<=0)
+            if (nudSoLuong.Value < 1 || Store.Shared.TienTe.LamTron(nudGiaNhap.Value) <= 0)
             {
                 MessageBox.Show("Số lượng và giá nhập sau làm tròn phải lớn hơn 0.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nudGiaNhap.Focus();
                 return;
             }
 
-            object[] values={
+            object[] values ={
                 Convert.ToInt32(thuoc["MaThuoc"]),
                 thuoc["TenThuoc"].ToString()??"",
                 thuoc["DonViTinh"].ToString()??"",
@@ -204,10 +204,10 @@ namespace Store.POS
                 dtpHanDung.Value.Date,
                 (int)nudSoLuong.Value,
                 Store.Shared.TienTe.LamTron(nudGiaNhap.Value)};
-            if(capNhat) dongPhieuDangChon!.ItemArray=values;
+            if (capNhat) dongPhieuDangChon!.ItemArray = values;
             else dtPhieu.Rows.Add(values);
             BoChonDongPhieu();
-            dgvPhieu.ClearSelection();dgvPhieu.CurrentCell=null;
+            dgvPhieu.ClearSelection(); dgvPhieu.CurrentCell = null;
 
             txtSoLo.Clear();
             nudSoLuong.Value = 1;
@@ -224,13 +224,13 @@ namespace Store.POS
             }
             dtPhieu.Rows.Remove(dongPhieuDangChon);
             BoChonDongPhieu();
-            txtSoLo.Clear();nudSoLuong.Value=1;
+            txtSoLo.Clear(); nudSoLuong.Value = 1;
             CapNhatTongVon();
         }
 
-        internal string? CanhBaoChuaLuu => dtPhieu.Rows.Count>0
+        internal string? CanhBaoChuaLuu => dtPhieu.Rows.Count > 0
             ? $"Phiếu nhập kho: {dtPhieu.Rows.Count} dòng thuốc chưa lưu."
-            : (cboThuoc.SelectedItem!=null || !string.IsNullOrWhiteSpace(txtSoLo.Text) || !string.IsNullOrWhiteSpace(txtGhiChu.Text) || nudGiaNhap.Value>0)
+            : (cboThuoc.SelectedItem != null || !string.IsNullOrWhiteSpace(txtSoLo.Text) || !string.IsNullOrWhiteSpace(txtGhiChu.Text) || nudGiaNhap.Value > 0)
                 ? "Thông tin phiếu nhập kho đang nhập chưa lưu." : null;
 
         private void btnXoaPhieu_Click(object sender, EventArgs e)
@@ -268,13 +268,13 @@ namespace Store.POS
             txtSoLo.Clear();
             nudSoLuong.Value = 1;
             nudGiaNhap.Value = 0;
-            dtpHanDung.Value=DateTime.Today.AddYears(1);
+            dtpHanDung.Value = DateTime.Today.AddYears(1);
             CapNhatTongVon();
-            try {NapNhaCungCap();}
-            catch(Exception ex)
+            try { NapNhaCungCap(); }
+            catch (Exception ex)
             {
-                cboNhaCungCap.DataSource=null;NapThuocTheoNCC();
-                MessageBox.Show("Phiếu đã được làm mới nhưng chưa tải được NCC: "+ex.Message,"Lỗi");
+                cboNhaCungCap.DataSource = null; NapThuocTheoNCC();
+                MessageBox.Show("Phiếu đã được làm mới nhưng chưa tải được NCC: " + ex.Message, "Lỗi");
             }
             CapNhatNhapLo();
         }
@@ -314,6 +314,11 @@ namespace Store.POS
             {
                 MessageBox.Show("Không lưu được phiếu nhập: " + error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnNhapExcel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

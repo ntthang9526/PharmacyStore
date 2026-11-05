@@ -21,7 +21,7 @@ namespace Store.POS
         {
             if (PosFormStyle.IsInDesigner(this)) return;
             DateTime homNay = DateTime.Today;
-            dtpTuNgay.Value = homNay.AddDays(-30);   // Mặc định: 30 ngày gần nhất để luôn xem được các hóa đơn gần đây
+            dtpTuNgay.Value = homNay.AddDays(-30);
             dtpDenNgay.Value = homNay;
             await XemBaoCaoAsync(false);
         }
@@ -42,9 +42,12 @@ namespace Store.POS
             },data=>
             {
                 if(!data.ok) {MessageBox.Show(this,data.error,"Báo cáo");return;}
-                dgvTheoNgay.DataSource=data.daily;dgvHoaDon.DataSource=data.orders;
-                lblSoHD.Text=data.count.ToString("N0",vn);lblTongTien.Text=data.total.ToString("N0",vn)+" đ";
-                lblGiamGia.Text=data.discount.ToString("N0",vn)+" đ";lblDoanhThu.Text=data.revenue.ToString("N0",vn)+" đ";
+                dgvTheoNgay.DataSource=data.daily;
+                dgvHoaDon.DataSource=data.orders;
+                lblSoHD.Text=data.count.ToString("N0",vn);
+                lblTongTien.Text=data.total.ToString("N0",vn)+" đ";
+                lblGiamGia.Text=data.discount.ToString("N0",vn)+" đ";
+                lblDoanhThu.Text=data.revenue.ToString("N0",vn)+" đ";
                 success=true;
                 if(notifyEmpty && data.count==0) MessageBox.Show(this,"Không có hóa đơn trong khoảng ngày này.","Thông báo");
             },error=>MessageBox.Show(this,"Không tải được báo cáo: "+error.Message,"Báo cáo"));

@@ -1,0 +1,192 @@
+@model PharmacyWeb.Models.ViewModels.ProductDetailViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container-xxl px-3 py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-muted">Sản phẩm</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="@Model.CategoryId" class="text-decoration-none text-muted">@Model.CategoryName</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <!-- Main Detail Card -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <div class="row g-4">
+            <!-- Left: Product Image Gallery -->
+            <div class="col-lg-5">
+                <div class="card border-0 bg-light rounded-4 overflow-hidden text-center p-4 mb-2 position-relative" style="height: 340px;">
+                    <div class="position-absolute top-0 start-0 m-3 z-1">
+                        @if (Model.IsPrescription)
+                        {
+                            <span class="status-badge status-badge-warning">
+                                <i class="bi bi-file-earmark-medical me-1"></i>Cần đơn bác sĩ
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="status-badge status-badge-info">
+                                <i class="bi bi-check-circle me-1"></i>Mua trực tiếp
+                            </span>
+                        }
+                    </div>
+
+                    <img id="mainDetailImage" src="@Model.MainImageUrl" alt="@Model.Name" class="img-fluid h-100 object-fit-contain" />
+                </div>
+
+                @if (Model.Images.Count > 1)
+                {
+                    <div class="d-flex gap-2 overflow-auto py-1">
+                        @foreach (var img in Model.Images)
+                        {
+                            <div class="rounded-3 border overflow-hidden p-1 bg-white" style="width: 60px; height: 60px; cursor: pointer;" onclick="document.getElementById('mainDetailImage').src='@img'">
+                                <img src="@img" alt="Thumbnail" class="img-fluid h-100 w-100 object-fit-contain" />
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Right: Product Information & Purchase Form -->
+            <div class="col-lg-7 d-flex flex-column">
+                <div class="mb-2">
+                    <span class="lc-unit-pill me-1">@Model.CategoryName</span>
+                    @if (!string.IsNullOrEmpty(Model.SupplierName))
+                    {
+                        <span class="small text-muted">Nhà sản xuất: <strong>@Model.SupplierName</strong></span>
+                    }
+                </div>
+
+                <h1 class="h3 fw-bold text-dark mb-2">@Model.Name</h1>
+
+                @if (!string.IsNullOrEmpty(Model.ActiveIngredient))
+                {
+                    <div class="mb-2 text-secondary small">
+                        <strong>Hoạt chất chính:</strong> <span class="fw-semibold text-teal" style="color: var(--color-primary);">@Model.ActiveIngredient</span>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.PackagingSpec))
+                {
+                    <div class="mb-3 text-secondary small">
+                        <strong>Quy cách đóng gói:</strong> @Model.PackagingSpec
+                    </div>
+                }
+
+                <div class="d-flex align-items-baseline gap-3 p-3 rounded-3 mb-3" style="background-color: var(--color-bg-page);">
+                    <span class="display-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
+                        @Model.Price.ToString("N0") ₫
+                    </span>
+                    <span class="lc-unit-pill">
+                        /@Model.Unit
+                    </span>
+                </div>
+
+                <!-- Stock Availability -->
+                <div class="mb-4">
+                    @if (!Model.IsSelling)
+                    {
+                        <span class="status-badge status-badge-danger"><i class="bi bi-x-circle me-1"></i>Sản phẩm đang ngừng kinh doanh</span>
+                    }
+                    else if (Model.AvailableStock <= 0)
+                    {
+                        <span class="status-badge status-badge-danger"><i class="bi bi-slash-circle me-1"></i>Tạm hết hàng</span>
+                    }
+                    else if (Model.AvailableStock <= 5)
+                    {
+                        <span class="status-badge status-badge-warning"><i class="bi bi-exclamation-triangle me-1"></i>Sắp hết hàng (còn @Model.AvailableStock @Model.Unit có thể bán)</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge status-badge-success"><i class="bi bi-check2-circle me-1"></i>Còn hàng trong kho (@Model.AvailableStock @Model.Unit)</span>
+                    }
+                </div>
+
+                <!-- Action Controls -->
+                <div class="mt-auto pt-3 border-top">
+                    @if (Model.IsPrescription)
+                    {
+                        <div class="alert alert-warning py-3 border-0 rounded-3 mb-3" style="background-color: var(--color-warning-bg); color: var(--color-warning);">
+                            <div class="d-flex gap-2">
+                                <i class="bi bi-exclamation-octagon-fill fs-5"></i>
+                                <div class="small">
+                                    <strong>Thuốc cần đơn bác sĩ:</strong> Theo quy định y tế, sản phẩm này chỉ bán khi có đơn thuốc hợp lệ của bác sĩ và được tư vấn trực tiếp bởi dược sĩ.
+                                </div>
+                            </div>
+                        </div>
+
+                        <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx py-2 px-4 text-decoration-none">
+                            <i class="bi bi-camera-fill me-1"></i> Gửi ảnh đơn thuốc để dược sĩ tư vấn
+                        </a>
+                    }
+                    else if (Model.IsSelling && Model.AvailableStock > 0)
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="d-flex flex-wrap align-items-center gap-3">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="medicineId" value="@Model.Id" />
+
+                            <div class="d-flex align-items-center border rounded-pill p-1 bg-white" style="width: 130px;">
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none px-2" onclick="let input=this.nextElementSibling; if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                <input type="number" name="quantity" value="1" min="1" max="@Model.AvailableStock" class="form-control form-control-sm border-0 text-center fw-bold p-0 shadow-none" style="width: 50px;" />
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none px-2" onclick="let input=this.previousElementSibling; if(parseInt(input.value)<@Model.AvailableStock) input.value=parseInt(input.value)+1;">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+
+                            <button type="submit" class="btn-ph btn-ph-primary py-2 px-4 shadow-sm">
+                                <i class="bi bi-cart-plus-fill me-1"></i> Thêm vào giỏ hàng
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn-ph btn-ph-secondary py-2 px-4" disabled>
+                            Sản phẩm hiện đang tạm hết hàng
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description & Storage Instructions -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <h5 class="fw-bold mb-3 text-teal" style="color: var(--color-primary);">
+            <i class="bi bi-file-text me-2"></i>Mô tả sản phẩm &amp; Hướng dẫn sử dụng
+        </h5>
+        <div class="product-description lh-base text-secondary">
+            @if (!string.IsNullOrWhiteSpace(Model.DescriptionHtml))
+            {
+                @Html.Raw(Model.DescriptionHtml)
+            }
+            else
+            {
+                <p class="text-muted">Chưa có thông tin mô tả chi tiết cho sản phẩm này.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    @if (Model.RelatedProducts.Any())
+    {
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+            <h5 class="fw-bold mb-3 text-teal" style="color: var(--color-primary);">
+                <i class="bi bi-arrow-repeat me-2"></i>Sản phẩm tương tự trong nhóm @Model.CategoryName
+            </h5>
+            <div class="row g-2 g-md-3">
+                @foreach (var rel in Model.RelatedProducts)
+                {
+                    <div class="col-6 col-md-3">
+                        <partial name="_ProductCard" model="rel" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

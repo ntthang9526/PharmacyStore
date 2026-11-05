@@ -1,0 +1,81 @@
+@model List<PharmacyWeb.Data.Entities.Voucher>
+@{
+    ViewData["Title"] = "Quản Lý Mã Giảm Giá";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Quản Lý Mã Giảm Giá (Vouchers)</h4>
+        <span class="text-muted small">Cấu hình loại chiết khấu FIXED / PERCENT, điều kiện đơn tối thiểu và số lượt</span>
+    </div>
+    <a asp-action="Create" class="btn btn-primary rounded-pill btn-sm px-3" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+        <i class="bi bi-plus-circle me-1"></i> Tạo voucher mới
+    </a>
+</div>
+
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Mã giảm giá</th>
+                    <th>Loại & Mức giảm</th>
+                    <th>Đơn tối thiểu</th>
+                    <th>Giảm tối đa</th>
+                    <th class="text-center">Lượt còn</th>
+                    <th>Trạng thái</th>
+                    <th class="pe-4 text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@v.Code</td>
+                        <td>
+                            @if (v.DiscountType == "PERCENT")
+                            {
+                                <span class="badge bg-info-subtle text-info-emphasis">Giảm @v.DiscountValue%</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success-subtle text-success">Giảm @v.DiscountValue.ToString("N0") ₫</span>
+                            }
+                        </td>
+                        <td>@v.MinOrderValue.ToString("N0") ₫</td>
+                        <td>@(v.MaxDiscountCap.HasValue ? $"{v.MaxDiscountCap.Value:N0} ₫" : "-")</td>
+                        <td class="text-center fw-bold @(v.Quantity <= 0 ? "text-danger" : "text-dark")">@v.Quantity</td>
+                        <td>
+                            @if (!v.IsActive)
+                            {
+                                <span class="badge bg-secondary">Tạm khóa</span>
+                            }
+                            else if (v.Quantity <= 0)
+                            {
+                                <span class="badge bg-danger">Hết lượt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Đang kích hoạt</span>
+                            }
+                        </td>
+                        <td class="pe-4 text-end">
+                            <div class="d-inline-flex gap-2">
+                                <a asp-action="Edit" asp-route-id="@v.Id" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" style="font-size: 0.75rem;">
+                                    Sửa
+                                </a>
+                                <form asp-action="ToggleActive" method="post" class="m-0 d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@v.Id" />
+                                    <button type="submit" class="btn btn-sm @(v.IsActive ? "btn-outline-danger" : "btn-outline-success") rounded-pill py-0 px-2" style="font-size: 0.75rem;">
+                                        @(v.IsActive ? "Khóa" : "Mở")
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

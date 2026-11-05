@@ -1,0 +1,7 @@
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+App_Data/Prescriptions/*
+!App_Data/Prescriptions/.gitkeep

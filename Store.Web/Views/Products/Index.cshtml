@@ -1,0 +1,228 @@
+@model PharmacyWeb.Models.ViewModels.ProductFilterViewModel
+@{
+    ViewData["Title"] = "Danh Mục Thuốc & Sản Phẩm";
+}
+
+<div class="container-xxl px-3 py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Danh mục sản phẩm</li>
+        </ol>
+    </nav>
+
+    <!-- Mobile Filter Open Button Bar -->
+    <div class="d-lg-none mb-3 d-flex justify-content-between align-items-center bg-white p-3 rounded-3 shadow-xs border">
+        <span class="small fw-semibold text-secondary">Tìm thấy @Model.Results.TotalItems sản phẩm</span>
+        <button class="btn btn-ph btn-ph-secondary btn-ph-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilterDrawer">
+            <i class="bi bi-funnel-fill me-1"></i> Bộ lọc thuốc
+        </button>
+    </div>
+
+    <div class="row g-4">
+        <!-- Desktop Filter Sidebar -->
+        <aside class="col-lg-3 d-none d-lg-block">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white sticky-top" style="top: 80px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0 text-teal" style="color: var(--color-primary);">
+                        <i class="bi bi-funnel-fill me-1"></i> Bộ lọc tìm kiếm
+                    </h6>
+                    <a asp-action="Index" class="text-decoration-none small text-muted">Xóa lọc</a>
+                </div>
+
+                <form id="catalogFilterForm" asp-action="Index" method="get">
+                    <!-- Keyword -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Từ khóa tìm kiếm</label>
+                        <input type="text" name="Keyword" class="form-control form-control-sm rounded-pill" placeholder="Tên thuốc, hoạt chất..." value="@Model.Keyword" />
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Nhóm thuốc</label>
+                        <div class="d-flex flex-column gap-1">
+                            <div class="form-check small">
+                                <input class="form-check-input" type="radio" name="CategoryId" id="cat_all" value="" @(!Model.CategoryId.HasValue ? "checked" : "") />
+                                <label class="form-check-label" for="cat_all">Tất cả nhóm thuốc</label>
+                            </div>
+                            @foreach (var cat in Model.Categories)
+                            {
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="radio" name="CategoryId" id="cat_@cat.Id" value="@cat.Id" @(Model.CategoryId == cat.Id ? "checked" : "") />
+                                    <label class="form-check-label d-flex justify-content-between" for="cat_@cat.Id">
+                                        <span class="text-truncate">@cat.Name</span>
+                                        <span class="text-muted">(@cat.ProductCount)</span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <hr class="text-muted my-3 opacity-25" />
+
+                    <!-- Price Range -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Khoảng giá (₫)</label>
+                        <div class="row g-1">
+                            <div class="col-6">
+                                <input type="number" name="MinPrice" class="form-control form-control-sm rounded-pill" placeholder="Từ" value="@Model.MinPrice" />
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="MaxPrice" class="form-control form-control-sm rounded-pill" placeholder="Đến" value="@Model.MaxPrice" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted my-3 opacity-25" />
+
+                    <!-- Toggles -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Phân loại &amp; Tồn kho</label>
+                        <div class="form-check form-switch small mb-2">
+                            <input class="form-check-input" type="checkbox" name="DirectPurchaseOnly" id="opt_otc" value="true" @(Model.DirectPurchaseOnly == true ? "checked" : "") />
+                            <label class="form-check-label" for="opt_otc">Chỉ thuốc mua trực tiếp</label>
+                        </div>
+                        <div class="form-check form-switch small">
+                            <input class="form-check-input" type="checkbox" name="OnlyInStock" id="opt_instock" value="true" @(Model.OnlyInStock == true ? "checked" : "") />
+                            <label class="form-check-label" for="opt_instock">Chỉ sản phẩm còn hàng</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-ph btn-ph-primary w-100 btn-sm">
+                        <i class="bi bi-filter me-1"></i> Áp dụng bộ lọc
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Product Grid -->
+        <main class="col-12 col-lg-9">
+            <!-- Header bar with Count and Sorting -->
+            <div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <div>
+                        <span class="fw-semibold text-dark">Hiển thị @Model.Results.TotalItems sản phẩm</span>
+                        @if (!string.IsNullOrWhiteSpace(Model.Keyword))
+                        {
+                            <span class="text-muted small">cho từ khóa: <strong>"@Model.Keyword"</strong></span>
+                        }
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <label class="small text-muted text-nowrap mb-0">Sắp xếp:</label>
+                        <select id="sortSelect" name="SortBy" class="form-select form-select-sm rounded-pill border-secondary-subtle" style="width: auto;" onchange="updateSort(this.value)">
+                            <option value="default" selected="@(Model.SortBy == "default")">Mặc định (Nổi bật)</option>
+                            <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Giá tăng dần</option>
+                            <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Giá giảm dần</option>
+                            <option value="name_asc" selected="@(Model.SortBy == "name_asc")">Tên A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div id="productGridContainer">
+                <partial name="_ProductGridPartial" model="Model" />
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Mobile Offcanvas Filter Drawer -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileFilterDrawer" aria-labelledby="mobileFilterDrawerLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold text-teal" id="mobileFilterDrawerLabel">
+            <i class="bi bi-funnel-fill me-1"></i> Bộ Lọc Tìm Kiếm
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form asp-action="Index" method="get">
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Từ khóa tìm kiếm</label>
+                <input type="text" name="Keyword" class="form-control form-control-sm rounded-pill" value="@Model.Keyword" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Nhóm thuốc</label>
+                <div class="d-flex flex-column gap-1">
+                    <div class="form-check small">
+                        <input class="form-check-input" type="radio" name="CategoryId" id="m_cat_all" value="" @(!Model.CategoryId.HasValue ? "checked" : "") />
+                        <label class="form-check-label" for="m_cat_all">Tất cả nhóm thuốc</label>
+                    </div>
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <div class="form-check small">
+                            <input class="form-check-input" type="radio" name="CategoryId" id="m_cat_@cat.Id" value="@cat.Id" @(Model.CategoryId == cat.Id ? "checked" : "") />
+                            <label class="form-check-label d-flex justify-content-between" for="m_cat_@cat.Id">
+                                <span>@cat.Name</span>
+                                <span class="text-muted">(@cat.ProductCount)</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Khoảng giá (₫)</label>
+                <div class="row g-1">
+                    <div class="col-6"><input type="number" name="MinPrice" class="form-control form-control-sm rounded-pill" placeholder="Từ" value="@Model.MinPrice" /></div>
+                    <div class="col-6"><input type="number" name="MaxPrice" class="form-control form-control-sm rounded-pill" placeholder="Đến" value="@Model.MaxPrice" /></div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="form-check form-switch small mb-2">
+                    <input class="form-check-input" type="checkbox" name="DirectPurchaseOnly" id="m_opt_otc" value="true" @(Model.DirectPurchaseOnly == true ? "checked" : "") />
+                    <label class="form-check-label" for="m_opt_otc">Chỉ thuốc mua trực tiếp</label>
+                </div>
+                <div class="form-check form-switch small">
+                    <input class="form-check-input" type="checkbox" name="OnlyInStock" id="m_opt_instock" value="true" @(Model.OnlyInStock == true ? "checked" : "") />
+                    <label class="form-check-label" for="m_opt_instock">Chỉ còn hàng</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-ph btn-ph-primary w-100">Áp dụng bộ lọc</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateSort(val) {
+            const form = document.getElementById('catalogFilterForm');
+            let sortInput = form.querySelector('input[name="SortBy"]');
+            if (!sortInput) {
+                sortInput = document.createElement('input');
+                sortInput.type = 'hidden';
+                sortInput.name = 'SortBy';
+                form.appendChild(sortInput);
+            }
+            sortInput.value = val;
+            form.submit();
+        }
+
+        document.getElementById('catalogFilterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData).toString();
+
+            const container = document.getElementById('productGridContainer');
+            container.style.opacity = '0.5';
+
+            fetch('@Url.Action("Index", "Products")?' + params, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(res => res.text())
+            .then(html => {
+                container.innerHTML = html;
+                container.style.opacity = '1';
+                window.history.pushState(null, '', '@Url.Action("Index", "Products")?' + params);
+            })
+            .catch(() => {
+                this.submit();
+            });
+        });
+    </script>
+}

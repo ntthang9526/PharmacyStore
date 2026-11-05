@@ -1,0 +1,53 @@
+@model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Data.Entities.StockIn>
+@{
+    ViewData["Title"] = "Lịch Sử Phiếu Nhập Kho";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Lịch Sử Phiếu Nhập Kho</h4>
+        <span class="text-muted small">Danh sách các phiếu nhập đã được ghi nhận vào kho dữ liệu</span>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-boxes me-1"></i> Quản lý lô
+        </a>
+        <a asp-action="StockIn" class="btn btn-primary rounded-pill btn-sm px-3" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+            <i class="bi bi-plus-circle me-1"></i> Lập phiếu mới
+        </a>
+    </div>
+</div>
+
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Mã phiếu</th>
+                    <th>Nhà cung cấp</th>
+                    <th>Ngày nhập</th>
+                    <th>Người lập phiếu</th>
+                    <th class="text-end">Tổng tiền nhập</th>
+                    <th class="pe-4 text-end">Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model.Items)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@s.Code</td>
+                        <td class="fw-semibold">@s.Supplier?.Name</td>
+                        <td>@s.ImportDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@s.EmployeeName</td>
+                        <td class="text-end fw-bold" style="font-variant-numeric: tabular-nums;">@s.TotalCost.ToString("N0") ₫</td>
+                        <td class="pe-4 text-end">
+                            <a asp-action="StockInDetails" asp-route-id="@s.Id" class="btn btn-outline-secondary btn-sm py-0 px-3 rounded-pill">
+                                Xem dòng
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

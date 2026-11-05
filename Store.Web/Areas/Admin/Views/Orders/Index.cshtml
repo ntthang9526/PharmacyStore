@@ -1,0 +1,118 @@
+@model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Data.Entities.Order>
+@{
+    ViewData["Title"] = "Quản Lý Đơn Hàng";
+    var status = ViewBag.Status as string;
+    var paymentStatus = ViewBag.PaymentStatus as string;
+    var keyword = ViewBag.Keyword as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Quản Lý Đơn Hàng Website</h4>
+        <span class="text-muted small">Quy trình xử lý theo luồng: Chờ xác nhận &rarr; Đã xác nhận &rarr; Đang giao &rarr; Hoàn tất / Thu tiền</span>
+    </div>
+</div>
+
+<!-- Search & Status Filter -->
+<div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
+    <form asp-action="Index" method="get" class="row g-2 align-items-center">
+        <div class="col-md-4">
+            <input type="text" name="keyword" class="form-control form-control-sm rounded-pill" placeholder="Mã đơn, SĐT hoặc tên khách..." value="@keyword" />
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-select form-select-sm rounded-pill">
+                <option value="">-- Tất cả trạng thái đơn --</option>
+                <option value="NEW" selected="@(status == "NEW")">Chờ xác nhận</option>
+                <option value="CONFIRMED" selected="@(status == "CONFIRMED")">Đã xác nhận</option>
+                <option value="SHIPPING" selected="@(status == "SHIPPING")">Đang giao hàng</option>
+                <option value="COMPLETED" selected="@(status == "COMPLETED")">Đã hoàn tất</option>
+                <option value="CANCELLED" selected="@(status == "CANCELLED")">Đã hủy</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="paymentStatus" class="form-select form-select-sm rounded-pill">
+                <option value="">-- Tất cả thanh toán --</option>
+                <option value="UNPAID" selected="@(paymentStatus == "UNPAID")">Chưa thanh toán</option>
+                <option value="PAID" selected="@(paymentStatus == "PAID")">Đã thanh toán</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-primary rounded-pill btn-sm w-100" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-filter"></i> Lọc
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm">Xóa</a>
+        </div>
+    </form>
+</div>
+
+<!-- Orders Table -->
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Mã đơn</th>
+                    <th>Thời gian đặt</th>
+                    <th>Khách hàng & SĐT</th>
+                    <th>Số món</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái đơn</th>
+                    <th>Thanh toán</th>
+                    <th class="pe-4 text-end">Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Model.Items)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@o.Code</td>
+                        <td>@o.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <div class="fw-bold">@o.CustomerName</div>
+                            <div class="text-muted" style="font-size: 0.75rem;">@o.CustomerPhone</div>
+                        </td>
+                        <td>@o.Items.Sum(i => i.Quantity)</td>
+                        <td class="fw-bold text-dark" style="font-variant-numeric: tabular-nums;">@o.TotalAmount.ToString("N0") ₫</td>
+                        <td>
+                            @if (o.OrderStatus == "NEW")
+                            {
+                                <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>Chờ xác nhận</span>
+                            }
+                            else if (o.OrderStatus == "CONFIRMED")
+                            {
+                                <span class="badge bg-info text-dark"><i class="bi bi-check2 me-1"></i>Đã xác nhận</span>
+                            }
+                            else if (o.OrderStatus == "SHIPPING")
+                            {
+                                <span class="badge bg-primary text-white"><i class="bi bi-truck me-1"></i>Đang giao</span>
+                            }
+                            else if (o.OrderStatus == "COMPLETED")
+                            {
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle me-1"></i>Hoàn tất</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger text-white"><i class="bi bi-x-circle me-1"></i>Đã hủy</span>
+                            }
+                        </td>
+                        <td>
+                            @if (o.PaymentStatus == "PAID")
+                            {
+                                <span class="badge bg-success text-white"><i class="bi bi-cash-stack me-1"></i>Đã thu</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary text-white">Chưa thu</span>
+                            }
+                        </td>
+                        <td class="pe-4 text-end">
+                            <a asp-action="Details" asp-route-id="@o.Id" class="btn btn-outline-primary btn-sm rounded-pill py-0 px-3">
+                                Xử lý
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

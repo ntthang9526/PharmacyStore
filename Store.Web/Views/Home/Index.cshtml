@@ -1,0 +1,190 @@
+@{
+    ViewData["Title"] = "Trang Chủ - Nhà Thuốc Pharmacy";
+    var featured = ViewBag.FeaturedProducts as List<ProductCardViewModel> ?? new();
+    var rxProducts = ViewBag.RxProducts as List<ProductCardViewModel> ?? new();
+    var healthcareProducts = ViewBag.HealthcareProducts as List<ProductCardViewModel> ?? new();
+}
+
+<div class="container-xxl px-3 py-4">
+    <!-- Khu vực Hero Đôi (Banner Chính thức + Khối Gửi đơn thuốc tư vấn) -->
+    <section class="mb-4" aria-label="Tìm nhanh thuốc và gửi đơn tư vấn">
+        <div class="row g-3 align-items-stretch">
+            <div class="col-12 col-lg-8">
+                <div class="store-hero-banner h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            <span class="status-badge status-badge-info"><i class="bi bi-shield-check me-1"></i> Hệ thống Nhà thuốc Chính hãng • Dược sĩ tận tâm</span>
+                        </div>
+                        <h1 class="h3 fw-bold mb-2" style="color:var(--color-primary-active);">
+                            Chăm sóc Sức khỏe Toàn diện cho Cả Gia đình
+                        </h1>
+                        <p class="text-secondary mb-3" style="max-width:60ch;">
+                            Đặt mua nhanh thuốc thông thường, vitamin và thiết bị y tế giao tận nơi hoặc gửi ảnh đơn thuốc để dược sĩ tư vấn chuyên môn.
+                        </p>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2 border-top" style="border-color:#99F6E4!important;">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="btn-ph btn-ph-primary text-decoration-none">
+                                <i class="bi bi-cart3 me-1"></i> <span>Mua thuốc trực tuyến</span>
+                            </a>
+                            <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx text-decoration-none">
+                                <i class="bi bi-file-earmark-medical me-1"></i> <span>Gửi đơn thuốc tư vấn</span>
+                            </a>
+                        </div>
+                        <div class="small text-secondary">
+                            Mã ưu đãi: <code class="font-mono-code fw-bold" style="color:var(--color-primary-active);">GIAM10K</code> • <code class="font-mono-code fw-bold" style="color:var(--color-primary-active);">PH10</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="rx-callout-box h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <strong class="d-flex align-items-center gap-2" style="color:var(--color-primary);">
+                                <i class="bi bi-file-earmark-medical fs-5"></i> Mua thuốc theo đơn bác sĩ
+                            </strong>
+                            <span class="status-badge status-badge-warning">Dược sĩ tư vấn</span>
+                        </div>
+                        <ol class="small mb-3 ps-3 text-secondary">
+                            <li class="mb-1"><strong>Bước 1:</strong> Tải lên ảnh chụp đơn thuốc rõ nét.</li>
+                            <li class="mb-1"><strong>Bước 2:</strong> Nhập họ tên &amp; số điện thoại liên hệ.</li>
+                            <li><strong>Bước 3:</strong> Dược sĩ liên hệ tư vấn &amp; hướng dẫn nhận thuốc.</li>
+                        </ol>
+                    </div>
+                    <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-primary w-100 text-decoration-none text-center">
+                        <i class="bi bi-cloud-arrow-up me-1"></i> <span>Gửi ảnh đơn thuốc ngay</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6 Ô Tiện ích Nhanh (Bố cục chuẩn Nhà thuốc Long Châu) -->
+    <section class="mb-4" aria-label="Tiện ích tra cứu nhanh">
+        <div class="row g-2 g-md-3">
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="PrescriptionRequest" asp-action="Index" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon orange"><i class="bi bi-file-earmark-medical"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Cần mua thuốc</div>
+                        <div class="text-muted" style="font-size:11px;">Gửi đơn tư vấn nhanh</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon"><i class="bi bi-cart3"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Mua trực tiếp</div>
+                        <div class="text-muted" style="font-size:11px;">Không cần đơn bác sĩ</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="Products" asp-action="Index" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon orange"><i class="bi bi-shield-check"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Thuốc theo đơn</div>
+                        <div class="text-muted" style="font-size:11px;">Cần đơn bác sĩ</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="MyOrders" asp-action="Index" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon green"><i class="bi bi-box-seam"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Đơn hàng của tôi</div>
+                        <div class="text-muted" style="font-size:11px;">Tra cứu trạng thái</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon"><i class="bi bi-capsule"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Vitamin &amp; Đề kháng</div>
+                        <div class="text-muted" style="font-size:11px;">Bổ sung khoáng chất</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="6" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon green"><i class="bi bi-bandaid"></i></span>
+                    <div>
+                        <div class="fw-bold small text-dark">Vật tư y tế</div>
+                        <div class="text-muted" style="font-size:11px;">Tủ thuốc gia đình</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Khối 1: Sản phẩm Mua trực tiếp Nổi bật với Dải Ribbon Teal POS -->
+    <section class="lc-section-card mb-4" aria-labelledby="homeFeaturedOtcHeading">
+        <div class="lc-section-ribbon">
+            <div>
+                <h2 class="h5 fw-bold mb-0 text-white" id="homeFeaturedOtcHeading">
+                    <i class="bi bi-stars me-1 text-warning"></i> Sản phẩm bán chạy nổi bật
+                </h2>
+            </div>
+            <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="btn-ph btn-ph-secondary btn-ph-sm text-decoration-none">
+                Xem tất cả <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+        <div class="row g-3">
+            @foreach (var med in featured)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <partial name="_ProductCard" model="med" />
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Khối 2: Nhóm Thuốc cần đơn bác sĩ -->
+    <section class="lc-section-card mb-4" aria-labelledby="homeRxSectionHeading">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom">
+            <div>
+                <h2 class="h5 fw-bold mb-0" id="homeRxSectionHeading" style="color:var(--color-primary-active);">
+                    <i class="bi bi-file-earmark-medical me-1 text-teal"></i> Thuốc cần đơn bác sĩ
+                </h2>
+                <p class="small text-secondary mb-0">Dược sĩ chuyên môn kiểm tra đơn thuốc và tư vấn trực tiếp</p>
+            </div>
+            <a asp-controller="Products" asp-action="Index" class="btn-ph btn-ph-rx btn-ph-sm text-decoration-none">
+                Xem tất cả <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+        <div class="row g-3">
+            @foreach (var med in rxProducts)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <partial name="_ProductCard" model="med" />
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Khối 3: Sản phẩm Chăm sóc Sức khỏe & Tủ thuốc Gia đình -->
+    <section class="lc-section-card mb-4" aria-labelledby="homeFamilySectionHeading">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom">
+            <div>
+                <h2 class="h5 fw-bold mb-0" id="homeFamilySectionHeading" style="color:var(--color-primary-active);">
+                    <i class="bi bi-heart-pulse me-1 text-danger"></i> Tủ thuốc gia đình &amp; Đề kháng
+                </h2>
+                <p class="small text-secondary mb-0">Bù nước điện giải, chăm sóc dạ dày và vitamin thiết yếu</p>
+            </div>
+            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="btn-ph btn-ph-secondary btn-ph-sm text-decoration-none">
+                Xem thêm <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+        <div class="row g-3">
+            @foreach (var med in healthcareProducts)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <partial name="_ProductCard" model="med" />
+                </div>
+            }
+        </div>
+    </section>
+</div>

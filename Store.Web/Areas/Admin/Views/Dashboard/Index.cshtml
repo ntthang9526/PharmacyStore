@@ -1,0 +1,188 @@
+@model PharmacyWeb.Models.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Tổng Quan KPI & Cảnh Báo Kho";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Bảng Điều Khiển Quản Trị</h4>
+        <span class="text-muted small">Số liệu thời gian thực được đồng bộ trực tiếp từ cơ sở dữ liệu</span>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-area="Admin" asp-controller="Inventory" asp-action="StockIn" class="btn btn-primary rounded-pill btn-sm px-3 shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+            <i class="bi bi-box-arrow-in-down me-1"></i> Lập phiếu nhập kho
+        </a>
+    </div>
+</div>
+
+<!-- 4 KPI Metrics Cards -->
+<div class="row g-3 mb-4">
+    <!-- Metric 1: New Orders -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 shadow-sm p-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="text-muted small fw-semibold">Đơn hàng mới</span>
+                <div class="rounded-3 p-2 bg-warning-subtle text-warning">
+                    <i class="bi bi-hourglass-split fs-5"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold text-dark mb-1">@Model.NewOrdersCount</h3>
+            <span class="small text-muted">Đang chờ xác nhận xuất kho</span>
+        </div>
+    </div>
+
+    <!-- Metric 2: Today's Collected Revenue -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 shadow-sm p-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="text-muted small fw-semibold">Doanh thu đã thu hôm nay</span>
+                <div class="rounded-3 p-2 bg-success-subtle text-success">
+                    <i class="bi bi-cash-stack fs-5"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold text-success mb-1" style="font-variant-numeric: tabular-nums;">
+                @Model.PaidRevenueToday.ToString("N0") ₫
+            </h3>
+            <span class="small text-muted">Chỉ tính đơn đã thanh toán</span>
+        </div>
+    </div>
+
+    <!-- Metric 3: Month's Collected Revenue -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 shadow-sm p-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="text-muted small fw-semibold">Doanh thu đã thu tháng này</span>
+                <div class="rounded-3 p-2 bg-primary-subtle text-primary">
+                    <i class="bi bi-graph-up fs-5"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold text-primary mb-1" style="font-variant-numeric: tabular-nums;">
+                @Model.PaidRevenueMonth.ToString("N0") ₫
+            </h3>
+            <span class="small text-muted">Thực thu theo chuẩn kế toán</span>
+        </div>
+    </div>
+
+    <!-- Metric 4: Stock Status -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 shadow-sm p-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="text-muted small fw-semibold">Thuốc có thể bán</span>
+                <div class="rounded-3 p-2 bg-info-subtle text-info">
+                    <i class="bi bi-capsule fs-5"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold text-dark mb-1">@Model.TotalAvailableProducts</h3>
+            <div class="small d-flex gap-2 text-danger">
+                <span><i class="bi bi-exclamation-circle me-1"></i>@Model.LowStockCount tồn thấp</span>
+                <span>• @Model.ExpiringSoonCount sắp hết hạn</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Left: Recent Orders Table -->
+    <div class="col-lg-7">
+        <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden h-100">
+            <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-receipt me-2 text-teal"></i>Đơn hàng gần đây</h6>
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="text-decoration-none small text-teal">
+                    Xem tất cả đơn <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th class="pe-4 text-end">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var o in Model.RecentOrders)
+                        {
+                            <tr>
+                                <td class="ps-4 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@o.Code</td>
+                                <td>@o.CustomerName</td>
+                                <td class="fw-bold" style="font-variant-numeric: tabular-nums;">@o.TotalAmount.ToString("N0") ₫</td>
+                                <td>
+                                    @if (o.OrderStatus == "NEW")
+                                    {
+                                        <span class="badge bg-warning text-dark">Chờ xác nhận</span>
+                                    }
+                                    else if (o.OrderStatus == "CONFIRMED")
+                                    {
+                                        <span class="badge bg-info text-dark">Đã xác nhận</span>
+                                    }
+                                    else if (o.OrderStatus == "COMPLETED")
+                                    {
+                                        <span class="badge bg-success text-white">Hoàn tất</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary text-white">@o.OrderStatus</span>
+                                    }
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id" class="btn btn-outline-secondary btn-sm py-0 px-2 rounded-pill">
+                                        Xem
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Batch Warnings -->
+    <div class="col-lg-5">
+        <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden h-100">
+            <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Cảnh báo lô hàng kho</h6>
+                <a asp-area="Admin" asp-controller="Inventory" asp-action="Index" class="text-decoration-none small text-teal">
+                    Quản lý kho <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="p-3">
+                @if (!Model.BatchAlerts.Any())
+                {
+                    <p class="text-muted small text-center my-4">Không có cảnh báo lô hàng nào.</p>
+                }
+                else
+                {
+                    <div class="d-flex flex-column gap-2 small">
+                        @foreach (var alert in Model.BatchAlerts)
+                        {
+                            <div class="p-2 rounded-3 border d-flex justify-content-between align-items-center bg-light">
+                                <div>
+                                    <strong class="text-dark">@alert.MedicineName</strong>
+                                    <div class="text-muted font-monospace" style="font-size: 0.75rem;">Lô: @alert.BatchNumber (Tồn: @alert.Stock)</div>
+                                </div>
+                                <div>
+                                    @if (alert.AlertType == "EXPIRING_SOON")
+                                    {
+                                        <span class="badge bg-warning text-dark">Hạn: @alert.ExpiryDate.ToString("dd/MM/yyyy")</span>
+                                    }
+                                    else if (alert.AlertType == "LOW_STOCK")
+                                    {
+                                        <span class="badge bg-danger text-white">Tồn thấp (@alert.Stock)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary text-white">Đang khóa</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

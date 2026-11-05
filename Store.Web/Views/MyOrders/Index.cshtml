@@ -1,0 +1,158 @@
+@model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Models.ViewModels.MyOrderListViewModel>
+@{
+    ViewData["Title"] = "Đơn Hàng Của Tôi";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Đơn hàng của tôi</li>
+        </ol>
+    </nav>
+
+    <h3 class="fw-bold text-dark mb-4">
+        <i class="bi bi-box-seam me-2 text-teal"></i>Lịch sử đơn hàng (@Model.TotalItems đơn)
+    </h3>
+
+    @if (!Model.Items.Any())
+    {
+        <div class="card border-0 rounded-4 shadow-sm p-5 bg-white text-center">
+            <div class="mb-3">
+                <i class="bi bi-inbox text-muted display-4"></i>
+            </div>
+            <h5 class="fw-bold text-dark">Bạn chưa có đơn hàng nào</h5>
+            <p class="text-secondary small mb-3">Hãy dạo quanh nhà thuốc và chọn những sản phẩm chăm sóc sức khỏe tốt nhất.</p>
+            <div>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                    Bắt đầu mua thuốc
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column gap-3 mb-4">
+            @foreach (var order in Model.Items)
+            {
+                <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+                    <div class="card-header bg-light border-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="fw-bold font-monospace text-teal fs-6" style="color: var(--color-primary);">@order.Code</span>
+                            <span class="text-muted small">@order.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <!-- Order Status Badge -->
+                            @if (order.OrderStatus == "NEW")
+                            {
+                                <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>Chờ xác nhận</span>
+                            }
+                            else if (order.OrderStatus == "CONFIRMED")
+                            {
+                                <span class="badge bg-info text-dark"><i class="bi bi-check2 me-1"></i>Đã xác nhận</span>
+                            }
+                            else if (order.OrderStatus == "SHIPPING")
+                            {
+                                <span class="badge bg-primary text-white"><i class="bi bi-truck me-1"></i>Đang giao hàng</span>
+                            }
+                            else if (order.OrderStatus == "COMPLETED")
+                            {
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle-fill me-1"></i>Hoàn tất</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger text-white"><i class="bi bi-x-circle me-1"></i>Đã hủy</span>
+                            }
+
+                            <!-- Payment Status Badge -->
+                            @if (order.PaymentStatus == "PAID")
+                            {
+                                <span class="badge bg-success text-white"><i class="bi bi-cash-stack me-1"></i>Đã thu tiền</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary text-white">Chưa thanh toán</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body px-4 py-3">
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            @foreach (var item in order.Items)
+                            {
+                                <div class="d-flex justify-content-between align-items-center small">
+                                    <div>
+                                        <span class="fw-semibold text-dark">@item.MedicineName</span>
+                                        <span class="text-muted"> (@item.Unit) × @item.Quantity</span>
+                                    </div>
+                                    <span class="text-secondary" style="font-variant-numeric: tabular-nums;">@item.TotalPrice.ToString("N0") ₫</span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-top gap-2">
+                            <div>
+                                <span class="text-muted small">Tổng thanh toán: </span>
+                                <strong class="fs-6 text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
+                                    @order.TotalAmount.ToString("N0") ₫
+                                </strong>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+                                    Chi tiết đơn
+                                </a>
+
+                                @if (order.CanCancel)
+                                {
+                                    <!-- Cancel Order Trigger Modal -->
+                                    <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#cancelModal_@order.Id">
+                                        Hủy đơn
+                                    </button>
+
+                                    <!-- Cancel Modal -->
+                                    <div class="modal fade" id="cancelModal_@order.Id" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content rounded-4 border-0 shadow">
+                                                <form asp-action="Cancel" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@order.Id" />
+                                                    <div class="modal-header border-0 pb-0">
+                                                        <h5 class="modal-title fw-bold text-dark">Hủy đơn hàng @order.Code</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body py-3">
+                                                        <p class="text-secondary small mb-3">Bạn có chắc chắn muốn hủy đơn hàng này không? Lô hàng đã giữ và lượt voucher (nếu có) sẽ được giải phóng ngay lập tức.</p>
+                                                        <label class="form-label small fw-semibold text-secondary">Lý do hủy đơn:</label>
+                                                        <input type="text" name="reason" class="form-control rounded-3" placeholder="vd: Tôi muốn đổi địa chỉ, đặt nhầm số lượng..." required />
+                                                    </div>
+                                                    <div class="modal-footer border-0 pt-0">
+                                                        <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-danger rounded-pill px-4">Xác nhận hủy đơn</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            var pModel = new PaginationViewModel
+            {
+                CurrentPage = Model.Page,
+                PageSize = Model.PageSize,
+                TotalItems = Model.TotalItems,
+                RouteUrl = Url.Action("Index", "MyOrders") ?? "/MyOrders"
+            };
+            <partial name="_Pagination" model="pModel" />
+        }
+    }
+</div>

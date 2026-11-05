@@ -1,0 +1,87 @@
+@model List<PharmacyWeb.Data.Entities.CustomerProfile>
+@{
+    ViewData["Title"] = "Quản Lý Khách Hàng";
+    var keyword = ViewBag.Keyword as string;
+    var totalItems = (int)(ViewBag.TotalItems ?? 0);
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Quản Lý Khách Hàng & Tài Khoản</h4>
+        <span class="text-muted small">Hồ sơ khách hàng, điểm tích lũy và kiểm soát trạng thái khóa tài khoản web</span>
+    </div>
+</div>
+
+<!-- Search Form -->
+<div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
+    <form asp-action="Index" method="get" class="row g-2 align-items-center">
+        <div class="col-md-6">
+            <input type="text" name="keyword" class="form-control form-control-sm rounded-pill" placeholder="Tìm tên khách hàng, số điện thoại, email..." value="@keyword" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary rounded-pill btn-sm w-100" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-search me-1"></i> Tìm
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Customers Table -->
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Họ và tên</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th class="text-center">Điểm POS</th>
+                    <th>Trạng thái Web</th>
+                    <th class="pe-4 text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 fw-bold text-dark">@c.FullName</td>
+                        <td class="font-monospace">@c.Phone</td>
+                        <td class="text-muted">@c.Email</td>
+                        <td class="text-center">
+                            <span class="badge bg-success-subtle text-success">@c.Points điểm</span>
+                        </td>
+                        <td>
+                            @if (c.IsLocked)
+                            {
+                                <span class="badge bg-danger"><i class="bi bi-lock-fill me-1"></i>Bị khóa</span>
+                            }
+                            else if (c.WebAccountActive)
+                            {
+                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Hoạt động</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Chưa kích hoạt</span>
+                            }
+                        </td>
+                        <td class="pe-4 text-end">
+                            <div class="d-inline-flex gap-2">
+                                <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" style="font-size: 0.75rem;">
+                                    Hồ sơ
+                                </a>
+                                <form asp-action="ToggleLock" method="post" class="m-0 d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@c.Id" />
+                                    <button type="submit" class="btn btn-sm @(c.IsLocked ? "btn-outline-success" : "btn-outline-danger") rounded-pill py-0 px-2" style="font-size: 0.75rem;">
+                                        @(c.IsLocked ? "Mở khóa" : "Khóa")
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

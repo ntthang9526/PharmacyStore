@@ -1,0 +1,74 @@
+@model PharmacyWeb.Models.ViewModels.VoucherFormViewModel
+@{
+    ViewData["Title"] = $"Chỉnh Sửa Voucher {Model.Code}";
+}
+
+<div class="container-fluid p-0" style="max-width: 680px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Chỉnh Sửa Voucher: @Model.Code</h4>
+            <span class="text-muted small">Cập nhật số lượt và trạng thái kích hoạt</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Code" />
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold text-secondary">Mã giảm giá</label>
+                    <input type="text" class="form-control rounded-3 font-monospace fw-bold" value="@Model.Code" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DiscountType" class="form-label small fw-semibold text-secondary">Loại giảm giá</label>
+                    <select asp-for="DiscountType" class="form-select rounded-3">
+                        <option value="FIXED">Số tiền cố định (VNĐ)</option>
+                        <option value="PERCENT">Phần trăm đơn hàng (%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="DiscountValue" class="form-label small fw-semibold text-secondary">Mức giảm</label>
+                    <input asp-for="DiscountValue" type="number" step="1000" class="form-control rounded-3" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MinOrderValue" class="form-label small fw-semibold text-secondary">Đơn tối thiểu (₫)</label>
+                    <input asp-for="MinOrderValue" type="number" step="5000" class="form-control rounded-3" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="MaxDiscountCap" class="form-label small fw-semibold text-secondary">Giảm tối đa (₫)</label>
+                    <input asp-for="MaxDiscountCap" type="number" step="5000" class="form-control rounded-3" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Quantity" class="form-label small fw-semibold text-secondary">Số lượt còn lại</label>
+                    <input asp-for="Quantity" type="number" class="form-control rounded-3" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label small fw-semibold text-secondary">Mô tả hiển thị</label>
+                <input asp-for="Description" class="form-control rounded-3" />
+            </div>
+
+            <div class="form-check form-switch mb-4">
+                <input class="form-check-input" type="checkbox" asp-for="IsActive" id="chkActive" />
+                <label class="form-check-label fw-semibold text-dark small" for="chkActive">Kích hoạt mã</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-check-lg me-1"></i> Lưu thay đổi
+            </button>
+        </form>
+    </div>
+</div>

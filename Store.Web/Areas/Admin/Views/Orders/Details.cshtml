@@ -1,0 +1,233 @@
+@model PharmacyWeb.Data.Entities.Order
+@{
+    ViewData["Title"] = $"Xử Lý Đơn Hàng {Model.Code}";
+}
+
+<div class="container-fluid p-0" style="max-width: 980px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Chi Tiết Đơn Hàng: <span class="font-monospace text-teal">@Model.Code</span></h4>
+            <span class="text-muted small">Thời gian đặt: <strong>@Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</strong></span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách đơn
+        </a>
+    </div>
+
+    <!-- Status Action Workflow Bar -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <span class="text-muted small d-block">Trạng thái hiện tại:</span>
+                <span class="badge @(Model.OrderStatus == "COMPLETED" ? "bg-success" : Model.OrderStatus == "CANCELLED" ? "bg-danger" : "bg-warning text-dark") fs-6 px-3 py-2">
+                    @(Model.OrderStatus == "NEW" ? "Chờ xác nhận" : Model.OrderStatus == "CONFIRMED" ? "Đã xác nhận" : Model.OrderStatus == "SHIPPING" ? "Đang giao hàng" : Model.OrderStatus == "COMPLETED" ? "Đã hoàn tất" : "Đã hủy")
+                </span>
+                <span class="badge @(Model.PaymentStatus == "PAID" ? "bg-success" : "bg-secondary") fs-6 px-3 py-2 ms-2">
+                    @(Model.PaymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán")
+                </span>
+            </div>
+
+            <!-- Workflow Action Buttons -->
+            <div class="d-flex flex-wrap gap-2">
+                @if (Model.OrderStatus == "NEW")
+                {
+                    <form asp-action="UpdateStatus" method="post" class="m-0">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="newStatus" value="CONFIRMED" />
+                        <button type="submit" class="btn btn-info rounded-pill btn-sm px-3 text-dark fw-semibold">
+                            <i class="bi bi-check2 me-1"></i> Xác nhận đơn
+                        </button>
+                    </form>
+                }
+
+                @if (Model.OrderStatus == "CONFIRMED")
+                {
+                    <form asp-action="UpdateStatus" method="post" class="m-0">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="newStatus" value="SHIPPING" />
+                        <button type="submit" class="btn btn-primary rounded-pill btn-sm px-3 text-white fw-semibold">
+                            <i class="bi bi-truck me-1"></i> Xuất giao hàng
+                        </button>
+                    </form>
+                }
+
+                @if (Model.OrderStatus == "SHIPPING" || (Model.OrderStatus == "CONFIRMED" && Model.PaymentStatus == "UNPAID"))
+                {
+                    <form asp-action="ConfirmPayment" method="post" class="m-0" onsubmit="return confirm('Xác nhận đã thu đủ tiền mặt và hoàn tất đơn hàng? Thao tác này sẽ trừ kho vĩnh viễn.');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-success rounded-pill btn-sm px-3 text-white fw-semibold">
+                            <i class="bi bi-cash-stack me-1"></i> Xác nhận thu tiền &amp; Hoàn tất
+                        </button>
+                    </form>
+                }
+
+                @if (Model.OrderStatus != "COMPLETED" && Model.OrderStatus != "CANCELLED")
+                {
+                    <!-- Cancel Button Trigger Modal -->
+                    <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#adminCancelModal">
+                        <i class="bi bi-x-circle me-1"></i> Hủy đơn
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Info & Allocations -->
+    <div class="row g-4 mb-4">
+        <!-- Customer & Shipping Card -->
+        <div class="col-md-5">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-person me-2 text-teal"></i>Thông tin người nhận</h6>
+                <div class="small d-flex flex-column gap-2">
+                    <div><strong>Họ tên:</strong> @Model.CustomerName</div>
+                    <div><strong>Số điện thoại:</strong> @Model.CustomerPhone</div>
+                    <div><strong>Địa chỉ nhận:</strong> @Model.ShippingAddress</div>
+                    <div><strong>Kênh bán:</strong> <span class="badge bg-light text-dark border">@Model.Channel</span></div>
+                    <div><strong>Thời gian đặt:</strong> @Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</div>
+                    @if (!string.IsNullOrEmpty(Model.Note))
+                    {
+                        <div class="p-2 rounded bg-light"><strong>Ghi chú:</strong> @Model.Note</div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.CancelReason))
+                    {
+                        <div class="p-2 rounded bg-danger-subtle text-danger"><strong>Lý do hủy:</strong> @Model.CancelReason</div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- FEFO Batch Allocations Card -->
+        <div class="col-md-7">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-boxes me-2 text-teal"></i>Phân bổ lô hàng theo hạn dùng</h6>
+                <div class="table-responsive border rounded-3">
+                    <table class="table table-sm align-middle mb-0 small">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Số lô</th>
+                                <th>Hạn dùng</th>
+                                <th class="text-center">Số lượng giữ</th>
+                                <th>Trạng thái kho</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var alloc in Model.Allocations)
+                            {
+                                <tr>
+                                    <td class="ps-3 py-2 font-monospace fw-bold">@alloc.Batch?.BatchNumber</td>
+                                    <td>@alloc.Batch?.ExpiryDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-center fw-bold">@alloc.Quantity</td>
+                                    <td>
+                                        @if (alloc.IsDeducted)
+                                        {
+                                            <span class="badge bg-success">Đã xuất kho</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">Đang giữ hàng</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Items & Calculation Table -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <h6 class="fw-bold text-dark mb-3">Sản phẩm trong đơn</h6>
+        <div class="table-responsive border rounded-3 mb-3">
+            <table class="table table-sm align-middle mb-0 small">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3 py-2">Tên thuốc</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-end">Đơn giá</th>
+                        <th class="text-end pe-3">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="ps-3 py-2 fw-semibold">@item.MedicineName (@item.Unit)</td>
+                            <td class="text-center">@item.Quantity</td>
+                            <td class="text-end" style="font-variant-numeric: tabular-nums;">@item.UnitPrice.ToString("N0") ₫</td>
+                            <td class="text-end pe-3 fw-bold" style="font-variant-numeric: tabular-nums;">@item.TotalPrice.ToString("N0") ₫</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="3" class="ps-3">Tạm tính:</td>
+                        <td class="text-end pe-3 fw-bold">@Model.SubtotalAmount.ToString("N0") ₫</td>
+                    </tr>
+                    @if (Model.DiscountAmount > 0)
+                    {
+                        <tr class="text-success">
+                            <td colspan="3" class="ps-3">Giảm giá voucher (@Model.VoucherCode):</td>
+                            <td class="text-end pe-3 fw-bold">-@Model.DiscountAmount.ToString("N0") ₫</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3" class="ps-3">Phí giao hàng:</td>
+                        <td class="text-end pe-3 fw-bold">@Model.ShippingFee.ToString("N0") ₫</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="ps-3 fw-bold fs-6">Tổng thanh toán:</td>
+                        <td class="text-end pe-3 fs-6 fw-bold text-teal" style="color: var(--color-primary-active);">@Model.TotalAmount.ToString("N0") ₫</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- Audit History Trail -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history me-2 text-teal"></i>Nhật ký thao tác trạng thái</h6>
+        <div class="d-flex flex-column gap-2 small">
+            @foreach (var h in Model.History)
+            {
+                <div class="p-2 rounded bg-light border d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong class="text-dark">@h.Actor:</strong>
+                        <span class="text-secondary ms-1">@h.Text</span>
+                    </div>
+                    <span class="text-muted font-monospace" style="font-size: 0.75rem;">@h.Time.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal Hủy Đơn Hàng -->
+<div class="modal fade" id="adminCancelModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="UpdateStatus" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="newStatus" value="CANCELLED" />
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-danger">Hủy Đơn Hàng @Model.Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <p class="text-secondary small mb-3">Thao tác hủy đơn sẽ hoàn lại lượng đã giữ trên các lô và khôi phục lượt voucher nếu có.</p>
+                    <label class="form-label small fw-semibold text-secondary">Lý do hủy đơn:</label>
+                    <input type="text" name="cancelReason" class="form-control rounded-3" placeholder="vd: Khách yêu cầu hủy qua điện thoại..." required />
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger rounded-pill px-4">Xác nhận hủy đơn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+@model PharmacyWeb.Models.ViewModels.VoucherFormViewModel
+@{
+    ViewData["Title"] = "Tạo Mã Giảm Giá Mới";
+}
+
+<div class="container-fluid p-0" style="max-width: 680px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Tạo Mã Giảm Giá Mới</h4>
+            <span class="text-muted small">Cấu hình loại chiết khấu, điều kiện kích hoạt và số lượng</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Code" class="form-label small fw-semibold text-secondary">Mã giảm giá (*)</label>
+                    <input asp-for="Code" class="form-control rounded-3 font-monospace text-uppercase" placeholder="vd: GIAM15K, PH20..." required />
+                    <span asp-validation-for="Code" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DiscountType" class="form-label small fw-semibold text-secondary">Loại giảm giá (*)</label>
+                    <select asp-for="DiscountType" class="form-select rounded-3">
+                        <option value="FIXED">Số tiền cố định (VNĐ)</option>
+                        <option value="PERCENT">Phần trăm đơn hàng (%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="DiscountValue" class="form-label small fw-semibold text-secondary">Mức giảm (*)</label>
+                    <input asp-for="DiscountValue" type="number" step="1000" class="form-control rounded-3" placeholder="vd: 15000 hoặc 10" required />
+                    <span asp-validation-for="DiscountValue" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MinOrderValue" class="form-label small fw-semibold text-secondary">Đơn tối thiểu (₫)</label>
+                    <input asp-for="MinOrderValue" type="number" step="5000" class="form-control rounded-3" placeholder="0" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="MaxDiscountCap" class="form-label small fw-semibold text-secondary">Giảm tối đa (₫ - nếu là %)</label>
+                    <input asp-for="MaxDiscountCap" type="number" step="5000" class="form-control rounded-3" placeholder="Để trống nếu không giới hạn" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Quantity" class="form-label small fw-semibold text-secondary">Số lượt sử dụng (*)</label>
+                    <input asp-for="Quantity" type="number" class="form-control rounded-3" placeholder="vd: 50" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label small fw-semibold text-secondary">Mô tả hiển thị</label>
+                <input asp-for="Description" class="form-control rounded-3" placeholder="vd: Giảm 15.000 ₫ cho đơn từ 100.000 ₫" />
+            </div>
+
+            <div class="form-check form-switch mb-4">
+                <input class="form-check-input" type="checkbox" asp-for="IsActive" id="chkActive" checked />
+                <label class="form-check-label fw-semibold text-dark small" for="chkActive">Kích hoạt mã ngay sau khi lưu</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-plus-circle me-1"></i> Lưu mã voucher
+            </button>
+        </form>
+    </div>
+</div>

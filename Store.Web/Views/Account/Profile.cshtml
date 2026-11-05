@@ -1,0 +1,206 @@
+@model PharmacyWeb.Models.ViewModels.CustomerProfileViewModel
+@{
+    ViewData["Title"] = "Hồ Sơ & Sổ Địa Chỉ";
+}
+
+<div class="container-xxl px-3 py-4" style="max-width: 960px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Hồ sơ cá nhân</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Left: Customer Overview & Address Book -->
+        <div class="col-lg-5">
+            <!-- Profile Info Card -->
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-3 text-center">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-teal mx-auto mb-3" style="width: 72px; height: 72px; background-color: var(--color-primary-soft);">
+                    <i class="bi bi-person-circle display-4"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">@Model.FullName</h5>
+                <span class="text-muted small d-block mb-3">@Model.Email</span>
+
+                <div class="p-3 rounded-3 bg-light border text-start small mb-3">
+                    <div class="mb-2"><strong>Số điện thoại:</strong> @Model.Phone</div>
+                    <div class="mb-2">
+                        <strong>Điểm tích lũy POS:</strong> 
+                        <span class="badge bg-success">@Model.Points điểm</span>
+                    </div>
+                    <div><strong>Ngày tham gia:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm flex-grow-1" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil me-1"></i> Sửa hồ sơ
+                    </button>
+                    <a asp-controller="MyOrders" asp-action="Index" class="btn btn-ph btn-ph-secondary btn-ph-sm flex-grow-1 text-decoration-none">
+                        <i class="bi bi-box-seam me-1"></i> Đơn hàng
+                    </a>
+                </div>
+            </div>
+
+            <!-- Address Book Card -->
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-geo-alt me-1 text-teal"></i>Sổ địa chỉ nhận hàng</h6>
+                    <button type="button" class="btn btn-ph btn-ph-primary btn-ph-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                        <i class="bi bi-plus me-1"></i>Thêm
+                    </button>
+                </div>
+
+                @if (Model.Addresses.Any())
+                {
+                    <div class="d-flex flex-column gap-2 small">
+                        @foreach (var addr in Model.Addresses)
+                        {
+                            <div class="p-3 rounded-3 border bg-light">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-bold text-dark">@addr.Label</span>
+                                    @if (addr.IsDefault)
+                                    {
+                                        <span class="badge bg-success"><i class="bi bi-check2 me-1"></i>Mặc định</span>
+                                    }
+                                </div>
+                                <div class="text-secondary fw-semibold">@addr.RecipientName (@addr.Phone)</div>
+                                <div class="text-muted mb-2">@addr.Address</div>
+
+                                <div class="d-flex justify-content-end gap-2 pt-2 border-top">
+                                    @if (!addr.IsDefault)
+                                    {
+                                        <form asp-action="SetDefaultAddress" method="post" class="m-0">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="addressId" value="@addr.Id" />
+                                            <button type="submit" class="btn btn-link p-0 small text-teal text-decoration-none" style="font-size:12px;">
+                                                Đặt làm mặc định
+                                            </button>
+                                        </form>
+                                        <span>•</span>
+                                    }
+                                    <form asp-action="DeleteAddress" method="post" class="m-0" onsubmit="return confirm('Bạn có chắc muốn xóa địa chỉ này?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="addressId" value="@addr.Id" />
+                                        <button type="submit" class="btn btn-link p-0 small text-danger text-decoration-none" style="font-size:12px;">
+                                            Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted small mb-0">Chưa có địa chỉ nào được lưu.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Right: Change Password -->
+        <div class="col-lg-7">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+                <h5 class="fw-bold text-teal mb-3" style="color: var(--color-primary);">
+                    <i class="bi bi-shield-lock me-2"></i>Đổi Mật Khẩu
+                </h5>
+
+                <form asp-action="ChangePassword" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="ChangePassword.CurrentPassword" class="form-label small fw-semibold text-secondary"></label>
+                        <input asp-for="ChangePassword.CurrentPassword" class="form-control rounded-3" />
+                        <span asp-validation-for="ChangePassword.CurrentPassword" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ChangePassword.NewPassword" class="form-label small fw-semibold text-secondary"></label>
+                        <input asp-for="ChangePassword.NewPassword" class="form-control rounded-3" />
+                        <span asp-validation-for="ChangePassword.NewPassword" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ChangePassword.ConfirmPassword" class="form-label small fw-semibold text-secondary"></label>
+                        <input asp-for="ChangePassword.ConfirmPassword" class="form-control rounded-3" />
+                        <span asp-validation-for="ChangePassword.ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-ph btn-ph-primary py-2 px-4">
+                        <i class="bi bi-key-fill me-1"></i> Cập nhật mật khẩu
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sửa Hồ Sơ -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="UpdateProfile" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Chỉnh Sửa Thông Tin Cá Nhân</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Họ và tên (*):</label>
+                        <input type="text" name="fullName" class="form-control rounded-3" value="@Model.FullName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Email liên hệ:</label>
+                        <input type="email" name="email" class="form-control rounded-3" value="@Model.Email" />
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-ph btn-ph-primary px-4">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm Địa Chỉ Mới -->
+<div class="modal fade" id="addAddressModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="AddAddress" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Thêm Địa Chỉ Giao Hàng Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Nhãn địa chỉ:</label>
+                        <input type="text" name="Label" class="form-control rounded-3" placeholder="vd: Nhà riêng, Cơ quan..." value="Nhà riêng" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Họ tên người nhận (*):</label>
+                        <input type="text" name="RecipientName" class="form-control rounded-3" value="@Model.FullName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Số điện thoại (*):</label>
+                        <input type="text" name="Phone" class="form-control rounded-3" value="@Model.Phone" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Địa chỉ chi tiết (*):</label>
+                        <textarea name="Address" rows="2" class="form-control rounded-3" placeholder="Số nhà, đường, phường/xã, quận/huyện..." required></textarea>
+                    </div>
+                    <div class="form-check form-switch small">
+                        <input class="form-check-input" type="checkbox" name="IsDefault" id="chkDefAddr" value="true" checked />
+                        <label class="form-check-label" for="chkDefAddr">Đặt làm địa chỉ nhận hàng mặc định</label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-ph btn-ph-primary px-4">Lưu địa chỉ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
