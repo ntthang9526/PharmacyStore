@@ -1,0 +1,85 @@
+@model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Models.ViewModels.PrescriptionRequestItemViewModel>
+@{
+    ViewData["Title"] = "Quản Lý Đơn Thuốc Tư Vấn";
+    var status = ViewBag.Status as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Yêu Cầu Đơn Thuốc Bác Sĩ</h4>
+        <span class="text-muted small">Xem ảnh đơn thuốc của bệnh nhân, kiểm tra và phản hồi hướng dẫn sử dụng</span>
+    </div>
+</div>
+
+<!-- Status Filters -->
+<div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Index" class="btn btn-sm rounded-pill @(string.IsNullOrEmpty(status) ? "btn-primary text-teal" : "btn-light border")" style="@(string.IsNullOrEmpty(status) ? "background-color: var(--color-primary); border-color: var(--color-primary); color: white !important;" : "")">
+            Tất cả yêu cầu (@Model.TotalItems)
+        </a>
+        <a asp-action="Index" asp-route-status="PENDING_REVIEW" class="btn btn-sm rounded-pill @(status == "PENDING_REVIEW" ? "btn-warning" : "btn-light border")">
+            <i class="bi bi-hourglass-split me-1"></i> Chờ dược sĩ kiểm tra
+        </a>
+        <a asp-action="Index" asp-route-status="NEED_MORE_INFO" class="btn btn-sm rounded-pill @(status == "NEED_MORE_INFO" ? "btn-danger" : "btn-light border")">
+            <i class="bi bi-exclamation-triangle me-1"></i> Cần bổ sung ảnh
+        </a>
+        <a asp-action="Index" asp-route-status="RESPONDED" class="btn btn-sm rounded-pill @(status == "RESPONDED" ? "btn-success text-white" : "btn-light border")">
+            <i class="bi bi-check-circle me-1"></i> Đã phản hồi
+        </a>
+    </div>
+</div>
+
+<!-- Requests Table -->
+<div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 small">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th class="ps-4">Mã yêu cầu</th>
+                    <th>Thời gian gửi</th>
+                    <th>Người bệnh & SĐT</th>
+                    <th>Số ảnh đính kèm</th>
+                    <th>Trạng thái</th>
+                    <th class="pe-4 text-end">Chi tiết & Phản hồi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.Items)
+                {
+                    <tr>
+                        <td class="ps-4 py-3 font-monospace fw-bold text-teal" style="color: var(--color-primary);">@r.Code</td>
+                        <td>@r.CreatedAt.AddHours(7).ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <div class="fw-bold">@r.PatientName</div>
+                            <div class="text-muted" style="font-size: 0.75rem;">@r.Phone</div>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">
+                                <i class="bi bi-images me-1"></i>@r.Images.Count ảnh
+                            </span>
+                        </td>
+                        <td>
+                            @if (r.Status == "PENDING_REVIEW")
+                            {
+                                <span class="badge bg-warning text-dark">Chờ kiểm tra</span>
+                            }
+                            else if (r.Status == "NEED_MORE_INFO")
+                            {
+                                <span class="badge bg-danger text-white">Cần bổ sung</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success text-white">Đã phản hồi</span>
+                            }
+                        </td>
+                        <td class="pe-4 text-end">
+                            <a asp-action="Details" asp-route-id="@r.Id" class="btn btn-outline-primary btn-sm rounded-pill py-0 px-3">
+                                Xem & Phản hồi
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

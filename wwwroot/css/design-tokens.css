@@ -1,0 +1,109 @@
+/* ==========================================================================
+   design-tokens.css — Hệ thống Token Thiết kế Pharmacy
+   Kế thừa bảng màu Teal #0F766E & Mint #CCFBF1 từ phần mềm WinForms POS (PosFormStyle.cs)
+   kết hợp bố cục Storefront kiểu Nhà thuốc Long Châu
+   ========================================================================== */
+
+:root {
+  /* 1. Brand Colors (POS Teal #0F766E & Mint #CCFBF1 / #134E4A) */
+  --color-primary: #0F766E;
+  --color-primary-hover: #0D9488;
+  --color-primary-active: #115E59;
+  --color-primary-gradient: linear-gradient(180deg, #0F766E 0%, #115E59 100%);
+  --color-primary-topbar: #134E4A;
+  --color-primary-soft: #CCFBF1;
+  --color-primary-soft-bg: #F0FDFA;
+  --color-primary-soft-fg: #134E4A;
+  --color-on-primary: #FFFFFF;
+
+  --color-accent-orange: #D97706;
+  --color-accent-orange-soft: #FEF3C7;
+
+  /* 2. Neutral Surfaces & Grounds (Chuẩn POS #F8FAFC & Read-only #F1F5F9) */
+  --color-bg-page: #F4F7F9;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-subtle: #F1F5F9;
+  --color-bg-readonly: #F1F5F9;
+  --color-bg-sidebar: #0F172A;
+  --color-bg-sidebar-hover: #1E293B;
+  --color-bg-preview-bar: #0F172A;
+
+  /* 3. Text Hierarchy (WCAG AA Checked >= 4.5:1) */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #334155;
+  --color-text-muted: #475569;
+  --color-text-on-dark: #F8FAFC;
+
+  /* 4. Borders & Dividers */
+  --color-border: #CBD5E1;
+  --color-border-subtle: #E2E8F0;
+  --color-border-focus: #0F766E;
+
+  /* 5. Semantic Status Colors (Always paired with icon + text label) */
+  --color-success: #166534;
+  --color-success-bg: #DCFCE7;
+  --color-success-border: #86EFAC;
+
+  --color-warning: #9A3412;
+  --color-warning-bg: #FEF3C7;
+  --color-warning-border: #FCD34D;
+
+  --color-danger: #BE123C;
+  --color-danger-bg: #FFE4E6;
+  --color-danger-border: #FDA4AF;
+
+  --color-info: #0369A1;
+  --color-info-bg: #E0F2FE;
+  --color-info-border: #7DD3FC;
+
+  /* 6. Typography */
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.0625rem;    /* 17px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.75rem;     /* 28px */
+
+  /* 7. Spacing Scale (8px base) */
+  --space-1: 0.25rem;      /* 4px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-3: 0.75rem;      /* 12px */
+  --space-4: 1rem;         /* 16px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-8: 2rem;         /* 32px */
+  --space-10: 2.5rem;      /* 40px */
+
+  /* 8. Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  /* 9. Shadows & Elevation */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 6px rgba(15, 118, 110, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 6px 16px rgba(15, 118, 110, 0.10);
+  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.16);
+
+  /* 10. Motion & Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-normal: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

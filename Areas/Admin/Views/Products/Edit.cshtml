@@ -1,0 +1,138 @@
+@model PharmacyWeb.Models.ViewModels.AdminProductFormViewModel
+@{
+    ViewData["Title"] = $"Chỉnh Sửa Thuốc - {Model.Name}";
+}
+
+<div class="container-fluid p-0" style="max-width: 900px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Chỉnh Sửa Thuốc: @Model.Name</h4>
+            <span class="text-muted small">Cập nhật thông tin chi tiết, giá bán và hình ảnh sản phẩm</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-8">
+                    <label asp-for="Name" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="Name" class="form-control rounded-3" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="BarCode" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="BarCode" class="form-control rounded-3 font-monospace" />
+                    <span asp-validation-for="BarCode" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="CategoryId" class="form-label small fw-semibold text-secondary"></label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.CategoryOptions" class="form-select rounded-3"></select>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="SupplierId" class="form-label small fw-semibold text-secondary"></label>
+                    <select asp-for="SupplierId" asp-items="ViewBag.SupplierOptions" class="form-select rounded-3"></select>
+                    <span asp-validation-for="SupplierId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label asp-for="ActiveIngredient" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="ActiveIngredient" class="form-control rounded-3" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Unit" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="Unit" class="form-control rounded-3" />
+                    <span asp-validation-for="Unit" class="text-danger small"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Price" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="Price" type="number" step="100" class="form-control rounded-3 fw-bold" />
+                    <span asp-validation-for="Price" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PackagingSpec" class="form-label small fw-semibold text-secondary"></label>
+                <input asp-for="PackagingSpec" class="form-control rounded-3" />
+            </div>
+
+            <!-- Existing Image & Upload -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold text-secondary">Ảnh chính hiện tại & Tải mới</label>
+                    @if (!string.IsNullOrEmpty(Model.ExistingMainImageUrl))
+                    {
+                        <div class="mb-2">
+                            <img src="@Model.ExistingMainImageUrl" alt="Main" class="img-thumbnail" style="max-height: 80px;" />
+                        </div>
+                    }
+                    <input asp-for="MainImageUpload" type="file" class="form-control rounded-3" accept=".jpg,.jpeg,.png,.webp" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="AdditionalImages" class="form-label small fw-semibold text-secondary"></label>
+                    <input asp-for="AdditionalImages" type="file" multiple class="form-control rounded-3" accept=".jpg,.jpeg,.png,.webp" />
+                </div>
+            </div>
+
+            <!-- Rich Text Editor for Description -->
+            <div class="mb-3">
+                <label asp-for="DescriptionHtml" class="form-label small fw-semibold text-secondary"></label>
+                <textarea asp-for="DescriptionHtml" id="descriptionEditor" class="form-control" rows="8"></textarea>
+                <span asp-validation-for="DescriptionHtml" class="text-danger small"></span>
+            </div>
+
+            <!-- Toggles -->
+            <div class="d-flex flex-wrap gap-4 p-3 bg-light rounded-3 mb-4">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsPrescription" id="chkRx" />
+                    <label class="form-check-label fw-semibold text-dark small" for="chkRx">Thuốc cần đơn bác sĩ</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsSelling" id="chkSell" />
+                    <label class="form-check-label fw-semibold text-dark small" for="chkSell">Đang bán</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" id="chkActive" />
+                    <label class="form-check-label fw-semibold text-dark small" for="chkActive">Hiển thị trên web</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="Featured" id="chkFeatured" />
+                    <label class="form-check-label fw-semibold text-dark small" for="chkFeatured">Sản phẩm nổi bật</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-check-lg me-1"></i> Lưu thay đổi
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <!-- TinyMCE: trình soạn thảo WYSIWYG gắn vào textarea (nội dung vẫn được sanitize phía server) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#descriptionEditor',
+            height: 320,
+            menubar: false,
+            branding: false,
+            plugins: 'lists link table code',
+            toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table | removeformat | code',
+            content_style: 'body { font-family: "Be Vietnam Pro", sans-serif; font-size: 14px; }'
+        });
+    </script>
+}

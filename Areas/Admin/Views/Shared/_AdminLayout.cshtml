@@ -1,0 +1,228 @@
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@inject PharmacyWeb.Data.PharmacyWebDbContext Db
+@{
+    var tokens = Xsrf.GetAndStoreTokens(Context);
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var pendingRxCount = Db.PrescriptionRequests.Count(r => r.Status == "PENDING_REVIEW");
+    var newOrdersCount = Db.Orders.Count(o => o.OrderStatus == "NEW");
+}
+<!DOCTYPE html>
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="@tokens.RequestToken" />
+    <title>@(ViewData["Title"] != null ? $"{ViewData["Title"]} - " : "")Quản Trị Nhà Thuốc Pharmacy</title>
+
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Design Tokens & Custom CSS -->
+    <link rel="stylesheet" href="~/css/design-tokens.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+</head>
+<body style="font-family: var(--font-sans); background-color: var(--color-bg-page);">
+
+    <div class="admin-shell" id="adminShell">
+        <!-- Mobile Drawer Backdrop (Hidden by default to prevent blocking UI on mobile) -->
+        <div id="adminMobileBackdrop" class="mobile-drawer-backdrop d-lg-none" style="display: none;" onclick="toggleAdminMobileSidebar(false)"></div>
+
+        <!-- Admin Sidebar (_AdminSidebar.cshtml) -->
+        <aside id="adminSidebar" class="admin-sidebar" aria-label="Menu Quản trị">
+            <div class="p-3 border-bottom border-secondary border-opacity-25 d-flex align-items-center justify-content-between">
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="d-flex align-items-center gap-2 text-white text-decoration-none">
+                    <span class="brand-icon-box" style="width:34px;height:34px;background-color:var(--color-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="bi bi-capsule fs-6"></i>
+                    </span>
+                    <div class="sidebar-brand-text">
+                        <div class="fw-bold lh-1 text-white">Pharmacy Admin</div>
+                        <small class="text-secondary" style="font-size:11px;">Quản trị hệ thống</small>
+                    </div>
+                </a>
+                <button type="button" class="btn btn-sm text-secondary d-none d-lg-inline-flex p-1 border-0 shadow-none" onclick="toggleAdminSidebarCollapse()" aria-label="Thu gọn thanh bên" title="Thu gọn / Mở rộng">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+            </div>
+
+            <div class="py-2 flex-grow-1 overflow-auto">
+                <div class="px-3 py-1 text-uppercase text-secondary sidebar-section-title" style="font-size:11px;font-weight:700;">Vận hành &amp; Danh mục</div>
+                
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="admin-nav-link @(currentController == "Dashboard" ? "active" : "")">
+                    <i class="bi bi-speedometer2"></i>
+                    <span class="sidebar-label">Tổng quan KPI</span>
+                </a>
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="admin-nav-link @(currentController == "Products" ? "active" : "")">
+                    <i class="bi bi-capsule"></i>
+                    <span class="sidebar-label">Thuốc &amp; Sản phẩm</span>
+                </a>
+                <a asp-area="Admin" asp-controller="CatalogMeta" asp-action="Index" class="admin-nav-link @(currentController == "CatalogMeta" ? "active" : "")">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="sidebar-label">Nhóm thuốc &amp; NCC</span>
+                </a>
+                <a asp-area="Admin" asp-controller="Inventory" asp-action="Index" class="admin-nav-link @(currentController == "Inventory" ? "active" : "")">
+                    <i class="bi bi-boxes"></i>
+                    <span class="sidebar-label">Kho &amp; Lô hàng</span>
+                </a>
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="admin-nav-link @(currentController == "Orders" ? "active" : "")">
+                    <i class="bi bi-receipt"></i>
+                    <span class="sidebar-label">Quản lý Đơn hàng</span>
+                    @if (newOrdersCount > 0)
+                    {
+                        <span class="badge rounded-pill bg-warning text-dark ms-auto sidebar-label">@newOrdersCount</span>
+                    }
+                </a>
+                <a asp-area="Admin" asp-controller="Prescriptions" asp-action="Index" class="admin-nav-link @(currentController == "Prescriptions" ? "active" : "")">
+                    <i class="bi bi-file-earmark-medical"></i>
+                    <span class="sidebar-label">Yêu cầu Đơn thuốc</span>
+                    @if (pendingRxCount > 0)
+                    {
+                        <span class="badge rounded-pill bg-info text-dark ms-auto sidebar-label">@pendingRxCount</span>
+                    }
+                </a>
+                <a asp-area="Admin" asp-controller="Customers" asp-action="Index" class="admin-nav-link @(currentController == "Customers" ? "active" : "")">
+                    <i class="bi bi-people"></i>
+                    <span class="sidebar-label">Khách hàng &amp; Tài khoản</span>
+                </a>
+                <a asp-area="Admin" asp-controller="Vouchers" asp-action="Index" class="admin-nav-link @(currentController == "Vouchers" ? "active" : "")">
+                    <i class="bi bi-ticket-perforated"></i>
+                    <span class="sidebar-label">Quản lý Mã giảm giá</span>
+                </a>
+                <a asp-area="Admin" asp-controller="Reports" asp-action="Index" class="admin-nav-link @(currentController == "Reports" ? "active" : "")">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span class="sidebar-label">Báo cáo Doanh thu</span>
+                </a>
+            </div>
+
+            <div class="p-3 border-top border-secondary border-opacity-25">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="admin-nav-link m-0" style="background-color: #1E293B;">
+                    <i class="bi bi-shop"></i>
+                    <span class="sidebar-label">Về trang bán hàng</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="admin-main-wrapper">
+            <!-- Admin Topbar (_AdminTopbar.cshtml) -->
+            <header class="admin-topbar">
+                <div class="d-flex align-items-center gap-2 min-w-0">
+                    <button type="button" class="btn btn-sm btn-outline-secondary d-lg-none" id="adminMobileToggleBtn" onclick="toggleAdminMobileSidebar(true)" aria-label="Mở menu quản trị" aria-controls="adminSidebar" aria-expanded="false">
+                        <i class="bi bi-list fs-5"></i>
+                    </button>
+                    <nav aria-label="breadcrumb" class="min-w-0">
+                        <ol class="breadcrumb small mb-0 flex-nowrap">
+                            <li class="breadcrumb-item d-none d-sm-inline"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">Quản trị</a></li>
+                            <li class="breadcrumb-item active fw-semibold text-truncate" aria-current="page">@(ViewData["Title"] ?? "Quản trị")</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn-ph btn-ph-secondary btn-ph-sm d-none d-sm-inline-flex">
+                        <i class="bi bi-globe me-1"></i> Về trang bán hàng
+                    </a>
+                    <span class="status-badge status-badge-success">
+                        <i class="bi bi-shield-check me-1"></i><span>Quản trị viên</span>
+                    </span>
+                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="m-0 d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill py-0 px-2" title="Đăng xuất">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </header>
+
+            <!-- Toast Container -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill fs-5"></i>
+                                <span>@TempData["SuccessMessage"]</span>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body d-flex align-items-center gap-2">
+                                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                                <span>@TempData["ErrorMessage"]</span>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Page Body Content -->
+            <div class="admin-content-area flex-grow-1">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleAdminSidebarCollapse() {
+            const sidebar = document.getElementById('adminSidebar');
+            if (sidebar) sidebar.classList.toggle('collapsed');
+        }
+
+        function toggleAdminMobileSidebar(open) {
+            const sidebar = document.getElementById('adminSidebar');
+            const backdrop = document.getElementById('adminMobileBackdrop');
+            const toggleBtn = document.getElementById('adminMobileToggleBtn');
+            if (sidebar) {
+                if (open) {
+                    sidebar.classList.add('mobile-open');
+                    sidebar.setAttribute('aria-hidden', 'false');
+                } else {
+                    sidebar.classList.remove('mobile-open');
+                    sidebar.setAttribute('aria-hidden', 'true');
+                }
+            }
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            }
+            if (backdrop) {
+                backdrop.style.display = open ? 'block' : 'none';
+            }
+        }
+
+        // Close mobile drawer on Escape key press
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleAdminMobileSidebar(false);
+            }
+        });
+
+        // Close mobile drawer when window resizes back to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992) {
+                toggleAdminMobileSidebar(false);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.map(toastEl => new bootstrap.Toast(toastEl, { delay: 4000 }).show());
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

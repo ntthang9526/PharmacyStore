@@ -1,0 +1,48 @@
+@model PharmacyWeb.Models.ViewModels.ProductFilterViewModel
+
+@if (!Model.Results.Items.Any())
+{
+    <div class="card border-0 rounded-4 shadow-sm p-5 bg-white text-center">
+        <div class="mb-3">
+            <i class="bi bi-search text-muted display-4"></i>
+        </div>
+        <h5 class="fw-bold text-dark">Không tìm thấy sản phẩm phù hợp</h5>
+        <p class="text-secondary small mb-3">Vui lòng thử tìm kiếm với từ khóa khác hoặc bỏ bớt các tiêu chí lọc.</p>
+        <div>
+            <a asp-action="Index" class="btn btn-ph btn-ph-primary rounded-pill btn-sm px-4">
+                Xóa tất cả bộ lọc
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row g-2 g-md-3">
+        @foreach (var item in Model.Results.Items)
+        {
+            <div class="col-6 col-md-4">
+                <partial name="_ProductCard" model="item" />
+            </div>
+        }
+    </div>
+
+    var queryParams = new Dictionary<string, string>();
+    if (!string.IsNullOrEmpty(Model.Keyword)) queryParams["Keyword"] = Model.Keyword;
+    if (Model.CategoryId.HasValue) queryParams["CategoryId"] = Model.CategoryId.Value.ToString();
+    if (Model.MinPrice.HasValue) queryParams["MinPrice"] = Model.MinPrice.Value.ToString();
+    if (Model.MaxPrice.HasValue) queryParams["MaxPrice"] = Model.MaxPrice.Value.ToString();
+    if (Model.DirectPurchaseOnly == true) queryParams["DirectPurchaseOnly"] = "true";
+    if (Model.OnlyInStock == true) queryParams["OnlyInStock"] = "true";
+    if (!string.IsNullOrEmpty(Model.SortBy)) queryParams["SortBy"] = Model.SortBy;
+
+    var paginationModel = new PaginationViewModel
+    {
+        CurrentPage = Model.Results.Page,
+        PageSize = Model.Results.PageSize,
+        TotalItems = Model.Results.TotalItems,
+        RouteUrl = Url.Action("Index", "Products") ?? "/Products",
+        QueryParams = queryParams
+    };
+
+    <partial name="_Pagination" model="paginationModel" />
+}

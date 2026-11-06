@@ -1,0 +1,142 @@
+@model PharmacyWeb.Models.ViewModels.StockInFormViewModel
+@{
+    ViewData["Title"] = "Lập Phiếu Nhập Kho Mới";
+    var medicines = (ViewBag.Medicines as PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Models.ViewModels.ProductCardViewModel>)?.Items ?? new();
+}
+
+<div class="container-fluid p-0" style="max-width: 960px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Lập Phiếu Nhập Kho Nhiều Dòng</h4>
+            <span class="text-muted small">Cập nhật số lô, hạn sử dụng và giá vốn nhập hàng vào kho</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại kho
+        </a>
+    </div>
+
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <form asp-action="StockIn" method="post" id="stockInForm">
+            @Html.AntiForgeryToken()
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="SupplierId" class="form-label small fw-semibold text-secondary">Nhà cung cấp (*)</label>
+                    <select asp-for="SupplierId" asp-items="ViewBag.Suppliers" class="form-select rounded-3" required>
+                        <option value="">-- Chọn nhà cung cấp nhập hàng --</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Note" class="form-label small fw-semibold text-secondary">Ghi chú phiếu nhập</label>
+                    <input asp-for="Note" class="form-control rounded-3" placeholder="vd: Nhập định kỳ tháng 11/2026..." />
+                </div>
+            </div>
+
+            <!-- Multi-line items table -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-list-check me-1 text-teal"></i>Danh sách thuốc nhập</h6>
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" onclick="addRow()">
+                    <i class="bi bi-plus-circle me-1"></i>Thêm dòng thuốc
+                </button>
+            </div>
+
+            <div class="table-responsive border rounded-3 mb-3">
+                <table class="table table-sm align-middle mb-0 small" id="linesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="min-width: 220px;">Thuốc</th>
+                            <th style="min-width: 130px;">Số lô</th>
+                            <th style="min-width: 140px;">Hạn dùng</th>
+                            <th style="min-width: 90px;">Số lượng</th>
+                            <th style="min-width: 110px;">Giá nhập (₫)</th>
+                            <th style="min-width: 110px;" class="text-end">Thành tiền</th>
+                            <th style="width: 40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="linesContainer">
+                        <tr class="line-row">
+                            <td>
+                                <select name="Lines[0].MedicineId" class="form-select form-select-sm" required>
+                                    <option value="">-- Chọn thuốc --</option>
+                                    @foreach (var m in medicines)
+                                    {
+                                        <option value="@m.Id">@m.Name (@m.Unit)</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input type="text" name="Lines[0].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
+                            <td><input type="date" name="Lines[0].ExpiryDate" class="form-control form-control-sm" required /></td>
+                            <td><input type="number" name="Lines[0].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
+                            <td><input type="number" name="Lines[0].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
+                            <td class="text-end fw-bold line-total">250,000 ₫</td>
+                            <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="5" class="fw-bold ps-3">Tổng giá trị phiếu nhập:</td>
+                            <td class="text-end fw-bold text-teal fs-6" id="grandTotal">250,000 ₫</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                <i class="bi bi-check-circle-fill me-1"></i> Lưu & Ghi sổ kho
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let rowIndex = 1;
+        const medOptions = `@Html.Raw(string.Join("", medicines.Select(m => $"<option value='{m.Id}'>{m.Name} ({m.Unit})</option>")))`;
+
+        function addRow() {
+            const tbody = document.getElementById('linesContainer');
+            const tr = document.createElement('tr');
+            tr.className = 'line-row';
+            tr.innerHTML = `
+                <td>
+                    <select name="Lines[${rowIndex}].MedicineId" class="form-select form-select-sm" required>
+                        <option value="">-- Chọn thuốc --</option>
+                        ${medOptions}
+                    </select>
+                </td>
+                <td><input type="text" name="Lines[${rowIndex}].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
+                <td><input type="date" name="Lines[${rowIndex}].ExpiryDate" class="form-control form-control-sm" required /></td>
+                <td><input type="number" name="Lines[${rowIndex}].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
+                <td><input type="number" name="Lines[${rowIndex}].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
+                <td class="text-end fw-bold line-total">250,000 ₫</td>
+                <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
+            `;
+            tbody.appendChild(tr);
+            rowIndex++;
+            calcTotals();
+        }
+
+        function removeRow(btn) {
+            const rows = document.querySelectorAll('.line-row');
+            if (rows.length > 1) {
+                btn.closest('tr').remove();
+                calcTotals();
+            } else {
+                alert('Phiếu nhập phải có ít nhất 1 dòng thuốc.');
+            }
+        }
+
+        function calcTotals() {
+            let total = 0;
+            document.querySelectorAll('.line-row').forEach(row => {
+                const qty = parseFloat(row.querySelector('.qty-input').value) || 0;
+                const cost = parseFloat(row.querySelector('.cost-input').value) || 0;
+                const lineTotal = qty * cost;
+                row.querySelector('.line-total').innerText = lineTotal.toLocaleString('vi-VN') + ' ₫';
+                total += lineTotal;
+            });
+            document.getElementById('grandTotal').innerText = total.toLocaleString('vi-VN') + ' ₫';
+        }
+    </script>
+}

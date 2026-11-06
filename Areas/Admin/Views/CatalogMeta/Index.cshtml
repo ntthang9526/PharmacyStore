@@ -1,0 +1,153 @@
+@{
+    ViewData["Title"] = "Quản Lý Nhóm Thuốc & Nhà Cung Cấp";
+    var categories = ViewBag.Categories as List<PharmacyWeb.Data.Entities.Category> ?? new();
+    var suppliers = ViewBag.Suppliers as List<PharmacyWeb.Data.Entities.Supplier> ?? new();
+}
+
+<div class="row g-4">
+    <!-- Left: Categories Management -->
+    <div class="col-lg-6">
+        <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-collection me-2 text-teal"></i>Nhóm Thuốc (Categories)</h5>
+                <button type="button" class="btn btn-primary rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#newCatModal" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                    <i class="bi bi-plus me-1"></i>Thêm nhóm
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-3">Tên nhóm</th>
+                            <th>Mô tả</th>
+                            <th class="text-end pe-3">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in categories)
+                        {
+                            <tr>
+                                <td class="ps-3 py-2 fw-semibold">@c.Name</td>
+                                <td class="text-muted text-truncate" style="max-width: 180px;">@c.Description</td>
+                                <td class="text-end pe-3">
+                                    <form asp-action="DeleteCategory" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhóm này không?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@c.Id" />
+                                        <button type="submit" class="btn btn-link text-danger p-0" title="Xóa nhóm">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Suppliers Management -->
+    <div class="col-lg-6">
+        <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-building me-2 text-teal"></i>Nhà Cung Cấp (Suppliers)</h5>
+                <button type="button" class="btn btn-primary rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#newSupModal" style="background-color: var(--color-primary); border-color: var(--color-primary);">
+                    <i class="bi bi-plus me-1"></i>Thêm NCC
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-3">Tên nhà cung cấp</th>
+                            <th>Điện thoại</th>
+                            <th class="text-end pe-3">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in suppliers)
+                        {
+                            <tr>
+                                <td class="ps-3 py-2 fw-semibold">@s.Name</td>
+                                <td class="font-monospace">@s.Phone</td>
+                                <td class="text-end pe-3">
+                                    <form asp-action="DeleteSupplier" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xóa nhà cung cấp này không?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@s.Id" />
+                                        <button type="submit" class="btn btn-link text-danger p-0" title="Xóa nhà cung cấp">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm Nhóm Thuốc -->
+<div class="modal fade" id="newCatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="SaveCategory" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Thêm Nhóm Thuốc Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Tên nhóm thuốc:</label>
+                        <input type="text" name="Name" class="form-control rounded-3" placeholder="vd: Thuốc cảm cúm - Sổ mũi" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Mô tả tóm tắt:</label>
+                        <input type="text" name="Description" class="form-control rounded-3" placeholder="Mô tả nhóm thuốc..." />
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-primary); border-color: var(--color-primary);">Lưu nhóm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm Nhà Cung Cấp -->
+<div class="modal fade" id="newSupModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="SaveSupplier" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Thêm Nhà Cung Cấp Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Tên nhà cung cấp:</label>
+                        <input type="text" name="Name" class="form-control rounded-3" placeholder="vd: Dược Hậu Giang..." required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Số điện thoại:</label>
+                        <input type="text" name="Phone" class="form-control rounded-3" placeholder="02923..." />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Địa chỉ:</label>
+                        <input type="text" name="Address" class="form-control rounded-3" placeholder="Địa chỉ trụ sở công ty..." />
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-primary); border-color: var(--color-primary);">Lưu NCC</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

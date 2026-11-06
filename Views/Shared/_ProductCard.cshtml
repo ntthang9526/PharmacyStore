@@ -1,0 +1,72 @@
+@model PharmacyWeb.Models.ViewModels.ProductCardViewModel
+
+<article class="product-card" aria-label="@Model.Name">
+    <!-- Image Media Frame with Badges -->
+    <a asp-controller="Products" asp-action="Details" asp-route-slug="@Model.Slug" class="product-card-media text-decoration-none">
+        <div class="product-card-badges">
+            @if (Model.IsPrescription)
+            {
+                <span class="status-badge status-badge-warning">
+                    <i class="bi bi-file-earmark-medical me-1"></i>Cần đơn bác sĩ
+                </span>
+            }
+            else
+            {
+                <span class="status-badge status-badge-info">
+                    <i class="bi bi-check-circle me-1"></i>Mua trực tiếp
+                </span>
+            }
+        </div>
+        <img src="@Model.ImageUrl" alt="Hình hộp @Model.Name" loading="lazy" />
+    </a>
+
+    <!-- Card Body -->
+    <div class="product-card-body">
+        <a asp-controller="Products" asp-action="Details" asp-route-slug="@Model.Slug" class="product-card-title" title="@Model.Name">
+            @Model.Name
+        </a>
+
+        <!-- Unit Pill & Active Ingredient -->
+        <div class="lc-unit-pill-row">
+            <span class="lc-unit-pill">@Model.Unit</span>
+            <span class="text-muted text-truncate" style="font-size:12px;">@(string.IsNullOrEmpty(Model.ActiveIngredient) ? Model.CategoryName : Model.ActiveIngredient)</span>
+        </div>
+
+        <!-- Price & Unit -->
+        <div class="product-card-price-row">
+            <div class="d-flex align-items-baseline gap-1">
+                <span class="product-card-price tabular-nums">@Model.Price.ToString("N0") ₫</span>
+                <span class="product-card-unit">/ @Model.Unit</span>
+            </div>
+            @if (Model.AvailableStock > 0 && Model.AvailableStock <= 5)
+            {
+                <span class="text-warning small" style="font-size:11px;"><i class="bi bi-exclamation-triangle"></i> Còn @Model.AvailableStock</span>
+            }
+        </div>
+
+        <!-- CTA Action Button -->
+        @if (Model.IsPrescription)
+        {
+            <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx w-100 text-decoration-none text-center">
+                <i class="bi bi-file-earmark-medical me-1"></i> <span>Gửi đơn tư vấn</span>
+            </a>
+        }
+        else if (Model.IsSelling && Model.AvailableStock > 0)
+        {
+            <form asp-controller="Cart" asp-action="Add" method="post" class="m-0 w-100">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="medicineId" value="@Model.Id" />
+                <input type="hidden" name="quantity" value="1" />
+                <button type="submit" class="btn-ph btn-ph-primary w-100">
+                    <i class="bi bi-cart3 me-1"></i> <span>Chọn mua</span>
+                </button>
+            </form>
+        }
+        else
+        {
+            <button type="button" class="btn-ph btn-ph-secondary w-100" disabled>
+                <span>Tạm hết hàng</span>
+            </button>
+        }
+    </div>
+</article>

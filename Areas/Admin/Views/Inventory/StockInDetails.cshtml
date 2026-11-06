@@ -1,0 +1,61 @@
+@model PharmacyWeb.Data.Entities.StockIn
+@{
+    ViewData["Title"] = $"Chi Tiết Phiếu Nhập {Model.Code}";
+}
+
+<div class="container-fluid p-0" style="max-width: 860px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Phiếu Nhập: @Model.Code</h4>
+            <span class="text-muted small">Nhà cung cấp: <strong>@Model.Supplier?.Name</strong> • Ngày nhập: @Model.ImportDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
+        </div>
+        <a asp-action="StockInHistory" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại lịch sử
+        </a>
+    </div>
+
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <div class="table-responsive border rounded-3 mb-3">
+            <table class="table table-sm align-middle mb-0 small">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3 py-2">Tên thuốc</th>
+                        <th>Số lô</th>
+                        <th>Hạn dùng</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-end">Đơn giá vốn</th>
+                        <th class="text-end pe-3">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var d in Model.Details)
+                    {
+                        <tr>
+                            <td class="ps-3 py-2 fw-semibold">@d.Medicine?.Name</td>
+                            <td class="font-monospace">@d.BatchNumber</td>
+                            <td>@d.ExpiryDate.ToString("dd/MM/yyyy")</td>
+                            <td class="text-center fw-bold">@d.Quantity</td>
+                            <td class="text-end" style="font-variant-numeric: tabular-nums;">@d.UnitCost.ToString("N0") ₫</td>
+                            <td class="text-end pe-3 fw-bold" style="font-variant-numeric: tabular-nums;">@d.TotalCost.ToString("N0") ₫</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="5" class="ps-3 fw-bold">Tổng tiền phiếu nhập:</td>
+                        <td class="text-end pe-3 fs-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
+                            @Model.TotalCost.ToString("N0") ₫
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Note))
+        {
+            <div class="p-3 rounded-3 bg-light text-secondary small">
+                <strong>Ghi chú:</strong> @Model.Note
+            </div>
+        }
+    </div>
+</div>

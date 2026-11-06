@@ -1,0 +1,181 @@
+using System.Globalization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
+using PharmacyWeb.Data;
+using PharmacyWeb.Data.Entities;
+using PharmacyWeb.Data.Seed;
+using PharmacyWeb.Services;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// 1. Database Configuration
+var provider = builder.Configuration["DatabaseProvider"] ?? "Sqlite";
+var sqlServerConn = builder.Configuration.GetConnectionString("DefaultConnection");
+var sqliteConn = builder.Configuration.GetConnectionString("SqliteConnection") ?? "Data Source=PharmacyWeb.db";
+
+if (provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(sqlServerConn))
+{
+    builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
+        options.UseSqlServer(sqlServerConn));
+}
+else
+{
+    builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
+        options.UseSqlite(sqliteConn));
+}
+
+// 2. Identity Configuration
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+    options.User.RequireUniqueEmail = false; // Allow username login by phone
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+})
+.AddEntityFrameworkStores<PharmacyWebDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "Pharmacy_Auth_v1";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.SlidingExpiration = true;
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Home/AccessDenied";
+
+    // Với Web API (/api/...) trả 401/403 thay vì chuyển hướng sang trang đăng nhập
+    options.Events.OnRedirectToLogin = ctx =>
+    {
+        if (ctx.Request.Path.StartsWithSegments("/api"))
+            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        else
+            ctx.Response.Redirect(ctx.RedirectUri);
+        return Task.CompletedTask;
+    };
+    options.Events.OnRedirectToAccessDenied = ctx =>
+    {
+        if (ctx.Request.Path.StartsWithSegments("/api"))
+            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+        else
+            ctx.Response.Redirect(ctx.RedirectUri);
+        return Task.CompletedTask;
+    };
+});
+
+// 3. Session Configuration
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "Pharmacy_Session_v1";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromHours(2);
+});
+
+builder.Services.AddHttpContextAccessor();
+
+// 4. Business Services Registration
+builder.Services.AddScoped<IHtmlSanitizerService, HtmlSanitizerService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+builder.Services.AddScoped<IReportService, ReportService>();
+
+// 5. MVC and Localization
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
+// 5b. Swagger (chỉ để test Web API RESTful tại /swagger)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new() { Title = "Pharmacy Web API", Version = "v1" });
+    options.DocInclusionPredicate((_, api) => api.RelativePath?.StartsWith("api/") == true);
+});
+
+var supportedCultures = new[]
+{
+    new CultureInfo("vi-VN"),
+    new CultureInfo("en-US")
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("vi-VN");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider
+    {
+        CookieName = "pharmacy_lang"
+    });
+});
+
+var app = builder.Build();
+
+// 6. Seed Data Execution on Startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<PharmacyWebDbContext>();
+        var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleMgr = services.GetRequiredService<RoleManager<ApplicationRole>>();
+        await DbInitializer.InitializeAsync(context, userMgr, roleMgr);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Lỗi xảy ra trong quá trình khởi tạo dữ liệu mẫu (Seed).");
+    }
+}
+
+// 7. Request Pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseRequestLocalization();
+app.UseSession();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Area Route (Admin)
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
+// Default Route (Storefront)
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
+// Required for WebApplicationFactory in integration tests
+public partial class Program { }

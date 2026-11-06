@@ -1,0 +1,82 @@
+@model PharmacyWeb.Data.Entities.CustomerProfile
+@{
+    ViewData["Title"] = $"Hồ Sơ Khách Hàng - {Model.FullName}";
+}
+
+<div class="container-fluid p-0" style="max-width: 860px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Hồ Sơ Khách Hàng: @Model.FullName</h4>
+            <span class="text-muted small">Số điện thoại: <strong>@Model.Phone</strong> • Email: @Model.Email</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+            <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-person-badge me-2 text-teal"></i>Thông tin tài khoản</h6>
+                <div class="small d-flex flex-column gap-2">
+                    <div><strong>Họ và tên:</strong> @Model.FullName</div>
+                    <div><strong>Điện thoại:</strong> @Model.Phone</div>
+                    <div><strong>Email:</strong> @Model.Email</div>
+                    <div><strong>Điểm tích lũy POS:</strong> <span class="badge bg-success">@Model.Points</span></div>
+                    <div><strong>Trạng thái:</strong> @(Model.IsLocked ? "Đang bị khóa" : "Hoạt động bình thường")</div>
+                    <div><strong>Ngày tạo:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-geo-alt me-2 text-teal"></i>Sổ địa chỉ đã lưu</h6>
+                @if (Model.Addresses.Any())
+                {
+                    <div class="d-flex flex-column gap-2 small">
+                        @foreach (var a in Model.Addresses)
+                        {
+                            <div class="p-2 rounded bg-light border">
+                                <strong>@a.Label:</strong> @a.RecipientName (@a.Phone) — @a.Address
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted small mb-0">Chưa có địa chỉ nào được lưu.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders History -->
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-box-seam me-2 text-teal"></i>Lịch sử mua hàng (@Model.Orders.Count đơn)</h6>
+        <div class="table-responsive border rounded-3">
+            <table class="table table-sm align-middle mb-0 small">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3 py-2">Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái đơn</th>
+                        <th>Thanh toán</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model.Orders.OrderByDescending(o => o.OrderDate))
+                    {
+                        <tr>
+                            <td class="ps-3 py-2 font-monospace fw-bold text-teal">@o.Code</td>
+                            <td>@o.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="fw-bold">@o.TotalAmount.ToString("N0") ₫</td>
+                            <td><span class="badge bg-light text-dark border">@o.OrderStatus</span></td>
+                            <td><span class="badge @(o.PaymentStatus == "PAID" ? "bg-success" : "bg-secondary")">@o.PaymentStatus</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
