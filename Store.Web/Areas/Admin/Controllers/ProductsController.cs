@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PharmacyWeb.Models.ViewModels;
 using PharmacyWeb.Services;
 
@@ -20,8 +21,9 @@ public class ProductsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] ProductFilterViewModel filter)
     {
-        // Admin can see both Active and Inactive medicines
-        var result = await _productService.GetCatalogAsync(filter);
+        filter.Page = Math.Max(1, filter.Page);
+        // Admin can see both Active and Inactive medicines, and filter by IsActive if specified
+        var result = await _productService.GetAdminCatalogAsync(filter);
         var categories = await _productService.GetCategoriesWithCountAsync();
 
         filter.Results = result;
@@ -99,10 +101,19 @@ public class ProductsController : Controller
             return View(model);
         }
 
-        var success = await _productService.UpdateProductAsync(model);
-        if (!success)
+        try
         {
-            TempData["ErrorMessage"] = "Không thể cập nhật sản phẩm. Vui lòng thử lại.";
+            var success = await _productService.UpdateProductAsync(model);
+            if (!success)
+            {
+                TempData["ErrorMessage"] = "Không thể cập nhật sản phẩm. Vui lòng thử lại.";
+                await PopulateDropdownsAsync();
+                return View(model);
+            }
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            ModelState.AddModelError(string.Empty, "Dữ liệu thuốc đã được cập nhật từ một phiên làm việc khác (POS hoặc quản trị viên khác). Vui lòng tải lại trang để cập nhật thông tin mới nhất.");
             await PopulateDropdownsAsync();
             return View(model);
         }

@@ -22,8 +22,11 @@
                 <span class="badge @(Model.OrderStatus == "COMPLETED" ? "bg-success" : Model.OrderStatus == "CANCELLED" ? "bg-danger" : "bg-warning text-dark") fs-6 px-3 py-2">
                     @(Model.OrderStatus == "NEW" ? "Chờ xác nhận" : Model.OrderStatus == "CONFIRMED" ? "Đã xác nhận" : Model.OrderStatus == "SHIPPING" ? "Đang giao hàng" : Model.OrderStatus == "COMPLETED" ? "Đã hoàn tất" : "Đã hủy")
                 </span>
-                <span class="badge @(Model.PaymentStatus == "PAID" ? "bg-success" : "bg-secondary") fs-6 px-3 py-2 ms-2">
-                    @(Model.PaymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán")
+                <span class="badge @(Model.IsRefunded ? "bg-danger" : Model.PaymentStatus == "PAID" ? "bg-success" : "bg-secondary") fs-6 px-3 py-2 ms-2">
+                    @(Model.IsRefunded ? "Đã hoàn tiền" : Model.PaymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán")
+                </span>
+                <span class="badge bg-light text-dark border fs-6 px-3 py-2 ms-2">
+                    @(Model.PaymentMethod == "BANK_TRANSFER" ? "Chuyển khoản NH" : "COD (Tiền mặt)")
                 </span>
             </div>
 
@@ -53,23 +56,58 @@
                     </form>
                 }
 
-                @if (Model.OrderStatus == "SHIPPING" || (Model.OrderStatus == "CONFIRMED" && Model.PaymentStatus == "UNPAID"))
+                @if (Model.PaymentStatus != "PAID" && Model.OrderStatus != "CANCELLED")
                 {
-                    <form asp-action="ConfirmPayment" method="post" class="m-0" onsubmit="return confirm('Xác nhận đã thu đủ tiền mặt và hoàn tất đơn hàng? Thao tác này sẽ trừ kho vĩnh viễn.');">
+                    if (Model.PaymentMethod == "BANK_TRANSFER")
+                    {
+                        <form asp-action="ConfirmPayment" method="post" class="m-0" onsubmit="return confirm('Xác nhận đã nhận khoản chuyển khoản ngân hàng @(Model.TotalAmount.ToString("N0")) ₫ cho đơn này?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-success rounded-pill btn-sm px-3 text-white fw-semibold">
+                                <i class="bi bi-bank me-1"></i> Xác nhận đã nhận chuyển khoản
+                            </button>
+                        </form>
+                    }
+                    else if (Model.OrderStatus == "SHIPPING" || Model.OrderStatus == "CONFIRMED")
+                    {
+                        <form asp-action="ConfirmPayment" method="post" class="m-0" onsubmit="return confirm('Xác nhận đã thu đủ tiền mặt COD và hoàn tất đơn hàng? Thao tác này sẽ trừ kho vĩnh viễn.');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-success rounded-pill btn-sm px-3 text-white fw-semibold">
+                                <i class="bi bi-cash-stack me-1"></i> Xác nhận thu tiền COD &amp; Hoàn tất
+                            </button>
+                        </form>
+                    }
+                }
+
+                @if (Model.OrderStatus == "SHIPPING" && Model.PaymentStatus == "PAID")
+                {
+                    <form asp-action="UpdateStatus" method="post" class="m-0" onsubmit="return confirm('Xác nhận giao hàng thành công và hoàn tất đơn hàng? Thao tác này sẽ trừ kho vĩnh viễn.');">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="newStatus" value="COMPLETED" />
                         <button type="submit" class="btn btn-success rounded-pill btn-sm px-3 text-white fw-semibold">
-                            <i class="bi bi-cash-stack me-1"></i> Xác nhận thu tiền &amp; Hoàn tất
+                            <i class="bi bi-check-circle me-1"></i> Hoàn tất giao hàng
                         </button>
                     </form>
                 }
 
-                @if (Model.OrderStatus != "COMPLETED" && Model.OrderStatus != "CANCELLED")
+                @if (Model.OrderStatus == "NEW" || Model.OrderStatus == "CONFIRMED")
                 {
-                    <!-- Cancel Button Trigger Modal -->
-                    <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#adminCancelModal">
-                        <i class="bi bi-x-circle me-1"></i> Hủy đơn
-                    </button>
+                    if (Model.PaymentStatus == "PAID")
+                    {
+                        <!-- Refund & Cancel Button Trigger Modal -->
+                        <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#adminRefundModal">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Hoàn tiền &amp; Hủy đơn
+                        </button>
+                    }
+                    else
+                    {
+                        <!-- Cancel Button Trigger Modal -->
+                        <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#adminCancelModal">
+                            <i class="bi bi-x-circle me-1"></i> Hủy đơn
+                        </button>
+                    }
                 }
             </div>
         </div>
@@ -86,7 +124,12 @@
                     <div><strong>Số điện thoại:</strong> @Model.CustomerPhone</div>
                     <div><strong>Địa chỉ nhận:</strong> @Model.ShippingAddress</div>
                     <div><strong>Kênh bán:</strong> <span class="badge bg-light text-dark border">@Model.Channel</span></div>
+                    <div><strong>Phương thức TT:</strong> <span class="badge bg-light text-dark border">@(Model.PaymentMethod == "BANK_TRANSFER" ? "Chuyển khoản ngân hàng" : "Thanh toán khi nhận hàng (COD)")</span></div>
                     <div><strong>Thời gian đặt:</strong> @Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</div>
+                    @if (Model.PaidAt.HasValue)
+                    {
+                        <div><strong>Thời gian thu tiền:</strong> <span class="text-success fw-semibold">@Model.PaidAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span> (@(Model.PaidByEmployee ?? "Hệ thống"))</div>
+                    }
                     @if (!string.IsNullOrEmpty(Model.Note))
                     {
                         <div class="p-2 rounded bg-light"><strong>Ghi chú:</strong> @Model.Note</div>
@@ -94,6 +137,15 @@
                     @if (!string.IsNullOrEmpty(Model.CancelReason))
                     {
                         <div class="p-2 rounded bg-danger-subtle text-danger"><strong>Lý do hủy:</strong> @Model.CancelReason</div>
+                    }
+                    @if (Model.IsRefunded)
+                    {
+                        <div class="p-2 rounded bg-warning-subtle text-dark border border-warning">
+                            <strong class="text-danger"><i class="bi bi-arrow-counterclockwise me-1"></i>Đã xử lý hoàn tiền:</strong>
+                            <div class="mt-1">- Số tiền hoàn: <strong class="text-danger">@Model.RefundAmount.ToString("N0") ₫</strong></div>
+                            <div>- Thời gian hoàn: @(Model.RefundedAt.HasValue ? Model.RefundedAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-") (@(Model.RefundedByEmployee ?? "Admin"))</div>
+                            <div>- Lý do hoàn: @Model.RefundReason</div>
+                        </div>
                     }
                 </div>
             </div>
@@ -226,6 +278,41 @@
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-danger rounded-pill px-4">Xác nhận hủy đơn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Hoàn Tiền & Hủy Đơn Hàng -->
+<div class="modal fade" id="adminRefundModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form asp-action="Refund" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-danger"><i class="bi bi-arrow-counterclockwise me-2"></i>Hoàn Tiền &amp; Hủy Đơn @Model.Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <div class="alert alert-warning py-2 px-3 small border-0 mb-3">
+                        <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i>
+                        Đơn hàng đã nhận thanh toán <strong>@Model.TotalAmount.ToString("N0") ₫</strong>.
+                        Thao tác này sẽ ghi nhận hoàn tiền cho khách, chuyển trạng thái đơn sang ĐÃ HỦY và giải phóng lượng hàng giữ trong kho.
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Số tiền hoàn lại:</label>
+                        <input type="text" class="form-control rounded-3 bg-light fw-bold text-danger" value="@Model.TotalAmount.ToString("N0") ₫" readonly />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold text-secondary">Lý do hoàn tiền &amp; hủy đơn:</label>
+                        <input type="text" name="refundReason" class="form-control rounded-3" placeholder="vd: Khách chuyển nhầm / hủy đơn theo yêu cầu qua hotline..." required />
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger rounded-pill px-4">Xác nhận hoàn tiền &amp; Hủy đơn</button>
                 </div>
             </form>
         </div>

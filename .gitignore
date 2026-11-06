@@ -5,6 +5,11 @@
 
 # dotenv files
 .env
+.env.vps
+Store.Web/.env.web
+*.db
+*.db-shm
+*.db-wal
 
 # User-specific files
 *.rsuser

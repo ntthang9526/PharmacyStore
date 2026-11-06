@@ -103,22 +103,34 @@
             </div>
 
             <!-- Toggles -->
-            <div class="d-flex flex-wrap gap-4 p-3 bg-light rounded-3 mb-4">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" asp-for="IsPrescription" id="chkRx" />
-                    <label class="form-check-label fw-semibold text-dark small" for="chkRx">Thuốc cần đơn bác sĩ</label>
+            <div class="row g-3 p-3 bg-light rounded-3 mb-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" asp-for="IsPrescription" id="chkRx" />
+                        <label class="form-check-label fw-semibold text-dark small" for="chkRx">Thuốc cần đơn bác sĩ</label>
+                        <div class="form-text text-muted" style="font-size: 0.75rem;">Yêu cầu toa thuốc hợp lệ khi mua.</div>
+                    </div>
                 </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" asp-for="IsSelling" id="chkSell" />
-                    <label class="form-check-label fw-semibold text-dark small" for="chkSell">Đang bán</label>
+                <div class="col-md-6 col-lg-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" asp-for="IsSelling" id="chkSell" />
+                        <label class="form-check-label fw-semibold text-dark small" for="chkSell">Cho phép bán hàng (Web &amp; POS)</label>
+                        <div class="form-text text-muted" style="font-size: 0.75rem;">Mở bán trên Web và quầy thuốc POS.</div>
+                    </div>
                 </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" asp-for="IsActive" id="chkActive" />
-                    <label class="form-check-label fw-semibold text-dark small" for="chkActive">Hiển thị trên web</label>
+                <div class="col-md-6 col-lg-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" asp-for="IsActive" id="chkActive" />
+                        <label class="form-check-label fw-semibold text-dark small" for="chkActive">Kích hoạt hoạt động (Web &amp; POS)</label>
+                        <div class="form-text text-muted" style="font-size: 0.75rem;">Dùng chung hệ thống: tắt cờ này sẽ ẩn trên Web và ngừng bán tại quầy POS.</div>
+                    </div>
                 </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" asp-for="Featured" id="chkFeatured" />
-                    <label class="form-check-label fw-semibold text-dark small" for="chkFeatured">Sản phẩm nổi bật</label>
+                <div class="col-md-6 col-lg-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" asp-for="Featured" id="chkFeatured" />
+                        <label class="form-check-label fw-semibold text-dark small" for="chkFeatured">Sản phẩm nổi bật</label>
+                        <div class="form-text text-muted" style="font-size: 0.75rem;">Ưu tiên hiển thị trang chủ website.</div>
+                    </div>
                 </div>
             </div>
 

@@ -81,13 +81,35 @@
                             </label>
                         </div>
 
-                        <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
-                            <input class="form-check-input ms-0 me-2" type="radio" asp-for="PaymentMethod" id="pay_bank" value="BANK_TRANSFER" />
-                            <label class="form-check-label w-100" for="pay_bank">
-                                <div class="fw-bold text-dark"><i class="bi bi-bank me-1 text-primary"></i>Chuyển khoản ngân hàng</div>
-                                <div class="text-muted small">Chuyển khoản qua số tài khoản ngân hàng của nhà thuốc</div>
-                            </label>
-                        </div>
+                        @if (Model.BankTransferInfo?.IsEnabled == true && !string.IsNullOrWhiteSpace(Model.BankTransferInfo.AccountNumber))
+                        {
+                            <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
+                                <input class="form-check-input ms-0 me-2" type="radio" asp-for="PaymentMethod" id="pay_bank" value="BANK_TRANSFER" />
+                                <label class="form-check-label w-100" for="pay_bank">
+                                    <div class="fw-bold text-dark d-flex align-items-center">
+                                        <i class="bi bi-bank me-1 text-primary"></i>Chuyển khoản ngân hàng
+                                        @if (Model.BankTransferInfo.IsDemoAccount)
+                                        {
+                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning ms-2" style="font-size: 0.7rem;">Tài khoản demo</span>
+                                        }
+                                    </div>
+                                    <div class="text-muted small">Chuyển khoản qua tài khoản ngân hàng của nhà thuốc</div>
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-check p-3 rounded-3 border bg-light opacity-75 d-flex align-items-center gap-2">
+                                <input class="form-check-input ms-0 me-2" type="radio" id="pay_bank" disabled />
+                                <label class="form-check-label w-100" for="pay_bank">
+                                    <div class="fw-bold text-secondary d-flex align-items-center">
+                                        <i class="bi bi-bank me-1"></i>Chuyển khoản ngân hàng
+                                        <span class="badge bg-secondary ms-2" style="font-size: 0.7rem;">Tạm ngưng</span>
+                                    </div>
+                                    <div class="text-muted small">Phương thức chuyển khoản tạm ngưng phục vụ hoặc chưa thiết lập tài khoản nhận tiền.</div>
+                                </label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

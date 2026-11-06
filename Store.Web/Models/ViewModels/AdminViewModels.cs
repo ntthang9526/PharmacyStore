@@ -3,6 +3,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace PharmacyWeb.Models.ViewModels;
 
+public class CreateCustomerWebAccountViewModel
+{
+    [Range(1, int.MaxValue)]
+    public int CustomerId { get; set; }
+    [Required, EmailAddress, MaxLength(100)]
+    public string Email { get; set; } = string.Empty;
+    [Required, MinLength(8), MaxLength(100)]
+    public string InitialPassword { get; set; } = string.Empty;
+}
+
 public class AdminDashboardViewModel
 {
     public int NewOrdersCount { get; set; }
@@ -59,12 +69,12 @@ public class AdminProductFormViewModel
     [Display(Name = "Tên thuốc / Sản phẩm")]
     public string Name { get; set; } = string.Empty;
 
-    [MaxLength(200)]
+    [MaxLength(150)]
     [Display(Name = "Hoạt chất chính")]
     public string ActiveIngredient { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Vui lòng nhập đơn vị tính")]
-    [MaxLength(50)]
+    [MaxLength(30)]
     [Display(Name = "Đơn vị tính (Hộp, Chai, Tuýp,...)")]
     public string Unit { get; set; } = "Hộp";
 
@@ -80,10 +90,10 @@ public class AdminProductFormViewModel
     [Display(Name = "Thuốc cần đơn bác sĩ")]
     public bool IsPrescription { get; set; }
 
-    [Display(Name = "Đang được phép bán")]
+    [Display(Name = "Cho phép bán hàng (Hệ thống Web & POS)")]
     public bool IsSelling { get; set; } = true;
 
-    [Display(Name = "Hiển thị trên website")]
+    [Display(Name = "Kích hoạt hoạt động (Hệ thống chung: Web & POS)")]
     public bool IsActive { get; set; } = true;
 
     [Display(Name = "Sản phẩm nổi bật")]
@@ -159,7 +169,10 @@ public class RevenueReportViewModel
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
     public int TotalPaidOrders { get; set; }
+    public int TotalRefundedOrders { get; set; }
     public decimal TotalCollectedRevenue { get; set; }
+    public decimal TotalRefundedAmount { get; set; }
+    public decimal NetRevenue => TotalCollectedRevenue - TotalRefundedAmount;
     public List<RevenueOrderItemViewModel> Orders { get; set; } = new();
 }
 
@@ -173,4 +186,14 @@ public class RevenueOrderItemViewModel
     public string PaymentMethod { get; set; } = "COD";
     public decimal TotalAmount { get; set; }
     public string PaidBy { get; set; } = string.Empty;
+    public string OrderStatus { get; set; } = string.Empty;
+    public string PaymentStatus { get; set; } = string.Empty;
+    public bool IsRefunded { get; set; }
+    public decimal RefundAmount { get; set; }
+    public DateTime? RefundedAt { get; set; }
+    public string? RefundedBy { get; set; }
+    public string? RefundReason { get; set; }
+    public decimal CollectedInPeriod { get; set; }
+    public decimal RefundedInPeriod { get; set; }
+    public decimal NetAmount => CollectedInPeriod - RefundedInPeriod;
 }

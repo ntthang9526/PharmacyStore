@@ -10,6 +10,7 @@ namespace PharmacyWeb.Services;
 public interface IProductService
 {
     Task<PagedResult<ProductCardViewModel>> GetCatalogAsync(ProductFilterViewModel filter);
+    Task<PagedResult<ProductCardViewModel>> GetAdminCatalogAsync(ProductFilterViewModel filter);
     Task<ProductDetailViewModel?> GetDetailBySlugAsync(string slug);
     Task<ProductDetailViewModel?> GetDetailByIdAsync(int id);
     Task<List<CategoryItemViewModel>> GetCategoriesWithCountAsync();
@@ -39,13 +40,32 @@ public class ProductService : IProductService
         _env = env;
     }
 
-    public async Task<PagedResult<ProductCardViewModel>> GetCatalogAsync(ProductFilterViewModel filter)
+    public Task<PagedResult<ProductCardViewModel>> GetCatalogAsync(ProductFilterViewModel filter)
+    {
+        return BuildCatalogAsync(filter, isAdmin: false);
+    }
+
+    public Task<PagedResult<ProductCardViewModel>> GetAdminCatalogAsync(ProductFilterViewModel filter)
+    {
+        return BuildCatalogAsync(filter, isAdmin: true);
+    }
+
+    private async Task<PagedResult<ProductCardViewModel>> BuildCatalogAsync(ProductFilterViewModel filter, bool isAdmin)
     {
         var query = _db.Medicines
             .AsNoTracking()
             .Include(m => m.Category)
             .Include(m => m.Batches)
-            .Where(m => m.IsActive); // Storefront only shows IsActive
+            .AsQueryable();
+
+        if (!isAdmin)
+        {
+            query = query.Where(m => m.IsActive); // Storefront only shows active medicines
+        }
+        else if (filter.IsActive.HasValue)
+        {
+            query = query.Where(m => m.IsActive == filter.IsActive.Value);
+        }
 
         if (!string.IsNullOrWhiteSpace(filter.Keyword))
         {
@@ -84,20 +104,21 @@ public class ProductService : IProductService
 
         var allItems = await query.ToListAsync();
 
-        var today = DateTime.UtcNow.Date;
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
         var mapped = allItems.Select(m =>
         {
             var availStock = (!m.IsActive || !m.IsSelling) ? 0 :
-                m.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today)
+                m.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                          .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 
             return new ProductCardViewModel
             {
                 Id = m.Id,
+                SupplierId = m.SupplierId,
                 Name = m.Name,
                 Slug = m.Slug,
                 CategoryName = m.Category?.Name ?? string.Empty,
-                ActiveIngredient = m.ActiveIngredient,
+                ActiveIngredient = m.ActiveIngredient ?? string.Empty,
                 Unit = m.Unit,
                 Price = m.Price,
                 IsPrescription = m.IsPrescription,
@@ -139,7 +160,7 @@ public class ProductService : IProductService
             .Include(m => m.Supplier)
             .Include(m => m.Images.OrderBy(i => i.DisplayOrder))
             .Include(m => m.Batches)
-            .FirstOrDefaultAsync(m => m.Slug == slug);
+            .FirstOrDefaultAsync(m => m.Slug == slug && m.IsActive);
 
         if (med == null) return null;
         return MapToDetailViewModel(med);
@@ -153,7 +174,7 @@ public class ProductService : IProductService
             .Include(m => m.Supplier)
             .Include(m => m.Images.OrderBy(i => i.DisplayOrder))
             .Include(m => m.Batches)
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstOrDefaultAsync(m => m.Id == id && m.IsActive);
 
         if (med == null) return null;
         return MapToDetailViewModel(med);
@@ -161,9 +182,9 @@ public class ProductService : IProductService
 
     private ProductDetailViewModel MapToDetailViewModel(Medicine med)
     {
-        var today = DateTime.UtcNow.Date;
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
         var availStock = (!med.IsActive || !med.IsSelling) ? 0 :
-            med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today)
+            med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                        .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 
         var vm = new ProductDetailViewModel
@@ -175,7 +196,7 @@ public class ProductService : IProductService
             CategoryName = med.Category?.Name ?? string.Empty,
             SupplierName = med.Supplier?.Name ?? string.Empty,
             BarCode = med.BarCode,
-            ActiveIngredient = med.ActiveIngredient,
+            ActiveIngredient = med.ActiveIngredient ?? string.Empty,
             Unit = med.Unit,
             PackagingSpec = med.PackagingSpec,
             Price = med.Price,
@@ -183,7 +204,7 @@ public class ProductService : IProductService
             IsSelling = med.IsSelling,
             IsActive = med.IsActive,
             AvailableStock = availStock,
-            DescriptionHtml = med.DescriptionHtml,
+            DescriptionHtml = _sanitizer.Sanitize(med.DescriptionHtml),
             MainImageUrl = !string.IsNullOrEmpty(med.MainImageUrl) 
                 ? med.MainImageUrl 
                 : MedicineSvgHelper.GeneratePackagingSvg(med.Name, med.ActiveIngredient, med.PackagingSpec, med.Unit, med.IsPrescription),
@@ -211,6 +232,7 @@ public class ProductService : IProductService
         vm.RelatedProducts = related.Select(r => new ProductCardViewModel
         {
             Id = r.Id,
+            SupplierId = r.SupplierId,
             Name = r.Name,
             Slug = r.Slug,
             CategoryName = r.Category?.Name ?? string.Empty,
@@ -221,7 +243,7 @@ public class ProductService : IProductService
             IsSelling = r.IsSelling,
             IsActive = r.IsActive,
             AvailableStock = (!r.IsActive || !r.IsSelling) ? 0 :
-                r.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today).Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity)),
+                r.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today).Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity)),
             ImageUrl = !string.IsNullOrEmpty(r.MainImageUrl) 
                 ? r.MainImageUrl 
                 : MedicineSvgHelper.GeneratePackagingSvg(r.Name, r.ActiveIngredient, r.PackagingSpec, r.Unit, r.IsPrescription)
@@ -330,6 +352,16 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync(m => m.Id == model.Id);
 
         if (med == null) return false;
+
+        // WEB-04: Concurrency control against stale form submissions
+        if (model.RowVersion != null && med.RowVersion != null && !model.RowVersion.SequenceEqual(med.RowVersion))
+        {
+            throw new DbUpdateConcurrencyException("Dữ liệu thuốc đã được cập nhật bởi một phiên làm việc khác (POS hoặc Web). Vui lòng tải lại trang để xem thông tin mới nhất.");
+        }
+        if (model.RowVersion != null)
+        {
+            _db.Entry(med).Property(m => m.RowVersion).OriginalValue = model.RowVersion;
+        }
 
         med.CategoryId = model.CategoryId;
         med.SupplierId = model.SupplierId;

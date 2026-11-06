@@ -1,3 +1,8 @@
+@inject PharmacyWeb.Services.IProductService ProductService
+@{
+    var footerCategories = (await ProductService.GetCategoriesWithCountAsync()).Take(4).ToList();
+}
+
 <footer class="bg-white border-top mt-5 pt-5 pb-4">
     <div class="container">
         <div class="row g-4 pb-4 border-bottom">
@@ -24,8 +29,10 @@
                 <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
                     <li><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-secondary">Tất cả sản phẩm</a></li>
                     <li><a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="text-decoration-none text-secondary">Thuốc mua trực tiếp</a></li>
-                    <li><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="text-decoration-none text-secondary">Vitamin &amp; Khoáng chất</a></li>
-                    <li><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="4" class="text-decoration-none text-secondary">Dạ dày - Tiêu hóa</a></li>
+                    @foreach (var c in footerCategories)
+                    {
+                        <li><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="@c.Id" class="text-decoration-none text-secondary">@c.Name</a></li>
+                    }
                     <li><a asp-controller="PrescriptionRequest" asp-action="Index" class="text-decoration-none text-secondary">Tư vấn đơn thuốc</a></li>
                 </ul>
             </div>

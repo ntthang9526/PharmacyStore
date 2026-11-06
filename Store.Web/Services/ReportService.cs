@@ -32,31 +32,39 @@ public class ReportService : IReportService
         var newOrdersCount = await _db.Orders.CountAsync(o => o.OrderStatus == "NEW");
 
         var paidTodayList = await _db.Orders
-            .Where(o => o.PaymentStatus == "PAID" && o.PaidAt >= startOfDayUtc)
+            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded) && o.PaidAt >= startOfDayUtc)
             .Select(o => o.TotalAmount)
             .ToListAsync();
-        var paidToday = paidTodayList.Sum();
+        var refundedTodayList = await _db.Orders
+            .Where(o => o.IsRefunded && o.RefundedAt >= startOfDayUtc)
+            .Select(o => o.RefundAmount)
+            .ToListAsync();
+        var paidToday = paidTodayList.Sum() - refundedTodayList.Sum();
 
         var paidMonthList = await _db.Orders
-            .Where(o => o.PaymentStatus == "PAID" && o.PaidAt >= startOfMonthUtc)
+            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded) && o.PaidAt >= startOfMonthUtc)
             .Select(o => o.TotalAmount)
             .ToListAsync();
-        var paidMonth = paidMonthList.Sum();
+        var refundedMonthList = await _db.Orders
+            .Where(o => o.IsRefunded && o.RefundedAt >= startOfMonthUtc)
+            .Select(o => o.RefundAmount)
+            .ToListAsync();
+        var paidMonth = paidMonthList.Sum() - refundedMonthList.Sum();
 
         var totalAvailable = await _db.Medicines
             .Include(m => m.Batches)
             .Where(m => m.IsActive && m.IsSelling)
-            .CountAsync(m => m.Batches.Any(b => !b.IsBlocked && b.ExpiryDate > nowUtc.Date && (b.Stock - b.ReservedQuantity) > 0));
+            .CountAsync(m => m.Batches.Any(b => !b.IsBlocked && b.ExpiryDate >= todayVn && (b.Stock - b.ReservedQuantity) > 0));
 
         var lowStockBatches = await _db.Batches
             .Include(b => b.Medicine)
             .Where(b => b.Stock <= 5)
             .ToListAsync();
 
-        var expiringLimit = nowUtc.Date.AddDays(90);
+        var expiringLimit = todayVn.AddDays(90);
         var expiringSoonBatches = await _db.Batches
             .Include(b => b.Medicine)
-            .Where(b => b.ExpiryDate > nowUtc.Date && b.ExpiryDate <= expiringLimit)
+            .Where(b => b.ExpiryDate >= todayVn && b.ExpiryDate <= expiringLimit)
             .ToListAsync();
 
         var pendingPrescriptions = await _db.PrescriptionRequests
@@ -125,18 +133,36 @@ public class ReportService : IReportService
 
     public async Task<RevenueReportViewModel> GetRevenueReportAsync(DateTime? fromDate, DateTime? toDate)
     {
-        var nowVn = DateTime.UtcNow.AddHours(7);
-        var start = fromDate ?? new DateTime(nowVn.Year, nowVn.Month, 1);
-        var end = toDate ?? nowVn.Date.AddDays(1).AddTicks(-1);
+        var todayVn = PharmacyClock.Today;
+        var start = fromDate?.Date ?? new DateTime(todayVn.Year, todayVn.Month, 1);
+        var end = toDate?.Date ?? todayVn;
+
+        if (start > end)
+        {
+            (start, end) = (end, start);
+        }
 
         var startUtc = start.AddHours(-7);
-        var endUtc = end.AddHours(-7);
+        var nextDayUtc = end.AddDays(1).AddHours(-7);
 
-        var paidOrders = await _db.Orders
+        // Fetch orders that were either paid in this period OR refunded in this period
+        var relevantOrders = await _db.Orders
             .AsNoTracking()
-            .Where(o => o.PaymentStatus == "PAID" && o.PaidAt >= startUtc && o.PaidAt <= endUtc)
-            .OrderByDescending(o => o.PaidAt)
-            .Select(o => new RevenueOrderItemViewModel
+            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded)
+                     && ((o.PaidAt >= startUtc && o.PaidAt < nextDayUtc) ||
+                         (o.RefundedAt >= startUtc && o.RefundedAt < nextDayUtc)))
+            .OrderByDescending(o => o.PaidAt ?? o.RefundedAt ?? o.OrderDate)
+            .ToListAsync();
+
+        var orderItems = relevantOrders.Select(o =>
+        {
+            bool collectedInPeriod = o.PaidAt.HasValue && o.PaidAt.Value >= startUtc && o.PaidAt.Value < nextDayUtc;
+            bool refundedInPeriod = o.IsRefunded && o.RefundedAt.HasValue && o.RefundedAt.Value >= startUtc && o.RefundedAt.Value < nextDayUtc;
+
+            decimal collectedAmount = collectedInPeriod ? o.TotalAmount : 0m;
+            decimal refundAmount = refundedInPeriod ? o.RefundAmount : 0m;
+
+            return new RevenueOrderItemViewModel
             {
                 OrderId = o.Id,
                 OrderCode = o.Code,
@@ -145,17 +171,33 @@ public class ReportService : IReportService
                 CustomerName = o.CustomerName,
                 PaymentMethod = o.PaymentMethod,
                 TotalAmount = o.TotalAmount,
-                PaidBy = o.PaidByEmployee ?? "Hệ thống"
-            })
-            .ToListAsync();
+                PaidBy = o.PaidByEmployee ?? "Hệ thống",
+                OrderStatus = o.OrderStatus,
+                PaymentStatus = o.PaymentStatus,
+                IsRefunded = o.IsRefunded,
+                RefundAmount = o.RefundAmount,
+                RefundedAt = o.RefundedAt,
+                RefundedBy = o.RefundedByEmployee,
+                RefundReason = o.RefundReason,
+                CollectedInPeriod = collectedAmount,
+                RefundedInPeriod = refundAmount
+            };
+        }).ToList();
+
+        var totalCollected = orderItems.Sum(o => o.CollectedInPeriod);
+        var totalRefunded = orderItems.Sum(o => o.RefundedInPeriod);
+        var paidCount = orderItems.Count(o => o.CollectedInPeriod > 0);
+        var refundedCount = orderItems.Count(o => o.RefundedInPeriod > 0);
 
         return new RevenueReportViewModel
         {
             FromDate = start,
             ToDate = end,
-            TotalPaidOrders = paidOrders.Count,
-            TotalCollectedRevenue = paidOrders.Sum(o => o.TotalAmount),
-            Orders = paidOrders
+            TotalPaidOrders = paidCount,
+            TotalRefundedOrders = refundedCount,
+            TotalCollectedRevenue = totalCollected,
+            TotalRefundedAmount = totalRefunded,
+            Orders = orderItems
         };
     }
 
@@ -164,12 +206,17 @@ public class ReportService : IReportService
         var report = await GetRevenueReportAsync(fromDate, toDate);
         var sb = new System.Text.StringBuilder();
 
-        sb.AppendLine("Mã Đơn,Ngày Đặt,Ngày Thu Tiền,Khách Hàng,Phương Thức,Số Tiền Đã Thu (VNĐ),Người Thu");
+        sb.AppendLine("Mã Đơn,Ngày Đặt,Ngày Thu Tiền,Trạng Thái TT,Khách Hàng,Phương Thức,Số Tiền Thu (VNĐ),Số Tiền Hoàn (VNĐ),Thực Nhận (VNĐ),Ngày Hoàn,Lý Do Hoàn,Người Thu,Người Hoàn");
         foreach (var o in report.Orders)
         {
             var orderDateVn = o.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm");
             var paidAtVn = o.PaidAt.HasValue ? o.PaidAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
-            sb.AppendLine($"\"{o.OrderCode}\",\"{orderDateVn}\",\"{paidAtVn}\",\"{o.CustomerName}\",\"{o.PaymentMethod}\",{o.TotalAmount:0},\"{o.PaidBy}\"");
+            var refundedAtVn = o.RefundedAt.HasValue ? o.RefundedAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
+            var net = o.CollectedInPeriod - o.RefundedInPeriod;
+            var paymentStatusText = o.IsRefunded ? "Đã hoàn tiền" : "Đã thanh toán";
+            var safeReason = (o.RefundReason ?? "-").Replace("\"", "\"\"");
+
+            sb.AppendLine($"\"{o.OrderCode}\",\"{orderDateVn}\",\"{paidAtVn}\",\"{paymentStatusText}\",\"{o.CustomerName}\",\"{o.PaymentMethod}\",{o.CollectedInPeriod:0},{o.RefundedInPeriod:0},{net:0},\"{refundedAtVn}\",\"{safeReason}\",\"{o.PaidBy}\",\"{o.RefundedBy ?? "-"}\"");
         }
 
         return sb.ToString();

@@ -3,5 +3,6 @@ obj/
 *.db
 *.db-shm
 *.db-wal
+.dotnet/
 App_Data/Prescriptions/*
 !App_Data/Prescriptions/.gitkeep

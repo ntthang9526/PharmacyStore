@@ -44,17 +44,21 @@ internal static class DatabaseConfiguration
             (!int.TryParse(configuredTimeout, out timeout) || timeout < 1 || timeout > 300))
             throw new InvalidOperationException("DB_CONNECT_TIMEOUT trong file .env phải từ 1 đến 300 giây.");
 
+        bool integratedSecurity = Flag("DB_INTEGRATED_SECURITY", false);
         var settings = new SqlConnectionStringBuilder
         {
             DataSource = Required("DB_SERVER"),
             InitialCatalog = Required("DB_NAME"),
-            UserID = Required("DB_USER"),
-            Password = Required("DB_PASSWORD"),
-            IntegratedSecurity = false,
+            IntegratedSecurity = integratedSecurity,
             Encrypt = Flag("DB_ENCRYPT", true),
             TrustServerCertificate = Flag("DB_TRUST_SERVER_CERTIFICATE", true),
             ConnectTimeout = timeout
         };
+        if (!integratedSecurity)
+        {
+            settings.UserID = Required("DB_USER");
+            settings.Password = Required("DB_PASSWORD");
+        }
         return settings.ConnectionString;
     }
 }

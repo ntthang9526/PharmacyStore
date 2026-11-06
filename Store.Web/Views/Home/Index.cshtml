@@ -1,3 +1,4 @@
+@inject PharmacyWeb.Services.IProductService ProductService
 @{
     var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
     var isEn = currentCulture.StartsWith("en");
@@ -5,6 +6,10 @@
     var featured = ViewBag.FeaturedProducts as List<ProductCardViewModel> ?? new();
     var rxProducts = ViewBag.RxProducts as List<ProductCardViewModel> ?? new();
     var healthcareProducts = ViewBag.HealthcareProducts as List<ProductCardViewModel> ?? new();
+
+    var homeCategories = await ProductService.GetCategoriesWithCountAsync();
+    var vitaminCat = homeCategories.FirstOrDefault(c => c.Slug.Contains("vitamin") || c.Name.ToLower().Contains("vitamin")) ?? homeCategories.ElementAtOrDefault(1);
+    var medSupplyCat = homeCategories.FirstOrDefault(c => c.Slug.Contains("vat-tu") || c.Name.ToLower().Contains("vật tư")) ?? homeCategories.ElementAtOrDefault(2);
 }
 
 <div class="container-xxl px-3 py-4">
@@ -29,63 +34,68 @@
                             <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="btn-ph btn-ph-primary text-decoration-none">
                                 <i class="bi bi-cart3 me-1"></i> <span>@(isEn ? "Buy Online" : "Mua thuốc trực tuyến")</span>
                             </a>
-                            <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx text-decoration-none">
-                                <i class="bi bi-file-earmark-medical me-1"></i> <span>@(isEn ? "Submit Prescription" : "Gửi đơn thuốc tư vấn")</span>
+                            <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-secondary text-decoration-none">
+                                <i class="bi bi-camera me-1"></i> <span>@(isEn ? "Send Prescription" : "Gửi ảnh đơn thuốc")</span>
                             </a>
                         </div>
-                        <div class="small text-secondary">
-                            @(isEn ? "Promo codes" : "Mã ưu đãi"): <code class="font-mono-code fw-bold" style="color:var(--color-primary-active);">GIAM10K</code> • <code class="font-mono-code fw-bold" style="color:var(--color-primary-active);">PH10</code>
+                        <div class="d-flex align-items-center gap-2 small text-secondary">
+                            <i class="bi bi-truck text-teal"></i>
+                            <span>@(isEn ? "Fast 2h Delivery in Urban" : "Giao nhanh 2h nội thành")</span>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-lg-4">
-                <div class="rx-callout-box h-100 d-flex flex-column justify-content-between">
+                <div class="store-hero-side h-100 d-flex flex-column justify-content-between">
                     <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <strong class="d-flex align-items-center gap-2" style="color:var(--color-primary);">
-                                <i class="bi bi-file-earmark-medical fs-5"></i> @(isEn ? "Doctor Prescription" : "Mua thuốc theo đơn bác sĩ")
-                            </strong>
-                            <span class="status-badge status-badge-warning">@(isEn ? "Consultation" : "Dược sĩ tư vấn")</span>
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="status-badge status-badge-warning"><i class="bi bi-bell-fill me-1"></i> @(isEn ? "Online Pharmacist" : "Dược sĩ trực tuyến")</span>
                         </div>
-                        <ol class="small mb-3 ps-3 text-secondary">
-                            <li class="mb-1"><strong>@(isEn ? "Step 1" : "Bước 1"):</strong> @(isEn ? "Upload clear prescription photo." : "Tải lên ảnh chụp đơn thuốc rõ nét.")</li>
-                            <li class="mb-1"><strong>@(isEn ? "Step 2" : "Bước 2"):</strong> @(isEn ? "Enter your name & phone number." : "Nhập họ tên & số điện thoại liên hệ.")</li>
-                            <li><strong>@(isEn ? "Step 3" : "Bước 3"):</strong> @(isEn ? "Pharmacist calls you to guide taking medicine." : "Dược sĩ liên hệ tư vấn & hướng dẫn nhận thuốc.")</li>
-                        </ol>
+                        <h2 class="h5 fw-bold text-dark mb-2">
+                            @(isEn ? "Have a Prescription? Let Us Help!" : "Có đơn thuốc bác sĩ? Để chúng tôi tư vấn")
+                        </h2>
+                        <p class="small text-secondary mb-3">
+                            @(isEn ? "Upload your prescription image. Our certified pharmacists will check stock, confirm dosage, and call you directly." : "Chụp ảnh đơn thuốc gửi qua hệ thống. Dược sĩ chuyên môn kiểm tra tồn kho, liều dùng và gọi lại hỗ trợ ngay.")
+                        </p>
                     </div>
-                    <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-primary w-100 text-decoration-none text-center">
-                        <i class="bi bi-cloud-arrow-up me-1"></i> <span>@(isEn ? "Submit Prescription Photo" : "Gửi ảnh đơn thuốc ngay")</span>
-                    </a>
+                    <div>
+                        <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx w-100 text-center text-decoration-none justify-content-center py-2 mb-2">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> @(isEn ? "Upload Prescription Now" : "Tải ảnh đơn thuốc ngay")
+                        </a>
+                        <div class="text-center small text-muted">
+                            <i class="bi bi-lock-fill me-1"></i> @(isEn ? "100% Confidential medical data" : "Bảo mật tuyệt đối thông tin bệnh án")
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6 Ô Tiện ích Nhanh -->
-    <section class="mb-4" aria-label="Tiện ích tra cứu nhanh">
+    <!-- Hàng Quick Access (6 ô biểu tượng nhanh, responsive chuẩn Long Châu) -->
+    <section class="mb-4" aria-label="Lối tắt truy cập nhanh">
         <div class="row g-2 g-md-3">
             <div class="col-6 col-md-4 col-xl-2">
-                <a asp-controller="PrescriptionRequest" asp-action="Index" class="lc-quick-tile text-decoration-none">
-                    <span class="lc-quick-tile-icon orange"><i class="bi bi-file-earmark-medical"></i></span>
+                <a asp-controller="Products" asp-action="Index" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon"><i class="bi bi-grid-fill"></i></span>
                     <div>
-                        <div class="fw-bold small text-dark">@(isEn ? "Need Medicine" : "Cần mua thuốc")</div>
-                        <div class="text-muted" style="font-size:11px;">@(isEn ? "Quick consultation" : "Gửi đơn tư vấn nhanh")</div>
+                        <div class="fw-bold small text-dark">@(isEn ? "All Products" : "Tất cả sản phẩm")</div>
+                        <div class="text-muted" style="font-size:11px;">@(isEn ? "Full catalog" : "Danh mục đầy đủ")</div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-xl-2">
                 <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="lc-quick-tile text-decoration-none">
-                    <span class="lc-quick-tile-icon"><i class="bi bi-cart3"></i></span>
+                    <span class="lc-quick-tile-icon green"><i class="bi bi-bag-check-fill"></i></span>
                     <div>
                         <div class="fw-bold small text-dark">@(isEn ? "Direct Purchase" : "Mua trực tiếp")</div>
-                        <div class="text-muted" style="font-size:11px;">@(isEn ? "No prescription needed" : "Không cần đơn bác sĩ")</div>
+                        <div class="text-muted" style="font-size:11px;">@(isEn ? "No Rx required" : "Không cần kê đơn")</div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-xl-2">
-                <a asp-controller="Products" asp-action="Index" class="lc-quick-tile text-decoration-none">
-                    <span class="lc-quick-tile-icon orange"><i class="bi bi-shield-check"></i></span>
+                <a asp-controller="PrescriptionRequest" asp-action="Index" class="lc-quick-tile text-decoration-none">
+                    <span class="lc-quick-tile-icon"><i class="bi bi-file-earmark-medical-fill"></i></span>
                     <div>
                         <div class="fw-bold small text-dark">@(isEn ? "Prescription" : "Thuốc theo đơn")</div>
                         <div class="text-muted" style="font-size:11px;">@(isEn ? "Requires prescription" : "Cần đơn bác sĩ")</div>
@@ -102,19 +112,19 @@
                 </a>
             </div>
             <div class="col-6 col-md-4 col-xl-2">
-                <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="lc-quick-tile text-decoration-none">
+                <a href="@(vitaminCat != null ? Url.Action("Index", "Products", new { CategoryId = vitaminCat.Id }) : Url.Action("Index", "Products"))" class="lc-quick-tile text-decoration-none">
                     <span class="lc-quick-tile-icon"><i class="bi bi-capsule"></i></span>
                     <div>
-                        <div class="fw-bold small text-dark">@(isEn ? "Vitamins" : "Vitamin & Đề kháng")</div>
+                        <div class="fw-bold small text-dark">@(isEn ? "Vitamins" : (vitaminCat?.Name ?? "Vitamin & Đề kháng"))</div>
                         <div class="text-muted" style="font-size:11px;">@(isEn ? "Essential nutrients" : "Bổ sung khoáng chất")</div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-xl-2">
-                <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="6" class="lc-quick-tile text-decoration-none">
+                <a href="@(medSupplyCat != null ? Url.Action("Index", "Products", new { CategoryId = medSupplyCat.Id }) : Url.Action("Index", "Products"))" class="lc-quick-tile text-decoration-none">
                     <span class="lc-quick-tile-icon green"><i class="bi bi-bandaid"></i></span>
                     <div>
-                        <div class="fw-bold small text-dark">@(isEn ? "Medical Supplies" : "Vật tư y tế")</div>
+                        <div class="fw-bold small text-dark">@(isEn ? "Medical Supplies" : (medSupplyCat?.Name ?? "Vật tư y tế"))</div>
                         <div class="text-muted" style="font-size:11px;">@(isEn ? "Family first-aid" : "Tủ thuốc gia đình")</div>
                     </div>
                 </a>
@@ -176,7 +186,7 @@
                 </h2>
                 <p class="small text-secondary mb-0">@(isEn ? "Electrolyte rehydration, stomach care, and essential vitamins" : "Bù nước điện giải, chăm sóc dạ dày và vitamin thiết yếu")</p>
             </div>
-            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="btn-ph btn-ph-secondary btn-ph-sm text-decoration-none">
+            <a href="@(vitaminCat != null ? Url.Action("Index", "Products", new { CategoryId = vitaminCat.Id }) : Url.Action("Index", "Products"))" class="btn-ph btn-ph-secondary btn-ph-sm text-decoration-none">
                 @(isEn ? "View more" : "Xem thêm") <i class="bi bi-chevron-right ms-1"></i>
             </a>
         </div>

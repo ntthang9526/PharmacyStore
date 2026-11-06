@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PharmacyWeb.Data;
 using PharmacyWeb.Data.Entities;
+using PharmacyWeb.Models;
 using PharmacyWeb.Models.ViewModels;
 using PharmacyWeb.Services;
 
@@ -16,17 +18,20 @@ public class CheckoutController : Controller
     private readonly IOrderService _orderService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly PharmacyWebDbContext _db;
+    private readonly BankTransferOptions _bankOptions;
 
     public CheckoutController(
         ICartService cartService,
         IOrderService orderService,
         UserManager<ApplicationUser> userManager,
-        PharmacyWebDbContext db)
+        PharmacyWebDbContext db,
+        IOptions<BankTransferOptions>? bankOptions = null)
     {
         _cartService = cartService;
         _orderService = orderService;
         _userManager = userManager;
         _db = db;
+        _bankOptions = bankOptions?.Value ?? new BankTransferOptions();
     }
 
     [HttpGet]
@@ -66,7 +71,8 @@ public class CheckoutController : Controller
             PaymentMethod = "COD",
             VoucherCode = cart.AppliedVoucherCode,
             IdempotencyKey = Guid.NewGuid().ToString("N"),
-            Cart = cart
+            Cart = cart,
+            BankTransferInfo = GetBankTransferInfo()
         };
 
         return View(model);
@@ -78,6 +84,13 @@ public class CheckoutController : Controller
     {
         var cart = await _cartService.GetCartAsync();
         model.Cart = cart;
+        model.BankTransferInfo = GetBankTransferInfo();
+
+        if (model.PaymentMethod == "BANK_TRANSFER" && (!_bankOptions.IsEnabled || string.IsNullOrWhiteSpace(_bankOptions.BankName) || string.IsNullOrWhiteSpace(_bankOptions.AccountNumber)))
+        {
+            ModelState.AddModelError(string.Empty, "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).");
+            return View("Index", model);
+        }
 
         if (!ModelState.IsValid)
         {
@@ -116,6 +129,7 @@ public class CheckoutController : Controller
             return NotFound();
         }
 
+        order.BankTransferInfo ??= GetBankTransferInfo();
         return View(order);
     }
 
@@ -128,6 +142,11 @@ public class CheckoutController : Controller
         if (user == null || !user.CustomerProfileId.HasValue)
         {
             return Unauthorized(new { success = false, message = "Vui lòng đăng nhập để đặt hàng." });
+        }
+
+        if (model.PaymentMethod == "BANK_TRANSFER" && (!_bankOptions.IsEnabled || string.IsNullOrWhiteSpace(_bankOptions.BankName) || string.IsNullOrWhiteSpace(_bankOptions.AccountNumber)))
+        {
+            return BadRequest(new { success = false, message = "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền." });
         }
 
         if (!ModelState.IsValid)
@@ -148,5 +167,19 @@ public class CheckoutController : Controller
             orderId = result.OrderId,
             orderCode = result.OrderCode
         });
+    }
+
+    private BankTransferInfoViewModel GetBankTransferInfo()
+    {
+        return new BankTransferInfoViewModel
+        {
+            IsEnabled = _bankOptions.IsEnabled,
+            IsDemoAccount = _bankOptions.IsDemoAccount,
+            BankName = _bankOptions.BankName,
+            AccountNumber = _bankOptions.AccountNumber,
+            AccountHolder = _bankOptions.AccountHolder,
+            TransferInstruction = _bankOptions.TransferInstruction,
+            DemoNotice = _bankOptions.DemoNotice
+        };
     }
 }

@@ -114,6 +114,14 @@ public class AccountController : Controller
             return View(model);
         }
 
+        // Không tự chiếm hồ sơ POS chỉ bằng một số điện thoại chưa xác minh.
+        if (await _db.CustomerProfiles.AnyAsync(c => c.Phone == phone))
+        {
+            ModelState.AddModelError("Phone", "Số điện thoại đã có hồ sơ tại nhà thuốc. Vui lòng liên hệ quản trị viên để liên kết tài khoản web.");
+            return View(model);
+        }
+
+        await using var registrationTransaction = await _db.Database.BeginTransactionAsync();
         // 1. Create CustomerProfile
         var customerProfile = new CustomerProfile
         {
@@ -155,16 +163,24 @@ public class AccountController : Controller
         var createResult = await _userManager.CreateAsync(user, model.Password);
         if (createResult.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, "Customer");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+            if (!roleResult.Succeeded)
+            {
+                await registrationTransaction.RollbackAsync();
+                ModelState.AddModelError(string.Empty, "Chưa tạo được quyền tài khoản. Vui lòng thử lại.");
+                return View(model);
+            }
 
             customerProfile.UserId = user.Id;
             await _db.SaveChangesAsync();
 
+            await registrationTransaction.CommitAsync();
             await _signInManager.SignInAsync(user, isPersistent: false);
             TempData["SuccessMessage"] = "Đăng ký tài khoản thành công!";
             return RedirectToAction("Index", "Home");
         }
 
+        await registrationTransaction.RollbackAsync();
         foreach (var error in createResult.Errors)
         {
             ModelState.AddModelError(string.Empty, error.Description);
@@ -218,7 +234,7 @@ public class AccountController : Controller
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+    public async Task<IActionResult> ChangePassword([Bind(Prefix = "ChangePassword")] ChangePasswordViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -246,23 +262,38 @@ public class AccountController : Controller
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateProfile(string fullName, string email)
+    public async Task<IActionResult> UpdateProfile(UpdateProfileViewModel model)
     {
-        if (string.IsNullOrWhiteSpace(fullName))
+        if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = "Họ và tên không được để trống.";
+            var firstError = ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault()?.ErrorMessage ?? "Dữ liệu không hợp lệ.";
+            TempData["ErrorMessage"] = firstError;
             return RedirectToAction(nameof(Profile));
         }
 
         var user = await _userManager.GetUserAsync(User);
         if (user == null) return Challenge();
 
-        user.FullName = fullName.Trim();
-        if (!string.IsNullOrWhiteSpace(email))
+        var trimmedName = model.FullName.Trim();
+        var trimmedEmail = model.Email.Trim().ToLowerInvariant();
+
+        // Kiểm tra email đã được tài khoản khác sử dụng chưa
+        var existingWithEmail = await _userManager.FindByEmailAsync(trimmedEmail);
+        if (existingWithEmail != null && existingWithEmail.Id != user.Id)
         {
-            user.Email = email.Trim().ToLowerInvariant();
+            TempData["ErrorMessage"] = "Email này đã được sử dụng bởi một tài khoản khác.";
+            return RedirectToAction(nameof(Profile));
         }
-        await _userManager.UpdateAsync(user);
+
+        user.FullName = trimmedName;
+        user.Email = trimmedEmail;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            TempData["ErrorMessage"] = string.Join("; ", result.Errors.Select(e => e.Description));
+            return RedirectToAction(nameof(Profile));
+        }
 
         if (user.CustomerProfileId.HasValue)
         {
@@ -270,7 +301,7 @@ public class AccountController : Controller
             if (profile != null)
             {
                 profile.FullName = user.FullName;
-                profile.Email = user.Email ?? string.Empty;
+                profile.Email = user.Email;
                 await _db.SaveChangesAsync();
             }
         }
@@ -284,9 +315,10 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddAddress(AddressItemViewModel model)
     {
-        if (string.IsNullOrWhiteSpace(model.RecipientName) || string.IsNullOrWhiteSpace(model.Phone) || string.IsNullOrWhiteSpace(model.Address))
+        if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = "Vui lòng nhập đầy đủ tên người nhận, số điện thoại và địa chỉ.";
+            var firstError = ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault()?.ErrorMessage ?? "Vui lòng nhập đầy đủ thông tin địa chỉ hợp lệ.";
+            TempData["ErrorMessage"] = firstError;
             return RedirectToAction(nameof(Profile));
         }
 

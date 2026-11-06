@@ -23,11 +23,11 @@ namespace Store.DAL
                     m.Unit AS DonViTinh,
                     m.Price AS DonGia,
                     m.IsPrescription AS KeDon,
-                    ISNULL(SUM(b.Stock), 0) AS TonKho
+                    ISNULL(SUM(b.Stock - b.ReservedQuantity), 0) AS TonKho
                 FROM Medicines m
                 LEFT JOIN Batches b
                        ON b.MedicineId = m.Id
-                      AND b.Stock > 0 AND b.IsBlocked=0
+                      AND b.Stock > b.ReservedQuantity AND b.IsBlocked=0
                       AND b.ExpiryDate >= CAST(GETDATE() AS DATE)
                 WHERE m.IsActive = 1 AND m.IsSelling=1
                   AND ( m.Name LIKE @kw
@@ -212,7 +212,7 @@ namespace Store.DAL
             foreach(var item in items.OrderBy(x=>x.MaThuoc))
             {
                 int remaining=item.SoLuong;var batches=new List<(int Id,int Stock)>();
-                using(var cmd=new SqlCommand(@"SELECT Id,Stock FROM Batches WITH (UPDLOCK,HOLDLOCK) WHERE MedicineId=@m AND Stock>0 AND IsBlocked=0
+                using(var cmd=new SqlCommand(@"SELECT Id,Stock-ReservedQuantity AS Stock FROM Batches WITH (UPDLOCK,HOLDLOCK) WHERE MedicineId=@m AND Stock>ReservedQuantity AND IsBlocked=0
                     AND ExpiryDate>=CAST(GETDATE() AS date) ORDER BY ExpiryDate,Id",conn,tran))
                 {
                     cmd.Parameters.Add("@m",SqlDbType.Int).Value=item.MaThuoc;using var reader=cmd.ExecuteReader();
@@ -221,7 +221,7 @@ namespace Store.DAL
                 foreach(var batch in batches)
                 {
                     if(remaining<=0) break;int quantity=Math.Min(remaining,batch.Stock);
-                    using(var cmd=new SqlCommand("UPDATE Batches SET Stock=Stock-@q WHERE Id=@id AND Stock>=@q AND IsBlocked=0",conn,tran))
+                    using(var cmd=new SqlCommand("UPDATE Batches SET Stock=Stock-@q WHERE Id=@id AND Stock-ReservedQuantity>=@q AND IsBlocked=0",conn,tran))
                     {
                         cmd.Parameters.Add("@id",SqlDbType.Int).Value=batch.Id;cmd.Parameters.Add("@q",SqlDbType.Int).Value=quantity;
                         if(cmd.ExecuteNonQuery()!=1) throw new InvalidOperationException("Tồn kho vừa thay đổi. Vui lòng thử lại.");

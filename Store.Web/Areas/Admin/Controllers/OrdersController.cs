@@ -18,6 +18,7 @@ public class OrdersController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string? status, string? paymentStatus, string? keyword, int page = 1)
     {
+        page = Math.Max(1, page);
         var orders = await _orderService.GetAdminOrdersAsync(status, paymentStatus, keyword, page, 12);
         ViewBag.Status = status;
         ViewBag.PaymentStatus = paymentStatus;
@@ -56,6 +57,23 @@ public class OrdersController : Controller
     {
         var employee = User.Identity?.Name ?? "admin";
         var res = await _orderService.ConfirmCodPaymentAsync(id, employee);
+        if (res.Success)
+        {
+            TempData["SuccessMessage"] = res.Message;
+        }
+        else
+        {
+            TempData["ErrorMessage"] = res.Message;
+        }
+        return RedirectToAction(nameof(Details), new { id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Refund(int id, string refundReason)
+    {
+        var employee = User.Identity?.Name ?? "admin";
+        var res = await _orderService.RefundOrderAsync(id, refundReason, employee);
         if (res.Success)
         {
             TempData["SuccessMessage"] = res.Message;

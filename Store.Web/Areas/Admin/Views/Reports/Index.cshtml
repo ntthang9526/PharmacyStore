@@ -38,22 +38,31 @@
 
 <!-- Summary Metric Cards -->
 <div class="row g-3 mb-4">
-    <div class="col-md-6">
-        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
-            <span class="text-muted small fw-semibold">Tổng doanh thu thực thu:</span>
-            <h2 class="display-6 fw-bold text-success my-2" style="font-variant-numeric: tabular-nums;">
+    <div class="col-md-4">
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+            <span class="text-muted small fw-semibold">Tổng thực thu trong kỳ:</span>
+            <h3 class="fw-bold text-success my-2" style="font-variant-numeric: tabular-nums;">
                 @Model.TotalCollectedRevenue.ToString("N0") ₫
-            </h2>
-            <span class="small text-muted">Từ @Model.FromDate.ToString("dd/MM/yyyy") đến @Model.ToDate.ToString("dd/MM/yyyy")</span>
+            </h3>
+            <span class="small text-muted">@Model.TotalPaidOrders giao dịch đã thu tiền</span>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
-            <span class="text-muted small fw-semibold">Số lượng giao dịch thành công:</span>
-            <h2 class="display-6 fw-bold text-teal my-2" style="color: var(--color-primary);">
-                @Model.TotalPaidOrders đơn
-            </h2>
-            <span class="small text-muted">Đã xác nhận thanh toán thành công</span>
+    <div class="col-md-4">
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+            <span class="text-muted small fw-semibold">Tổng tiền hoàn lại:</span>
+            <h3 class="fw-bold text-danger my-2" style="font-variant-numeric: tabular-nums;">
+                @Model.TotalRefundedAmount.ToString("N0") ₫
+            </h3>
+            <span class="small text-muted">@Model.TotalRefundedOrders đơn đã xử lý hoàn tiền</span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white h-100">
+            <span class="text-muted small fw-semibold">Doanh thu thực còn lại (Net):</span>
+            <h3 class="fw-bold text-teal my-2" style="color: var(--color-primary); font-variant-numeric: tabular-nums;">
+                @Model.NetRevenue.ToString("N0") ₫
+            </h3>
+            <span class="small text-muted">Thực thu trừ tiền đã hoàn</span>
         </div>
     </div>
 </div>
@@ -66,11 +75,14 @@
                 <tr>
                     <th class="ps-4">Mã đơn</th>
                     <th>Thời gian đặt</th>
-                    <th>Thời gian thu tiền</th>
+                    <th>Thời gian thu</th>
                     <th>Khách hàng</th>
                     <th>Phương thức</th>
-                    <th class="text-end">Số tiền thực thu</th>
-                    <th class="pe-4">Người xác nhận</th>
+                    <th>Trạng thái TT</th>
+                    <th class="text-end">Tiền thu</th>
+                    <th class="text-end">Tiền hoàn</th>
+                    <th class="text-end">Thực nhận</th>
+                    <th class="pe-4 text-end">Người xử lý</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,10 +96,28 @@
                         </td>
                         <td class="fw-semibold">@o.CustomerName</td>
                         <td><span class="badge bg-light text-dark border">@o.PaymentMethod</span></td>
-                        <td class="text-end fw-bold text-success fs-6" style="font-variant-numeric: tabular-nums;">
-                            @o.TotalAmount.ToString("N0") ₫
+                        <td>
+                            @if (o.IsRefunded)
+                            {
+                                <span class="badge bg-danger-subtle text-danger border border-danger">Đã hoàn tiền</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success-subtle text-success border border-success">Đã thanh toán</span>
+                            }
                         </td>
-                        <td class="pe-4 text-muted">@o.PaidBy</td>
+                        <td class="text-end fw-semibold text-success" style="font-variant-numeric: tabular-nums;">
+                            @(o.CollectedInPeriod > 0 ? o.CollectedInPeriod.ToString("N0") + " ₫" : "-")
+                        </td>
+                        <td class="text-end fw-semibold text-danger" style="font-variant-numeric: tabular-nums;">
+                            @(o.RefundedInPeriod > 0 ? "-" + o.RefundedInPeriod.ToString("N0") + " ₫" : "-")
+                        </td>
+                        <td class="text-end fw-bold text-teal" style="font-variant-numeric: tabular-nums;">
+                            @o.NetAmount.ToString("N0") ₫
+                        </td>
+                        <td class="pe-4 text-end text-muted">
+                            @(o.IsRefunded ? (o.RefundedBy ?? o.PaidBy) : o.PaidBy)
+                        </td>
                     </tr>
                 }
             </tbody>

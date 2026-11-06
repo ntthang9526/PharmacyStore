@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Store.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Store.DAL
         {
             Dictionary<int, Medicine> list = new();
 
-            string sql = "SELECT m.*,COALESCE(c.Name,N'') AS CategoryName,COALESCE(b.AvailableStock,0) AS AvailableStock FROM Medicines m LEFT JOIN Categories c ON c.Id=m.CategoryId LEFT JOIN (SELECT MedicineId,SUM(Stock) AS AvailableStock FROM Batches WHERE IsBlocked=0 AND ExpiryDate>=CAST(GETDATE() AS date) GROUP BY MedicineId) b ON b.MedicineId=m.Id WHERE m.IsActive=1 AND m.IsSelling=1";
+            string sql = "SELECT m.*,COALESCE(c.Name,N'') AS CategoryName,COALESCE(b.AvailableStock,0) AS AvailableStock FROM Medicines m LEFT JOIN Categories c ON c.Id=m.CategoryId LEFT JOIN (SELECT MedicineId,SUM(Stock-ReservedQuantity) AS AvailableStock FROM Batches WHERE IsBlocked=0 AND ExpiryDate>=CAST(GETDATE() AS date) GROUP BY MedicineId) b ON b.MedicineId=m.Id WHERE m.IsActive=1 AND m.IsSelling=1";
             using var connection = DBConnection.GetDbConnection();
             using var command = new SqlCommand(sql, connection);
 
@@ -48,7 +48,7 @@ namespace Store.DAL
         public int SoLuongConHan(int medId)
         {
             string sql = """
-                select b.MedicineId, SUM(b.Stock) as TotalStock
+                select b.MedicineId, SUM(b.Stock-b.ReservedQuantity) as TotalStock
                 from Batches b JOIN Medicines m ON m.Id=b.MedicineId
                 where m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND CAST(b.ExpiryDate AS DATE) >= CAST(GETDATE() AS DATE) and b.MedicineId = @MedicineId
                 group by b.MedicineId

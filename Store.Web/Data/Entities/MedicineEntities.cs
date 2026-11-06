@@ -26,11 +26,11 @@ public class Medicine
     [MaxLength(150)]
     public string Slug { get; set; } = string.Empty;
 
-    [MaxLength(200)]
+    [MaxLength(150)]
     public string ActiveIngredient { get; set; } = string.Empty;
 
     [Required]
-    [MaxLength(50)]
+    [MaxLength(30)]
     public string Unit { get; set; } = "Hộp";
 
     [MaxLength(150)]
@@ -62,7 +62,7 @@ public class Medicine
 
     [NotMapped]
     public int AvailableStock => (!IsActive || !IsSelling) ? 0 :
-        Batches.Where(b => !b.IsBlocked && b.ExpiryDate > DateTime.UtcNow.Date)
+        Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= PharmacyWeb.Services.PharmacyClock.Today)
                .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 }
 
@@ -98,11 +98,13 @@ public class Batch
 
     public int Stock { get; set; }
     public int ReservedQuantity { get; set; }
+    [Timestamp]
+    public byte[]? RowVersion { get; set; }
     public bool IsBlocked { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [NotMapped]
-    public int AvailableStock => (IsBlocked || ExpiryDate <= DateTime.UtcNow.Date) ? 0 : Math.Max(0, Stock - ReservedQuantity);
+    public int AvailableStock => (IsBlocked || ExpiryDate < PharmacyWeb.Services.PharmacyClock.Today) ? 0 : Math.Max(0, Stock - ReservedQuantity);
 
     public ICollection<OrderBatchAllocation> Allocations { get; set; } = new List<OrderBatchAllocation>();
 }

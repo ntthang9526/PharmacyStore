@@ -289,7 +289,9 @@ public class OrderAndFefoIntegrationTests : IDisposable
         var checkoutRes = await _orderService.CheckoutAsync(1, model);
         var orderId = checkoutRes.OrderId!.Value;
 
-        // Admin confirms payment
+        // Đơn phải được xác nhận trước khi thu tiền.
+        var confirmed = await _orderService.UpdateOrderStatusByAdminAsync(orderId, "CONFIRMED", null, "admin");
+        Assert.True(confirmed.Success);
         var payRes = await _orderService.ConfirmCodPaymentAsync(orderId, "admin");
         Assert.True(payRes.Success);
 

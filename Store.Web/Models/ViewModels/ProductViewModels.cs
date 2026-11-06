@@ -3,6 +3,7 @@ namespace PharmacyWeb.Models.ViewModels;
 public class ProductCardViewModel
 {
     public int Id { get; set; }
+    public int SupplierId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string CategoryName { get; set; } = string.Empty;
@@ -47,6 +48,7 @@ public class ProductFilterViewModel
     public decimal? MaxPrice { get; set; }
     public bool? OnlyInStock { get; set; }
     public bool? DirectPurchaseOnly { get; set; } // OTC only
+    public bool? IsActive { get; set; }
     public string SortBy { get; set; } = "default"; // default, price_asc, price_desc, name_asc
     public int Page { get; set; } = 1;
     public int PageSize { get; set; } = 12;

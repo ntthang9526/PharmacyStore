@@ -57,14 +57,14 @@ public class CartService : ICartService
             .Where(m => medicineIds.Contains(m.Id))
             .ToDictionaryAsync(m => m.Id);
 
-        var today = DateTime.UtcNow.Date;
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
 
         foreach (var item in sessionItems)
         {
             if (medicines.TryGetValue(item.MedicineId, out var med))
             {
                 var availStock = (!med.IsActive || !med.IsSelling) ? 0 :
-                    med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today)
+                    med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                                .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 
                 vm.Items.Add(new CartItemViewModel
@@ -111,8 +111,8 @@ public class CartService : ICartService
             return false; // Prescription and non-selling cannot be directly added to cart
         }
 
-        var today = DateTime.UtcNow.Date;
-        var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today)
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
+        var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                                     .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 
         var items = GetSessionItems();
@@ -155,8 +155,8 @@ public class CartService : ICartService
 
             if (med == null || !med.IsSelling) return false;
 
-            var today = DateTime.UtcNow.Date;
-            var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate > today)
+            var today = PharmacyWeb.Services.PharmacyClock.Today;
+            var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                                         .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
 
             if (quantity > availStock)

@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 namespace Store.DAL;
 public class LoHangDAL
@@ -14,7 +14,7 @@ public class LoHangDAL
                         WHEN m.IsActive=0 THEN N'Thuốc đã ẩn'
                         WHEN m.IsSelling=0 THEN N'Thuốc ngừng bán'
                         ELSE N'Được xuất bán' END AS TrangThaiLo,
-                   CASE WHEN m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock ELSE 0 END AS TonCoTheBan
+                   CASE WHEN m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock-b.ReservedQuantity ELSE 0 END AS TonCoTheBan
             FROM Batches b
             JOIN Medicines m ON m.Id = b.MedicineId
             JOIN Categories c ON c.Id = m.CategoryId

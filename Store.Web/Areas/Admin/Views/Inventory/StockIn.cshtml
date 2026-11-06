@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Lập Phiếu Nhập Kho Mới";
     var medicines = (ViewBag.Medicines as PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Models.ViewModels.ProductCardViewModel>)?.Items ?? new();
+    var existingLines = Model?.Lines ?? new();
 }
 
 <div class="container-fluid p-0" style="max-width: 960px;">
@@ -15,6 +16,15 @@
         </a>
     </div>
 
+    <!-- Hidden Template Select for Medicines with Supplier Attributes -->
+    <select id="medicineSelectTemplate" class="d-none">
+        <option value="">-- Chọn thuốc --</option>
+        @foreach (var m in medicines)
+        {
+            <option value="@m.Id" data-supplier="@m.SupplierId">@m.Name (@m.Unit)</option>
+        }
+    </select>
+
     <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
         <form asp-action="StockIn" method="post" id="stockInForm">
             @Html.AntiForgeryToken()
@@ -22,7 +32,7 @@
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <label asp-for="SupplierId" class="form-label small fw-semibold text-secondary">Nhà cung cấp (*)</label>
-                    <select asp-for="SupplierId" asp-items="ViewBag.Suppliers" class="form-select rounded-3" required>
+                    <select asp-for="SupplierId" asp-items="ViewBag.Suppliers" class="form-select rounded-3" id="supplierSelect" required onchange="filterMedicinesBySupplier()">
                         <option value="">-- Chọn nhà cung cấp nhập hàng --</option>
                     </select>
                 </div>
@@ -54,23 +64,52 @@
                         </tr>
                     </thead>
                     <tbody id="linesContainer">
-                        <tr class="line-row">
-                            <td>
-                                <select name="Lines[0].MedicineId" class="form-select form-select-sm" required>
-                                    <option value="">-- Chọn thuốc --</option>
-                                    @foreach (var m in medicines)
-                                    {
-                                        <option value="@m.Id">@m.Name (@m.Unit)</option>
-                                    }
-                                </select>
-                            </td>
-                            <td><input type="text" name="Lines[0].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
-                            <td><input type="date" name="Lines[0].ExpiryDate" class="form-control form-control-sm" required /></td>
-                            <td><input type="number" name="Lines[0].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
-                            <td><input type="number" name="Lines[0].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
-                            <td class="text-end fw-bold line-total">250,000 ₫</td>
-                            <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
-                        </tr>
+                        @if (existingLines.Any())
+                        {
+                            for (int i = 0; i < existingLines.Count; i++)
+                            {
+                                var line = existingLines[i];
+                                <tr class="line-row">
+                                    <input type="hidden" name="Lines.Index" value="@i" />
+                                    <td>
+                                        <select name="Lines[@i].MedicineId" class="form-select form-select-sm med-select" required>
+                                            <option value="">-- Chọn thuốc --</option>
+                                            @foreach (var m in medicines)
+                                            {
+                                                <option value="@m.Id" data-supplier="@m.SupplierId" selected="@(m.Id == line.MedicineId)">@m.Name (@m.Unit)</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="Lines[@i].BatchNumber" value="@line.BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
+                                    <td><input type="date" name="Lines[@i].ExpiryDate" value="@(line.ExpiryDate != default ? line.ExpiryDate.ToString("yyyy-MM-dd") : "")" class="form-control form-control-sm" required /></td>
+                                    <td><input type="number" name="Lines[@i].Quantity" value="@line.Quantity" class="form-control form-control-sm qty-input" min="1" required oninput="calcTotals()" /></td>
+                                    <td><input type="number" name="Lines[@i].UnitCost" value="@((long)line.UnitCost)" class="form-control form-control-sm cost-input" min="0" step="1000" required oninput="calcTotals()" /></td>
+                                    <td class="text-end fw-bold line-total">@((line.Quantity * line.UnitCost).ToString("N0")) ₫</td>
+                                    <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="line-row">
+                                <input type="hidden" name="Lines.Index" value="0" />
+                                <td>
+                                    <select name="Lines[0].MedicineId" class="form-select form-select-sm med-select" required>
+                                        <option value="">-- Chọn thuốc --</option>
+                                        @foreach (var m in medicines)
+                                        {
+                                            <option value="@m.Id" data-supplier="@m.SupplierId">@m.Name (@m.Unit)</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><input type="text" name="Lines[0].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
+                                <td><input type="date" name="Lines[0].ExpiryDate" class="form-control form-control-sm" required /></td>
+                                <td><input type="number" name="Lines[0].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
+                                <td><input type="number" name="Lines[0].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
+                                <td class="text-end fw-bold line-total">250,000 ₫</td>
+                                <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
+                            </tr>
+                        }
                     </tbody>
                     <tfoot class="table-light">
                         <tr>
@@ -91,29 +130,32 @@
 
 @section Scripts {
     <script>
-        let rowIndex = 1;
-        const medOptions = `@Html.Raw(string.Join("", medicines.Select(m => $"<option value='{m.Id}'>{m.Name} ({m.Unit})</option>")))`;
+        let nextRowId = document.querySelectorAll('.line-row').length || 1;
 
         function addRow() {
             const tbody = document.getElementById('linesContainer');
             const tr = document.createElement('tr');
             tr.className = 'line-row';
+            const rowIdx = nextRowId++;
+            const templateHtml = document.getElementById('medicineSelectTemplate').innerHTML;
+
             tr.innerHTML = `
+                <input type="hidden" name="Lines.Index" value="${rowIdx}" />
                 <td>
-                    <select name="Lines[${rowIndex}].MedicineId" class="form-select form-select-sm" required>
-                        <option value="">-- Chọn thuốc --</option>
-                        ${medOptions}
+                    <select name="Lines[${rowIdx}].MedicineId" class="form-select form-select-sm med-select" required>
+                        ${templateHtml}
                     </select>
                 </td>
-                <td><input type="text" name="Lines[${rowIndex}].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
-                <td><input type="date" name="Lines[${rowIndex}].ExpiryDate" class="form-control form-control-sm" required /></td>
-                <td><input type="number" name="Lines[${rowIndex}].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
-                <td><input type="number" name="Lines[${rowIndex}].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
+                <td><input type="text" name="Lines[${rowIdx}].BatchNumber" class="form-control form-control-sm font-monospace" placeholder="LOT-..." required /></td>
+                <td><input type="date" name="Lines[${rowIdx}].ExpiryDate" class="form-control form-control-sm" required /></td>
+                <td><input type="number" name="Lines[${rowIdx}].Quantity" class="form-control form-control-sm qty-input" value="10" min="1" required oninput="calcTotals()" /></td>
+                <td><input type="number" name="Lines[${rowIdx}].UnitCost" class="form-control form-control-sm cost-input" value="25000" min="0" step="1000" required oninput="calcTotals()" /></td>
                 <td class="text-end fw-bold line-total">250,000 ₫</td>
                 <td class="text-center"><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-x-circle"></i></button></td>
             `;
             tbody.appendChild(tr);
-            rowIndex++;
+            filterMedicinesBySupplier();
+            reindexRows();
             calcTotals();
         }
 
@@ -121,10 +163,29 @@
             const rows = document.querySelectorAll('.line-row');
             if (rows.length > 1) {
                 btn.closest('tr').remove();
+                reindexRows();
                 calcTotals();
             } else {
                 alert('Phiếu nhập phải có ít nhất 1 dòng thuốc.');
             }
+        }
+
+        function reindexRows() {
+            const rows = document.querySelectorAll('.line-row');
+            rows.forEach((row, idx) => {
+                const indexInput = row.querySelector('input[name="Lines.Index"]');
+                if (indexInput) indexInput.value = idx;
+                const select = row.querySelector('select[name^="Lines["]');
+                if (select) select.name = `Lines[${idx}].MedicineId`;
+                const batch = row.querySelector('input[name$=".BatchNumber"]');
+                if (batch) batch.name = `Lines[${idx}].BatchNumber`;
+                const expiry = row.querySelector('input[name$=".ExpiryDate"]');
+                if (expiry) expiry.name = `Lines[${idx}].ExpiryDate`;
+                const qty = row.querySelector('input[name$=".Quantity"]');
+                if (qty) qty.name = `Lines[${idx}].Quantity`;
+                const cost = row.querySelector('input[name$=".UnitCost"]');
+                if (cost) cost.name = `Lines[${idx}].UnitCost`;
+            });
         }
 
         function calcTotals() {
@@ -138,5 +199,38 @@
             });
             document.getElementById('grandTotal').innerText = total.toLocaleString('vi-VN') + ' ₫';
         }
+
+        function filterMedicinesBySupplier() {
+            const supplierId = document.getElementById('supplierSelect').value;
+            document.querySelectorAll('.med-select').forEach(select => {
+                const currentVal = select.value;
+                let currentValStillValid = false;
+                Array.from(select.options).forEach(opt => {
+                    if (!opt.value) {
+                        opt.hidden = false;
+                        opt.disabled = false;
+                        return;
+                    }
+                    const optSupplier = opt.getAttribute('data-supplier');
+                    const matches = !supplierId || optSupplier === supplierId;
+                    opt.hidden = !matches;
+                    opt.disabled = !matches;
+                    if (opt.value === currentVal && matches) {
+                        currentValStillValid = true;
+                    }
+                });
+                if (currentVal && !currentValStillValid) {
+                    select.value = "";
+                }
+            });
+        }
+
+        document.getElementById('stockInForm').addEventListener('submit', function() {
+            reindexRows();
+        });
+
+        // Initialize on page load
+        filterMedicinesBySupplier();
+        calcTotals();
     </script>
 }

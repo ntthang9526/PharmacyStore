@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 namespace Store.DAL;
 public partial class ThuocDAL
@@ -9,7 +9,7 @@ public partial class ThuocDAL
                m.SupplierId AS MaNCC, c.Name AS TenNhom, s.Name AS TenNCC, m.Unit AS DonViTinh, ROUND(m.Price, 0) AS DonGia,
                ISNULL(SUM(b.Stock), 0) AS SoLuongTon, gia.UnitCost AS GiaNhapGanNhat, m.IsSelling AS DangBan,m.IsPrescription AS KeDon, CAST(CASE WHEN COUNT(b.Id)>0 THEN 1 ELSE 0 END AS bit) AS KhoaNCC,
                CASE WHEN m.IsActive=0 THEN N'Đã ẩn' WHEN m.IsSelling=1 THEN N'Đang bán' ELSE N'Ngừng bán' END AS TrangThaiBan,
-               ISNULL(SUM(CASE WHEN m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock ELSE 0 END),0) AS TonCoTheBan
+               ISNULL(SUM(CASE WHEN m.IsActive=1 AND m.IsSelling=1 AND b.IsBlocked=0 AND b.ExpiryDate>=CAST(GETDATE() AS date) THEN b.Stock-b.ReservedQuantity ELSE 0 END),0) AS TonCoTheBan
         FROM Medicines m
         JOIN Categories c ON c.Id = m.CategoryId
         JOIN Suppliers s ON s.Id = m.SupplierId

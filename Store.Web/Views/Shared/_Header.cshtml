@@ -4,6 +4,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject ICartService CartService
+@inject IProductService ProductService
 
 @{
     var cart = await CartService.GetCartAsync();
@@ -14,6 +15,7 @@
     var isEn = currentCulture.StartsWith("en");
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var headerCategories = (await ProductService.GetCategoriesWithCountAsync()).Take(5).ToList();
 }
 
 <header class="store-header">
@@ -172,18 +174,13 @@
             <a asp-controller="PrescriptionRequest" asp-action="Index" class="category-nav-link @(currentController == "PrescriptionRequest" ? "active" : "")">
                 @(isEn ? "Submit Prescription" : "Gửi đơn thuốc")
             </a>
-            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="1" class="category-nav-link @(Context.Request.Query["CategoryId"] == "1" ? "active" : "")">
-                @(isEn ? "Fever & Pain" : "Hạ sốt - Giảm đau")
-            </a>
-            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="3" class="category-nav-link @(Context.Request.Query["CategoryId"] == "3" ? "active" : "")">
-                @(isEn ? "Vitamins" : "Vitamin & Đề kháng")
-            </a>
-            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="4" class="category-nav-link @(Context.Request.Query["CategoryId"] == "4" ? "active" : "")">
-                @(isEn ? "Digestion" : "Tiêu hóa - Dạ dày")
-            </a>
-            <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="6" class="category-nav-link @(Context.Request.Query["CategoryId"] == "6" ? "active" : "")">
-                @(isEn ? "Medical Supplies" : "Vật tư y tế")
-            </a>
+            @foreach (var cat in headerCategories)
+            {
+                var isCatActive = Context.Request.Query["CategoryId"] == cat.Id.ToString();
+                <a asp-controller="Products" asp-action="Index" asp-route-CategoryId="@cat.Id" class="category-nav-link @(isCatActive ? "active" : "")">
+                    @cat.Name
+                </a>
+            }
         </div>
     </nav>
 </header>

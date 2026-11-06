@@ -25,7 +25,7 @@ public class InventoryService : IInventoryService
 
     public async Task<PagedResult<Batch>> GetBatchesAsync(string? filterType, int? medicineId, int page, int pageSize)
     {
-        var today = DateTime.UtcNow.Date;
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
         var soonLimit = today.AddDays(90);
 
         var query = _db.Batches
@@ -41,8 +41,8 @@ public class InventoryService : IInventoryService
 
         query = filterType switch
         {
-            "EXPIRING_SOON" => query.Where(b => b.ExpiryDate > today && b.ExpiryDate <= soonLimit),
-            "EXPIRED" => query.Where(b => b.ExpiryDate <= today),
+            "EXPIRING_SOON" => query.Where(b => b.ExpiryDate >= today && b.ExpiryDate <= soonLimit),
+            "EXPIRED" => query.Where(b => b.ExpiryDate < today),
             "LOW_STOCK" => query.Where(b => b.Stock <= 5),
             "BLOCKED" => query.Where(b => b.IsBlocked),
             _ => query
@@ -76,8 +76,19 @@ public class InventoryService : IInventoryService
         {
             return (false, "Phiếu nhập phải có nhà cung cấp và ít nhất một dòng thuốc.", null);
         }
+        if (!await _db.Suppliers.AnyAsync(s => s.Id == model.SupplierId && s.IsActive))
+            return (false, "Nhà cung cấp không hợp lệ.", null);
+        var medicineIds = model.Lines.Select(l => l.MedicineId).Distinct().ToList();
+        var allowedIds = await _db.Medicines.Where(m => medicineIds.Contains(m.Id) && m.SupplierId == model.SupplierId && m.IsActive)
+            .Select(m => m.Id).ToListAsync();
+        if (allowedIds.Count != medicineIds.Count)
+            return (false, "Có thuốc không thuộc nhà cung cấp đã chọn hoặc đã bị ẩn.", null);
+        if (model.Lines.Any(l => l.Quantity <= 0 || l.UnitCost <= 0 || string.IsNullOrWhiteSpace(l.BatchNumber) || l.ExpiryDate.Date <= PharmacyClock.Today))
+            return (false, "Kiểm tra số lượng, giá nhập, số lô và hạn dùng của các dòng thuốc.", null);
+        if (model.Lines.GroupBy(l => new { l.MedicineId, Lot = l.BatchNumber.Trim(), Date = l.ExpiryDate.Date }).Any(g => g.Count() > 1))
+            return (false, "Mỗi lô thuốc chỉ nhập một dòng trong cùng phiếu.", null);
 
-        using var transaction = await _db.Database.BeginTransactionAsync();
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
             var code = $"PN{DateTime.UtcNow:yyyy}-{new Random().Next(100, 999)}";
@@ -108,12 +119,11 @@ public class InventoryService : IInventoryService
 
                 // Update or create batch
                 var batch = await _db.Batches.FirstOrDefaultAsync(b =>
-                    b.MedicineId == line.MedicineId && b.BatchNumber == line.BatchNumber.Trim());
+                    b.MedicineId == line.MedicineId && b.BatchNumber == line.BatchNumber.Trim() && b.ExpiryDate == line.ExpiryDate.Date);
 
                 if (batch != null)
                 {
                     batch.Stock += line.Quantity;
-                    batch.ExpiryDate = line.ExpiryDate; // update expiry if provided
                 }
                 else
                 {
@@ -121,7 +131,7 @@ public class InventoryService : IInventoryService
                     {
                         MedicineId = line.MedicineId,
                         BatchNumber = line.BatchNumber.Trim(),
-                        ExpiryDate = line.ExpiryDate,
+                        ExpiryDate = line.ExpiryDate.Date,
                         Stock = line.Quantity,
                         ReservedQuantity = 0,
                         IsBlocked = false,

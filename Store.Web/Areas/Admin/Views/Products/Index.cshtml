@@ -16,7 +16,7 @@
 <!-- Search & Filter Card -->
 <div class="card border-0 rounded-4 shadow-sm p-3 bg-white mb-3">
     <form asp-action="Index" method="get" class="row g-2 align-items-center">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input type="text" name="Keyword" class="form-control form-control-sm rounded-pill" placeholder="Tìm tên thuốc, hoạt chất, mã vạch..." value="@Model.Keyword" />
         </div>
         <div class="col-md-3">
@@ -28,10 +28,17 @@
                 }
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <select name="DirectPurchaseOnly" class="form-select form-select-sm rounded-pill">
-                <option value="">-- Tất cả phân loại --</option>
-                <option value="true" selected="@(Model.DirectPurchaseOnly == true)">Chỉ thuốc mua trực tiếp</option>
+                <option value="">-- Phân loại --</option>
+                <option value="true" selected="@(Model.DirectPurchaseOnly == true)">Mua trực tiếp (OTC)</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="IsActive" class="form-select form-select-sm rounded-pill">
+                <option value="">-- Hiển thị: Tất cả --</option>
+                <option value="true" selected="@(Model.IsActive == true)">Đang hiển thị</option>
+                <option value="false" selected="@(Model.IsActive == false)">Đã ẩn</option>
             </select>
         </div>
         <div class="col-md-2 d-flex gap-2">
@@ -55,12 +62,21 @@
                     <th>Giá niêm yết</th>
                     <th>Tồn kho (Bán được)</th>
                     <th>Phân loại</th>
-                    <th>Trạng thái bán</th>
-                    <th>Hiển thị</th>
+                    <th>Bán hàng</th>
+                    <th>Hoạt động (Web &amp; POS)</th>
                     <th class="pe-4 text-end">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
+                @if (!Model.Results.Items.Any())
+                {
+                    <tr>
+                        <td colspan="9" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-1"></i>
+                            Không tìm thấy sản phẩm nào phù hợp với bộ lọc.
+                        </td>
+                    </tr>
+                }
                 @foreach (var m in Model.Results.Items)
                 {
                     <tr>
@@ -112,17 +128,17 @@
                             </form>
                         </td>
                         <td>
-                            <form asp-action="ToggleActive" method="post" class="m-0">
+                            <form asp-action="ToggleActive" method="post" class="m-0" onsubmit="return confirm('Bạn có chắc muốn đổi trạng thái kích hoạt của thuốc này? Lưu ý thao tác này sẽ ảnh hưởng cả Website và phần mềm bán tại quầy POS.');">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@m.Id" />
                                 <button type="submit" class="btn btn-sm btn-link p-0 text-decoration-none">
                                     @if (m.IsActive)
                                     {
-                                        <span class="badge bg-primary">Hiển thị</span>
+                                        <span class="badge bg-primary" title="Đang kích hoạt dùng chung trên cả Web và quầy thuốc POS"><i class="bi bi-check-circle me-1"></i>Hoạt động</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger">Đã ẩn</span>
+                                        <span class="badge bg-danger" title="Đang tạm dừng trên cả Web và quầy thuốc POS"><i class="bi bi-slash-circle me-1"></i>Tạm dừng</span>
                                     }
                                 </button>
                             </form>
@@ -138,3 +154,21 @@
         </table>
     </div>
 </div>
+
+@{
+    var queryParams = new Dictionary<string, string>();
+    if (!string.IsNullOrEmpty(Model.Keyword)) queryParams["Keyword"] = Model.Keyword;
+    if (Model.CategoryId.HasValue) queryParams["CategoryId"] = Model.CategoryId.Value.ToString();
+    if (Model.DirectPurchaseOnly.HasValue) queryParams["DirectPurchaseOnly"] = Model.DirectPurchaseOnly.Value.ToString();
+    if (Model.IsActive.HasValue) queryParams["IsActive"] = Model.IsActive.Value.ToString();
+
+    var paginationModel = new PharmacyWeb.Models.ViewModels.PaginationViewModel
+    {
+        CurrentPage = Model.Results.Page,
+        PageSize = Model.Results.PageSize,
+        TotalItems = Model.Results.TotalItems,
+        RouteUrl = Url.Action("Index", "Products", new { area = "Admin" }) ?? "/Admin/Products",
+        QueryParams = queryParams
+    };
+}
+<partial name="_Pagination" model="paginationModel" />

@@ -109,6 +109,19 @@ public class Order
     [MaxLength(100)]
     public string? PaidByEmployee { get; set; }
 
+    public bool IsRefunded { get; set; } = false;
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal RefundAmount { get; set; } = 0m;
+
+    public DateTime? RefundedAt { get; set; }
+
+    [MaxLength(100)]
+    public string? RefundedByEmployee { get; set; }
+
+    [MaxLength(500)]
+    public string? RefundReason { get; set; }
+
     public DateTime? ConfirmedAt { get; set; }
     public DateTime? ShippedAt { get; set; }
     public DateTime? CompletedAt { get; set; }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Store.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Store.DAL
         public int TimToanBoSoLuongConHan(int medicineId)
         {
             string sql = """
-                select COALESCE(SUM(b.Stock), 0) as TotalStock
+                select COALESCE(SUM(b.Stock-b.ReservedQuantity), 0) as TotalStock
                 from Batches b JOIN Medicines m ON m.Id=b.MedicineId
                 where b.MedicineId = @MedicineId AND b.IsBlocked=0 AND m.IsActive=1 AND m.IsSelling=1 and CAST(b.ExpiryDate AS date) >= CAST(GETDATE() AS date)
                 """;

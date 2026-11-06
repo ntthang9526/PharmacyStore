@@ -33,10 +33,10 @@ public class Supplier
     [MaxLength(150)]
     public string Name { get; set; } = string.Empty;
 
-    [MaxLength(20)]
+    [MaxLength(15)]
     public string Phone { get; set; } = string.Empty;
 
-    [MaxLength(255)]
+    [MaxLength(250)]
     public string Address { get; set; } = string.Empty;
 
     public bool IsActive { get; set; } = true;

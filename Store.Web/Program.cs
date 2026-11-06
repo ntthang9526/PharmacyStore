@@ -10,19 +10,24 @@ using PharmacyWeb.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Database Configuration
-var provider = builder.Configuration["DatabaseProvider"] ?? "Sqlite";
-var sqlServerConn = builder.Configuration.GetConnectionString("DefaultConnection");
+var provider = builder.Configuration["DatabaseProvider"] ?? "SqlServer";
+var sqlServerConn = Environment.GetEnvironmentVariable("PHARMACY_CONNECTION_STRING")
+    ?? Store.DAL.DatabaseConfiguration.Load(builder.Environment.ContentRootPath);
 var sqliteConn = builder.Configuration.GetConnectionString("SqliteConnection") ?? "Data Source=PharmacyWeb.db";
 
-if (provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(sqlServerConn))
+if (provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
 {
     builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
         options.UseSqlServer(sqlServerConn));
 }
-else
+else if (provider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase) && builder.Environment.IsEnvironment("Testing"))
 {
     builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
         options.UseSqlite(sqliteConn));
+}
+else
+{
+    throw new InvalidOperationException("Website dùng SQL Server chung với POS. SQLite chỉ dành cho môi trường Testing.");
 }
 
 // 2. Identity Configuration
@@ -63,6 +68,10 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
+
+// Configuration Options
+builder.Services.Configure<PharmacyWeb.Models.BankTransferOptions>(
+    builder.Configuration.GetSection(PharmacyWeb.Models.BankTransferOptions.SectionName));
 
 // 4. Business Services Registration
 builder.Services.AddScoped<IHtmlSanitizerService, HtmlSanitizerService>();
@@ -106,12 +115,16 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<PharmacyWebDbContext>();
         var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleMgr = services.GetRequiredService<RoleManager<ApplicationRole>>();
-        await DbInitializer.InitializeAsync(context, userMgr, roleMgr);
+        if (context.Database.IsSqlServer())
+            await SharedPosDatabase.InitializeAsync(context, userMgr, roleMgr, builder.Environment.ContentRootPath);
+        else
+            await DbInitializer.InitializeAsync(context, userMgr, roleMgr);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Lỗi xảy ra trong quá trình khởi tạo dữ liệu mẫu (Seed).");
+        throw new InvalidOperationException("Chưa khởi tạo được database web dùng chung POS. Kiểm tra .env và script Database/IntegratePosDatabase.sql.", ex);
     }
 }
 

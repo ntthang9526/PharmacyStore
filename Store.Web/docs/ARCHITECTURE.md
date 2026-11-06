@@ -1,3 +1,5 @@
+> Cập nhật SQL Server 05/11/2026: bản chạy chính đã dùng chung database POS, bảng web có tiền tố Web. Các mô tả SQLite/tài khoản mẫu/cấu trúc cũ bên dưới là tài liệu trước chuyển đổi; ưu tiên [SQLSERVER-POS-INTEGRATION.md](SQLSERVER-POS-INTEGRATION.md).
+
 # KIẾN TRÚC HỆ THỐNG PHARMACY WEB (ARCHITECTURE & DATA LIFECYCLE)
 
 ## 1. Tổng quan Kiến trúc

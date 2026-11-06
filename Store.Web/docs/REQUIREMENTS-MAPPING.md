@@ -1,3 +1,5 @@
+> Cập nhật SQL Server 05/11/2026: bản chạy chính đã dùng chung database POS, bảng web có tiền tố Web. Các mô tả SQLite/tài khoản mẫu/cấu trúc cũ bên dưới là tài liệu trước chuyển đổi; ưu tiên [SQLSERVER-POS-INTEGRATION.md](SQLSERVER-POS-INTEGRATION.md).
+
 # BẢNG ÁNH XẠ 11 YÊU CẦU MÔN HỌC (REQUIREMENTS MAPPING)
 ## DỰ ÁN WEBSITE BÁN HÀNG & QUẢN TRỊ NHÀ THUỐC PHARMACY
 

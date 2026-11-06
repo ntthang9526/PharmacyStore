@@ -19,10 +19,11 @@
         <div class="col-md-6">
             <input type="text" name="keyword" class="form-control form-control-sm rounded-pill" placeholder="Tìm tên khách hàng, số điện thoại, email..." value="@keyword" />
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 d-flex gap-2">
             <button type="submit" class="btn btn-primary rounded-pill btn-sm w-100" style="background-color: var(--color-primary); border-color: var(--color-primary);">
                 <i class="bi bi-search me-1"></i> Tìm
             </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm">Xóa</a>
         </div>
     </form>
 </div>
@@ -42,6 +43,15 @@
                 </tr>
             </thead>
             <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-people fs-3 d-block mb-1"></i>
+                            Không có hồ sơ khách hàng nào phù hợp.
+                        </td>
+                    </tr>
+                }
                 @foreach (var c in Model)
                 {
                     <tr>
@@ -85,3 +95,18 @@
         </table>
     </div>
 </div>
+
+@{
+    var qParams = new Dictionary<string, string>();
+    if (!string.IsNullOrEmpty(keyword)) qParams["keyword"] = keyword;
+
+    var pager = new PharmacyWeb.Models.ViewModels.PaginationViewModel
+    {
+        CurrentPage = currentPage,
+        PageSize = 10,
+        TotalItems = totalItems,
+        RouteUrl = Url.Action("Index", "Customers", new { area = "Admin" }) ?? "/Admin/Customers",
+        QueryParams = qParams
+    };
+}
+<partial name="_Pagination" model="pager" />

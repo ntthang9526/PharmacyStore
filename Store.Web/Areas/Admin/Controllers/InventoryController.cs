@@ -22,9 +22,10 @@ public class InventoryController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string? filterType, int? medicineId, int page = 1)
     {
+        page = Math.Max(1, page);
         var batches = await _inventoryService.GetBatchesAsync(filterType, medicineId, page, 15);
         ViewBag.FilterType = filterType;
-        ViewBag.Medicines = await _productService.GetCatalogAsync(new ProductFilterViewModel { Page = 1, PageSize = 100 });
+        ViewBag.Medicines = await _productService.GetCatalogAsync(new ProductFilterViewModel { Page = 1, PageSize = 1000 });
         return View(batches);
     }
 
@@ -47,9 +48,7 @@ public class InventoryController : Controller
     [HttpGet]
     public async Task<IActionResult> StockIn()
     {
-        var suppliers = await _productService.GetAllSuppliersAsync();
-        ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
-        ViewBag.Medicines = await _productService.GetCatalogAsync(new ProductFilterViewModel { Page = 1, PageSize = 100 });
+        await PopulateStockInLookupsAsync();
         return View(new StockInFormViewModel());
     }
 
@@ -57,12 +56,10 @@ public class InventoryController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> StockIn(StockInFormViewModel model)
     {
-        if (!ModelState.IsValid || !model.Lines.Any())
+        if (!ModelState.IsValid || model.Lines == null || !model.Lines.Any())
         {
             TempData["ErrorMessage"] = "Vui lòng nhập đầy đủ nhà cung cấp và các dòng thuốc nhập kho.";
-            var suppliers = await _productService.GetAllSuppliersAsync();
-            ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
-            ViewBag.Medicines = await _productService.GetCatalogAsync(new ProductFilterViewModel { Page = 1, PageSize = 100 });
+            await PopulateStockInLookupsAsync(model.SupplierId);
             return View(model);
         }
 
@@ -74,12 +71,14 @@ public class InventoryController : Controller
         }
 
         TempData["ErrorMessage"] = res.Message;
+        await PopulateStockInLookupsAsync(model.SupplierId);
         return View(model);
     }
 
     [HttpGet]
     public async Task<IActionResult> StockInHistory(int page = 1)
     {
+        page = Math.Max(1, page);
         var result = await _inventoryService.GetStockInsAsync(page, 10);
         return View(result);
     }
@@ -90,5 +89,12 @@ public class InventoryController : Controller
         var stockIn = await _inventoryService.GetStockInDetailsAsync(id);
         if (stockIn == null) return NotFound();
         return View(stockIn);
+    }
+
+    private async Task PopulateStockInLookupsAsync(int? selectedSupplierId = null)
+    {
+        var suppliers = await _productService.GetAllSuppliersAsync();
+        ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name", selectedSupplierId);
+        ViewBag.Medicines = await _productService.GetCatalogAsync(new ProductFilterViewModel { Page = 1, PageSize = 1000 });
     }
 }

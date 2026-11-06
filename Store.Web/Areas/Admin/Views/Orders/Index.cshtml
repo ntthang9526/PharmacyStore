@@ -62,6 +62,15 @@
                 </tr>
             </thead>
             <tbody>
+                @if (!Model.Items.Any())
+                {
+                    <tr>
+                        <td colspan="8" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-1"></i>
+                            Không có đơn hàng nào phù hợp với điều kiện tìm kiếm.
+                        </td>
+                    </tr>
+                }
                 @foreach (var o in Model.Items)
                 {
                     <tr>
@@ -116,3 +125,20 @@
         </table>
     </div>
 </div>
+
+@{
+    var qParams = new Dictionary<string, string>();
+    if (!string.IsNullOrEmpty(status)) qParams["status"] = status;
+    if (!string.IsNullOrEmpty(paymentStatus)) qParams["paymentStatus"] = paymentStatus;
+    if (!string.IsNullOrEmpty(keyword)) qParams["keyword"] = keyword;
+
+    var pager = new PharmacyWeb.Models.ViewModels.PaginationViewModel
+    {
+        CurrentPage = Model.Page,
+        PageSize = Model.PageSize,
+        TotalItems = Model.TotalItems,
+        RouteUrl = Url.Action("Index", "Orders", new { area = "Admin" }) ?? "/Admin/Orders",
+        QueryParams = qParams
+    };
+}
+<partial name="_Pagination" model="pager" />

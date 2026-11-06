@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PharmacyWeb.Data;
 using PharmacyWeb.Data.Entities;
+using PharmacyWeb.Models;
 using PharmacyWeb.Models.ViewModels;
 
 namespace PharmacyWeb.Services;
@@ -15,17 +17,23 @@ public interface IOrderService
     Task<Order?> GetOrderDetailsForAdminAsync(int orderId);
     Task<(bool Success, string Message)> UpdateOrderStatusByAdminAsync(int orderId, string newStatus, string? cancelReason, string employeeName);
     Task<(bool Success, string Message)> ConfirmCodPaymentAsync(int orderId, string employeeName);
+    Task<(bool Success, string Message)> RefundOrderAsync(int orderId, string refundReason, string employeeName);
 }
 
 public class OrderService : IOrderService
 {
     private readonly PharmacyWebDbContext _db;
     private readonly ICartService _cartService;
+    private readonly BankTransferOptions _bankOptions;
 
-    public OrderService(PharmacyWebDbContext db, ICartService cartService)
+    public OrderService(
+        PharmacyWebDbContext db,
+        ICartService cartService,
+        IOptions<BankTransferOptions>? bankOptions = null)
     {
         _db = db;
         _cartService = cartService;
+        _bankOptions = bankOptions?.Value ?? new BankTransferOptions();
     }
 
     public async Task<(bool Success, string Message, int? OrderId, string? OrderCode)> CheckoutAsync(int customerId, CheckoutFormViewModel model)
@@ -60,11 +68,16 @@ public class OrderService : IOrderService
             return (false, "Tài khoản khách hàng không hợp lệ hoặc đã bị tạm khóa.", null, null);
         }
 
+        if (model.PaymentMethod == "BANK_TRANSFER" && (!_bankOptions.IsEnabled || string.IsNullOrWhiteSpace(_bankOptions.BankName) || string.IsNullOrWhiteSpace(_bankOptions.AccountNumber)))
+        {
+            return (false, "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).", null, null);
+        }
+
         // Open Database Transaction for atomic FEFO allocation, voucher deduction & order creation
-        using var transaction = await _db.Database.BeginTransactionAsync();
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
-            var today = DateTime.UtcNow.Date;
+            var today = PharmacyWeb.Services.PharmacyClock.Today;
             var medicineIds = cart.Items.Select(i => i.MedicineId).Distinct().ToList();
 
             // Load fresh medicines with batches for locking
@@ -88,7 +101,7 @@ public class OrderService : IOrderService
 
                 // FEFO Allocation: batches ordered by ExpiryDate ASC, then Id ASC
                 var candidateBatches = med.Batches
-                    .Where(b => !b.IsBlocked && b.ExpiryDate > today)
+                    .Where(b => !b.IsBlocked && b.ExpiryDate >= today)
                     .OrderBy(b => b.ExpiryDate)
                     .ThenBy(b => b.Id)
                     .ToList();
@@ -261,6 +274,16 @@ public class OrderService : IOrderService
             OrderStatus = order.OrderStatus,
             PaymentStatus = order.PaymentStatus,
             OrderDate = order.OrderDate,
+            BankTransferInfo = new BankTransferInfoViewModel
+            {
+                IsEnabled = _bankOptions.IsEnabled,
+                IsDemoAccount = _bankOptions.IsDemoAccount,
+                BankName = _bankOptions.BankName,
+                AccountNumber = _bankOptions.AccountNumber,
+                AccountHolder = _bankOptions.AccountHolder,
+                TransferInstruction = _bankOptions.TransferInstruction,
+                DemoNotice = _bankOptions.DemoNotice
+            },
             Items = order.Items.Select(i => new OrderItemViewModel
             {
                 MedicineName = i.MedicineName,
@@ -331,7 +354,7 @@ public class OrderService : IOrderService
             return (false, "Chỉ có thể hủy đơn hàng khi đơn đang ở trạng thái 'Chờ xác nhận' (NEW).");
         }
 
-        using var transaction = await _db.Database.BeginTransactionAsync();
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
             // Release reserved quantities on batches
@@ -431,10 +454,21 @@ public class OrderService : IOrderService
 
         if (order == null) return (false, "Không tìm thấy đơn hàng.");
 
+        var allowed = order.OrderStatus switch
+        {
+            "NEW" => new[] { "CONFIRMED", "CANCELLED" },
+            "CONFIRMED" => new[] { "SHIPPING", "CANCELLED" },
+            "SHIPPING" => new[] { "COMPLETED" },
+            _ => Array.Empty<string>()
+        };
+        if (!allowed.Contains(newStatus)) return (false, "Không thể chuyển đơn sang trạng thái này.");
+        if (newStatus == "COMPLETED" && order.PaymentStatus != "PAID")
+            return (false, "Vui lòng dùng thao tác xác nhận thu tiền để hoàn tất đơn.");
+
         // Valid transitions:
         // NEW -> CONFIRMED, CANCELLED
         // CONFIRMED -> SHIPPING, CANCELLED
-        // SHIPPING -> COMPLETED, CANCELLED
+        // SHIPPING -> COMPLETED
         // COMPLETED -> (cannot change)
         // CANCELLED -> (cannot change)
 
@@ -443,11 +477,16 @@ public class OrderService : IOrderService
             return (false, $"Đơn hàng đã ở trạng thái {order.OrderStatus}, không thể chuyển tiếp.");
         }
 
-        using var transaction = await _db.Database.BeginTransactionAsync();
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
             if (newStatus == "CANCELLED")
             {
+                if (order.PaymentStatus == "PAID")
+                {
+                    return (false, "Đơn hàng đã thanh toán không thể hủy trực tiếp mà không xử lý hoàn tiền. Vui lòng sử dụng chức năng hoàn tiền.");
+                }
+
                 foreach (var alloc in order.Allocations)
                 {
                     if (alloc.Batch != null && !alloc.IsDeducted)
@@ -493,6 +532,8 @@ public class OrderService : IOrderService
             }
             else if (newStatus == "SHIPPING")
             {
+                if (order.Allocations.Any(a => a.Batch == null || a.Batch.IsBlocked || a.Batch.ExpiryDate < PharmacyWeb.Services.PharmacyClock.Today))
+                    return (false, "Lô hàng đã khóa hoặc hết hạn. Chưa thể giao đơn.");
                 order.OrderStatus = "SHIPPING";
                 order.ShippingStatus = "SHIPPING";
                 order.ShippedAt = DateTime.UtcNow;
@@ -507,6 +548,18 @@ public class OrderService : IOrderService
             }
             else if (newStatus == "COMPLETED")
             {
+                var today = PharmacyWeb.Services.PharmacyClock.Today;
+                var invalidAlloc = order.Allocations.FirstOrDefault(a =>
+                    !a.IsDeducted && (a.Batch == null || a.Batch.IsBlocked || a.Batch.ExpiryDate < today));
+                if (invalidAlloc != null)
+                {
+                    var batchInfo = invalidAlloc.Batch != null ? $"Lô '{invalidAlloc.Batch.BatchNumber}'" : "Một lô hàng trong đơn";
+                    var reason = invalidAlloc.Batch == null
+                        ? "không tồn tại"
+                        : (invalidAlloc.Batch.IsBlocked ? "đang bị khóa" : $"đã hết hạn (HSD: {invalidAlloc.Batch.ExpiryDate:dd/MM/yyyy})");
+                    return (false, $"{batchInfo} {reason}. Không thể hoàn tất đơn hàng. Vui lòng kiểm tra và xử lý lô hàng trong kho trước.");
+                }
+
                 // Completing order permanently deducts batch stock!
                 foreach (var alloc in order.Allocations)
                 {
@@ -551,48 +604,171 @@ public class OrderService : IOrderService
 
         if (order == null) return (false, "Không tìm thấy đơn hàng.");
         if (order.PaymentStatus == "PAID") return (false, "Đơn hàng này đã được xác nhận thanh toán trước đó.");
+        if (order.OrderStatus == "CANCELLED") return (false, "Không thể xác nhận thanh toán cho đơn hàng đã hủy.");
 
-        using var transaction = await _db.Database.BeginTransactionAsync();
+        var isBankTransfer = order.PaymentMethod == "BANK_TRANSFER";
+
+        if (!isBankTransfer && order.OrderStatus is not ("CONFIRMED" or "SHIPPING"))
+            return (false, "Chỉ xác nhận thu tiền COD cho đơn đã xác nhận hoặc đang giao.");
+
+        var today = PharmacyWeb.Services.PharmacyClock.Today;
+        var invalidAlloc = order.Allocations.FirstOrDefault(a =>
+            !a.IsDeducted && (a.Batch == null || a.Batch.IsBlocked || a.Batch.ExpiryDate < today));
+        if (invalidAlloc != null)
+        {
+            var batchInfo = invalidAlloc.Batch != null ? $"Lô '{invalidAlloc.Batch.BatchNumber}'" : "Một lô hàng trong đơn";
+            var reason = invalidAlloc.Batch == null
+                ? "không tồn tại"
+                : (invalidAlloc.Batch.IsBlocked ? "đang bị khóa" : $"đã hết hạn (HSD: {invalidAlloc.Batch.ExpiryDate:dd/MM/yyyy})");
+            return (false, $"{batchInfo} {reason}. Không thể xác nhận thanh toán/hoàn tất đơn. Vui lòng kiểm tra lô hàng trong kho trước.");
+        }
+
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
             order.PaymentStatus = "PAID";
             order.PaidAt = DateTime.UtcNow;
             order.PaidByEmployee = employeeName;
 
-            // If not completed yet, complete it now
-            if (order.OrderStatus != "COMPLETED")
+            if (isBankTransfer)
             {
-                foreach (var alloc in order.Allocations)
+                // For Bank Transfer: only confirm payment, do not force delivery completion before goods are shipped!
+                order.OrderVersion += 1;
+                order.History.Add(new OrderStatusHistory
                 {
-                    if (alloc.Batch != null && !alloc.IsDeducted)
-                    {
-                        alloc.Batch.Stock = Math.Max(0, alloc.Batch.Stock - alloc.Quantity);
-                        alloc.Batch.ReservedQuantity = Math.Max(0, alloc.Batch.ReservedQuantity - alloc.Quantity);
-                        alloc.IsDeducted = true;
-                    }
-                }
-                order.OrderStatus = "COMPLETED";
-                order.ShippingStatus = "DELIVERED";
-                order.CompletedAt = DateTime.UtcNow;
+                    OrderId = order.Id,
+                    Time = DateTime.UtcNow,
+                    Actor = employeeName,
+                    Text = $"Xác nhận đã nhận chuyển khoản ngân hàng: {order.TotalAmount:N0} ₫."
+                });
+
+                await _db.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return (true, $"Đã xác nhận nhận chuyển khoản {order.TotalAmount:N0} ₫ cho đơn {order.Code}. Đơn hàng sẵn sàng để xuất kho giao hàng.");
             }
-
-            order.OrderVersion += 1;
-            order.History.Add(new OrderStatusHistory
+            else
             {
-                OrderId = order.Id,
-                Time = DateTime.UtcNow,
-                Actor = employeeName,
-                Text = $"Xác nhận đã thu tiền COD: {order.TotalAmount:N0} ₫."
-            });
+                // For COD: Delivery completion and stock deduction
+                if (order.OrderStatus != "COMPLETED")
+                {
+                    foreach (var alloc in order.Allocations)
+                    {
+                        if (alloc.Batch != null && !alloc.IsDeducted)
+                        {
+                            alloc.Batch.Stock = Math.Max(0, alloc.Batch.Stock - alloc.Quantity);
+                            alloc.Batch.ReservedQuantity = Math.Max(0, alloc.Batch.ReservedQuantity - alloc.Quantity);
+                            alloc.IsDeducted = true;
+                        }
+                    }
+                    order.OrderStatus = "COMPLETED";
+                    order.ShippingStatus = "DELIVERED";
+                    order.CompletedAt = DateTime.UtcNow;
+                }
 
-            await _db.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return (true, $"Đã xác nhận thu tiền {order.TotalAmount:N0} ₫ cho đơn {order.Code}.");
+                order.OrderVersion += 1;
+                order.History.Add(new OrderStatusHistory
+                {
+                    OrderId = order.Id,
+                    Time = DateTime.UtcNow,
+                    Actor = employeeName,
+                    Text = $"Xác nhận đã thu tiền COD: {order.TotalAmount:N0} ₫ và hoàn tất đơn hàng."
+                });
+
+                await _db.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return (true, $"Đã xác nhận thu tiền COD {order.TotalAmount:N0} ₫ và hoàn tất đơn {order.Code}.");
+            }
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync();
             return (false, $"Lỗi xác nhận thanh toán: {ex.Message}");
+        }
+    }
+
+    public async Task<(bool Success, string Message)> RefundOrderAsync(int orderId, string refundReason, string employeeName)
+    {
+        if (string.IsNullOrWhiteSpace(refundReason))
+        {
+            return (false, "Vui lòng nhập lý do hoàn tiền.");
+        }
+
+        var order = await _db.Orders
+            .Include(o => o.Allocations).ThenInclude(a => a.Batch)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
+        if (order == null) return (false, "Không tìm thấy đơn hàng.");
+
+        // Idempotency / Double refund guard (Criterion 3: thao tác lặp không hoàn hai lần)
+        if (order.IsRefunded || order.PaymentStatus == "REFUNDED")
+        {
+            return (false, "Đơn hàng này đã được xử lý hoàn tiền trước đó, không thể hoàn tiền hai lần.");
+        }
+
+        // Only orders that are PAID can be refunded
+        if (order.PaymentStatus != "PAID")
+        {
+            return (false, "Chỉ có thể hoàn tiền cho đơn hàng đã ghi nhận thanh toán (PAID).");
+        }
+
+        // Completed orders cannot be refunded via simple cancel-refund
+        if (order.OrderStatus == "COMPLETED")
+        {
+            return (false, "Đơn hàng đã hoàn tất giao hàng thành công, không thể hủy hoàn tiền theo luồng này.");
+        }
+
+        using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
+        try
+        {
+            // 1. Release reserved quantities if allocations haven't been deducted
+            foreach (var alloc in order.Allocations)
+            {
+                if (alloc.Batch != null && !alloc.IsDeducted)
+                {
+                    alloc.Batch.ReservedQuantity = Math.Max(0, alloc.Batch.ReservedQuantity - alloc.Quantity);
+                }
+            }
+
+            // 2. Restore voucher if used
+            if (!string.IsNullOrWhiteSpace(order.VoucherCode))
+            {
+                var voucher = await _db.Vouchers.FirstOrDefaultAsync(v => v.Code == order.VoucherCode);
+                if (voucher != null)
+                {
+                    voucher.Quantity += 1;
+                }
+            }
+
+            // 3. Mark order as cancelled and refunded, preserving original PaidAt and PaidByEmployee
+            order.OrderStatus = "CANCELLED";
+            order.ShippingStatus = "CANCELLED";
+            order.PaymentStatus = "REFUNDED";
+            order.IsRefunded = true;
+            order.RefundAmount = order.TotalAmount;
+            order.RefundedAt = DateTime.UtcNow;
+            order.RefundedByEmployee = employeeName;
+            order.RefundReason = refundReason.Trim();
+            order.CancelReason = $"Đã hoàn tiền & Hủy đơn. Lý do: {refundReason.Trim()}";
+            order.OrderVersion += 1;
+
+            // 4. Record history
+            order.History.Add(new OrderStatusHistory
+            {
+                OrderId = order.Id,
+                Time = DateTime.UtcNow,
+                Actor = employeeName,
+                Text = $"Đã hoàn trả {order.RefundAmount:N0} ₫ cho khách hàng và hủy đơn. Lý do: {order.RefundReason}"
+            });
+
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return (true, $"Đã xử lý hoàn tiền {order.RefundAmount:N0} ₫ và hủy đơn hàng {order.Code} thành công.");
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            return (false, $"Lỗi khi xử lý hoàn tiền đơn hàng: {ex.Message}");
         }
     }
 }

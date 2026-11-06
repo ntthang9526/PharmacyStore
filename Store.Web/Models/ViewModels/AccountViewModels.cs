@@ -72,6 +72,20 @@ public class ChangePasswordViewModel
     public string ConfirmPassword { get; set; } = string.Empty;
 }
 
+public class UpdateProfileViewModel
+{
+    [Required(ErrorMessage = "Họ và tên không được để trống")]
+    [MaxLength(100, ErrorMessage = "Họ và tên không quá 100 ký tự")]
+    [Display(Name = "Họ và tên")]
+    public string FullName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Email không được để trống")]
+    [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
+    [MaxLength(150, ErrorMessage = "Email không quá 150 ký tự")]
+    [Display(Name = "Email")]
+    public string Email { get; set; } = string.Empty;
+}
+
 public class CustomerProfileViewModel
 {
     public int Id { get; set; }
@@ -87,10 +101,26 @@ public class CustomerProfileViewModel
 public class AddressItemViewModel
 {
     public int Id { get; set; }
+
+    [MaxLength(50, ErrorMessage = "Nhãn địa chỉ không quá 50 ký tự")]
+    [Display(Name = "Tên địa chỉ")]
     public string Label { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Vui lòng nhập họ và tên người nhận")]
+    [MaxLength(100, ErrorMessage = "Tên người nhận không quá 100 ký tự")]
+    [Display(Name = "Tên người nhận")]
     public string RecipientName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Vui lòng nhập số điện thoại người nhận")]
+    [RegularExpression(@"^0[35789]\d{8}$", ErrorMessage = "Số điện thoại không đúng định dạng (10 chữ số)")]
+    [Display(Name = "Số điện thoại")]
     public string Phone { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Vui lòng nhập địa chỉ chi tiết")]
+    [MaxLength(255, ErrorMessage = "Địa chỉ không quá 255 ký tự")]
+    [Display(Name = "Địa chỉ nhận hàng")]
     public string Address { get; set; } = string.Empty;
+
     public bool IsDefault { get; set; }
 }
 
