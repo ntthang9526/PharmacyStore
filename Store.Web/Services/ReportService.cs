@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PharmacyWeb.Data;
 using PharmacyWeb.Models.ViewModels;
@@ -13,105 +14,125 @@ public interface IReportService
 
 public class ReportService : IReportService
 {
-    private readonly PharmacyWebDbContext _db;
+    private readonly PharmacyWebDbContext _databaseContext;
 
-    public ReportService(PharmacyWebDbContext db)
+    public ReportService(PharmacyWebDbContext databaseContext)
     {
-        _db = db;
+        _databaseContext = databaseContext;
     }
 
+    /// <summary>
+    /// Thu thập các chỉ số KPI tổng quan cho Dashboard Quản trị:
+    /// - Đơn hàng mới cần duyệt.
+    /// - Thực thu hôm nay & tháng này (Doanh thu đã trừ các khoản hoàn tiền nếu có).
+    /// - Số sản phẩm có thể bán, cảnh báo hết hạn và cảnh báo tồn kho thấp.
+    /// </summary>
     public async Task<AdminDashboardViewModel> GetDashboardMetricsAsync()
     {
-        var nowUtc = DateTime.UtcNow;
-        var todayVn = nowUtc.AddHours(7).Date;
-        var startOfMonthVn = new DateTime(todayVn.Year, todayVn.Month, 1);
+        var currentUtcTime = DateTime.UtcNow;
+        var todayVietnamTime = currentUtcTime.AddHours(7).Date;
+        var startOfMonthVietnamTime = new DateTime(todayVietnamTime.Year, todayVietnamTime.Month, 1);
 
-        var startOfDayUtc = todayVn.AddHours(-7);
-        var startOfMonthUtc = startOfMonthVn.AddHours(-7);
+        // Chuyển mốc thời gian Việt Nam (UTC+7) về chuẩn UTC để truy vấn cơ sở dữ liệu
+        var startOfDayUtc = todayVietnamTime.AddHours(-7);
+        var startOfMonthUtc = startOfMonthVietnamTime.AddHours(-7);
 
-        var newOrdersCount = await _db.Orders.CountAsync(o => o.OrderStatus == "NEW");
+        int newOrdersCount = await _databaseContext.Orders
+            .CountAsync(order => order.OrderStatus == "NEW");
 
-        var paidTodayList = await _db.Orders
-            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded) && o.PaidAt >= startOfDayUtc)
-            .Select(o => o.TotalAmount)
-            .ToListAsync();
-        var refundedTodayList = await _db.Orders
-            .Where(o => o.IsRefunded && o.RefundedAt >= startOfDayUtc)
-            .Select(o => o.RefundAmount)
-            .ToListAsync();
-        var paidToday = paidTodayList.Sum() - refundedTodayList.Sum();
-
-        var paidMonthList = await _db.Orders
-            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded) && o.PaidAt >= startOfMonthUtc)
-            .Select(o => o.TotalAmount)
-            .ToListAsync();
-        var refundedMonthList = await _db.Orders
-            .Where(o => o.IsRefunded && o.RefundedAt >= startOfMonthUtc)
-            .Select(o => o.RefundAmount)
-            .ToListAsync();
-        var paidMonth = paidMonthList.Sum() - refundedMonthList.Sum();
-
-        var totalAvailable = await _db.Medicines
-            .Include(m => m.Batches)
-            .Where(m => m.IsActive && m.IsSelling)
-            .CountAsync(m => m.Batches.Any(b => !b.IsBlocked && b.ExpiryDate >= todayVn && (b.Stock - b.ReservedQuantity) > 0));
-
-        var lowStockBatches = await _db.Batches
-            .Include(b => b.Medicine)
-            .Where(b => b.Stock <= 5)
+        // Tính doanh thu thực hôm nay: Tổng tiền đã thu trừ đi tổng tiền đã hoàn lại trong ngày
+        var paidTodayList = await _databaseContext.Orders
+            .Where(order => (order.PaymentStatus == "PAID" || order.PaymentStatus == "REFUNDED" || order.IsRefunded) &&
+                            order.PaidAt >= startOfDayUtc)
+            .Select(order => order.TotalAmount)
             .ToListAsync();
 
-        var expiringLimit = todayVn.AddDays(90);
-        var expiringSoonBatches = await _db.Batches
-            .Include(b => b.Medicine)
-            .Where(b => b.ExpiryDate >= todayVn && b.ExpiryDate <= expiringLimit)
+        var refundedTodayList = await _databaseContext.Orders
+            .Where(order => order.IsRefunded && order.RefundedAt >= startOfDayUtc)
+            .Select(order => order.RefundAmount)
             .ToListAsync();
 
-        var pendingPrescriptions = await _db.PrescriptionRequests
-            .CountAsync(p => p.Status == "PENDING_REVIEW");
+        decimal paidToday = paidTodayList.Sum() - refundedTodayList.Sum();
 
-        var recentOrders = await _db.Orders
+        // Tính doanh thu thực tháng này: Tổng tiền đã thu trừ đi tổng tiền đã hoàn lại trong tháng
+        var paidMonthList = await _databaseContext.Orders
+            .Where(order => (order.PaymentStatus == "PAID" || order.PaymentStatus == "REFUNDED" || order.IsRefunded) &&
+                            order.PaidAt >= startOfMonthUtc)
+            .Select(order => order.TotalAmount)
+            .ToListAsync();
+
+        var refundedMonthList = await _databaseContext.Orders
+            .Where(order => order.IsRefunded && order.RefundedAt >= startOfMonthUtc)
+            .Select(order => order.RefundAmount)
+            .ToListAsync();
+
+        decimal paidMonth = paidMonthList.Sum() - refundedMonthList.Sum();
+
+        int totalAvailableProducts = await _databaseContext.Medicines
+            .Include(medicine => medicine.Batches)
+            .Where(medicine => medicine.IsActive && medicine.IsSelling)
+            .CountAsync(medicine => medicine.Batches.Any(batch =>
+                !batch.IsBlocked &&
+                batch.ExpiryDate >= todayVietnamTime &&
+                (batch.Stock - batch.ReservedQuantity) > 0));
+
+        var lowStockBatches = await _databaseContext.Batches
+            .Include(batch => batch.Medicine)
+            .Where(batch => batch.Stock <= 5)
+            .ToListAsync();
+
+        var expiringLimitDate = todayVietnamTime.AddDays(90);
+        var expiringSoonBatches = await _databaseContext.Batches
+            .Include(batch => batch.Medicine)
+            .Where(batch => batch.ExpiryDate >= todayVietnamTime && batch.ExpiryDate <= expiringLimitDate)
+            .ToListAsync();
+
+        int pendingPrescriptionsCount = await _databaseContext.PrescriptionRequests
+            .CountAsync(request => request.Status == "PENDING_REVIEW");
+
+        var recentOrders = await _databaseContext.Orders
             .AsNoTracking()
-            .OrderByDescending(o => o.OrderDate)
+            .OrderByDescending(order => order.OrderDate)
             .Take(5)
-            .Select(o => new OrderRecentItemViewModel
+            .Select(order => new OrderRecentItemViewModel
             {
-                Id = o.Id,
-                Code = o.Code,
-                CustomerName = o.CustomerName,
-                OrderDate = o.OrderDate,
-                TotalAmount = o.TotalAmount,
-                OrderStatus = o.OrderStatus,
-                PaymentStatus = o.PaymentStatus
+                Id = order.Id,
+                Code = order.Code,
+                CustomerName = order.CustomerName,
+                OrderDate = order.OrderDate,
+                TotalAmount = order.TotalAmount,
+                OrderStatus = order.OrderStatus,
+                PaymentStatus = order.PaymentStatus
             })
             .ToListAsync();
 
-        var alerts = new List<BatchAlertViewModel>();
+        var batchAlerts = new List<BatchAlertViewModel>();
 
-        foreach (var b in expiringSoonBatches.Take(4))
+        foreach (var batch in expiringSoonBatches.Take(4))
         {
-            alerts.Add(new BatchAlertViewModel
+            batchAlerts.Add(new BatchAlertViewModel
             {
-                BatchId = b.Id,
-                BatchNumber = b.BatchNumber,
-                MedicineName = b.Medicine?.Name ?? "Thuốc",
-                ExpiryDate = b.ExpiryDate,
-                Stock = b.Stock,
+                BatchId = batch.Id,
+                BatchNumber = batch.BatchNumber,
+                MedicineName = batch.Medicine?.Name ?? "Thuốc",
+                ExpiryDate = batch.ExpiryDate,
+                Stock = batch.Stock,
                 AlertType = "EXPIRING_SOON"
             });
         }
 
-        foreach (var b in lowStockBatches.Take(4))
+        foreach (var batch in lowStockBatches.Take(4))
         {
-            if (!alerts.Any(a => a.BatchId == b.Id))
+            bool isAlreadyInAlerts = batchAlerts.Any(alert => alert.BatchId == batch.Id);
+            if (!isAlreadyInAlerts)
             {
-                alerts.Add(new BatchAlertViewModel
+                batchAlerts.Add(new BatchAlertViewModel
                 {
-                    BatchId = b.Id,
-                    BatchNumber = b.BatchNumber,
-                    MedicineName = b.Medicine?.Name ?? "Thuốc",
-                    ExpiryDate = b.ExpiryDate,
-                    Stock = b.Stock,
+                    BatchId = batch.Id,
+                    BatchNumber = batch.BatchNumber,
+                    MedicineName = batch.Medicine?.Name ?? "Thuốc",
+                    ExpiryDate = batch.ExpiryDate,
+                    Stock = batch.Stock,
                     AlertType = "LOW_STOCK"
                 });
             }
@@ -122,103 +143,119 @@ public class ReportService : IReportService
             NewOrdersCount = newOrdersCount,
             PaidRevenueToday = paidToday,
             PaidRevenueMonth = paidMonth,
-            TotalAvailableProducts = totalAvailable,
+            TotalAvailableProducts = totalAvailableProducts,
             LowStockCount = lowStockBatches.Count,
             ExpiringSoonCount = expiringSoonBatches.Count,
-            PendingPrescriptionsCount = pendingPrescriptions,
+            PendingPrescriptionsCount = pendingPrescriptionsCount,
             RecentOrders = recentOrders,
-            BatchAlerts = alerts
+            BatchAlerts = batchAlerts
         };
     }
 
+    /// <summary>
+    /// Xuất báo cáo doanh thu tài chính theo khoảng thời gian tùy chọn.
+    /// Đối chiếu 3 đại lượng: Tiền thu, Tiền hoàn và Doanh thu thực nhận (BS-01).
+    /// </summary>
     public async Task<RevenueReportViewModel> GetRevenueReportAsync(DateTime? fromDate, DateTime? toDate)
     {
-        var todayVn = PharmacyClock.Today;
-        var start = fromDate?.Date ?? new DateTime(todayVn.Year, todayVn.Month, 1);
-        var end = toDate?.Date ?? todayVn;
+        var todayVietnamTime = PharmacyClock.Today;
+        var startDate = fromDate?.Date ?? new DateTime(todayVietnamTime.Year, todayVietnamTime.Month, 1);
+        var endDate = toDate?.Date ?? todayVietnamTime;
 
-        if (start > end)
+        if (startDate > endDate)
         {
-            (start, end) = (end, start);
+            (startDate, endDate) = (endDate, startDate);
         }
 
-        var startUtc = start.AddHours(-7);
-        var nextDayUtc = end.AddDays(1).AddHours(-7);
+        var startUtcTime = startDate.AddHours(-7);
+        var endUtcTime = endDate.AddDays(1).AddHours(-7); // Hết ngày cuối cùng (23:59:59)
 
-        // Fetch orders that were either paid in this period OR refunded in this period
-        var relevantOrders = await _db.Orders
+        // Lấy tất cả đơn có phát sinh giao dịch thu tiền HOẶC hoàn tiền trong kỳ báo cáo
+        var relevantOrders = await _databaseContext.Orders
             .AsNoTracking()
-            .Where(o => (o.PaymentStatus == "PAID" || o.PaymentStatus == "REFUNDED" || o.IsRefunded)
-                     && ((o.PaidAt >= startUtc && o.PaidAt < nextDayUtc) ||
-                         (o.RefundedAt >= startUtc && o.RefundedAt < nextDayUtc)))
-            .OrderByDescending(o => o.PaidAt ?? o.RefundedAt ?? o.OrderDate)
+            .Where(order => (order.PaymentStatus == "PAID" || order.PaymentStatus == "REFUNDED" || order.IsRefunded) &&
+                            ((order.PaidAt >= startUtcTime && order.PaidAt < endUtcTime) ||
+                             (order.RefundedAt >= startUtcTime && order.RefundedAt < endUtcTime)))
+            .OrderByDescending(order => order.PaidAt ?? order.RefundedAt ?? order.OrderDate)
             .ToListAsync();
 
-        var orderItems = relevantOrders.Select(o =>
+        var reportOrderItems = relevantOrders.Select(order =>
         {
-            bool collectedInPeriod = o.PaidAt.HasValue && o.PaidAt.Value >= startUtc && o.PaidAt.Value < nextDayUtc;
-            bool refundedInPeriod = o.IsRefunded && o.RefundedAt.HasValue && o.RefundedAt.Value >= startUtc && o.RefundedAt.Value < nextDayUtc;
+            bool isCollectedInThisPeriod = order.PaidAt.HasValue &&
+                                          order.PaidAt.Value >= startUtcTime &&
+                                          order.PaidAt.Value < endUtcTime;
 
-            decimal collectedAmount = collectedInPeriod ? o.TotalAmount : 0m;
-            decimal refundAmount = refundedInPeriod ? o.RefundAmount : 0m;
+            bool isRefundedInThisPeriod = order.IsRefunded &&
+                                         order.RefundedAt.HasValue &&
+                                         order.RefundedAt.Value >= startUtcTime &&
+                                         order.RefundedAt.Value < endUtcTime;
+
+            decimal collectedAmount = isCollectedInThisPeriod ? order.TotalAmount : 0m;
+            decimal refundAmount = isRefundedInThisPeriod ? order.RefundAmount : 0m;
 
             return new RevenueOrderItemViewModel
             {
-                OrderId = o.Id,
-                OrderCode = o.Code,
-                OrderDate = o.OrderDate,
-                PaidAt = o.PaidAt,
-                CustomerName = o.CustomerName,
-                PaymentMethod = o.PaymentMethod,
-                TotalAmount = o.TotalAmount,
-                PaidBy = o.PaidByEmployee ?? "Hệ thống",
-                OrderStatus = o.OrderStatus,
-                PaymentStatus = o.PaymentStatus,
-                IsRefunded = o.IsRefunded,
-                RefundAmount = o.RefundAmount,
-                RefundedAt = o.RefundedAt,
-                RefundedBy = o.RefundedByEmployee,
-                RefundReason = o.RefundReason,
+                OrderId = order.Id,
+                OrderCode = order.Code,
+                OrderDate = order.OrderDate,
+                PaidAt = order.PaidAt,
+                CustomerName = order.CustomerName,
+                PaymentMethod = order.PaymentMethod,
+                TotalAmount = order.TotalAmount,
+                PaidBy = order.PaidByEmployee ?? "Hệ thống",
+                OrderStatus = order.OrderStatus,
+                PaymentStatus = order.PaymentStatus,
+                IsRefunded = order.IsRefunded,
+                RefundAmount = order.RefundAmount,
+                RefundedAt = order.RefundedAt,
+                RefundedBy = order.RefundedByEmployee,
+                RefundReason = order.RefundReason,
                 CollectedInPeriod = collectedAmount,
                 RefundedInPeriod = refundAmount
             };
         }).ToList();
 
-        var totalCollected = orderItems.Sum(o => o.CollectedInPeriod);
-        var totalRefunded = orderItems.Sum(o => o.RefundedInPeriod);
-        var paidCount = orderItems.Count(o => o.CollectedInPeriod > 0);
-        var refundedCount = orderItems.Count(o => o.RefundedInPeriod > 0);
+        decimal totalCollected = reportOrderItems.Sum(item => item.CollectedInPeriod);
+        decimal totalRefunded = reportOrderItems.Sum(item => item.RefundedInPeriod);
+        int totalPaidOrdersCount = reportOrderItems.Count(item => item.CollectedInPeriod > 0);
+        int totalRefundedOrdersCount = reportOrderItems.Count(item => item.RefundedInPeriod > 0);
 
         return new RevenueReportViewModel
         {
-            FromDate = start,
-            ToDate = end,
-            TotalPaidOrders = paidCount,
-            TotalRefundedOrders = refundedCount,
+            FromDate = startDate,
+            ToDate = endDate,
+            TotalPaidOrders = totalPaidOrdersCount,
+            TotalRefundedOrders = totalRefundedOrdersCount,
             TotalCollectedRevenue = totalCollected,
             TotalRefundedAmount = totalRefunded,
-            Orders = orderItems
+            Orders = reportOrderItems
         };
     }
 
+    /// <summary>
+    /// Xuất báo cáo doanh thu ra định dạng tệp CSV để người vận hành mở trong Excel đối chiếu.
+    /// </summary>
     public async Task<string> GenerateRevenueCsvAsync(DateTime? fromDate, DateTime? toDate)
     {
-        var report = await GetRevenueReportAsync(fromDate, toDate);
-        var sb = new System.Text.StringBuilder();
+        var revenueReport = await GetRevenueReportAsync(fromDate, toDate);
+        var csvBuilder = new StringBuilder();
 
-        sb.AppendLine("Mã Đơn,Ngày Đặt,Ngày Thu Tiền,Trạng Thái TT,Khách Hàng,Phương Thức,Số Tiền Thu (VNĐ),Số Tiền Hoàn (VNĐ),Thực Nhận (VNĐ),Ngày Hoàn,Lý Do Hoàn,Người Thu,Người Hoàn");
-        foreach (var o in report.Orders)
+        // Tiêu đề các cột dữ liệu
+        csvBuilder.AppendLine("Mã Đơn,Ngày Đặt,Ngày Thu Tiền,Trạng Thái TT,Khách Hàng,Phương Thức,Số Tiền Thu (VNĐ),Số Tiền Hoàn (VNĐ),Thực Nhận (VNĐ),Ngày Hoàn,Lý Do Hoàn,Người Thu,Người Hoàn");
+
+        foreach (var order in revenueReport.Orders)
         {
-            var orderDateVn = o.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm");
-            var paidAtVn = o.PaidAt.HasValue ? o.PaidAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
-            var refundedAtVn = o.RefundedAt.HasValue ? o.RefundedAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
-            var net = o.CollectedInPeriod - o.RefundedInPeriod;
-            var paymentStatusText = o.IsRefunded ? "Đã hoàn tiền" : "Đã thanh toán";
-            var safeReason = (o.RefundReason ?? "-").Replace("\"", "\"\"");
+            string orderDateVietnamTime = order.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm");
+            string paidAtVietnamTime = order.PaidAt.HasValue ? order.PaidAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
+            string refundedAtVietnamTime = order.RefundedAt.HasValue ? order.RefundedAt.Value.AddHours(7).ToString("dd/MM/yyyy HH:mm") : "-";
+            
+            decimal netCollectedAmount = order.CollectedInPeriod - order.RefundedInPeriod;
+            string paymentStatusText = order.IsRefunded ? "Đã hoàn tiền" : "Đã thanh toán";
+            string escapedRefundReason = (order.RefundReason ?? "-").Replace("\"", "\"\"");
 
-            sb.AppendLine($"\"{o.OrderCode}\",\"{orderDateVn}\",\"{paidAtVn}\",\"{paymentStatusText}\",\"{o.CustomerName}\",\"{o.PaymentMethod}\",{o.CollectedInPeriod:0},{o.RefundedInPeriod:0},{net:0},\"{refundedAtVn}\",\"{safeReason}\",\"{o.PaidBy}\",\"{o.RefundedBy ?? "-"}\"");
+            csvBuilder.AppendLine($"\"{order.OrderCode}\",\"{orderDateVietnamTime}\",\"{paidAtVietnamTime}\",\"{paymentStatusText}\",\"{order.CustomerName}\",\"{order.PaymentMethod}\",{order.CollectedInPeriod:0},{order.RefundedInPeriod:0},{netCollectedAmount:0},\"{refundedAtVietnamTime}\",\"{escapedRefundReason}\",\"{order.PaidBy}\",\"{order.RefundedBy ?? "-"}\"");
         }
 
-        return sb.ToString();
+        return csvBuilder.ToString();
     }
 }

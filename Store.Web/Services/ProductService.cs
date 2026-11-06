@@ -29,22 +29,33 @@ public interface IProductService
 
 public class ProductService : IProductService
 {
-    private readonly PharmacyWebDbContext _db;
-    private readonly IHtmlSanitizerService _sanitizer;
-    private readonly IWebHostEnvironment _env;
+    private readonly PharmacyWebDbContext _databaseContext;
+    private readonly IHtmlSanitizerService _htmlSanitizer;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProductService(PharmacyWebDbContext db, IHtmlSanitizerService sanitizer, IWebHostEnvironment env)
+    public ProductService(
+        PharmacyWebDbContext databaseContext,
+        IHtmlSanitizerService htmlSanitizer,
+        IWebHostEnvironment webHostEnvironment)
     {
-        _db = db;
-        _sanitizer = sanitizer;
-        _env = env;
+        _databaseContext = databaseContext;
+        _htmlSanitizer = htmlSanitizer;
+        _webHostEnvironment = webHostEnvironment;
     }
 
+    /// <summary>
+    /// Lấy danh mục sản phẩm cho khách hàng xem trên storefront.
+    /// Chỉ hiển thị các sản phẩm đang được kích hoạt (IsActive = true).
+    /// </summary>
     public Task<PagedResult<ProductCardViewModel>> GetCatalogAsync(ProductFilterViewModel filter)
     {
         return BuildCatalogAsync(filter, isAdmin: false);
     }
 
+    /// <summary>
+    /// Lấy danh mục sản phẩm cho trang quản trị Admin.
+    /// Cho phép xem cả sản phẩm đang kích hoạt và đã tạm ngưng.
+    /// </summary>
     public Task<PagedResult<ProductCardViewModel>> GetAdminCatalogAsync(ProductFilterViewModel filter)
     {
         return BuildCatalogAsync(filter, isAdmin: true);
@@ -52,248 +63,254 @@ public class ProductService : IProductService
 
     private async Task<PagedResult<ProductCardViewModel>> BuildCatalogAsync(ProductFilterViewModel filter, bool isAdmin)
     {
-        var query = _db.Medicines
+        var query = _databaseContext.Medicines
             .AsNoTracking()
-            .Include(m => m.Category)
-            .Include(m => m.Batches)
+            .Include(medicine => medicine.Category)
+            .Include(medicine => medicine.Batches)
             .AsQueryable();
 
+        // 1. Phân quyền hiển thị: Storefront chỉ thấy thuốc active; Admin có thể lọc theo trạng thái
         if (!isAdmin)
         {
-            query = query.Where(m => m.IsActive); // Storefront only shows active medicines
+            query = query.Where(medicine => medicine.IsActive);
         }
         else if (filter.IsActive.HasValue)
         {
-            query = query.Where(m => m.IsActive == filter.IsActive.Value);
+            query = query.Where(medicine => medicine.IsActive == filter.IsActive.Value);
         }
 
+        // 2. Tìm kiếm theo từ khóa (tên thuốc hoặc hoạt chất)
         if (!string.IsNullOrWhiteSpace(filter.Keyword))
         {
-            var kw = filter.Keyword.Trim().ToLower();
-            query = query.Where(m => m.Name.ToLower().Contains(kw) || m.ActiveIngredient.ToLower().Contains(kw));
+            string keywordLower = filter.Keyword.Trim().ToLower();
+            query = query.Where(medicine => medicine.Name.ToLower().Contains(keywordLower) ||
+                                           medicine.ActiveIngredient.ToLower().Contains(keywordLower));
         }
 
+        // 3. Lọc theo danh mục nhóm thuốc
         if (filter.CategoryId.HasValue && filter.CategoryId.Value > 0)
         {
-            query = query.Where(m => m.CategoryId == filter.CategoryId.Value);
+            query = query.Where(medicine => medicine.CategoryId == filter.CategoryId.Value);
         }
 
+        // 4. Lọc theo khoảng giá niêm yết
         if (filter.MinPrice.HasValue)
         {
-            query = query.Where(m => m.Price >= filter.MinPrice.Value);
+            query = query.Where(medicine => medicine.Price >= filter.MinPrice.Value);
         }
 
         if (filter.MaxPrice.HasValue)
         {
-            query = query.Where(m => m.Price <= filter.MaxPrice.Value);
+            query = query.Where(medicine => medicine.Price <= filter.MaxPrice.Value);
         }
 
+        // 5. Lọc chỉ lấy thuốc mua trực tiếp (không kê đơn OTC)
         if (filter.DirectPurchaseOnly == true)
         {
-            query = query.Where(m => !m.IsPrescription);
+            query = query.Where(medicine => !medicine.IsPrescription);
         }
 
-        // Sorting
+        // 6. Sắp xếp kết quả
         query = filter.SortBy switch
         {
-            "price_asc" => query.OrderBy(m => m.Price),
-            "price_desc" => query.OrderByDescending(m => m.Price),
-            "name_asc" => query.OrderBy(m => m.Name),
-            _ => query.OrderByDescending(m => m.Featured).ThenBy(m => m.Id)
+            "price_asc" => query.OrderBy(medicine => medicine.Price),
+            "price_desc" => query.OrderByDescending(medicine => medicine.Price),
+            "name_asc" => query.OrderBy(medicine => medicine.Name),
+            _ => query.OrderByDescending(medicine => medicine.Featured).ThenBy(medicine => medicine.Id)
         };
 
-        var allItems = await query.ToListAsync();
+        var allMedicines = await query.ToListAsync();
+        var today = PharmacyClock.Today;
 
-        var today = PharmacyWeb.Services.PharmacyClock.Today;
-        var mapped = allItems.Select(m =>
+        var productCardList = new List<ProductCardViewModel>();
+        foreach (var medicine in allMedicines)
         {
-            var availStock = (!m.IsActive || !m.IsSelling) ? 0 :
-                m.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
-                         .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
-
-            return new ProductCardViewModel
-            {
-                Id = m.Id,
-                SupplierId = m.SupplierId,
-                Name = m.Name,
-                Slug = m.Slug,
-                CategoryName = m.Category?.Name ?? string.Empty,
-                ActiveIngredient = m.ActiveIngredient ?? string.Empty,
-                Unit = m.Unit,
-                Price = m.Price,
-                IsPrescription = m.IsPrescription,
-                IsSelling = m.IsSelling,
-                IsActive = m.IsActive,
-                AvailableStock = availStock,
-                ImageUrl = !string.IsNullOrEmpty(m.MainImageUrl) 
-                    ? m.MainImageUrl 
-                    : MedicineSvgHelper.GeneratePackagingSvg(m.Name, m.ActiveIngredient, m.PackagingSpec, m.Unit, m.IsPrescription)
-            };
-        });
-
-        if (filter.OnlyInStock == true)
-        {
-            mapped = mapped.Where(m => m.AvailableStock > 0);
+            int availableStock = CalculateAvailableStock(medicine, today);
+            var cardViewModel = MapToProductCardViewModel(medicine, availableStock);
+            productCardList.Add(cardViewModel);
         }
 
-        var list = mapped.ToList();
-        var total = list.Count;
-        var pageSize = filter.PageSize > 0 ? filter.PageSize : 12;
-        var page = Math.Max(1, filter.Page);
+        // 7. Lọc theo trạng thái còn hàng nếu người dùng tick chọn
+        if (filter.OnlyInStock == true)
+        {
+            productCardList = productCardList
+                .Where(card => card.AvailableStock > 0)
+                .ToList();
+        }
 
-        var pagedItems = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        int totalCount = productCardList.Count;
+        int pageSize = filter.PageSize > 0 ? filter.PageSize : 12;
+        int currentPage = Math.Max(1, filter.Page);
+
+        var pagedItems = productCardList
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
 
         return new PagedResult<ProductCardViewModel>
         {
             Items = pagedItems,
-            Page = page,
+            Page = currentPage,
             PageSize = pageSize,
-            TotalItems = total
+            TotalItems = totalCount
         };
     }
 
+    /// <summary>
+    /// Lấy chi tiết thông tin thuốc theo đường dẫn thân thiện (Slug) trên storefront.
+    /// </summary>
     public async Task<ProductDetailViewModel?> GetDetailBySlugAsync(string slug)
     {
-        var med = await _db.Medicines
+        var medicine = await _databaseContext.Medicines
             .AsNoTracking()
             .Include(m => m.Category)
             .Include(m => m.Supplier)
-            .Include(m => m.Images.OrderBy(i => i.DisplayOrder))
+            .Include(m => m.Images.OrderBy(img => img.DisplayOrder))
             .Include(m => m.Batches)
             .FirstOrDefaultAsync(m => m.Slug == slug && m.IsActive);
 
-        if (med == null) return null;
-        return MapToDetailViewModel(med);
+        if (medicine == null)
+        {
+            return null;
+        }
+
+        return MapToDetailViewModel(medicine);
     }
 
+    /// <summary>
+    /// Lấy chi tiết thông tin thuốc theo ID cho storefront.
+    /// </summary>
     public async Task<ProductDetailViewModel?> GetDetailByIdAsync(int id)
     {
-        var med = await _db.Medicines
+        var medicine = await _databaseContext.Medicines
             .AsNoTracking()
             .Include(m => m.Category)
             .Include(m => m.Supplier)
-            .Include(m => m.Images.OrderBy(i => i.DisplayOrder))
+            .Include(m => m.Images.OrderBy(img => img.DisplayOrder))
             .Include(m => m.Batches)
             .FirstOrDefaultAsync(m => m.Id == id && m.IsActive);
 
-        if (med == null) return null;
-        return MapToDetailViewModel(med);
+        if (medicine == null)
+        {
+            return null;
+        }
+
+        return MapToDetailViewModel(medicine);
     }
 
-    private ProductDetailViewModel MapToDetailViewModel(Medicine med)
+    private ProductDetailViewModel MapToDetailViewModel(Medicine medicine)
     {
-        var today = PharmacyWeb.Services.PharmacyClock.Today;
-        var availStock = (!med.IsActive || !med.IsSelling) ? 0 :
-            med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
-                       .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
+        var today = PharmacyClock.Today;
+        int availableStock = CalculateAvailableStock(medicine, today);
 
-        var vm = new ProductDetailViewModel
+        string mainImageUrl = !string.IsNullOrEmpty(medicine.MainImageUrl)
+            ? medicine.MainImageUrl
+            : MedicineSvgHelper.GeneratePackagingSvg(medicine.Name, medicine.ActiveIngredient, medicine.PackagingSpec, medicine.Unit, medicine.IsPrescription);
+
+        var detailViewModel = new ProductDetailViewModel
         {
-            Id = med.Id,
-            Name = med.Name,
-            Slug = med.Slug,
-            CategoryId = med.CategoryId,
-            CategoryName = med.Category?.Name ?? string.Empty,
-            SupplierName = med.Supplier?.Name ?? string.Empty,
-            BarCode = med.BarCode,
-            ActiveIngredient = med.ActiveIngredient ?? string.Empty,
-            Unit = med.Unit,
-            PackagingSpec = med.PackagingSpec,
-            Price = med.Price,
-            IsPrescription = med.IsPrescription,
-            IsSelling = med.IsSelling,
-            IsActive = med.IsActive,
-            AvailableStock = availStock,
-            DescriptionHtml = _sanitizer.Sanitize(med.DescriptionHtml),
-            MainImageUrl = !string.IsNullOrEmpty(med.MainImageUrl) 
-                ? med.MainImageUrl 
-                : MedicineSvgHelper.GeneratePackagingSvg(med.Name, med.ActiveIngredient, med.PackagingSpec, med.Unit, med.IsPrescription),
-            Images = med.Images.Select(i => i.ImageUrl).ToList()
+            Id = medicine.Id,
+            Name = medicine.Name,
+            Slug = medicine.Slug,
+            CategoryId = medicine.CategoryId,
+            CategoryName = medicine.Category?.Name ?? string.Empty,
+            SupplierName = medicine.Supplier?.Name ?? string.Empty,
+            BarCode = medicine.BarCode,
+            ActiveIngredient = medicine.ActiveIngredient ?? string.Empty,
+            Unit = medicine.Unit,
+            PackagingSpec = medicine.PackagingSpec,
+            Price = medicine.Price,
+            IsPrescription = medicine.IsPrescription,
+            IsSelling = medicine.IsSelling,
+            IsActive = medicine.IsActive,
+            AvailableStock = availableStock,
+            DescriptionHtml = _htmlSanitizer.Sanitize(medicine.DescriptionHtml),
+            MainImageUrl = mainImageUrl,
+            Images = medicine.Images.Select(img => img.ImageUrl).ToList()
         };
 
-        if (string.IsNullOrEmpty(med.MainImageUrl) && !vm.Images.Any())
+        if (string.IsNullOrEmpty(medicine.MainImageUrl) && detailViewModel.Images.Count == 0)
         {
-            vm.Images.Add(vm.MainImageUrl);
+            detailViewModel.Images.Add(detailViewModel.MainImageUrl);
         }
-        else if (!string.IsNullOrEmpty(med.MainImageUrl) && !vm.Images.Contains(med.MainImageUrl))
+        else if (!string.IsNullOrEmpty(medicine.MainImageUrl) && !detailViewModel.Images.Contains(medicine.MainImageUrl))
         {
-            vm.Images.Insert(0, med.MainImageUrl);
+            detailViewModel.Images.Insert(0, medicine.MainImageUrl);
         }
 
-        // Related products in same category
-        var related = _db.Medicines
+        // Tải các sản phẩm tương tự cùng danh mục nhóm thuốc
+        var relatedMedicines = _databaseContext.Medicines
             .AsNoTracking()
             .Include(m => m.Category)
             .Include(m => m.Batches)
-            .Where(m => m.CategoryId == med.CategoryId && m.Id != med.Id && m.IsActive)
+            .Where(m => m.CategoryId == medicine.CategoryId && m.Id != medicine.Id && m.IsActive)
             .Take(4)
             .ToList();
 
-        vm.RelatedProducts = related.Select(r => new ProductCardViewModel
+        detailViewModel.RelatedProducts = relatedMedicines.Select(relatedMedicine =>
         {
-            Id = r.Id,
-            SupplierId = r.SupplierId,
-            Name = r.Name,
-            Slug = r.Slug,
-            CategoryName = r.Category?.Name ?? string.Empty,
-            ActiveIngredient = r.ActiveIngredient,
-            Unit = r.Unit,
-            Price = r.Price,
-            IsPrescription = r.IsPrescription,
-            IsSelling = r.IsSelling,
-            IsActive = r.IsActive,
-            AvailableStock = (!r.IsActive || !r.IsSelling) ? 0 :
-                r.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today).Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity)),
-            ImageUrl = !string.IsNullOrEmpty(r.MainImageUrl) 
-                ? r.MainImageUrl 
-                : MedicineSvgHelper.GeneratePackagingSvg(r.Name, r.ActiveIngredient, r.PackagingSpec, r.Unit, r.IsPrescription)
+            int relatedAvailableStock = CalculateAvailableStock(relatedMedicine, today);
+            return MapToProductCardViewModel(relatedMedicine, relatedAvailableStock);
         }).ToList();
 
-        return vm;
+        return detailViewModel;
     }
 
+    /// <summary>
+    /// Lấy danh sách các nhóm thuốc kèm số lượng sản phẩm đang kinh doanh.
+    /// </summary>
     public async Task<List<CategoryItemViewModel>> GetCategoriesWithCountAsync()
     {
-        return await _db.Categories
+        return await _databaseContext.Categories
             .AsNoTracking()
-            .Where(c => c.IsActive)
-            .OrderBy(c => c.DisplayOrder)
-            .Select(c => new CategoryItemViewModel
+            .Where(category => category.IsActive)
+            .OrderBy(category => category.DisplayOrder)
+            .Select(category => new CategoryItemViewModel
             {
-                Id = c.Id,
-                Name = c.Name,
-                Slug = c.Slug,
-                ProductCount = c.Medicines.Count(m => m.IsActive)
+                Id = category.Id,
+                Name = category.Name,
+                Slug = category.Slug,
+                ProductCount = category.Medicines.Count(medicine => medicine.IsActive)
             })
             .ToListAsync();
     }
 
     public async Task<List<Category>> GetAllCategoriesAsync()
     {
-        return await _db.Categories.AsNoTracking().OrderBy(c => c.DisplayOrder).ToListAsync();
+        return await _databaseContext.Categories
+            .AsNoTracking()
+            .OrderBy(category => category.DisplayOrder)
+            .ToListAsync();
     }
 
     public async Task<List<Supplier>> GetAllSuppliersAsync()
     {
-        return await _db.Suppliers.AsNoTracking().OrderBy(s => s.Name).ToListAsync();
+        return await _databaseContext.Suppliers
+            .AsNoTracking()
+            .OrderBy(supplier => supplier.Name)
+            .ToListAsync();
     }
 
     public async Task<Medicine?> GetEntityByIdAsync(int id)
     {
-        return await _db.Medicines
-            .Include(m => m.Images)
-            .Include(m => m.Batches)
-            .FirstOrDefaultAsync(m => m.Id == id);
+        return await _databaseContext.Medicines
+            .Include(medicine => medicine.Images)
+            .Include(medicine => medicine.Batches)
+            .FirstOrDefaultAsync(medicine => medicine.Id == id);
     }
 
+    /// <summary>
+    /// Thêm thuốc mới vào hệ thống (lưu chung vào bảng Medicines của POS).
+    /// </summary>
     public async Task<int> CreateProductAsync(AdminProductFormViewModel model)
     {
-        var slug = GenerateSlug(model.Name);
-        var baseSlug = slug;
-        int count = 1;
-        while (await _db.Medicines.AnyAsync(m => m.Slug == slug))
+        string generatedSlug = GenerateSlug(model.Name);
+        string uniqueSlug = generatedSlug;
+        int duplicateSuffixCounter = 1;
+
+        while (await _databaseContext.Medicines.AnyAsync(medicine => medicine.Slug == uniqueSlug))
         {
-            slug = $"{baseSlug}-{count++}";
+            uniqueSlug = $"{generatedSlug}-{duplicateSuffixCounter++}";
         }
 
         string? mainImagePath = null;
@@ -308,7 +325,7 @@ public class ProductService : IProductService
             SupplierId = model.SupplierId,
             BarCode = model.BarCode.Trim(),
             Name = model.Name.Trim(),
-            Slug = slug,
+            Slug = uniqueSlug,
             ActiveIngredient = model.ActiveIngredient?.Trim() ?? string.Empty,
             Unit = model.Unit.Trim(),
             PackagingSpec = model.PackagingSpec?.Trim() ?? string.Empty,
@@ -317,112 +334,135 @@ public class ProductService : IProductService
             IsSelling = model.IsSelling,
             IsActive = model.IsActive,
             Featured = model.Featured,
-            DescriptionHtml = _sanitizer.Sanitize(model.DescriptionHtml),
+            DescriptionHtml = _htmlSanitizer.Sanitize(model.DescriptionHtml),
             MainImageUrl = mainImagePath,
             CreatedAt = DateTime.UtcNow
         };
 
         if (model.AdditionalImages != null)
         {
-            int order = 1;
-            foreach (var imgFile in model.AdditionalImages)
+            int displayOrder = 1;
+            foreach (var imageFile in model.AdditionalImages)
             {
-                var path = await SaveUploadedImageAsync(imgFile);
-                if (path != null)
+                string? imagePath = await SaveUploadedImageAsync(imageFile);
+                if (imagePath != null)
                 {
                     medicine.Images.Add(new MedicineImage
                     {
-                        ImageUrl = path,
-                        DisplayOrder = order++,
+                        ImageUrl = imagePath,
+                        DisplayOrder = displayOrder++,
                         IsPrimary = false
                     });
                 }
             }
         }
 
-        _db.Medicines.Add(medicine);
-        await _db.SaveChangesAsync();
+        _databaseContext.Medicines.Add(medicine);
+        await _databaseContext.SaveChangesAsync();
         return medicine.Id;
     }
 
+    /// <summary>
+    /// Cập nhật thông tin thuốc.
+    /// Có cơ chế Concurrency Token (RowVersion) chống ghi đè khi POS hoặc phiên khác vừa cập nhật (WEB-04).
+    /// </summary>
     public async Task<bool> UpdateProductAsync(AdminProductFormViewModel model)
     {
-        var med = await _db.Medicines
+        var medicine = await _databaseContext.Medicines
             .Include(m => m.Images)
             .FirstOrDefaultAsync(m => m.Id == model.Id);
 
-        if (med == null) return false;
+        if (medicine == null)
+        {
+            return false;
+        }
 
-        // WEB-04: Concurrency control against stale form submissions
-        if (model.RowVersion != null && med.RowVersion != null && !model.RowVersion.SequenceEqual(med.RowVersion))
+        // Kiểm tra xung đột dữ liệu đồng thời nếu RowVersion của form không khớp với cơ sở dữ liệu
+        if (model.RowVersion != null && medicine.RowVersion != null && !model.RowVersion.SequenceEqual(medicine.RowVersion))
         {
             throw new DbUpdateConcurrencyException("Dữ liệu thuốc đã được cập nhật bởi một phiên làm việc khác (POS hoặc Web). Vui lòng tải lại trang để xem thông tin mới nhất.");
         }
+
         if (model.RowVersion != null)
         {
-            _db.Entry(med).Property(m => m.RowVersion).OriginalValue = model.RowVersion;
+            _databaseContext.Entry(medicine).Property(m => m.RowVersion).OriginalValue = model.RowVersion;
         }
 
-        med.CategoryId = model.CategoryId;
-        med.SupplierId = model.SupplierId;
-        med.BarCode = model.BarCode.Trim();
-        med.Name = model.Name.Trim();
-        med.ActiveIngredient = model.ActiveIngredient?.Trim() ?? string.Empty;
-        med.Unit = model.Unit.Trim();
-        med.PackagingSpec = model.PackagingSpec?.Trim() ?? string.Empty;
-        med.Price = model.Price;
-        med.IsPrescription = model.IsPrescription;
-        med.IsSelling = model.IsSelling;
-        med.IsActive = model.IsActive;
-        med.Featured = model.Featured;
-        med.DescriptionHtml = _sanitizer.Sanitize(model.DescriptionHtml);
+        medicine.CategoryId = model.CategoryId;
+        medicine.SupplierId = model.SupplierId;
+        medicine.BarCode = model.BarCode.Trim();
+        medicine.Name = model.Name.Trim();
+        medicine.ActiveIngredient = model.ActiveIngredient?.Trim() ?? string.Empty;
+        medicine.Unit = model.Unit.Trim();
+        medicine.PackagingSpec = model.PackagingSpec?.Trim() ?? string.Empty;
+        medicine.Price = model.Price;
+        medicine.IsPrescription = model.IsPrescription;
+        medicine.IsSelling = model.IsSelling;
+        medicine.IsActive = model.IsActive;
+        medicine.Featured = model.Featured;
+        medicine.DescriptionHtml = _htmlSanitizer.Sanitize(model.DescriptionHtml);
 
         if (model.MainImageUpload != null)
         {
-            var newPath = await SaveUploadedImageAsync(model.MainImageUpload);
-            if (newPath != null)
+            string? newMainImagePath = await SaveUploadedImageAsync(model.MainImageUpload);
+            if (newMainImagePath != null)
             {
-                med.MainImageUrl = newPath;
+                medicine.MainImageUrl = newMainImagePath;
             }
         }
 
         if (model.AdditionalImages != null)
         {
-            int order = med.Images.Count + 1;
-            foreach (var imgFile in model.AdditionalImages)
+            int nextDisplayOrder = medicine.Images.Count + 1;
+            foreach (var imageFile in model.AdditionalImages)
             {
-                var path = await SaveUploadedImageAsync(imgFile);
-                if (path != null)
+                string? additionalImagePath = await SaveUploadedImageAsync(imageFile);
+                if (additionalImagePath != null)
                 {
-                    med.Images.Add(new MedicineImage
+                    medicine.Images.Add(new MedicineImage
                     {
-                        ImageUrl = path,
-                        DisplayOrder = order++,
+                        ImageUrl = additionalImagePath,
+                        DisplayOrder = nextDisplayOrder++,
                         IsPrimary = false
                     });
                 }
             }
         }
 
-        await _db.SaveChangesAsync();
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
+    /// <summary>
+    /// Đảo trạng thái kích hoạt hoạt động của thuốc (IsActive).
+    /// Lưu ý: Cờ IsActive dùng chung cả Web & POS (BS-04).
+    /// </summary>
     public async Task<bool> ToggleActiveAsync(int id)
     {
-        var med = await _db.Medicines.FindAsync(id);
-        if (med == null) return false;
-        med.IsActive = !med.IsActive;
-        await _db.SaveChangesAsync();
+        var medicine = await _databaseContext.Medicines.FindAsync(id);
+        if (medicine == null)
+        {
+            return false;
+        }
+
+        medicine.IsActive = !medicine.IsActive;
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
+    /// <summary>
+    /// Đảo trạng thái cho phép bán hàng của thuốc (IsSelling).
+    /// </summary>
     public async Task<bool> ToggleSellingAsync(int id)
     {
-        var med = await _db.Medicines.FindAsync(id);
-        if (med == null) return false;
-        med.IsSelling = !med.IsSelling;
-        await _db.SaveChangesAsync();
+        var medicine = await _databaseContext.Medicines.FindAsync(id);
+        if (medicine == null)
+        {
+            return false;
+        }
+
+        medicine.IsSelling = !medicine.IsSelling;
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
@@ -431,31 +471,44 @@ public class ProductService : IProductService
         if (category.Id == 0)
         {
             category.Slug = GenerateSlug(category.Name);
-            _db.Categories.Add(category);
+            _databaseContext.Categories.Add(category);
         }
         else
         {
-            var existing = await _db.Categories.FindAsync(category.Id);
-            if (existing == null) return false;
-            existing.Name = category.Name;
-            existing.Description = category.Description;
-            existing.IsActive = category.IsActive;
-            existing.DisplayOrder = category.DisplayOrder;
+            var existingCategory = await _databaseContext.Categories.FindAsync(category.Id);
+            if (existingCategory == null)
+            {
+                return false;
+            }
+
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+            existingCategory.IsActive = category.IsActive;
+            existingCategory.DisplayOrder = category.DisplayOrder;
         }
-        await _db.SaveChangesAsync();
+
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
     public async Task<(bool Success, string Message)> DeleteCategoryAsync(int id)
     {
-        var cat = await _db.Categories.Include(c => c.Medicines).FirstOrDefaultAsync(c => c.Id == id);
-        if (cat == null) return (false, "Không tìm thấy danh mục");
-        if (cat.Medicines.Any())
+        var category = await _databaseContext.Categories
+            .Include(c => c.Medicines)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (category == null)
         {
-            return (false, $"Không thể xóa danh mục '{cat.Name}' vì vẫn còn {cat.Medicines.Count} sản phẩm liên kết. Hãy ẩn danh mục thay vì xóa.");
+            return (false, "Không tìm thấy danh mục.");
         }
-        _db.Categories.Remove(cat);
-        await _db.SaveChangesAsync();
+
+        if (category.Medicines.Count > 0)
+        {
+            return (false, $"Không thể xóa danh mục '{category.Name}' vì vẫn còn {category.Medicines.Count} sản phẩm liên kết. Hãy ẩn danh mục thay vì xóa.");
+        }
+
+        _databaseContext.Categories.Remove(category);
+        await _databaseContext.SaveChangesAsync();
         return (true, "Đã xóa danh mục thành công.");
     }
 
@@ -463,68 +516,145 @@ public class ProductService : IProductService
     {
         if (supplier.Id == 0)
         {
-            _db.Suppliers.Add(supplier);
+            _databaseContext.Suppliers.Add(supplier);
         }
         else
         {
-            var existing = await _db.Suppliers.FindAsync(supplier.Id);
-            if (existing == null) return false;
-            existing.Name = supplier.Name;
-            existing.Phone = supplier.Phone;
-            existing.Address = supplier.Address;
-            existing.IsActive = supplier.IsActive;
+            var existingSupplier = await _databaseContext.Suppliers.FindAsync(supplier.Id);
+            if (existingSupplier == null)
+            {
+                return false;
+            }
+
+            existingSupplier.Name = supplier.Name;
+            existingSupplier.Phone = supplier.Phone;
+            existingSupplier.Address = supplier.Address;
+            existingSupplier.IsActive = supplier.IsActive;
         }
-        await _db.SaveChangesAsync();
+
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
     public async Task<(bool Success, string Message)> DeleteSupplierAsync(int id)
     {
-        var sup = await _db.Suppliers.Include(s => s.Medicines).Include(s => s.StockIns).FirstOrDefaultAsync(s => s.Id == id);
-        if (sup == null) return (false, "Không tìm thấy nhà cung cấp");
-        if (sup.Medicines.Any() || sup.StockIns.Any())
+        var supplier = await _databaseContext.Suppliers
+            .Include(s => s.Medicines)
+            .Include(s => s.StockIns)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (supplier == null)
         {
-            return (false, $"Không thể xóa nhà cung cấp '{sup.Name}' vì còn thuốc hoặc phiếu nhập liên kết.");
+            return (false, "Không tìm thấy nhà cung cấp.");
         }
-        _db.Suppliers.Remove(sup);
-        await _db.SaveChangesAsync();
+
+        if (supplier.Medicines.Count > 0 || supplier.StockIns.Count > 0)
+        {
+            return (false, $"Không thể xóa nhà cung cấp '{supplier.Name}' vì còn thuốc hoặc phiếu nhập liên kết.");
+        }
+
+        _databaseContext.Suppliers.Remove(supplier);
+        await _databaseContext.SaveChangesAsync();
         return (true, "Đã xóa nhà cung cấp thành công.");
     }
 
+    private static int CalculateAvailableStock(Medicine medicine, DateTime currentDate)
+    {
+        if (!medicine.IsActive || !medicine.IsSelling)
+        {
+            return 0;
+        }
+
+        int totalAvailableStock = 0;
+        foreach (var batch in medicine.Batches)
+        {
+            bool isBatchValid = !batch.IsBlocked && batch.ExpiryDate >= currentDate;
+            if (isBatchValid)
+            {
+                int remainingInBatch = batch.Stock - batch.ReservedQuantity;
+                if (remainingInBatch > 0)
+                {
+                    totalAvailableStock += remainingInBatch;
+                }
+            }
+        }
+
+        return totalAvailableStock;
+    }
+
+    private static ProductCardViewModel MapToProductCardViewModel(Medicine medicine, int availableStock)
+    {
+        string imageUrl = !string.IsNullOrEmpty(medicine.MainImageUrl)
+            ? medicine.MainImageUrl
+            : MedicineSvgHelper.GeneratePackagingSvg(medicine.Name, medicine.ActiveIngredient, medicine.PackagingSpec, medicine.Unit, medicine.IsPrescription);
+
+        return new ProductCardViewModel
+        {
+            Id = medicine.Id,
+            SupplierId = medicine.SupplierId,
+            Name = medicine.Name,
+            Slug = medicine.Slug,
+            CategoryName = medicine.Category?.Name ?? string.Empty,
+            ActiveIngredient = medicine.ActiveIngredient ?? string.Empty,
+            Unit = medicine.Unit,
+            Price = medicine.Price,
+            IsPrescription = medicine.IsPrescription,
+            IsSelling = medicine.IsSelling,
+            IsActive = medicine.IsActive,
+            AvailableStock = availableStock,
+            ImageUrl = imageUrl
+        };
+    }
+
+    /// <summary>
+    /// Lưu tệp ảnh tải lên với kiểm tra phần mở rộng và kiểm tra nội dung byte (Magic bytes check) để ngăn chặn mã độc.
+    /// </summary>
     private async Task<string?> SaveUploadedImageAsync(IFormFile file)
     {
-        if (file.Length == 0 || file.Length > 5 * 1024 * 1024) return null;
+        if (file.Length == 0 || file.Length > 5 * 1024 * 1024)
+        {
+            return null;
+        }
 
         var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
-        var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-        if (!allowedExtensions.Contains(ext)) return null;
+        string fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        if (!allowedExtensions.Contains(fileExtension))
+        {
+            return null;
+        }
 
-        // Magic bytes check
+        // Kiểm tra chữ ký byte đầu tệp (Magic Bytes) để ngăn chặn tệp giả mạo đuôi ảnh
         using (var stream = file.OpenReadStream())
         {
-            var header = new byte[8];
-            var bytesRead = await stream.ReadAsync(header.AsMemory(0, header.Length));
-            if (bytesRead < 4) return null;
+            var headerBytes = new byte[8];
+            int bytesRead = await stream.ReadAsync(headerBytes.AsMemory(0, headerBytes.Length));
+            if (bytesRead < 4)
+            {
+                return null;
+            }
 
-            bool isJpeg = header[0] == 0xFF && header[1] == 0xD8 && header[2] == 0xFF;
-            bool isPng = header[0] == 0x89 && header[1] == 0x50 && header[2] == 0x4E && header[3] == 0x47;
-            bool isWebp = header[0] == 0x52 && header[1] == 0x49 && header[2] == 0x46 && header[3] == 0x46;
+            bool isJpeg = headerBytes[0] == 0xFF && headerBytes[1] == 0xD8 && headerBytes[2] == 0xFF;
+            bool isPng = headerBytes[0] == 0x89 && headerBytes[1] == 0x50 && headerBytes[2] == 0x4E && headerBytes[3] == 0x47;
+            bool isWebp = headerBytes[0] == 0x52 && headerBytes[1] == 0x49 && headerBytes[2] == 0x46 && headerBytes[3] == 0x46;
 
-            if (!isJpeg && !isPng && !isWebp) return null;
+            if (!isJpeg && !isPng && !isWebp)
+            {
+                return null;
+            }
         }
 
-        var uploadsDir = Path.Combine(_env.WebRootPath, "uploads", "products");
-        if (!Directory.Exists(uploadsDir))
+        string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "products");
+        if (!Directory.Exists(uploadsDirectory))
         {
-            Directory.CreateDirectory(uploadsDir);
+            Directory.CreateDirectory(uploadsDirectory);
         }
 
-        var uniqueFileName = $"{Guid.NewGuid():N}{ext}";
-        var filePath = Path.Combine(uploadsDir, uniqueFileName);
+        string uniqueFileName = $"{Guid.NewGuid():N}{fileExtension}";
+        string physicalFilePath = Path.Combine(uploadsDirectory, uniqueFileName);
 
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        using (var destinationStream = new FileStream(physicalFilePath, FileMode.Create))
         {
-            await file.CopyToAsync(fileStream);
+            await file.CopyToAsync(destinationStream);
         }
 
         return $"/uploads/products/{uniqueFileName}";
@@ -532,17 +662,22 @@ public class ProductService : IProductService
 
     private static string GenerateSlug(string text)
     {
-        if (string.IsNullOrWhiteSpace(text)) return Guid.NewGuid().ToString("N")[..8];
-        var normalized = text.ToLowerInvariant().Trim();
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return Guid.NewGuid().ToString("N")[..8];
+        }
+
+        string normalized = text.ToLowerInvariant().Trim();
         normalized = Regex.Replace(normalized, @"[áàảãạăắằẳẵặâấầẩẫậ]", "a");
         normalized = Regex.Replace(normalized, @"[éèẻẽẹêếềểễệ]", "e");
         normalized = Regex.Replace(normalized, @"[íìỉĩị]", "i");
         normalized = Regex.Replace(normalized, @"[óòỏõọôốồổỗộơớờởỡợ]", "o");
-        normalized = Regex.Replace(normalized, @"[úùủũụưứừửữự]", "u");
+        normalized = Regex.Replace(normalized, @"[úùũụưứừửữự]", "u");
         normalized = Regex.Replace(normalized, @"[ýỳỷỹỵ]", "y");
         normalized = Regex.Replace(normalized, @"[đ]", "d");
         normalized = Regex.Replace(normalized, @"[^a-z0-9\s-]", "");
         normalized = Regex.Replace(normalized, @"\s+", "-").Trim('-');
+
         return string.IsNullOrEmpty(normalized) ? Guid.NewGuid().ToString("N")[..8] : normalized;
     }
 }

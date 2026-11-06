@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyWeb.Data;
+using PharmacyWeb.Data.Entities;
 using PharmacyWeb.Models.ViewModels;
 
 namespace PharmacyWeb.Services;
@@ -17,6 +18,10 @@ public interface ICartService
     void RemoveVoucher();
 }
 
+/// <summary>
+/// Dữ liệu mục giỏ hàng lưu gọn trong Session của trình duyệt khách hàng.
+/// Chỉ lưu ID thuốc và số lượng để đảm bảo giá và tồn kho luôn được kiểm tra mới nhất từ cơ sở dữ liệu.
+/// </summary>
 public class CartSessionItem
 {
     public int MedicineId { get; set; }
@@ -29,159 +34,197 @@ public class CartService : ICartService
     private const string VoucherSessionKey = "Pharmacy_Session_Voucher_v1";
 
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly PharmacyWebDbContext _db;
+    private readonly PharmacyWebDbContext _databaseContext;
 
-    public CartService(IHttpContextAccessor httpContextAccessor, PharmacyWebDbContext db)
+    public CartService(IHttpContextAccessor httpContextAccessor, PharmacyWebDbContext databaseContext)
     {
         _httpContextAccessor = httpContextAccessor;
-        _db = db;
+        _databaseContext = databaseContext;
     }
 
     private ISession Session => _httpContextAccessor.HttpContext?.Session 
-        ?? throw new InvalidOperationException("Session is not available.");
+        ?? throw new InvalidOperationException("Session hiện tại không khả dụng.");
 
+    /// <summary>
+    /// Lấy toàn bộ giỏ hàng của khách từ session và tra cứu thông tin giá, tồn kho mới nhất từ database.
+    /// </summary>
     public async Task<CartViewModel> GetCartAsync()
     {
         var sessionItems = GetSessionItems();
-        var vm = new CartViewModel();
+        var cartViewModel = new CartViewModel();
 
-        if (!sessionItems.Any())
+        if (sessionItems.Count == 0)
         {
-            return vm;
+            return cartViewModel;
         }
 
-        var medicineIds = sessionItems.Select(s => s.MedicineId).Distinct().ToList();
-        var medicines = await _db.Medicines
+        // Lấy danh sách ID thuốc để truy vấn một lần duy nhất (tránh lỗi N+1 query)
+        var medicineIds = sessionItems
+            .Select(sessionItem => sessionItem.MedicineId)
+            .Distinct()
+            .ToList();
+
+        var medicinesDictionary = await _databaseContext.Medicines
             .AsNoTracking()
-            .Include(m => m.Batches)
-            .Where(m => medicineIds.Contains(m.Id))
-            .ToDictionaryAsync(m => m.Id);
+            .Include(medicine => medicine.Batches)
+            .Where(medicine => medicineIds.Contains(medicine.Id))
+            .ToDictionaryAsync(medicine => medicine.Id);
 
-        var today = PharmacyWeb.Services.PharmacyClock.Today;
+        var today = PharmacyClock.Today;
 
-        foreach (var item in sessionItems)
+        foreach (var sessionItem in sessionItems)
         {
-            if (medicines.TryGetValue(item.MedicineId, out var med))
+            if (medicinesDictionary.TryGetValue(sessionItem.MedicineId, out var medicine))
             {
-                var availStock = (!med.IsActive || !med.IsSelling) ? 0 :
-                    med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
-                               .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
+                int availableStock = CalculateAvailableStock(medicine, today);
 
-                vm.Items.Add(new CartItemViewModel
+                var cartItemViewModel = new CartItemViewModel
                 {
-                    MedicineId = med.Id,
-                    MedicineName = med.Name,
-                    Slug = med.Slug,
-                    Unit = med.Unit,
-                    Price = med.Price, // Server-authoritative price
-                    Quantity = item.Quantity,
-                    AvailableStock = availStock,
-                    IsPrescription = med.IsPrescription,
-                    IsSelling = med.IsSelling,
-                    IsActive = med.IsActive,
-                    ImageUrl = med.MainImageUrl
-                });
+                    MedicineId = medicine.Id,
+                    MedicineName = medicine.Name,
+                    Slug = medicine.Slug,
+                    Unit = medicine.Unit,
+                    Price = medicine.Price, // Giá chuẩn xác lấy trực tiếp từ database của quầy POS
+                    Quantity = sessionItem.Quantity,
+                    AvailableStock = availableStock,
+                    IsPrescription = medicine.IsPrescription,
+                    IsSelling = medicine.IsSelling,
+                    IsActive = medicine.IsActive,
+                    ImageUrl = medicine.MainImageUrl
+                };
+
+                cartViewModel.Items.Add(cartItemViewModel);
             }
         }
 
-        // Apply voucher if saved in session
-        var voucherCode = Session.GetString(VoucherSessionKey);
-        if (!string.IsNullOrWhiteSpace(voucherCode))
+        // Kiểm tra và áp dụng mã voucher nếu khách đã lưu trong session trước đó
+        var savedVoucherCode = Session.GetString(VoucherSessionKey);
+        if (!string.IsNullOrWhiteSpace(savedVoucherCode))
         {
-            var res = await EvaluateVoucherInternalAsync(voucherCode, vm.SubtotalAmount);
-            vm.AppliedVoucherCode = voucherCode;
-            vm.VoucherSuccess = res.Success;
-            vm.VoucherMessage = res.Message;
-            vm.DiscountAmount = res.DiscountAmount;
+            var voucherEvaluationResult = await EvaluateVoucherInternalAsync(savedVoucherCode, cartViewModel.SubtotalAmount);
+            cartViewModel.AppliedVoucherCode = savedVoucherCode;
+            cartViewModel.VoucherSuccess = voucherEvaluationResult.Success;
+            cartViewModel.VoucherMessage = voucherEvaluationResult.Message;
+            cartViewModel.DiscountAmount = voucherEvaluationResult.DiscountAmount;
         }
 
-        return vm;
+        return cartViewModel;
     }
 
+    /// <summary>
+    /// Thêm thuốc vào giỏ hàng với kiểm tra thuốc kê đơn (Rx) và tồn kho có thể bán.
+    /// </summary>
     public async Task<bool> AddToCartAsync(int medicineId, int quantity)
     {
-        if (quantity <= 0) return false;
+        if (quantity <= 0)
+        {
+            return false;
+        }
 
-        var med = await _db.Medicines
+        var medicine = await _databaseContext.Medicines
             .Include(m => m.Batches)
             .FirstOrDefaultAsync(m => m.Id == medicineId && m.IsActive);
 
-        if (med == null || med.IsPrescription || !med.IsSelling)
+        // Quy định an toàn y tế: Thuốc cần đơn bác sĩ (Rx) không được mua trực tiếp tự do
+        if (medicine == null || medicine.IsPrescription || !medicine.IsSelling)
         {
-            return false; // Prescription and non-selling cannot be directly added to cart
+            return false;
         }
 
-        var today = PharmacyWeb.Services.PharmacyClock.Today;
-        var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
-                                    .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
+        var today = PharmacyClock.Today;
+        int availableStock = CalculateAvailableStock(medicine, today);
 
-        var items = GetSessionItems();
-        var existing = items.FirstOrDefault(i => i.MedicineId == medicineId);
+        var sessionItems = GetSessionItems();
+        var existingItem = sessionItems.FirstOrDefault(item => item.MedicineId == medicineId);
 
-        var targetQty = (existing?.Quantity ?? 0) + quantity;
-        if (targetQty > availStock)
+        int currentQuantityInCart = existingItem != null ? existingItem.Quantity : 0;
+        int targetTotalQuantity = currentQuantityInCart + quantity;
+
+        // Chặn thêm quá số lượng thuốc thực tế có thể bán trong kho
+        if (targetTotalQuantity > availableStock)
         {
-            return false; // Exceeds available stock
+            return false;
         }
 
-        if (existing != null)
+        if (existingItem != null)
         {
-            existing.Quantity = targetQty;
+            existingItem.Quantity = targetTotalQuantity;
         }
         else
         {
-            items.Add(new CartSessionItem { MedicineId = medicineId, Quantity = quantity });
+            sessionItems.Add(new CartSessionItem
+            {
+                MedicineId = medicineId,
+                Quantity = quantity
+            });
         }
 
-        SaveSessionItems(items);
+        SaveSessionItems(sessionItems);
         return true;
     }
 
+    /// <summary>
+    /// Cập nhật lại số lượng sản phẩm trong giỏ hàng. Nếu số lượng <= 0 thì tự động xóa khỏi giỏ.
+    /// </summary>
     public async Task<bool> UpdateQuantityAsync(int medicineId, int quantity)
     {
-        var items = GetSessionItems();
-        var existing = items.FirstOrDefault(i => i.MedicineId == medicineId);
-        if (existing == null) return false;
+        var sessionItems = GetSessionItems();
+        var existingItem = sessionItems.FirstOrDefault(item => item.MedicineId == medicineId);
+        if (existingItem == null)
+        {
+            return false;
+        }
 
         if (quantity <= 0)
         {
-            items.Remove(existing);
+            sessionItems.Remove(existingItem);
         }
         else
         {
-            var med = await _db.Medicines
+            var medicine = await _databaseContext.Medicines
                 .Include(m => m.Batches)
                 .FirstOrDefaultAsync(m => m.Id == medicineId && m.IsActive);
 
-            if (med == null || !med.IsSelling) return false;
-
-            var today = PharmacyWeb.Services.PharmacyClock.Today;
-            var availStock = med.Batches.Where(b => !b.IsBlocked && b.ExpiryDate >= today)
-                                        .Sum(b => Math.Max(0, b.Stock - b.ReservedQuantity));
-
-            if (quantity > availStock)
+            if (medicine == null || !medicine.IsSelling)
             {
                 return false;
             }
 
-            existing.Quantity = quantity;
+            var today = PharmacyClock.Today;
+            int availableStock = CalculateAvailableStock(medicine, today);
+
+            if (quantity > availableStock)
+            {
+                return false;
+            }
+
+            existingItem.Quantity = quantity;
         }
 
-        SaveSessionItems(items);
+        SaveSessionItems(sessionItems);
         return true;
     }
 
+    /// <summary>
+    /// Xóa một sản phẩm ra khỏi giỏ hàng.
+    /// </summary>
     public Task<bool> RemoveFromCartAsync(int medicineId)
     {
-        var items = GetSessionItems();
-        var removed = items.RemoveAll(i => i.MedicineId == medicineId) > 0;
-        if (removed)
+        var sessionItems = GetSessionItems();
+        int removedCount = sessionItems.RemoveAll(item => item.MedicineId == medicineId);
+        bool hasRemoved = removedCount > 0;
+
+        if (hasRemoved)
         {
-            SaveSessionItems(items);
+            SaveSessionItems(sessionItems);
         }
-        return Task.FromResult(removed);
+
+        return Task.FromResult(hasRemoved);
     }
 
+    /// <summary>
+    /// Xóa toàn bộ giỏ hàng và voucher sau khi đặt hàng thành công.
+    /// </summary>
     public Task ClearCartAsync()
     {
         Session.Remove(CartSessionKey);
@@ -189,31 +232,36 @@ public class CartService : ICartService
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Kiểm tra và lưu voucher vào session nếu hợp lệ.
+    /// </summary>
     public async Task<(bool Success, string Message, decimal DiscountAmount)> ApplyVoucherAsync(string voucherCode)
     {
         if (string.IsNullOrWhiteSpace(voucherCode))
         {
             RemoveVoucher();
-            return (false, "Vui lòng nhập mã giảm giá", 0m);
+            return (false, "Vui lòng nhập mã giảm giá.", 0m);
         }
 
         var cart = await GetCartAsync();
-        if (!cart.Items.Any())
+        if (cart.Items.Count == 0)
         {
-            return (false, "Giỏ hàng đang trống", 0m);
+            return (false, "Giỏ hàng của bạn đang trống.", 0m);
         }
 
-        var res = await EvaluateVoucherInternalAsync(voucherCode.Trim(), cart.SubtotalAmount);
-        if (res.Success)
+        string cleanVoucherCode = voucherCode.Trim().ToUpperInvariant();
+        var evaluationResult = await EvaluateVoucherInternalAsync(cleanVoucherCode, cart.SubtotalAmount);
+
+        if (evaluationResult.Success)
         {
-            Session.SetString(VoucherSessionKey, voucherCode.Trim().ToUpperInvariant());
+            Session.SetString(VoucherSessionKey, cleanVoucherCode);
         }
         else
         {
             Session.Remove(VoucherSessionKey);
         }
 
-        return res;
+        return evaluationResult;
     }
 
     public void RemoveVoucher()
@@ -221,10 +269,43 @@ public class CartService : ICartService
         Session.Remove(VoucherSessionKey);
     }
 
-    private async Task<(bool Success, string Message, decimal DiscountAmount)> EvaluateVoucherInternalAsync(string code, decimal subtotal)
+    /// <summary>
+    /// Tính toán số lượng tồn kho có thể bán của thuốc.
+    /// Quy tắc: Chỉ tính từ các lô không bị khóa (IsBlocked = false) và còn hạn sử dụng (ExpiryDate >= today).
+    /// </summary>
+    private static int CalculateAvailableStock(Medicine medicine, DateTime currentDate)
     {
-        var cleanCode = code.Trim().ToUpperInvariant();
-        var voucher = await _db.Vouchers.FirstOrDefaultAsync(v => v.Code.ToUpper() == cleanCode);
+        if (!medicine.IsActive || !medicine.IsSelling)
+        {
+            return 0;
+        }
+
+        int totalAvailableStock = 0;
+
+        foreach (var batch in medicine.Batches)
+        {
+            bool isBatchValid = !batch.IsBlocked && batch.ExpiryDate >= currentDate;
+            if (isBatchValid)
+            {
+                int remainingInBatch = batch.Stock - batch.ReservedQuantity;
+                if (remainingInBatch > 0)
+                {
+                    totalAvailableStock += remainingInBatch;
+                }
+            }
+        }
+
+        return totalAvailableStock;
+    }
+
+    /// <summary>
+    /// Đánh giá tính hợp lệ và giá trị giảm giá của voucher.
+    /// </summary>
+    private async Task<(bool Success, string Message, decimal DiscountAmount)> EvaluateVoucherInternalAsync(string voucherCode, decimal subtotalAmount)
+    {
+        string normalizedCode = voucherCode.Trim().ToUpperInvariant();
+        var voucher = await _databaseContext.Vouchers
+            .FirstOrDefaultAsync(v => v.Code.ToUpper() == normalizedCode);
 
         if (voucher == null)
         {
@@ -241,55 +322,59 @@ public class CartService : ICartService
             return (false, "Mã giảm giá đã hết lượt sử dụng.", 0m);
         }
 
-        if (voucher.StartDate.HasValue && DateTime.UtcNow < voucher.StartDate.Value)
+        var currentUtcTime = DateTime.UtcNow;
+
+        if (voucher.StartDate.HasValue && currentUtcTime < voucher.StartDate.Value)
         {
             return (false, "Mã giảm giá chưa đến thời gian áp dụng.", 0m);
         }
 
-        if (voucher.EndDate.HasValue && DateTime.UtcNow > voucher.EndDate.Value)
+        if (voucher.EndDate.HasValue && currentUtcTime > voucher.EndDate.Value)
         {
             return (false, "Mã giảm giá đã hết hạn sử dụng.", 0m);
         }
 
-        if (subtotal < voucher.MinOrderValue)
+        if (subtotalAmount < voucher.MinOrderValue)
         {
             return (false, $"Đơn hàng tối thiểu để áp dụng mã là {voucher.MinOrderValue:N0} ₫.", 0m);
         }
 
-        decimal discount = 0m;
+        decimal calculatedDiscount = 0m;
+
         if (voucher.DiscountType == "PERCENT")
         {
-            discount = Math.Round(subtotal * (voucher.DiscountValue / 100m), 0);
-            if (voucher.MaxDiscountCap.HasValue && discount > voucher.MaxDiscountCap.Value)
+            calculatedDiscount = Math.Round(subtotalAmount * (voucher.DiscountValue / 100m), 0);
+            if (voucher.MaxDiscountCap.HasValue && calculatedDiscount > voucher.MaxDiscountCap.Value)
             {
-                discount = voucher.MaxDiscountCap.Value;
+                calculatedDiscount = voucher.MaxDiscountCap.Value;
             }
         }
         else
         {
-            discount = voucher.DiscountValue;
+            calculatedDiscount = voucher.DiscountValue;
         }
 
-        // Discount cannot exceed subtotal
-        if (discount > subtotal)
+        // Tiền giảm giá không bao giờ được vượt quá giá trị đơn hàng
+        if (calculatedDiscount > subtotalAmount)
         {
-            discount = subtotal;
+            calculatedDiscount = subtotalAmount;
         }
 
-        return (true, $"Áp dụng mã giảm giá {voucher.Code} thành công: giảm {discount:N0} ₫", discount);
+        return (true, $"Áp dụng mã giảm giá {voucher.Code} thành công: giảm {calculatedDiscount:N0} ₫", calculatedDiscount);
     }
 
     private List<CartSessionItem> GetSessionItems()
     {
-        var json = Session.GetString(CartSessionKey);
-        if (string.IsNullOrWhiteSpace(json))
+        string? jsonString = Session.GetString(CartSessionKey);
+        if (string.IsNullOrWhiteSpace(jsonString))
         {
             return new List<CartSessionItem>();
         }
 
         try
         {
-            return JsonSerializer.Deserialize<List<CartSessionItem>>(json) ?? new List<CartSessionItem>();
+            var deserializedItems = JsonSerializer.Deserialize<List<CartSessionItem>>(jsonString);
+            return deserializedItems ?? new List<CartSessionItem>();
         }
         catch
         {
@@ -297,9 +382,9 @@ public class CartService : ICartService
         }
     }
 
-    private void SaveSessionItems(List<CartSessionItem> items)
+    private void SaveSessionItems(List<CartSessionItem> sessionItems)
     {
-        var json = JsonSerializer.Serialize(items);
-        Session.SetString(CartSessionKey, json);
+        string jsonString = JsonSerializer.Serialize(sessionItems);
+        Session.SetString(CartSessionKey, jsonString);
     }
 }
