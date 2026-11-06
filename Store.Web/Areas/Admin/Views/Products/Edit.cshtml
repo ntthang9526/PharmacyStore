@@ -86,20 +86,40 @@
                 </div>
             </div>
 
-            <!-- Rich Text Editor for Description -->
+            <!-- Rich Text Editor for Description (Gắn liền với Textarea chuẩn theo yêu cầu đề bài) -->
             <div class="mb-3">
-                <label asp-for="DescriptionHtml" class="form-label small fw-semibold text-secondary"></label>
-                <div class="btn-toolbar p-1 bg-light border border-bottom-0 rounded-top-3 d-flex gap-1" role="toolbar">
-                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="formatDoc('bold')"><strong>B</strong></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="formatDoc('italic')"><em>I</em></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="formatDoc('insertUnorderedList')"><i class="bi bi-list-ul"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="formatDoc('insertOrderedList')"><i class="bi bi-list-ol"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="formatDoc('removeFormat')"><i class="bi bi-eraser"></i></button>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label asp-for="DescriptionHtml" class="form-label small fw-semibold text-secondary mb-0">
+                        <i class="bi bi-file-earmark-richtext me-1"></i>Mô tả chi tiết sản phẩm
+                    </label>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-sm btn-primary active py-0 px-2" id="btnModeVisual" onclick="switchEditorMode('visual')" title="Soạn thảo trực quan">
+                            <i class="bi bi-eye me-1"></i>Trực quan
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" id="btnModeHtml" onclick="switchEditorMode('html')" title="Xem và sửa trong textarea">
+                            <i class="bi bi-code-slash me-1"></i>Textarea HTML
+                        </button>
+                    </div>
                 </div>
-                <div id="editorContent" contenteditable="true" class="form-control rounded-bottom-3 border-top-0 p-3 bg-white" style="min-height: 140px; outline: none;">
+
+                <!-- Thanh công cụ soạn thảo định dạng (Toolbar) -->
+                <div class="btn-toolbar p-1 bg-light border border-bottom-0 rounded-top-3 d-flex flex-wrap gap-1 align-items-center" role="toolbar" id="editorToolbar">
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('bold')" title="In đậm"><strong>B</strong></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('italic')" title="In nghiêng"><em>I</em></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('insertUnorderedList')" title="Danh sách chấm"><i class="bi bi-list-ul"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('insertOrderedList')" title="Danh sách số"><i class="bi bi-list-ol"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('h3')" title="Tiêu đề mục">H3</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="applyFormat('removeFormat')" title="Xóa định dạng"><i class="bi bi-eraser"></i></button>
+                </div>
+
+                <!-- Khung soạn thảo trực quan (WYSIWYG visual editor) -->
+                <div id="visualEditor" contenteditable="true" class="form-control rounded-bottom-3 border-top-0 p-3 bg-white" style="min-height: 140px; outline: none;">
                     @Html.Raw(Model.DescriptionHtml)
                 </div>
-                <input type="hidden" asp-for="DescriptionHtml" id="hiddenDescriptionHtml" />
+
+                <!-- Textarea chính thức của form gắn asp-for="DescriptionHtml" theo đúng yêu cầu đề bài -->
+                <textarea asp-for="DescriptionHtml" id="descriptionTextarea" class="form-control font-monospace p-3 small" rows="6" style="display: none; border-top-left-radius: 0; border-top-right-radius: 0;" placeholder="Nhập mã HTML hoặc nội dung mô tả..."></textarea>
+                <span asp-validation-for="DescriptionHtml" class="text-danger small"></span>
             </div>
 
             <!-- Toggles -->
@@ -134,7 +154,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);" onclick="document.getElementById('hiddenDescriptionHtml').value = document.getElementById('editorContent').innerHTML;">
+            <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
                 <i class="bi bi-check-lg me-1"></i> Lưu thay đổi
             </button>
         </form>
@@ -143,9 +163,133 @@
 
 @section Scripts {
     <script>
-        function formatDoc(cmd, val) {
-            document.execCommand(cmd, false, val);
-            document.getElementById('editorContent').focus();
+        function syncFromVisualToTextarea() {
+            const visual = document.getElementById('visualEditor');
+            const textarea = document.getElementById('descriptionTextarea');
+            if (visual && textarea) {
+                textarea.value = visual.innerHTML;
+            }
         }
+
+        function syncFromTextareaToVisual() {
+            const visual = document.getElementById('visualEditor');
+            const textarea = document.getElementById('descriptionTextarea');
+            if (visual && textarea) {
+                visual.innerHTML = textarea.value;
+            }
+        }
+
+        function switchEditorMode(mode) {
+            const visual = document.getElementById('visualEditor');
+            const textarea = document.getElementById('descriptionTextarea');
+            const btnVisual = document.getElementById('btnModeVisual');
+            const btnHtml = document.getElementById('btnModeHtml');
+
+            if (mode === 'html') {
+                syncFromVisualToTextarea();
+                visual.style.display = 'none';
+                textarea.style.display = 'block';
+                btnHtml.classList.add('active', 'btn-primary');
+                btnHtml.classList.remove('btn-outline-secondary');
+                btnVisual.classList.remove('active', 'btn-primary');
+                btnVisual.classList.add('btn-outline-secondary');
+                textarea.focus();
+            } else {
+                syncFromTextareaToVisual();
+                textarea.style.display = 'none';
+                visual.style.display = 'block';
+                btnVisual.classList.add('active', 'btn-primary');
+                btnVisual.classList.remove('btn-outline-secondary');
+                btnHtml.classList.remove('active', 'btn-primary');
+                btnHtml.classList.add('btn-outline-secondary');
+                visual.focus();
+            }
+        }
+
+        function applyFormat(command, value = null) {
+            const visual = document.getElementById('visualEditor');
+            const textarea = document.getElementById('descriptionTextarea');
+            const isTextareaMode = textarea && textarea.style.display !== 'none';
+
+            if (isTextareaMode) {
+                insertTagIntoTextarea(textarea, command);
+                syncFromTextareaToVisual();
+            } else {
+                visual.focus();
+                if (command === 'h3') {
+                    document.execCommand('formatBlock', false, '<h3>');
+                } else {
+                    document.execCommand(command, false, value);
+                }
+                syncFromVisualToTextarea();
+            }
+        }
+
+        function insertTagIntoTextarea(textarea, command) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            let openTag = '';
+            let closeTag = '';
+
+            switch (command) {
+                case 'bold':
+                    openTag = '<strong>';
+                    closeTag = '</strong>';
+                    break;
+                case 'italic':
+                    openTag = '<em>';
+                    closeTag = '</em>';
+                    break;
+                case 'insertUnorderedList':
+                    openTag = '<ul>\n  <li>';
+                    closeTag = '</li>\n</ul>';
+                    break;
+                case 'insertOrderedList':
+                    openTag = '<ol>\n  <li>';
+                    closeTag = '</li>\n</ol>';
+                    break;
+                case 'h3':
+                    openTag = '<h3>';
+                    closeTag = '</h3>';
+                    break;
+                case 'removeFormat':
+                    const strippedText = selectedText.replace(/<[^>]*>/g, '');
+                    textarea.setRangeText(strippedText, start, end, 'select');
+                    return;
+            }
+
+            const defaultText = selectedText || 'Nội dung';
+            const replacement = `${openTag}${defaultText}${closeTag}`;
+            textarea.setRangeText(replacement, start, end, 'select');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const visual = document.getElementById('visualEditor');
+            const textarea = document.getElementById('descriptionTextarea');
+            const form = document.querySelector('form');
+
+            if (visual && textarea) {
+                if (!visual.innerHTML.trim() && textarea.value.trim()) {
+                    visual.innerHTML = textarea.value;
+                } else {
+                    textarea.value = visual.innerHTML;
+                }
+
+                visual.addEventListener('input', syncFromVisualToTextarea);
+                visual.addEventListener('blur', syncFromVisualToTextarea);
+                textarea.addEventListener('input', syncFromTextareaToVisual);
+            }
+
+            if (form) {
+                form.addEventListener('submit', () => {
+                    const visualEl = document.getElementById('visualEditor');
+                    const textareaEl = document.getElementById('descriptionTextarea');
+                    if (visualEl && textareaEl && visualEl.style.display !== 'none') {
+                        textareaEl.value = visualEl.innerHTML;
+                    }
+                });
+            }
+        });
     </script>
 }
