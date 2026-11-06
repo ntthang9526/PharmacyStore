@@ -6,3 +6,5 @@ obj/
 .dotnet/
 App_Data/Prescriptions/*
 !App_Data/Prescriptions/.gitkeep
+wwwroot/uploads/*
+!wwwroot/uploads/.gitkeep

@@ -3,6 +3,7 @@
 Website bán hàng và quản trị trực tuyến cho Nhà thuốc Pharmacy, tích hợp trực tiếp cơ sở dữ liệu SQL Server chung với phần mềm quản lý tại quầy (Store.POS).
 
 > **Tài liệu hướng dẫn đầy đủ:**
+> - [Giải thích chi tiết cấu trúc thư mục & tệp tin](docs/GIAI-THICH-THU-MUC-VA-FILE.md)
 > - [Hướng dẫn cài đặt & sử dụng chi tiết](docs/HUONG-DAN-CAI-DAT-VA-SU-DUNG.md)
 > - [Kiến trúc tích hợp SQL Server & POS](docs/SQLSERVER-POS-INTEGRATION.md)
 > - [Kịch bản Demo báo cáo](docs/DEMO-SCRIPT.md)
@@ -35,4 +36,4 @@ Sao lưu database POS, chạy `Database/IntegratePosDatabase.sql`, cấu hình `
 dotnet test tests/PharmacyWeb.Tests/PharmacyWeb.Tests.csproj
 ```
 
-17 ca xUnit đạt trong lượt chuyển đổi; kiểm tra tích hợp SQL Server/POS được chạy trên database phục hồi riêng. Xem hướng dẫn tích hợp và báo cáo kiểm thử để biết phạm vi.
+39 ca xUnit đạt trong bộ kiểm thử hồi quy và vòng đời tích hợp; kiểm tra tích hợp SQL Server/POS được chạy trên database phục hồi riêng. Xem hướng dẫn tích hợp và báo cáo kiểm thử để biết phạm vi.
