@@ -1,8 +1,11 @@
 # Pharmacy Web — ASP.NET Core MVC
 
-Website dùng chung SQL Server với POS. Cấu hình hiện tại trên máy này: `.\SQLEXPRESS`, database `PharmacyStoreDB`, Windows Authentication. Không dùng SQLite cho bản chạy chính.
+Website bán hàng và quản trị trực tuyến cho Nhà thuốc Pharmacy, tích hợp trực tiếp cơ sở dữ liệu SQL Server chung với phần mềm quản lý tại quầy (Store.POS).
 
-Đọc hướng dẫn đầy đủ tại [docs/SQLSERVER-POS-INTEGRATION.md](docs/SQLSERVER-POS-INTEGRATION.md).
+> **Tài liệu hướng dẫn đầy đủ:**
+> - [Hướng dẫn cài đặt & sử dụng chi tiết](docs/HUONG-DAN-CAI-DAT-VA-SU-DUNG.md)
+> - [Kiến trúc tích hợp SQL Server & POS](docs/SQLSERVER-POS-INTEGRATION.md)
+> - [Kịch bản Demo báo cáo](docs/DEMO-SCRIPT.md)
 
 ## Chạy trên máy hiện tại
 
