@@ -219,7 +219,7 @@
                         <label for="cartVoucherInput" class="form-label small fw-semibold text-secondary">Mã giảm giá</label>
                         <form asp-action="ApplyVoucher" method="post" class="input-group">
                             @Html.AntiForgeryToken()
-                            <input id="cartVoucherInput" type="text" name="voucherCode" class="form-control form-control-sm rounded-pill-start text-uppercase" placeholder="vd: GIAM10K, PH10..." value="@Model.AppliedVoucherCode" />
+                            <input id="cartVoucherInput" type="text" name="voucherCode" class="form-control form-control-sm rounded-pill-start text-uppercase" placeholder="Nhập mã giảm giá" value="@Model.AppliedVoucherCode" />
                             <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill-end px-3" style="border-color: var(--color-primary); color: var(--color-primary);">
                                 Áp dụng
                             </button>

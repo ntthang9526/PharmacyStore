@@ -928,4 +928,20 @@ public class SupplementalReportVerificationTests : IDisposable
         Assert.Equal(reportedItem.CollectedInPeriod, reportedItem.RefundedInPeriod);
         Assert.Equal(0m, reportedItem.NetAmount);
     }
+
+    [Fact]
+    public void ConfirmPassword_ShouldHaveVietnameseRequiredErrorMessage()
+    {
+        var regProp = typeof(RegisterViewModel).GetProperty(nameof(RegisterViewModel.ConfirmPassword));
+        Assert.NotNull(regProp);
+        var regReq = regProp!.GetCustomAttribute<RequiredAttribute>();
+        Assert.NotNull(regReq);
+        Assert.Equal("Vui lòng nhập lại mật khẩu", regReq!.ErrorMessage);
+
+        var chgProp = typeof(ChangePasswordViewModel).GetProperty(nameof(ChangePasswordViewModel.ConfirmPassword));
+        Assert.NotNull(chgProp);
+        var chgReq = chgProp!.GetCustomAttribute<RequiredAttribute>();
+        Assert.NotNull(chgReq);
+        Assert.Equal("Vui lòng nhập lại mật khẩu", chgReq!.ErrorMessage);
+    }
 }

@@ -42,6 +42,7 @@ public class RegisterViewModel
     [Display(Name = "Mật khẩu")]
     public string Password { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Vui lòng nhập lại mật khẩu")]
     [DataType(DataType.Password)]
     [Display(Name = "Xác nhận mật khẩu")]
     [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp")]
@@ -66,6 +67,7 @@ public class ChangePasswordViewModel
     [Display(Name = "Mật khẩu mới")]
     public string NewPassword { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Vui lòng nhập lại mật khẩu")]
     [DataType(DataType.Password)]
     [Display(Name = "Xác nhận mật khẩu mới")]
     [Compare("NewPassword", ErrorMessage = "Mật khẩu xác nhận không khớp")]

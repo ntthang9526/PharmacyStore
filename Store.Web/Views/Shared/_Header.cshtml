@@ -168,12 +168,6 @@
             <a asp-controller="Products" asp-action="Index" class="category-nav-link @(currentController == "Products" && string.IsNullOrEmpty(Context.Request.Query["DirectPurchaseOnly"]) && string.IsNullOrEmpty(Context.Request.Query["CategoryId"]) ? "active" : "")">
                 @(isEn ? "All Medicines" : "Tất cả thuốc")
             </a>
-            <a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="category-nav-link @(Context.Request.Query["DirectPurchaseOnly"] == "true" ? "active" : "")">
-                @(isEn ? "Direct Purchase" : "Mua trực tiếp")
-            </a>
-            <a asp-controller="PrescriptionRequest" asp-action="Index" class="category-nav-link @(currentController == "PrescriptionRequest" ? "active" : "")">
-                @(isEn ? "Submit Prescription" : "Gửi đơn thuốc")
-            </a>
             @foreach (var cat in headerCategories)
             {
                 var isCatActive = Context.Request.Query["CategoryId"] == cat.Id.ToString();
