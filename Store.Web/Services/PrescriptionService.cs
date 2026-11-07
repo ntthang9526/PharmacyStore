@@ -50,6 +50,11 @@ public class PrescriptionService : IPrescriptionService
             return (false, "Không tìm thấy hồ sơ khách hàng.", null, null);
         }
 
+        if (customer.IsLocked)
+        {
+            return (false, "Tài khoản đã bị khóa. Vui lòng liên hệ nhà thuốc.", null, null);
+        }
+
         if (!Directory.Exists(PrescriptionStorageDirectory))
         {
             Directory.CreateDirectory(PrescriptionStorageDirectory);

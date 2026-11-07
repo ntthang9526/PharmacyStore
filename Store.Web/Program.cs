@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,26 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Home/AccessDenied";
+    options.Events.OnValidatePrincipal = async context =>
+    {
+        await SecurityStampValidator.ValidatePrincipalAsync(context);
+        if (context.Principal?.Identity?.IsAuthenticated != true) return;
+
+        var services = context.HttpContext.RequestServices;
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var user = await userManager.GetUserAsync(context.Principal);
+        bool locked = user == null || user.IsLocked;
+        if (!locked && user!.CustomerProfileId.HasValue)
+        {
+            var db = services.GetRequiredService<PharmacyWebDbContext>();
+            locked = await db.CustomerProfiles.AnyAsync(c => c.Id == user.CustomerProfileId.Value && c.IsLocked);
+        }
+        if (locked)
+        {
+            context.RejectPrincipal();
+            await context.HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+        }
+    };
 });
 
 // 3. Session Configuration

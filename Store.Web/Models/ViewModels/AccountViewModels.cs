@@ -136,6 +136,6 @@ public class MyOrderListViewModel
     public string ShippingStatus { get; set; } = "NOT_SHIPPED";
     public decimal TotalAmount { get; set; }
     public int TotalItemCount { get; set; }
-    public bool CanCancel => OrderStatus == "NEW";
+    public bool CanCancel => OrderStatus == "NEW" && PaymentStatus is "UNPAID" or "PENDING_TRANSFER";
     public List<OrderItemViewModel> Items { get; set; } = new();
 }

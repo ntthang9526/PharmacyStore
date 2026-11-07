@@ -409,6 +409,11 @@ public class OrderService : IOrderService
             return (false, "Chỉ có thể hủy đơn hàng khi đơn đang ở trạng thái 'Chờ xác nhận' (NEW).");
         }
 
+        if (order.PaymentStatus is not ("UNPAID" or "PENDING_TRANSFER") || order.PaidAt.HasValue || order.IsRefunded)
+        {
+            return (false, "Không thể tự hủy đơn đã ghi nhận thanh toán. Vui lòng liên hệ nhà thuốc để hoàn tiền.");
+        }
+
         using var transaction = await _databaseContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
