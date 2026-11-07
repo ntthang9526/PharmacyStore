@@ -1,19 +1,19 @@
 @model PharmacyWeb.Models.ViewModels.CartViewModel
 @{
-    ViewData["Title"] = "Giỏ Hàng";
+    ViewData["Title"] = Loc["Cart_Title"];
 }
 
 <div class="container-xxl px-3 py-4">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Giỏ hàng của bạn</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Loc["Cart_YourCart"]</li>
         </ol>
     </nav>
 
     <h3 class="fw-bold text-dark mb-4">
-        <i class="bi bi-cart3 me-2 text-teal"></i>Giỏ hàng (@Model.Items.Sum(i => i.Quantity) sản phẩm)
+        <i class="bi bi-cart3 me-2 text-teal"></i>@string.Format(Loc["Cart_ItemsCount"].Value, Model.Items.Sum(i => i.Quantity))
     </h3>
 
     @if (!Model.Items.Any())
@@ -22,11 +22,11 @@
             <div class="mb-3">
                 <i class="bi bi-cart-x text-muted display-3"></i>
             </div>
-            <h4 class="fw-bold text-dark mb-2">Giỏ hàng của bạn đang trống</h4>
-            <p class="text-secondary small mb-4">Hãy khám phá danh mục thuốc chất lượng cao và chọn sản phẩm cần mua.</p>
+            <h4 class="fw-bold text-dark mb-2">@Loc["Cart_Empty"]</h4>
+            <p class="text-secondary small mb-4">@Loc["Cart_EmptyDesc"]</p>
             <div>
                 <a asp-controller="Products" asp-action="Index" class="btn btn-ph btn-ph-primary px-4 py-2 text-decoration-none">
-                    <i class="bi bi-arrow-left me-1"></i> Khám phá sản phẩm
+                    <i class="bi bi-arrow-left me-1"></i> @Loc["Cart_Explore"]
                 </a>
             </div>
         </div>
@@ -42,10 +42,10 @@
                         <table class="table align-middle mb-0">
                             <thead class="table-light small text-secondary">
                                 <tr>
-                                    <th class="ps-4" style="min-width: 250px;">Sản phẩm</th>
-                                    <th style="min-width: 100px;">Đơn giá</th>
-                                    <th style="min-width: 120px;">Số lượng</th>
-                                    <th style="min-width: 110px;">Thành tiền</th>
+                                    <th class="ps-4" style="min-width: 250px;">@Loc["Cart_TableProduct"]</th>
+                                    <th style="min-width: 100px;">@Loc["Cart_TablePrice"]</th>
+                                    <th style="min-width: 120px;">@Loc["Cart_TableQty"]</th>
+                                    <th style="min-width: 110px;">@Loc["Cart_TableSubtotal"]</th>
                                     <th class="pe-4 text-end" style="width: 50px;"></th>
                                 </tr>
                             </thead>
@@ -80,11 +80,11 @@
                                                             <i class="bi bi-exclamation-circle me-1"></i>
                                                             @if (!item.IsSelling || !item.IsActive)
                                                             {
-                                                                <span>Sản phẩm hiện ngừng kinh doanh</span>
+                                                                <span>@Loc["Product_Discontinued"]</span>
                                                             }
                                                             else
                                                             {
-                                                                <span>Kho chỉ còn @item.AvailableStock @item.Unit có thể bán</span>
+                                                                <span>@string.Format(Loc["Cart_ShortageStock"].Value, item.AvailableStock, item.Unit)</span>
                                                             }
                                                         </div>
                                                     }
@@ -102,11 +102,11 @@
                                             <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center border rounded-pill p-1 bg-light" style="width: 115px;">
                                                 @Html.AntiForgeryToken()
                                                 <input type="hidden" name="medicineId" value="@item.MedicineId" />
-                                                <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 32px; height: 32px;" aria-label="Giảm số lượng @item.MedicineName" title="Giảm số lượng">
+                                                <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 32px; height: 32px;" aria-label="Giảm số lượng" title="Giảm">
                                                     <i class="bi bi-dash fs-6"></i>
                                                 </button>
                                                 <span class="fw-bold text-center flex-grow-1 small" style="font-variant-numeric: tabular-nums;">@item.Quantity</span>
-                                                <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 32px; height: 32px;" aria-label="Tăng số lượng @item.MedicineName" title="Tăng số lượng">
+                                                <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 32px; height: 32px;" aria-label="Tăng số lượng" title="Tăng">
                                                     <i class="bi bi-plus fs-6"></i>
                                                 </button>
                                             </form>
@@ -122,7 +122,7 @@
                                             <form asp-action="Remove" method="post" class="m-0">
                                                 @Html.AntiForgeryToken()
                                                 <input type="hidden" name="medicineId" value="@item.MedicineId" />
-                                                <button type="submit" class="btn btn-link text-danger p-2 text-decoration-none" aria-label="Xóa @item.MedicineName khỏi giỏ hàng" title="Xóa sản phẩm">
+                                                <button type="submit" class="btn btn-link text-danger p-2 text-decoration-none" aria-label="Xóa khỏi giỏ hàng" title="Xóa">
                                                     <i class="bi bi-trash3 fs-5"></i>
                                                 </button>
                                             </form>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Mobile Cards (< 768px) — Full vertical cards, no horizontal scrolling -->
+                <!-- 2. Mobile Cards (< 768px) -->
                 <div class="d-md-none d-flex flex-column gap-3 mb-3">
                     @foreach (var item in Model.Items)
                     {
@@ -158,7 +158,7 @@
                                         <form asp-action="Remove" method="post" class="m-0 flex-shrink-0">
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="medicineId" value="@item.MedicineId" />
-                                            <button type="submit" class="btn btn-link text-danger p-1 text-decoration-none" aria-label="Xóa @item.MedicineName khỏi giỏ hàng" title="Xóa sản phẩm" style="min-width: 36px; min-height: 36px;">
+                                            <button type="submit" class="btn btn-link text-danger p-1 text-decoration-none" aria-label="Xóa" title="Xóa" style="min-width: 36px; min-height: 36px;">
                                                 <i class="bi bi-trash3 fs-5"></i>
                                             </button>
                                         </form>
@@ -171,7 +171,7 @@
                                     {
                                         <div class="text-danger small fw-semibold mt-1">
                                             <i class="bi bi-exclamation-circle me-1"></i>
-                                            <span>Kho chỉ còn @item.AvailableStock @item.Unit</span>
+                                            <span>@string.Format(Loc["Cart_ShortageStock"].Value, item.AvailableStock, item.Unit)</span>
                                         </div>
                                     }
                                 </div>
@@ -182,17 +182,17 @@
                                 <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center border rounded-pill p-1 bg-light" style="width: 125px;">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="medicineId" value="@item.MedicineId" />
-                                    <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 36px; height: 36px;" aria-label="Giảm số lượng @item.MedicineName" title="Giảm số lượng">
+                                    <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 36px; height: 36px;" aria-label="Giảm" title="Giảm">
                                         <i class="bi bi-dash fs-5"></i>
                                     </button>
                                     <span class="fw-bold text-center flex-grow-1" style="font-variant-numeric: tabular-nums;">@item.Quantity</span>
-                                    <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 36px; height: 36px;" aria-label="Tăng số lượng @item.MedicineName" title="Tăng số lượng">
+                                    <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-sm btn-link text-dark p-0 d-flex align-items-center justify-content-center text-decoration-none" style="width: 36px; height: 36px;" aria-label="Tăng" title="Tăng">
                                         <i class="bi bi-plus fs-5"></i>
                                     </button>
                                 </form>
 
                                 <div class="text-end">
-                                    <span class="text-muted small d-block" style="font-size:11px;">Thành tiền:</span>
+                                    <span class="text-muted small d-block" style="font-size:11px;">@Loc["Cart_TableSubtotal"]:</span>
                                     <span class="fw-bold text-teal fs-6" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                                         @item.TotalPrice.ToString("N0") ₫
                                     </span>
@@ -204,24 +204,24 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <a asp-controller="Products" asp-action="Index" class="text-decoration-none small fw-semibold text-teal">
-                        <i class="bi bi-arrow-left me-1"></i> Tiếp tục tìm kiếm thuốc
+                        <i class="bi bi-arrow-left me-1"></i> @Loc["Cart_ContinueShopping"]
                     </a>
                 </div>
             </div>
 
-            <!-- Right: Order Summary & Voucher (Natural scrolling, no sticky overlapping) -->
+            <!-- Right: Order Summary & Voucher -->
             <div class="col-lg-4">
                 <div class="card border-0 rounded-4 shadow-sm bg-white p-4">
-                    <h5 class="fw-bold text-dark mb-3">Tóm tắt đơn hàng</h5>
+                    <h5 class="fw-bold text-dark mb-3">@Loc["Cart_SummaryTitle"]</h5>
 
                     <!-- Voucher Input -->
                     <div class="mb-3">
-                        <label for="cartVoucherInput" class="form-label small fw-semibold text-secondary">Mã giảm giá</label>
+                        <label for="cartVoucherInput" class="form-label small fw-semibold text-secondary">@Loc["Cart_VoucherLabel"]</label>
                         <form asp-action="ApplyVoucher" method="post" class="input-group">
                             @Html.AntiForgeryToken()
-                            <input id="cartVoucherInput" type="text" name="voucherCode" class="form-control form-control-sm rounded-pill-start text-uppercase" placeholder="Nhập mã giảm giá" value="@Model.AppliedVoucherCode" />
+                            <input id="cartVoucherInput" type="text" name="voucherCode" class="form-control form-control-sm rounded-pill-start text-uppercase" placeholder="@Loc["Cart_VoucherPlaceholder"]" value="@Model.AppliedVoucherCode" />
                             <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill-end px-3" style="border-color: var(--color-primary); color: var(--color-primary);">
-                                Áp dụng
+                                @Loc["Cart_ApplyVoucher"]
                             </button>
                         </form>
 
@@ -232,7 +232,7 @@
                                 <form asp-action="RemoveVoucher" method="post" class="m-0">
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="btn btn-link text-danger p-0 small text-decoration-none">
-                                        <i class="bi bi-x-circle me-1"></i>Hủy mã
+                                        <i class="bi bi-x-circle me-1"></i>@Loc["Cart_CancelVoucher"]
                                     </button>
                                 </form>
                             </div>
@@ -243,29 +243,29 @@
 
                     <!-- Calculation Lines -->
                     <div class="d-flex justify-content-between mb-2 small">
-                        <span class="text-secondary">Tạm tính tiền hàng:</span>
+                        <span class="text-secondary">@Loc["Cart_Subtotal"]</span>
                         <span class="fw-bold" style="font-variant-numeric: tabular-nums;">@Model.SubtotalAmount.ToString("N0") ₫</span>
                     </div>
 
                     @if (Model.DiscountAmount > 0)
                     {
                         <div class="d-flex justify-content-between mb-2 small text-success">
-                            <span>Giảm giá:</span>
+                            <span>@Loc["Cart_Discount"]</span>
                             <span class="fw-bold" style="font-variant-numeric: tabular-nums;">-@Model.DiscountAmount.ToString("N0") ₫</span>
                         </div>
                     }
 
                     <div class="d-flex justify-content-between mb-3 small">
-                        <span class="text-secondary">Phí giao hàng:</span>
+                        <span class="text-secondary">@Loc["Cart_ShippingFee"]</span>
                         <span class="fw-bold @(Model.ShippingFee == 0 ? "text-success" : "")" style="font-variant-numeric: tabular-nums;">
-                            @(Model.ShippingFee == 0 ? "Miễn phí" : $"{Model.ShippingFee:N0} ₫")
+                            @(Model.ShippingFee == 0 ? Loc["Cart_Free"] : $"{Model.ShippingFee:N0} ₫")
                         </span>
                     </div>
 
                     @if (Model.ShippingFee > 0)
                     {
                         <div class="alert alert-info py-1 px-2 small border-0 mb-3" style="font-size: 0.75rem;">
-                            <i class="bi bi-truck me-1"></i> Mua thêm <strong>@((100000m - Model.SubtotalAmount).ToString("N0")) ₫</strong> để được Miễn phí giao hàng.
+                            <i class="bi bi-truck me-1"></i> @string.Format(Loc["Cart_FreeShippingNudge"].Value, (100000m - Model.SubtotalAmount).ToString("N0"))
                         </div>
                     }
 
@@ -273,7 +273,7 @@
 
                     <!-- Total Final -->
                     <div class="d-flex justify-content-between align-items-baseline mb-4">
-                        <span class="fw-bold text-dark fs-6">Tổng thanh toán:</span>
+                        <span class="fw-bold text-dark fs-6">@Loc["Cart_TotalAmount"]</span>
                         <span class="display-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                             @Model.TotalAmount.ToString("N0") ₫
                         </span>
@@ -283,13 +283,13 @@
                     @if (Model.CanCheckout)
                     {
                         <a asp-controller="Checkout" asp-action="Index" class="btn btn-ph btn-ph-primary w-100 py-2 fs-6 text-decoration-none text-center shadow-sm">
-                            Tiến hành đặt hàng <i class="bi bi-arrow-right ms-1"></i>
+                            @Loc["Cart_CheckoutBtn"] <i class="bi bi-arrow-right ms-1"></i>
                         </a>
                     }
                     else
                     {
                         <button type="button" class="btn btn-ph btn-ph-secondary w-100 py-2" disabled>
-                            Không thể đặt hàng (Vui lòng kiểm tra tồn kho)
+                            @Loc["Cart_CannotCheckout"]
                         </button>
                     }
                 </div>

@@ -1,19 +1,19 @@
 @model PharmacyWeb.Models.ViewModels.PagedResult<PharmacyWeb.Models.ViewModels.MyOrderListViewModel>
 @{
-    ViewData["Title"] = "Đơn Hàng Của Tôi";
+    ViewData["Title"] = Loc["Orders_Title"];
 }
 
 <div class="container py-4">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Đơn hàng của tôi</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Loc["Orders_Title"]</li>
         </ol>
     </nav>
 
     <h3 class="fw-bold text-dark mb-4">
-        <i class="bi bi-box-seam me-2 text-teal"></i>Lịch sử đơn hàng (@Model.TotalItems đơn)
+        <i class="bi bi-box-seam me-2 text-teal"></i>@string.Format(Loc["Orders_HistoryCount"].Value, Model.TotalItems)
     </h3>
 
     @if (!Model.Items.Any())
@@ -22,11 +22,11 @@
             <div class="mb-3">
                 <i class="bi bi-inbox text-muted display-4"></i>
             </div>
-            <h5 class="fw-bold text-dark">Bạn chưa có đơn hàng nào</h5>
-            <p class="text-secondary small mb-3">Hãy dạo quanh nhà thuốc và chọn những sản phẩm chăm sóc sức khỏe tốt nhất.</p>
+            <h5 class="fw-bold text-dark">@Loc["Orders_NoOrders"]</h5>
+            <p class="text-secondary small mb-3">@Loc["Orders_NoOrdersDesc"]</p>
             <div>
                 <a asp-controller="Products" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                    Bắt đầu mua thuốc
+                    @Loc["Orders_StartShopping"]
                 </a>
             </div>
         </div>
@@ -46,33 +46,33 @@
                             <!-- Order Status Badge -->
                             @if (order.OrderStatus == "NEW")
                             {
-                                <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>Chờ xác nhận</span>
+                                <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>@Loc["Status_NEW"]</span>
                             }
                             else if (order.OrderStatus == "CONFIRMED")
                             {
-                                <span class="badge bg-info text-dark"><i class="bi bi-check2 me-1"></i>Đã xác nhận</span>
+                                <span class="badge bg-info text-dark"><i class="bi bi-check2 me-1"></i>@Loc["Status_CONFIRMED"]</span>
                             }
                             else if (order.OrderStatus == "SHIPPING")
                             {
-                                <span class="badge bg-primary text-white"><i class="bi bi-truck me-1"></i>Đang giao hàng</span>
+                                <span class="badge bg-primary text-white"><i class="bi bi-truck me-1"></i>@Loc["Status_SHIPPING"]</span>
                             }
                             else if (order.OrderStatus == "COMPLETED")
                             {
-                                <span class="badge bg-success text-white"><i class="bi bi-check-circle-fill me-1"></i>Hoàn tất</span>
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle-fill me-1"></i>@Loc["Status_COMPLETED"]</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger text-white"><i class="bi bi-x-circle me-1"></i>Đã hủy</span>
+                                <span class="badge bg-danger text-white"><i class="bi bi-x-circle me-1"></i>@Loc["Status_CANCELLED"]</span>
                             }
 
                             <!-- Payment Status Badge -->
                             @if (order.PaymentStatus == "PAID")
                             {
-                                <span class="badge bg-success text-white"><i class="bi bi-cash-stack me-1"></i>Đã thu tiền</span>
+                                <span class="badge bg-success text-white"><i class="bi bi-cash-stack me-1"></i>@Loc["Status_PAID"]</span>
                             }
                             else
                             {
-                                <span class="badge bg-secondary text-white">Chưa thanh toán</span>
+                                <span class="badge bg-secondary text-white">@Loc["Status_UNPAID"]</span>
                             }
                         </div>
                     </div>
@@ -93,7 +93,7 @@
 
                         <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-top gap-2">
                             <div>
-                                <span class="text-muted small">Tổng thanh toán: </span>
+                                <span class="text-muted small">@Loc["Cart_TotalAmount"] </span>
                                 <strong class="fs-6 text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                                     @order.TotalAmount.ToString("N0") ₫
                                 </strong>
@@ -101,14 +101,14 @@
 
                             <div class="d-flex gap-2">
                                 <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
-                                    Chi tiết đơn
+                                    @Loc["Orders_DetailsBtn"]
                                 </a>
 
                                 @if (order.CanCancel)
                                 {
                                     <!-- Cancel Order Trigger Modal -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill btn-sm px-3" data-bs-toggle="modal" data-bs-target="#cancelModal_@order.Id">
-                                        Hủy đơn
+                                        @Loc["Orders_CancelBtn"]
                                     </button>
 
                                     <!-- Cancel Modal -->
@@ -119,17 +119,17 @@
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" name="id" value="@order.Id" />
                                                     <div class="modal-header border-0 pb-0">
-                                                        <h5 class="modal-title fw-bold text-dark">Hủy đơn hàng @order.Code</h5>
+                                                        <h5 class="modal-title fw-bold text-dark">@string.Format(Loc["Orders_CancelModalTitle"].Value, order.Code)</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body py-3">
-                                                        <p class="text-secondary small mb-3">Bạn có chắc chắn muốn hủy đơn hàng này không? Lô hàng đã giữ và lượt voucher (nếu có) sẽ được giải phóng ngay lập tức.</p>
-                                                        <label class="form-label small fw-semibold text-secondary">Lý do hủy đơn:</label>
-                                                        <input type="text" name="reason" class="form-control rounded-3" placeholder="vd: Tôi muốn đổi địa chỉ, đặt nhầm số lượng..." required />
+                                                        <p class="text-secondary small mb-3">@Loc["Orders_CancelConfirm"]</p>
+                                                        <label class="form-label small fw-semibold text-secondary">@Loc["Orders_CancelReasonLabel"]</label>
+                                                        <input type="text" name="reason" class="form-control rounded-3" placeholder="@Loc["Orders_CancelReasonPlaceholder"]" required />
                                                     </div>
                                                     <div class="modal-footer border-0 pt-0">
-                                                        <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Đóng</button>
-                                                        <button type="submit" class="btn btn-danger rounded-pill px-4">Xác nhận hủy đơn</button>
+                                                        <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">@Loc["Common_Close"]</button>
+                                                        <button type="submit" class="btn btn-danger rounded-pill px-4">@Loc["Orders_ConfirmCancelBtn"]</button>
                                                     </div>
                                                 </form>
                                             </div>

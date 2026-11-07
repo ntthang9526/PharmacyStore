@@ -6,11 +6,11 @@
         <div class="mb-3">
             <i class="bi bi-search text-muted display-4"></i>
         </div>
-        <h5 class="fw-bold text-dark">Không tìm thấy sản phẩm phù hợp</h5>
-        <p class="text-secondary small mb-3">Vui lòng thử tìm kiếm với từ khóa khác hoặc bỏ bớt các tiêu chí lọc.</p>
+        <h5 class="fw-bold text-dark">@Loc["Catalog_NotFound"]</h5>
+        <p class="text-secondary small mb-3">@Loc["Catalog_NotFoundDesc"]</p>
         <div>
             <a asp-action="Index" class="btn btn-ph btn-ph-primary rounded-pill btn-sm px-4">
-                Xóa tất cả bộ lọc
+                @Loc["Catalog_ClearAllFilters"]
             </a>
         </div>
     </div>

@@ -1,6 +1,6 @@
 @model PharmacyWeb.Models.ViewModels.OrderResultViewModel
 @{
-    ViewData["Title"] = $"Đặt Hàng Thành Công - {Model.OrderCode}";
+    ViewData["Title"] = $"{Loc["Result_Title"]} - {Model.OrderCode}";
 }
 
 <div class="container py-5 text-center" style="max-width: 720px;">
@@ -9,31 +9,31 @@
             <div class="rounded-circle bg-success-subtle text-success mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 72px; height: 72px;">
                 <i class="bi bi-check-lg display-4"></i>
             </div>
-            <h3 class="fw-bold text-dark mb-1">Đặt Hàng Thành Công!</h3>
-            <p class="text-secondary small mb-0">Cảm ơn bạn đã tin dùng sản phẩm của Nhà thuốc Pharmacy.</p>
+            <h3 class="fw-bold text-dark mb-1">@Loc["Result_Heading"]</h3>
+            <p class="text-secondary small mb-0">@Loc["Result_ThankYou"]</p>
         </div>
 
         <!-- Order Summary Card -->
         <div class="card bg-light border-0 rounded-3 p-3 mb-4">
             <div class="row g-2 small">
                 <div class="col-sm-6">
-                    <span class="text-muted d-block">Mã đơn hàng:</span>
+                    <span class="text-muted d-block">@Loc["Result_OrderCode"]</span>
                     <strong class="fs-6 font-monospace text-teal" style="color: var(--color-primary);">@Model.OrderCode</strong>
                 </div>
                 <div class="col-sm-6">
-                    <span class="text-muted d-block">Thời gian đặt:</span>
+                    <span class="text-muted d-block">@Loc["Result_OrderTime"]</span>
                     <strong>@Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</strong>
                 </div>
                 <div class="col-sm-6">
-                    <span class="text-muted d-block">Trạng thái đơn:</span>
-                    <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>Chờ xác nhận</span>
+                    <span class="text-muted d-block">@Loc["Result_OrderStatus"]</span>
+                    <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>@(Loc["Status_" + Model.OrderStatus]?.Value ?? Model.OrderStatus)</span>
                 </div>
                 <div class="col-sm-6">
-                    <span class="text-muted d-block">Phương thức:</span>
-                    <strong>@(Model.PaymentMethod == "COD" ? "Thanh toán khi nhận hàng" : "Chuyển khoản")</strong>
+                    <span class="text-muted d-block">@Loc["Result_PaymentMethod"]</span>
+                    <strong>@(Model.PaymentMethod == "COD" ? Loc["Checkout_COD"] : Loc["Checkout_BankTransfer"])</strong>
                 </div>
                 <div class="col-12 pt-2 border-top">
-                    <span class="text-muted d-block">Người nhận:</span>
+                    <span class="text-muted d-block">@Loc["Result_Recipient"]</span>
                     <strong>@Model.CustomerName (@Model.CustomerPhone)</strong> — @Model.ShippingAddress
                 </div>
             </div>
@@ -46,11 +46,11 @@
             <div class="card border border-primary-subtle rounded-3 p-3 mb-4 bg-primary-subtle bg-opacity-10">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <h6 class="fw-bold text-primary mb-0">
-                        <i class="bi bi-bank me-1"></i> Hướng dẫn chuyển khoản ngân hàng
+                        <i class="bi bi-bank me-1"></i> @Loc["Result_BankGuideTitle"]
                     </h6>
                     @if (bankInfo?.IsDemoAccount == true)
                     {
-                        <span class="badge bg-warning text-dark border border-warning">Tài khoản thử nghiệm demo</span>
+                        <span class="badge bg-warning text-dark border border-warning">@Loc["Checkout_DemoAccount"]</span>
                     }
                 </div>
 
@@ -62,28 +62,25 @@
                     </div>
                 }
 
-                <p class="small text-secondary mb-3">
-                    Quý khách vui lòng chuyển khoản theo thông tin bên dưới để nhà thuốc xác nhận và chuẩn bị đơn hàng:
-                </p>
                 <div class="row g-2 small">
                     <div class="col-sm-6">
-                        <span class="text-muted d-block">Ngân hàng thụ hưởng:</span>
-                        <strong class="text-dark">@(bankInfo?.BankName ?? "Vietcombank (Chi nhánh Cần Thơ)")</strong>
+                        <span class="text-muted d-block">@Loc["Result_BeneficiaryBank"]</span>
+                        <strong class="text-dark">@(bankInfo?.BankName ?? "Vietcombank")</strong>
                     </div>
                     <div class="col-sm-6">
-                        <span class="text-muted d-block">Số tài khoản:</span>
+                        <span class="text-muted d-block">@Loc["Result_AccountNumber"]</span>
                         <strong class="text-dark font-monospace fs-6">@(bankInfo?.AccountNumber ?? "1029384756")</strong>
                     </div>
                     <div class="col-sm-6">
-                        <span class="text-muted d-block">Chủ tài khoản:</span>
+                        <span class="text-muted d-block">@Loc["Result_AccountHolder"]</span>
                         <strong class="text-dark">@(bankInfo?.AccountHolder ?? "NHA THUOC PHARMACY STORE")</strong>
                     </div>
                     <div class="col-sm-6">
-                        <span class="text-muted d-block">Số tiền thanh toán:</span>
+                        <span class="text-muted d-block">@Loc["Result_AmountToPay"]</span>
                         <strong class="text-success fs-6 fw-bold">@Model.TotalAmount.ToString("N0") ₫</strong>
                     </div>
                     <div class="col-12 mt-2 pt-2 border-top">
-                        <span class="text-muted d-block">Cú pháp chuyển khoản:</span>
+                        <span class="text-muted d-block">@Loc["Result_TransferMemo"]</span>
                         <div class="p-2 bg-white rounded border font-monospace text-primary fw-bold user-select-all">
                             THANH TOAN @Model.OrderCode
                         </div>
@@ -94,14 +91,14 @@
         }
 
         <!-- Items Table -->
-        <h6 class="fw-bold text-dark mb-2">Chi tiết sản phẩm đã đặt:</h6>
+        <h6 class="fw-bold text-dark mb-2">@Loc["Result_ItemsTitle"]</h6>
         <div class="border rounded-3 overflow-hidden mb-4">
             <table class="table table-sm align-middle mb-0">
                 <thead class="table-light small">
                     <tr>
-                        <th class="ps-3">Tên thuốc</th>
-                        <th class="text-center">Số lượng</th>
-                        <th class="text-end pe-3">Thành tiền</th>
+                        <th class="ps-3">@Loc["Cart_TableProduct"]</th>
+                        <th class="text-center">@Loc["Cart_TableQty"]</th>
+                        <th class="text-end pe-3">@Loc["Cart_TableSubtotal"]</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -116,7 +113,7 @@
                 </tbody>
                 <tfoot class="table-light">
                     <tr>
-                        <td colspan="2" class="ps-3 fw-bold">Tổng thanh toán:</td>
+                        <td colspan="2" class="ps-3 fw-bold">@Loc["Cart_TotalAmount"]</td>
                         <td class="text-end pe-3 fs-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                             @Model.TotalAmount.ToString("N0") ₫
                         </td>
@@ -127,10 +124,10 @@
 
         <div class="d-flex flex-wrap justify-content-center gap-3">
             <a asp-controller="MyOrders" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
-                <i class="bi bi-box-seam me-1"></i> Xem đơn hàng của tôi
+                <i class="bi bi-box-seam me-1"></i> @Loc["Result_ViewMyOrders"]
             </a>
             <a asp-controller="Home" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                <i class="bi bi-house me-1"></i> Quay về trang chủ
+                <i class="bi bi-house me-1"></i> @Loc["Result_BackHome"]
             </a>
         </div>
     </div>

@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="0" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="0" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Header_TopAuthentic" xml:space="preserve">
+    <value>Hệ thống Nhà thuốc Chính hãng • Dược sĩ tư vấn tận tâm</value>
+  </data>
+  <data name="Header_Hotline" xml:space="preserve">
+    <value>Tổng đài tư vấn</value>
+  </data>
+  <data name="Header_TollFree" xml:space="preserve">
+    <value>Miễn phí</value>
+  </data>
+  <data name="Header_Policies" xml:space="preserve">
+    <value>Chính sách &amp; Hỗ trợ</value>
+  </data>
+  <data name="Header_AdminPortal" xml:space="preserve">
+    <value>Khu vực Quản trị</value>
+  </data>
+  <data name="Header_SubTitle" xml:space="preserve">
+    <value>Hệ thống Nhà thuốc &amp; Dược phẩm</value>
+  </data>
+  <data name="Header_SearchPlaceholder" xml:space="preserve">
+    <value>Tìm tên thuốc, hoạt chất, triệu chứng...</value>
+  </data>
+  <data name="Header_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Header_SwitchLang" xml:space="preserve">
+    <value>Chuyển sang Tiếng Anh</value>
+  </data>
+  <data name="Header_MyOrders" xml:space="preserve">
+    <value>Đơn của tôi</value>
+  </data>
+  <data name="Header_Account" xml:space="preserve">
+    <value>Tài khoản</value>
+  </data>
+  <data name="Header_SignIn" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Header_SignOut" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Header_PrescriptionRequests" xml:space="preserve">
+    <value>Đơn thuốc tư vấn</value>
+  </data>
+  <data name="Header_ProfileSecurity" xml:space="preserve">
+    <value>Hồ sơ &amp; Đổi mật khẩu</value>
+  </data>
+  <data name="Header_Cart" xml:space="preserve">
+    <value>Giỏ hàng</value>
+  </data>
+  <data name="Header_Home" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Header_AllMedicines" xml:space="preserve">
+    <value>Tất cả thuốc</value>
+  </data>
+  <data name="Common_Currency" xml:space="preserve">
+    <value>₫</value>
+  </data>
+  <data name="Common_RequiresRx" xml:space="preserve">
+    <value>Cần đơn bác sĩ</value>
+  </data>
+  <data name="Common_DirectPurchase" xml:space="preserve">
+    <value>Mua trực tiếp</value>
+  </data>
+  <data name="Common_AddToCart" xml:space="preserve">
+    <value>Chọn mua</value>
+  </data>
+  <data name="Common_Consultation" xml:space="preserve">
+    <value>Gửi đơn tư vấn</value>
+  </data>
+  <data name="Common_OutOfStock" xml:space="preserve">
+    <value>Tạm hết hàng</value>
+  </data>
+  <data name="Common_OnlyLeft" xml:space="preserve">
+    <value>Còn</value>
+  </data>
+  <data name="Common_Units" xml:space="preserve">
+    <value>sản phẩm</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>Quay lại</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Common_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="Common_Success" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Catalog_Title" xml:space="preserve">
+    <value>Danh Mục Thuốc &amp; Sản Phẩm</value>
+  </data>
+  <data name="Catalog_Breadcrumb" xml:space="preserve">
+    <value>Danh mục sản phẩm</value>
+  </data>
+  <data name="Catalog_Found" xml:space="preserve">
+    <value>Tìm thấy {0} sản phẩm</value>
+  </data>
+  <data name="Catalog_Showing" xml:space="preserve">
+    <value>Hiển thị {0} sản phẩm</value>
+  </data>
+  <data name="Catalog_ForKeyword" xml:space="preserve">
+    <value>cho từ khóa</value>
+  </data>
+  <data name="Catalog_FilterBtn" xml:space="preserve">
+    <value>Bộ lọc thuốc</value>
+  </data>
+  <data name="Catalog_FilterHeader" xml:space="preserve">
+    <value>Bộ lọc tìm kiếm</value>
+  </data>
+  <data name="Catalog_ClearFilter" xml:space="preserve">
+    <value>Xóa lọc</value>
+  </data>
+  <data name="Catalog_ClearAllFilters" xml:space="preserve">
+    <value>Xóa tất cả bộ lọc</value>
+  </data>
+  <data name="Catalog_KeywordLabel" xml:space="preserve">
+    <value>Từ khóa tìm kiếm</value>
+  </data>
+  <data name="Catalog_KeywordPlaceholder" xml:space="preserve">
+    <value>Tên thuốc, hoạt chất...</value>
+  </data>
+  <data name="Catalog_CategoryLabel" xml:space="preserve">
+    <value>Nhóm thuốc</value>
+  </data>
+  <data name="Catalog_AllCategories" xml:space="preserve">
+    <value>Tất cả nhóm thuốc</value>
+  </data>
+  <data name="Catalog_PriceRange" xml:space="preserve">
+    <value>Khoảng giá (₫)</value>
+  </data>
+  <data name="Catalog_From" xml:space="preserve">
+    <value>Từ</value>
+  </data>
+  <data name="Catalog_To" xml:space="preserve">
+    <value>Đến</value>
+  </data>
+  <data name="Catalog_ClassificationStock" xml:space="preserve">
+    <value>Phân loại &amp; Tồn kho</value>
+  </data>
+  <data name="Catalog_DirectPurchaseOnly" xml:space="preserve">
+    <value>Chỉ thuốc mua trực tiếp</value>
+  </data>
+  <data name="Catalog_OnlyInStock" xml:space="preserve">
+    <value>Chỉ sản phẩm còn hàng</value>
+  </data>
+  <data name="Catalog_ApplyFilter" xml:space="preserve">
+    <value>Áp dụng bộ lọc</value>
+  </data>
+  <data name="Catalog_SortLabel" xml:space="preserve">
+    <value>Sắp xếp:</value>
+  </data>
+  <data name="Catalog_SortDefault" xml:space="preserve">
+    <value>Mặc định (Nổi bật)</value>
+  </data>
+  <data name="Catalog_SortPriceAsc" xml:space="preserve">
+    <value>Giá tăng dần</value>
+  </data>
+  <data name="Catalog_SortPriceDesc" xml:space="preserve">
+    <value>Giá giảm dần</value>
+  </data>
+  <data name="Catalog_SortNameAsc" xml:space="preserve">
+    <value>Tên A-Z</value>
+  </data>
+  <data name="Catalog_NotFound" xml:space="preserve">
+    <value>Không tìm thấy sản phẩm phù hợp</value>
+  </data>
+  <data name="Catalog_NotFoundDesc" xml:space="preserve">
+    <value>Vui lòng thử tìm kiếm với từ khóa khác hoặc bỏ bớt các tiêu chí lọc.</value>
+  </data>
+  <data name="Product_Manufacturer" xml:space="preserve">
+    <value>Nhà sản xuất:</value>
+  </data>
+  <data name="Product_ActiveIngredient" xml:space="preserve">
+    <value>Hoạt chất chính:</value>
+  </data>
+  <data name="Product_Packaging" xml:space="preserve">
+    <value>Quy cách đóng gói:</value>
+  </data>
+  <data name="Product_Discontinued" xml:space="preserve">
+    <value>Sản phẩm đang ngừng kinh doanh</value>
+  </data>
+  <data name="Product_LowStockNotice" xml:space="preserve">
+    <value>Sắp hết hàng (còn {0} {1} có thể bán)</value>
+  </data>
+  <data name="Product_InStockNotice" xml:space="preserve">
+    <value>Còn hàng trong kho ({0} {1})</value>
+  </data>
+  <data name="Product_RxAlertTitle" xml:space="preserve">
+    <value>Thuốc cần đơn bác sĩ:</value>
+  </data>
+  <data name="Product_RxAlertDesc" xml:space="preserve">
+    <value>Theo quy định y tế, sản phẩm này chỉ bán khi có đơn thuốc hợp lệ của bác sĩ và được tư vấn trực tiếp bởi dược sĩ.</value>
+  </data>
+  <data name="Product_SendRxBtn" xml:space="preserve">
+    <value>Gửi ảnh đơn thuốc để dược sĩ tư vấn</value>
+  </data>
+  <data name="Product_AddToCartBtn" xml:space="preserve">
+    <value>Thêm vào giỏ hàng</value>
+  </data>
+  <data name="Product_DescriptionTitle" xml:space="preserve">
+    <value>Mô tả sản phẩm &amp; Hướng dẫn sử dụng</value>
+  </data>
+  <data name="Product_NoDescription" xml:space="preserve">
+    <value>Chưa có thông tin mô tả chi tiết cho sản phẩm này.</value>
+  </data>
+  <data name="Product_SimilarTitle" xml:space="preserve">
+    <value>Sản phẩm tương tự trong nhóm {0}</value>
+  </data>
+  <data name="Cart_Title" xml:space="preserve">
+    <value>Giỏ Hàng</value>
+  </data>
+  <data name="Cart_YourCart" xml:space="preserve">
+    <value>Giỏ hàng của bạn</value>
+  </data>
+  <data name="Cart_ItemsCount" xml:space="preserve">
+    <value>Giỏ hàng ({0} sản phẩm)</value>
+  </data>
+  <data name="Cart_Empty" xml:space="preserve">
+    <value>Giỏ hàng của bạn đang trống</value>
+  </data>
+  <data name="Cart_EmptyDesc" xml:space="preserve">
+    <value>Hãy khám phá danh mục thuốc chất lượng cao và chọn sản phẩm cần mua.</value>
+  </data>
+  <data name="Cart_Explore" xml:space="preserve">
+    <value>Khám phá sản phẩm</value>
+  </data>
+  <data name="Cart_TableProduct" xml:space="preserve">
+    <value>Sản phẩm</value>
+  </data>
+  <data name="Cart_TablePrice" xml:space="preserve">
+    <value>Đơn giá</value>
+  </data>
+  <data name="Cart_TableQty" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="Cart_TableSubtotal" xml:space="preserve">
+    <value>Thành tiền</value>
+  </data>
+  <data name="Cart_ShortageStock" xml:space="preserve">
+    <value>Kho chỉ còn {0} {1} có thể bán</value>
+  </data>
+  <data name="Cart_ContinueShopping" xml:space="preserve">
+    <value>Tiếp tục tìm kiếm thuốc</value>
+  </data>
+  <data name="Cart_SummaryTitle" xml:space="preserve">
+    <value>Tóm tắt đơn hàng</value>
+  </data>
+  <data name="Cart_VoucherLabel" xml:space="preserve">
+    <value>Mã giảm giá</value>
+  </data>
+  <data name="Cart_VoucherPlaceholder" xml:space="preserve">
+    <value>Nhập mã giảm giá</value>
+  </data>
+  <data name="Cart_ApplyVoucher" xml:space="preserve">
+    <value>Áp dụng</value>
+  </data>
+  <data name="Cart_CancelVoucher" xml:space="preserve">
+    <value>Hủy mã</value>
+  </data>
+  <data name="Cart_Subtotal" xml:space="preserve">
+    <value>Tạm tính tiền hàng:</value>
+  </data>
+  <data name="Cart_Discount" xml:space="preserve">
+    <value>Giảm giá:</value>
+  </data>
+  <data name="Cart_ShippingFee" xml:space="preserve">
+    <value>Phí giao hàng:</value>
+  </data>
+  <data name="Cart_Free" xml:space="preserve">
+    <value>Miễn phí</value>
+  </data>
+  <data name="Cart_FreeShippingNudge" xml:space="preserve">
+    <value>Mua thêm {0} ₫ để được Miễn phí giao hàng.</value>
+  </data>
+  <data name="Cart_TotalAmount" xml:space="preserve">
+    <value>Tổng thanh toán:</value>
+  </data>
+  <data name="Cart_CheckoutBtn" xml:space="preserve">
+    <value>Tiến hành đặt hàng</value>
+  </data>
+  <data name="Cart_CannotCheckout" xml:space="preserve">
+    <value>Không thể đặt hàng (Vui lòng kiểm tra tồn kho)</value>
+  </data>
+  <data name="Checkout_Title" xml:space="preserve">
+    <value>Thanh Toán &amp; Đặt Hàng</value>
+  </data>
+  <data name="Checkout_Heading" xml:space="preserve">
+    <value>Xác nhận thông tin &amp; Đặt hàng</value>
+  </data>
+  <data name="Checkout_ValidationNotice" xml:space="preserve">
+    <value>Vui lòng kiểm tra lại thông tin:</value>
+  </data>
+  <data name="Checkout_ShippingAddressTitle" xml:space="preserve">
+    <value>Địa chỉ nhận hàng</value>
+  </data>
+  <data name="Checkout_RecipientName" xml:space="preserve">
+    <value>Họ và tên người nhận thuốc</value>
+  </data>
+  <data name="Checkout_RecipientNamePlaceholder" xml:space="preserve">
+    <value>Nhập họ và tên người nhận thuốc</value>
+  </data>
+  <data name="Checkout_Phone" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="Checkout_PhonePlaceholder" xml:space="preserve">
+    <value>Số điện thoại liên hệ nhận hàng (10 chữ số)</value>
+  </data>
+  <data name="Checkout_Address" xml:space="preserve">
+    <value>Địa chỉ giao hàng</value>
+  </data>
+  <data name="Checkout_AddressPlaceholder" xml:space="preserve">
+    <value>Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố</value>
+  </data>
+  <data name="Checkout_Note" xml:space="preserve">
+    <value>Ghi chú giao hàng</value>
+  </data>
+  <data name="Checkout_NotePlaceholder" xml:space="preserve">
+    <value>Ghi chú thêm cho người giao hàng (nếu có)</value>
+  </data>
+  <data name="Checkout_PaymentMethodTitle" xml:space="preserve">
+    <value>Phương thức thanh toán</value>
+  </data>
+  <data name="Checkout_COD" xml:space="preserve">
+    <value>Thanh toán khi nhận hàng</value>
+  </data>
+  <data name="Checkout_CODDesc" xml:space="preserve">
+    <value>Khách kiểm tra bưu kiện thuốc và thanh toán tiền mặt trực tiếp cho bưu tá</value>
+  </data>
+  <data name="Checkout_BankTransfer" xml:space="preserve">
+    <value>Chuyển khoản ngân hàng</value>
+  </data>
+  <data name="Checkout_BankTransferDesc" xml:space="preserve">
+    <value>Chuyển khoản qua tài khoản ngân hàng của nhà thuốc</value>
+  </data>
+  <data name="Checkout_DemoAccount" xml:space="preserve">
+    <value>Tài khoản demo</value>
+  </data>
+  <data name="Checkout_BankSuspended" xml:space="preserve">
+    <value>Phương thức chuyển khoản tạm ngưng phục vụ hoặc chưa thiết lập tài khoản nhận tiền.</value>
+  </data>
+  <data name="Checkout_OrderItemsTitle" xml:space="preserve">
+    <value>Đơn hàng của bạn ({0} sản phẩm)</value>
+  </data>
+  <data name="Checkout_TotalToPay" xml:space="preserve">
+    <value>Tổng cần thanh toán:</value>
+  </data>
+  <data name="Checkout_ConfirmBtn" xml:space="preserve">
+    <value>Xác nhận &amp; Đặt hàng ngay</value>
+  </data>
+  <data name="Result_Title" xml:space="preserve">
+    <value>Đặt Hàng Thành Công</value>
+  </data>
+  <data name="Result_Heading" xml:space="preserve">
+    <value>Đặt Hàng Thành Công!</value>
+  </data>
+  <data name="Result_ThankYou" xml:space="preserve">
+    <value>Cảm ơn bạn đã tin dùng sản phẩm của Nhà thuốc Pharmacy.</value>
+  </data>
+  <data name="Result_OrderCode" xml:space="preserve">
+    <value>Mã đơn hàng:</value>
+  </data>
+  <data name="Result_OrderTime" xml:space="preserve">
+    <value>Thời gian đặt:</value>
+  </data>
+  <data name="Result_OrderStatus" xml:space="preserve">
+    <value>Trạng thái đơn:</value>
+  </data>
+  <data name="Result_PaymentMethod" xml:space="preserve">
+    <value>Phương thức:</value>
+  </data>
+  <data name="Result_Recipient" xml:space="preserve">
+    <value>Người nhận:</value>
+  </data>
+  <data name="Result_BankGuideTitle" xml:space="preserve">
+    <value>Hướng dẫn chuyển khoản ngân hàng</value>
+  </data>
+  <data name="Result_BeneficiaryBank" xml:space="preserve">
+    <value>Ngân hàng thụ hưởng:</value>
+  </data>
+  <data name="Result_AccountNumber" xml:space="preserve">
+    <value>Số tài khoản:</value>
+  </data>
+  <data name="Result_AccountHolder" xml:space="preserve">
+    <value>Chủ tài khoản:</value>
+  </data>
+  <data name="Result_AmountToPay" xml:space="preserve">
+    <value>Số tiền thanh toán:</value>
+  </data>
+  <data name="Result_TransferMemo" xml:space="preserve">
+    <value>Cú pháp chuyển khoản:</value>
+  </data>
+  <data name="Result_ItemsTitle" xml:space="preserve">
+    <value>Chi tiết sản phẩm đã đặt:</value>
+  </data>
+  <data name="Result_ViewMyOrders" xml:space="preserve">
+    <value>Xem đơn hàng của tôi</value>
+  </data>
+  <data name="Result_BackHome" xml:space="preserve">
+    <value>Quay về trang chủ</value>
+  </data>
+  <data name="Status_NEW" xml:space="preserve">
+    <value>Chờ xác nhận</value>
+  </data>
+  <data name="Status_CONFIRMED" xml:space="preserve">
+    <value>Đã xác nhận</value>
+  </data>
+  <data name="Status_SHIPPING" xml:space="preserve">
+    <value>Đang giao hàng</value>
+  </data>
+  <data name="Status_COMPLETED" xml:space="preserve">
+    <value>Hoàn tất</value>
+  </data>
+  <data name="Status_CANCELLED" xml:space="preserve">
+    <value>Đã hủy</value>
+  </data>
+  <data name="Status_PAID" xml:space="preserve">
+    <value>Đã thu tiền</value>
+  </data>
+  <data name="Status_UNPAID" xml:space="preserve">
+    <value>Chưa thanh toán</value>
+  </data>
+  <data name="Status_REFUNDED" xml:space="preserve">
+    <value>Đã hoàn tiền</value>
+  </data>
+  <data name="Orders_Title" xml:space="preserve">
+    <value>Đơn Hàng Của Tôi</value>
+  </data>
+  <data name="Orders_HistoryCount" xml:space="preserve">
+    <value>Lịch sử đơn hàng ({0} đơn)</value>
+  </data>
+  <data name="Orders_NoOrders" xml:space="preserve">
+    <value>Bạn chưa có đơn hàng nào</value>
+  </data>
+  <data name="Orders_NoOrdersDesc" xml:space="preserve">
+    <value>Hãy dạo quanh nhà thuốc và chọn những sản phẩm chăm sóc sức khỏe tốt nhất.</value>
+  </data>
+  <data name="Orders_StartShopping" xml:space="preserve">
+    <value>Bắt đầu mua thuốc</value>
+  </data>
+  <data name="Orders_DetailsBtn" xml:space="preserve">
+    <value>Chi tiết đơn</value>
+  </data>
+  <data name="Orders_CancelBtn" xml:space="preserve">
+    <value>Hủy đơn</value>
+  </data>
+  <data name="Orders_CancelModalTitle" xml:space="preserve">
+    <value>Hủy đơn hàng {0}</value>
+  </data>
+  <data name="Orders_CancelConfirm" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn hủy đơn hàng này không? Lô hàng đã giữ và lượt voucher (nếu có) sẽ được giải phóng ngay lập tức.</value>
+  </data>
+  <data name="Orders_CancelReasonLabel" xml:space="preserve">
+    <value>Lý do hủy đơn:</value>
+  </data>
+  <data name="Orders_CancelReasonPlaceholder" xml:space="preserve">
+    <value>vd: Tôi muốn đổi địa chỉ, đặt nhầm số lượng...</value>
+  </data>
+  <data name="Orders_ConfirmCancelBtn" xml:space="preserve">
+    <value>Xác nhận hủy đơn</value>
+  </data>
+  <data name="Account_LoginTitle" xml:space="preserve">
+    <value>Đăng Nhập Tài Khoản</value>
+  </data>
+  <data name="Account_LoginWelcome" xml:space="preserve">
+    <value>Chào mừng bạn quay lại hệ thống Nhà thuốc Pharmacy</value>
+  </data>
+  <data name="Account_PhoneOrEmail" xml:space="preserve">
+    <value>Số điện thoại hoặc email</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="Account_RememberMe" xml:space="preserve">
+    <value>Ghi nhớ đăng nhập</value>
+  </data>
+  <data name="Account_NoAccount" xml:space="preserve">
+    <value>Chưa có tài khoản?</value>
+  </data>
+  <data name="Account_RegisterNew" xml:space="preserve">
+    <value>Đăng ký tài khoản mới</value>
+  </data>
+  <data name="Account_RegisterTitle" xml:space="preserve">
+    <value>Đăng Ký Tài Khoản Khách Hàng</value>
+  </data>
+  <data name="Account_RegisterSubtitle" xml:space="preserve">
+    <value>Tạo tài khoản khách hàng để theo dõi đơn và lưu địa chỉ nhận thuốc</value>
+  </data>
+  <data name="Account_FullName" xml:space="preserve">
+    <value>Họ và tên</value>
+  </data>
+  <data name="Account_ConfirmPassword" xml:space="preserve">
+    <value>Nhập lại mật khẩu</value>
+  </data>
+  <data name="Account_CompleteRegistration" xml:space="preserve">
+    <value>Hoàn tất đăng ký</value>
+  </data>
+  <data name="Account_AlreadyHaveAccount" xml:space="preserve">
+    <value>Đã có tài khoản?</value>
+  </data>
+  <data name="Account_SignInNow" xml:space="preserve">
+    <value>Đăng nhập ngay</value>
+  </data>
+  <data name="Account_ProfileTitle" xml:space="preserve">
+    <value>Hồ Sơ &amp; Sổ Địa Chỉ</value>
+  </data>
+  <data name="Account_EditProfile" xml:space="preserve">
+    <value>Sửa hồ sơ</value>
+  </data>
+  <data name="Account_POSPoints" xml:space="preserve">
+    <value>Điểm tích lũy POS:</value>
+  </data>
+  <data name="Account_JoinDate" xml:space="preserve">
+    <value>Ngày tham gia:</value>
+  </data>
+  <data name="Account_AddressBookTitle" xml:space="preserve">
+    <value>Sổ địa chỉ nhận hàng</value>
+  </data>
+  <data name="Account_AddAddress" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
+  <data name="Rx_Title" xml:space="preserve">
+    <value>Tư Vấn Đơn Thuốc Bác Sĩ</value>
+  </data>
+  <data name="Rx_Heading" xml:space="preserve">
+    <value>Gửi Ảnh Đơn Thuốc</value>
+  </data>
+  <data name="Rx_ResponseTime" xml:space="preserve">
+    <value>Dược sĩ phản hồi trong vòng 15 phút</value>
+  </data>
+  <data name="Rx_PrivacyNotice" xml:space="preserve">
+    <value>Ảnh đơn thuốc được lưu trữ riêng tư, chỉ dược sĩ phụ trách và bạn mới có quyền xem.</value>
+  </data>
+  <data name="Rx_PatientName" xml:space="preserve">
+    <value>Họ và tên người bệnh...</value>
+  </data>
+  <data name="Rx_ContactPhone" xml:space="preserve">
+    <value>Số điện thoại dược sĩ liên hệ...</value>
+  </data>
+  <data name="Rx_CustomerNote" xml:space="preserve">
+    <value>Ghi chú về tiền sử dị ứng, triệu chứng hoặc câu hỏi cho dược sĩ...</value>
+  </data>
+  <data name="Rx_PhotoUpload" xml:space="preserve">
+    <value>Tải ảnh đơn thuốc</value>
+  </data>
+  <data name="Rx_PhotoNotice" xml:space="preserve">
+    <value>Hỗ trợ định dạng JPEG, PNG, WebP (Tối đa 5MB/ảnh).</value>
+  </data>
+  <data name="Rx_SendBtn" xml:space="preserve">
+    <value>Gửi đơn cho dược sĩ</value>
+  </data>
+  <data name="Rx_MyHistory" xml:space="preserve">
+    <value>Đơn thuốc đã gửi ({0} yêu cầu)</value>
+  </data>
+  <data name="Rx_NoHistory" xml:space="preserve">
+    <value>Bạn chưa gửi ảnh đơn thuốc nào. Vui lòng gửi ảnh ở khung bên trái khi cần mua thuốc kê đơn.</value>
+  </data>
+  <data name="Rx_StatusPending" xml:space="preserve">
+    <value>Chờ dược sĩ kiểm tra</value>
+  </data>
+  <data name="Rx_StatusNeedInfo" xml:space="preserve">
+    <value>Cần bổ sung ảnh/thông tin</value>
+  </data>
+  <data name="Rx_StatusAnswered" xml:space="preserve">
+    <value>Dược sĩ đã phản hồi</value>
+  </data>
+  <data name="Rx_PharmacistFeedback" xml:space="preserve">
+    <value>Phản hồi từ Dược sĩ:</value>
+  </data>
+  <data name="Rx_ViewImage" xml:space="preserve">
+    <value>Xem ảnh đơn ({0})</value>
+  </data>
+  <data name="Pagination_Previous" xml:space="preserve">
+    <value>Trước</value>
+  </data>
+  <data name="Pagination_Next" xml:space="preserve">
+    <value>Sau</value>
+  </data>
+  <data name="Msg_CartAdded" xml:space="preserve">
+    <value>Đã thêm sản phẩm vào giỏ hàng!</value>
+  </data>
+  <data name="Msg_CartCannotAdd" xml:space="preserve">
+    <value>Không thể thêm sản phẩm vào giỏ (thuốc kê đơn, tạm hết hàng hoặc vượt quá số lượng có thể bán).</value>
+  </data>
+  <data name="Msg_CartQuantityExceeded" xml:space="preserve">
+    <value>Số lượng yêu cầu vượt quá tồn kho có thể bán.</value>
+  </data>
+  <data name="Msg_CartRemoved" xml:space="preserve">
+    <value>Đã xóa sản phẩm khỏi giỏ hàng.</value>
+  </data>
+  <data name="Msg_CartVoucherRemoved" xml:space="preserve">
+    <value>Đã hủy áp dụng mã giảm giá.</value>
+  </data>
+  <data name="Msg_CheckoutCartEmpty" xml:space="preserve">
+    <value>Giỏ hàng của bạn đang trống.</value>
+  </data>
+  <data name="Msg_OrderPlacedSuccess" xml:space="preserve">
+    <value>Đặt hàng thành công!</value>
+  </data>
+  <data name="Msg_OrderCancelSuccess" xml:space="preserve">
+    <value>Hủy đơn hàng thành công!</value>
+  </data>
+  <data name="Msg_LoginSuccess" xml:space="preserve">
+    <value>Đăng nhập thành công!</value>
+  </data>
+  <data name="Msg_RegisterSuccess" xml:space="preserve">
+    <value>Đăng ký tài khoản thành công!</value>
+  </data>
+  <data name="Msg_ProfileUpdated" xml:space="preserve">
+    <value>Cập nhật thông tin hồ sơ thành công!</value>
+  </data>
+  <data name="Msg_PasswordChanged" xml:space="preserve">
+    <value>Đổi mật khẩu thành công!</value>
+  </data>
+  <data name="Msg_AddressAdded" xml:space="preserve">
+    <value>Thêm địa chỉ giao hàng mới thành công!</value>
+  </data>
+  <data name="Msg_AddressDeleted" xml:space="preserve">
+    <value>Đã xóa địa chỉ.</value>
+  </data>
+  <data name="Msg_AddressDefaultSet" xml:space="preserve">
+    <value>Đã đổi địa chỉ nhận hàng mặc định.</value>
+  </data>
+</root>

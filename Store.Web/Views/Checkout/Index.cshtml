@@ -1,26 +1,26 @@
 @model PharmacyWeb.Models.ViewModels.CheckoutFormViewModel
 @{
-    ViewData["Title"] = "Thanh Toán & Đặt Hàng";
+    ViewData["Title"] = Loc["Checkout_Title"];
 }
 
 <div class="container py-4" style="max-width: 980px;">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Cart" asp-action="Index" class="text-decoration-none text-muted">Giỏ hàng</a></li>
-            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Thông tin đặt hàng</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Cart" asp-action="Index" class="text-decoration-none text-muted">@Loc["Cart_Title"]</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Loc["Checkout_Heading"]</li>
         </ol>
     </nav>
 
     <h3 class="fw-bold text-dark mb-4">
-        <i class="bi bi-shield-check me-2 text-teal"></i>Xác nhận thông tin & Đặt hàng
+        <i class="bi bi-shield-check me-2 text-teal"></i>@Loc["Checkout_Heading"]
     </h3>
 
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger rounded-3 mb-4">
-            <h6 class="fw-bold mb-1"><i class="bi bi-exclamation-triangle-fill me-1"></i>Vui lòng kiểm tra lại thông tin:</h6>
+            <h6 class="fw-bold mb-1"><i class="bi bi-exclamation-triangle-fill me-1"></i>@Loc["Checkout_ValidationNotice"]</h6>
             <div asp-validation-summary="All" class="small mb-0"></div>
         </div>
     }
@@ -35,49 +35,49 @@
             <div class="col-lg-7">
                 <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-3">
                     <h5 class="fw-bold text-teal mb-3" style="color: var(--color-primary);">
-                        <i class="bi bi-geo-alt me-2"></i>Địa chỉ nhận hàng
+                        <i class="bi bi-geo-alt me-2"></i>@Loc["Checkout_ShippingAddressTitle"]
                     </h5>
 
                     <!-- Recipient Name -->
                     <div class="mb-3">
-                        <label asp-for="RecipientName" class="form-label small fw-semibold text-secondary"></label>
-                        <input asp-for="RecipientName" class="form-control rounded-3" placeholder="Nhập họ và tên người nhận thuốc" />
+                        <label asp-for="RecipientName" class="form-label small fw-semibold text-secondary">@Loc["Checkout_RecipientName"]</label>
+                        <input asp-for="RecipientName" class="form-control rounded-3" placeholder="@Loc["Checkout_RecipientNamePlaceholder"]" />
                         <span asp-validation-for="RecipientName" class="text-danger small"></span>
                     </div>
 
                     <!-- Phone Number -->
                     <div class="mb-3">
-                        <label asp-for="Phone" class="form-label small fw-semibold text-secondary"></label>
-                        <input asp-for="Phone" class="form-control rounded-3" placeholder="Số điện thoại liên hệ nhận hàng (10 chữ số)" />
+                        <label asp-for="Phone" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Phone"]</label>
+                        <input asp-for="Phone" class="form-control rounded-3" placeholder="@Loc["Checkout_PhonePlaceholder"]" />
                         <span asp-validation-for="Phone" class="text-danger small"></span>
                     </div>
 
                     <!-- Address -->
                     <div class="mb-3">
-                        <label asp-for="Address" class="form-label small fw-semibold text-secondary"></label>
-                        <textarea asp-for="Address" rows="2" class="form-control rounded-3" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+                        <label asp-for="Address" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Address"]</label>
+                        <textarea asp-for="Address" rows="2" class="form-control rounded-3" placeholder="@Loc["Checkout_AddressPlaceholder"]"></textarea>
                         <span asp-validation-for="Address" class="text-danger small"></span>
                     </div>
 
                     <!-- Note -->
                     <div class="mb-0">
-                        <label asp-for="Note" class="form-label small fw-semibold text-secondary"></label>
-                        <input asp-for="Note" class="form-control rounded-3" placeholder="Ghi chú thêm cho người giao hàng (nếu có)" />
+                        <label asp-for="Note" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Note"]</label>
+                        <input asp-for="Note" class="form-control rounded-3" placeholder="@Loc["Checkout_NotePlaceholder"]" />
                     </div>
                 </div>
 
                 <!-- Payment Method Card -->
                 <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
                     <h5 class="fw-bold text-teal mb-3" style="color: var(--color-primary);">
-                        <i class="bi bi-credit-card me-2"></i>Phương thức thanh toán
+                        <i class="bi bi-credit-card me-2"></i>@Loc["Checkout_PaymentMethodTitle"]
                     </h5>
 
                     <div class="d-flex flex-column gap-2">
                         <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
                             <input class="form-check-input ms-0 me-2" type="radio" asp-for="PaymentMethod" id="pay_cod" value="COD" checked />
                             <label class="form-check-label w-100" for="pay_cod">
-                                <div class="fw-bold text-dark"><i class="bi bi-cash-coin me-1 text-success"></i>Thanh toán khi nhận hàng</div>
-                                <div class="text-muted small">Khách kiểm tra bưu kiện thuốc và thanh toán tiền mặt trực tiếp cho bưu tá</div>
+                                <div class="fw-bold text-dark"><i class="bi bi-cash-coin me-1 text-success"></i>@Loc["Checkout_COD"]</div>
+                                <div class="text-muted small">@Loc["Checkout_CODDesc"]</div>
                             </label>
                         </div>
 
@@ -87,13 +87,13 @@
                                 <input class="form-check-input ms-0 me-2" type="radio" asp-for="PaymentMethod" id="pay_bank" value="BANK_TRANSFER" />
                                 <label class="form-check-label w-100" for="pay_bank">
                                     <div class="fw-bold text-dark d-flex align-items-center">
-                                        <i class="bi bi-bank me-1 text-primary"></i>Chuyển khoản ngân hàng
+                                        <i class="bi bi-bank me-1 text-primary"></i>@Loc["Checkout_BankTransfer"]
                                         @if (Model.BankTransferInfo.IsDemoAccount)
                                         {
-                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning ms-2" style="font-size: 0.7rem;">Tài khoản demo</span>
+                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning ms-2" style="font-size: 0.7rem;">@Loc["Checkout_DemoAccount"]</span>
                                         }
                                     </div>
-                                    <div class="text-muted small">Chuyển khoản qua tài khoản ngân hàng của nhà thuốc</div>
+                                    <div class="text-muted small">@Loc["Checkout_BankTransferDesc"]</div>
                                 </label>
                             </div>
                         }
@@ -103,10 +103,10 @@
                                 <input class="form-check-input ms-0 me-2" type="radio" id="pay_bank" disabled />
                                 <label class="form-check-label w-100" for="pay_bank">
                                     <div class="fw-bold text-secondary d-flex align-items-center">
-                                        <i class="bi bi-bank me-1"></i>Chuyển khoản ngân hàng
-                                        <span class="badge bg-secondary ms-2" style="font-size: 0.7rem;">Tạm ngưng</span>
+                                        <i class="bi bi-bank me-1"></i>@Loc["Checkout_BankTransfer"]
+                                        <span class="badge bg-secondary ms-2" style="font-size: 0.7rem;">@Loc["Checkout_DemoAccount"]</span>
                                     </div>
-                                    <div class="text-muted small">Phương thức chuyển khoản tạm ngưng phục vụ hoặc chưa thiết lập tài khoản nhận tiền.</div>
+                                    <div class="text-muted small">@Loc["Checkout_BankSuspended"]</div>
                                 </label>
                             </div>
                         }
@@ -117,7 +117,7 @@
             <!-- Right: Order Summary -->
             <div class="col-lg-5">
                 <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
-                    <h5 class="fw-bold text-dark mb-3">Đơn hàng của bạn (@Model.Cart.Items.Count sản phẩm)</h5>
+                    <h5 class="fw-bold text-dark mb-3">@string.Format(Loc["Checkout_OrderItemsTitle"].Value, Model.Cart.Items.Count)</h5>
 
                     <div class="d-flex flex-column gap-2 mb-3 overflow-auto" style="max-height: 220px;">
                         @foreach (var item in Model.Cart.Items)
@@ -133,36 +133,36 @@
                     </div>
 
                     <div class="d-flex justify-content-between mb-2 small">
-                        <span class="text-secondary">Tạm tính:</span>
+                        <span class="text-secondary">@Loc["Cart_Subtotal"]</span>
                         <span class="fw-bold" style="font-variant-numeric: tabular-nums;">@Model.Cart.SubtotalAmount.ToString("N0") ₫</span>
                     </div>
 
                     @if (Model.Cart.DiscountAmount > 0)
                     {
                         <div class="d-flex justify-content-between mb-2 small text-success">
-                            <span>Giảm giá (@Model.Cart.AppliedVoucherCode):</span>
+                            <span>@Loc["Cart_Discount"] (@Model.Cart.AppliedVoucherCode):</span>
                             <span class="fw-bold" style="font-variant-numeric: tabular-nums;">-@Model.Cart.DiscountAmount.ToString("N0") ₫</span>
                         </div>
                     }
 
                     <div class="d-flex justify-content-between mb-3 small">
-                        <span class="text-secondary">Phí giao hàng:</span>
+                        <span class="text-secondary">@Loc["Cart_ShippingFee"]</span>
                         <span class="fw-bold @(Model.Cart.ShippingFee == 0 ? "text-success" : "")" style="font-variant-numeric: tabular-nums;">
-                            @(Model.Cart.ShippingFee == 0 ? "Miễn phí" : $"{Model.Cart.ShippingFee:N0} ₫")
+                            @(Model.Cart.ShippingFee == 0 ? Loc["Cart_Free"] : $"{Model.Cart.ShippingFee:N0} ₫")
                         </span>
                     </div>
 
                     <hr class="text-muted my-3 opacity-25" />
 
                     <div class="d-flex justify-content-between align-items-baseline mb-4">
-                        <span class="fw-bold text-dark fs-6">Tổng cần thanh toán:</span>
+                        <span class="fw-bold text-dark fs-6">@Loc["Checkout_TotalToPay"]</span>
                         <span class="fs-4 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                             @Model.Cart.TotalAmount.ToString("N0") ₫
                         </span>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                        <i class="bi bi-check-circle-fill me-1"></i> Xác nhận & Đặt hàng ngay
+                        <i class="bi bi-check-circle-fill me-1"></i> @Loc["Checkout_ConfirmBtn"]
                     </button>
                 </div>
             </div>

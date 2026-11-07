@@ -83,9 +83,15 @@ builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
 // 5. MVC and Localization
+builder.Services.AddLocalization();
+
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()
-    .AddDataAnnotationsLocalization();
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(PharmacyWeb.SharedResource));
+    });
 
 var supportedCultures = new[]
 {
@@ -98,10 +104,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.DefaultRequestCulture = new RequestCulture("vi-VN");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
-    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider
+    options.RequestCultureProviders.Clear();
+    options.RequestCultureProviders.Add(new CookieRequestCultureProvider
     {
         CookieName = "pharmacy_lang"
     });
+    options.RequestCultureProviders.Add(new QueryStringRequestCultureProvider());
 });
 
 var app = builder.Build();

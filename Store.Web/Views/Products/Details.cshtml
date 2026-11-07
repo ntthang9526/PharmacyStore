@@ -7,8 +7,8 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-muted">Sản phẩm</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-muted">@Loc["Catalog_Breadcrumb"]</a></li>
             <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="@Model.CategoryId" class="text-decoration-none text-muted">@Model.CategoryName</a></li>
             <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Model.Name</li>
         </ol>
@@ -24,13 +24,13 @@
                         @if (Model.IsPrescription)
                         {
                             <span class="status-badge status-badge-warning">
-                                <i class="bi bi-file-earmark-medical me-1"></i>Cần đơn bác sĩ
+                                <i class="bi bi-file-earmark-medical me-1"></i>@Loc["Common_RequiresRx"]
                             </span>
                         }
                         else
                         {
                             <span class="status-badge status-badge-info">
-                                <i class="bi bi-check-circle me-1"></i>Mua trực tiếp
+                                <i class="bi bi-check-circle me-1"></i>@Loc["Common_DirectPurchase"]
                             </span>
                         }
                     </div>
@@ -57,7 +57,7 @@
                     <span class="lc-unit-pill me-1">@Model.CategoryName</span>
                     @if (!string.IsNullOrEmpty(Model.SupplierName))
                     {
-                        <span class="small text-muted">Nhà sản xuất: <strong>@Model.SupplierName</strong></span>
+                        <span class="small text-muted">@Loc["Product_Manufacturer"] <strong>@Model.SupplierName</strong></span>
                     }
                 </div>
 
@@ -66,14 +66,14 @@
                 @if (!string.IsNullOrEmpty(Model.ActiveIngredient))
                 {
                     <div class="mb-2 text-secondary small">
-                        <strong>Hoạt chất chính:</strong> <span class="fw-semibold text-teal" style="color: var(--color-primary);">@Model.ActiveIngredient</span>
+                        <strong>@Loc["Product_ActiveIngredient"]</strong> <span class="fw-semibold text-teal" style="color: var(--color-primary);">@Model.ActiveIngredient</span>
                     </div>
                 }
 
                 @if (!string.IsNullOrEmpty(Model.PackagingSpec))
                 {
                     <div class="mb-3 text-secondary small">
-                        <strong>Quy cách đóng gói:</strong> @Model.PackagingSpec
+                        <strong>@Loc["Product_Packaging"]</strong> @Model.PackagingSpec
                     </div>
                 }
 
@@ -90,19 +90,19 @@
                 <div class="mb-4">
                     @if (!Model.IsSelling)
                     {
-                        <span class="status-badge status-badge-danger"><i class="bi bi-x-circle me-1"></i>Sản phẩm đang ngừng kinh doanh</span>
+                        <span class="status-badge status-badge-danger"><i class="bi bi-x-circle me-1"></i>@Loc["Product_Discontinued"]</span>
                     }
                     else if (Model.AvailableStock <= 0)
                     {
-                        <span class="status-badge status-badge-danger"><i class="bi bi-slash-circle me-1"></i>Tạm hết hàng</span>
+                        <span class="status-badge status-badge-danger"><i class="bi bi-slash-circle me-1"></i>@Loc["Common_OutOfStock"]</span>
                     }
                     else if (Model.AvailableStock <= 5)
                     {
-                        <span class="status-badge status-badge-warning"><i class="bi bi-exclamation-triangle me-1"></i>Sắp hết hàng (còn @Model.AvailableStock @Model.Unit có thể bán)</span>
+                        <span class="status-badge status-badge-warning"><i class="bi bi-exclamation-triangle me-1"></i>@string.Format(Loc["Product_LowStockNotice"].Value, Model.AvailableStock, Model.Unit)</span>
                     }
                     else
                     {
-                        <span class="status-badge status-badge-success"><i class="bi bi-check2-circle me-1"></i>Còn hàng trong kho (@Model.AvailableStock @Model.Unit)</span>
+                        <span class="status-badge status-badge-success"><i class="bi bi-check2-circle me-1"></i>@string.Format(Loc["Product_InStockNotice"].Value, Model.AvailableStock, Model.Unit)</span>
                     }
                 </div>
 
@@ -114,13 +114,13 @@
                             <div class="d-flex gap-2">
                                 <i class="bi bi-exclamation-octagon-fill fs-5"></i>
                                 <div class="small">
-                                    <strong>Thuốc cần đơn bác sĩ:</strong> Theo quy định y tế, sản phẩm này chỉ bán khi có đơn thuốc hợp lệ của bác sĩ và được tư vấn trực tiếp bởi dược sĩ.
+                                    <strong>@Loc["Product_RxAlertTitle"]</strong> @Loc["Product_RxAlertDesc"]
                                 </div>
                             </div>
                         </div>
 
                         <a asp-controller="PrescriptionRequest" asp-action="Index" class="btn-ph btn-ph-rx py-2 px-4 text-decoration-none">
-                            <i class="bi bi-camera-fill me-1"></i> Gửi ảnh đơn thuốc để dược sĩ tư vấn
+                            <i class="bi bi-camera-fill me-1"></i> @Loc["Product_SendRxBtn"]
                         </a>
                     }
                     else if (Model.IsSelling && Model.AvailableStock > 0)
@@ -130,24 +130,24 @@
                             <input type="hidden" name="medicineId" value="@Model.Id" />
 
                             <div class="d-flex align-items-center border rounded-pill p-1 bg-white" style="width: 140px;">
-                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Giảm số lượng" title="Giảm số lượng" onclick="let input=this.nextElementSibling; if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Giảm số lượng" title="Giảm" onclick="let input=this.nextElementSibling; if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">
                                     <i class="bi bi-dash fs-5"></i>
                                 </button>
-                                <input type="number" name="quantity" value="1" min="1" max="@Model.AvailableStock" class="form-control form-control-sm border-0 text-center fw-bold p-0 shadow-none" style="width: 50px;" aria-label="Số lượng sản phẩm" />
-                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Tăng số lượng" title="Tăng số lượng" onclick="let input=this.previousElementSibling; if(parseInt(input.value)<@Model.AvailableStock) input.value=parseInt(input.value)+1;">
+                                <input type="number" name="quantity" value="1" min="1" max="@Model.AvailableStock" class="form-control form-control-sm border-0 text-center fw-bold p-0 shadow-none" style="width: 50px;" aria-label="Quantity" />
+                                <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" aria-label="Tăng số lượng" title="Tăng" onclick="let input=this.previousElementSibling; if(parseInt(input.value)<@Model.AvailableStock) input.value=parseInt(input.value)+1;">
                                     <i class="bi bi-plus fs-5"></i>
                                 </button>
                             </div>
 
                             <button type="submit" class="btn-ph btn-ph-primary py-2 px-4 shadow-sm">
-                                <i class="bi bi-cart-plus-fill me-1"></i> Thêm vào giỏ hàng
+                                <i class="bi bi-cart-plus-fill me-1"></i> @Loc["Product_AddToCartBtn"]
                             </button>
                         </form>
                     }
                     else
                     {
                         <button type="button" class="btn-ph btn-ph-secondary py-2 px-4" disabled>
-                            Sản phẩm hiện đang tạm hết hàng
+                            @Loc["Common_OutOfStock"]
                         </button>
                     }
                 </div>
@@ -158,7 +158,7 @@
     <!-- Description & Storage Instructions -->
     <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
         <h5 class="fw-bold mb-3 text-teal" style="color: var(--color-primary);">
-            <i class="bi bi-file-text me-2"></i>Mô tả sản phẩm &amp; Hướng dẫn sử dụng
+            <i class="bi bi-file-text me-2"></i>@Loc["Product_DescriptionTitle"]
         </h5>
         <div class="product-description lh-base text-secondary">
             @if (!string.IsNullOrWhiteSpace(Model.DescriptionHtml))
@@ -167,7 +167,7 @@
             }
             else
             {
-                <p class="text-muted">Chưa có thông tin mô tả chi tiết cho sản phẩm này.</p>
+                <p class="text-muted">@Loc["Product_NoDescription"]</p>
             }
         </div>
     </div>
@@ -177,7 +177,7 @@
     {
         <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
             <h5 class="fw-bold mb-3 text-teal" style="color: var(--color-primary);">
-                <i class="bi bi-arrow-repeat me-2"></i>Sản phẩm tương tự trong nhóm @Model.CategoryName
+                <i class="bi bi-arrow-repeat me-2"></i>@string.Format(Loc["Product_SimilarTitle"].Value, Model.CategoryName)
             </h5>
             <div class="row g-2 g-md-3">
                 @foreach (var rel in Model.RelatedProducts)

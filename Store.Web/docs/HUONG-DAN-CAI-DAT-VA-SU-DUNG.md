@@ -2,8 +2,8 @@
 
 **Hệ thống:** Website Bán Thuốc & Quản Trị Nhà Thuốc Trực Tuyến (Pharmacy Store Web)  
 **Công nghệ:** ASP.NET Core MVC 8.0, Entity Framework Core, SQL Server (Dùng chung POS)  
-**Ngày cập nhật:** 06/11/2026  
-**Trạng thái kiểm thử:** 39/39 Tests Đạt (100% Passed)
+**Ngày cập nhật:** 07/11/2026  
+**Trạng thái kiểm thử:** 47/47 Tests Đạt (100% Passed) — Lưu trữ file TRX chuẩn
 
 ---
 
@@ -131,9 +131,9 @@ Trong file `Store.Web/appsettings.json`, khu vực `PaymentSettings:BankTransfer
 ### Bước 4: Chạy kiểm thử tự động (Verification Tests)
 Trước khi chạy ứng dụng, chạy toàn bộ bộ test tự động để đảm bảo hệ thống toàn vẹn:
 ```powershell
-dotnet test tests/PharmacyWeb.Tests/PharmacyWeb.Tests.csproj
+dotnet test tests/PharmacyWeb.Tests/PharmacyWeb.Tests.csproj --no-restore -p:GitRepositoryConfigurationScope=local
 ```
-Kết quả cần đạt: **39/39 tests Passed (100%)**.
+Kết quả cần đạt: **47/47 tests Passed (100%)**.
 
 ### Bước 5: Khởi động Website
 Chạy lệnh khởi động ứng dụng:
@@ -150,6 +150,12 @@ Mở trình duyệt và truy cập: **`https://localhost:55441`** hoặc **`http
 ---
 
 ## 4. Hướng Dẫn Sử Dụng — Dành Cho Khách Hàng (Storefront)
+
+### 4.0. Ngôn ngữ hiển thị (Mặc định Tiếng Việt & Đổi Tiếng Anh)
+- **Mặc định Tiếng Việt (`vi-VN`):** Website tự động thiết lập ngôn ngữ mặc định là Tiếng Việt cho tất cả người dùng mới truy cập, không bị ảnh hưởng bởi thiết lập ngôn ngữ trình duyệt.
+- **Chuyển đổi sang Tiếng Anh (`en-US`):** Nhấn vào nút ngôn ngữ `<i class="bi bi-globe"></i> VI` trên thanh Header để chuyển toàn bộ giao diện (Danh mục, Giỏ hàng, Checkout, Lịch sử đơn hàng, Đơn thuốc tư vấn, Header, Footer) sang Tiếng Anh.
+- **Bảo lưu lựa chọn:** Lựa chọn ngôn ngữ được lưu bền vững qua Cookie `pharmacy_lang`.
+- **Định dạng tiền tệ:** Luôn đồng nhất theo Đồng Việt Nam (`₫`), không tự ý đổi sang USD. Tên thuốc và dữ liệu người dùng nhập luôn được giữ nguyên vẹn bản ngữ chuyên môn.
 
 ### 4.1. Đăng ký & Đăng nhập tài khoản
 1. **Đăng ký tài khoản mới:**

@@ -1,6 +1,6 @@
 @model PharmacyWeb.Models.ViewModels.RegisterViewModel
 @{
-    ViewData["Title"] = "Đăng Ký Tài Khoản Khách Hàng";
+    ViewData["Title"] = Loc["Account_RegisterTitle"];
 }
 
 <div class="container py-5" style="max-width: 540px;">
@@ -9,8 +9,8 @@
             <div class="rounded-circle d-flex align-items-center justify-content-center text-white mx-auto mb-2" style="width: 48px; height: 48px; background-color: var(--color-primary);">
                 <i class="bi bi-person-plus-fill fs-3"></i>
             </div>
-            <h4 class="fw-bold text-dark mb-1">Đăng Ký Tài Khoản</h4>
-            <span class="text-muted small">Tạo tài khoản khách hàng để theo dõi đơn và lưu địa chỉ nhận thuốc</span>
+            <h4 class="fw-bold text-dark mb-1">@Loc["Account_RegisterTitle"]</h4>
+            <span class="text-muted small">@Loc["Account_RegisterSubtitle"]</span>
         </div>
 
         @if (!ViewData.ModelState.IsValid)
@@ -24,51 +24,51 @@
             @Html.AntiForgeryToken()
 
             <div class="mb-3">
-                <label asp-for="FullName" class="form-label small fw-semibold text-secondary"></label>
-                <input asp-for="FullName" class="form-control rounded-3" placeholder="Nguyễn Văn A" />
+                <label asp-for="FullName" class="form-label small fw-semibold text-secondary">@Loc["Account_FullName"]</label>
+                <input asp-for="FullName" class="form-control rounded-3" placeholder="@Loc["Account_FullName"]..." />
                 <span asp-validation-for="FullName" class="text-danger small"></span>
             </div>
 
             <div class="row g-2 mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Phone" class="form-label small fw-semibold text-secondary"></label>
+                    <label asp-for="Phone" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Phone"]</label>
                     <input asp-for="Phone" class="form-control rounded-3" placeholder="0912345678" />
                     <span asp-validation-for="Phone" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="Email" class="form-label small fw-semibold text-secondary"></label>
+                    <label asp-for="Email" class="form-label small fw-semibold text-secondary">Email</label>
                     <input asp-for="Email" class="form-control rounded-3" placeholder="email@example.com" />
                     <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Address" class="form-label small fw-semibold text-secondary"></label>
-                <input asp-for="Address" class="form-control rounded-3" placeholder="Số nhà, tên đường, phường, quận/huyện..." />
+                <label asp-for="Address" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Address"]</label>
+                <input asp-for="Address" class="form-control rounded-3" placeholder="@Loc["Checkout_AddressPlaceholder"]" />
                 <span asp-validation-for="Address" class="text-danger small"></span>
             </div>
 
             <div class="row g-2 mb-4">
                 <div class="col-md-6">
-                    <label asp-for="Password" class="form-label small fw-semibold text-secondary"></label>
-                    <input asp-for="Password" class="form-control rounded-3" placeholder="Từ 6 ký tự..." />
+                    <label asp-for="Password" class="form-label small fw-semibold text-secondary">@Loc["Account_Password"]</label>
+                    <input asp-for="Password" class="form-control rounded-3" placeholder="@Loc["Account_Password"]..." />
                     <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="ConfirmPassword" class="form-label small fw-semibold text-secondary"></label>
-                    <input asp-for="ConfirmPassword" class="form-control rounded-3" placeholder="Nhập lại mật khẩu..." />
+                    <label asp-for="ConfirmPassword" class="form-label small fw-semibold text-secondary">@Loc["Account_ConfirmPassword"]</label>
+                    <input asp-for="ConfirmPassword" class="form-control rounded-3" placeholder="@Loc["Account_ConfirmPassword"]..." />
                     <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm mb-3" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                <i class="bi bi-check2-circle me-1"></i> Hoàn tất đăng ký
+                <i class="bi bi-check2-circle me-1"></i> @Loc["Account_CompleteRegistration"]
             </button>
         </form>
 
         <div class="text-center small text-muted">
-            Đã có tài khoản?
-            <a asp-action="Login" class="text-teal fw-bold text-decoration-none" style="color: var(--color-primary);">Đăng nhập ngay</a>
+            @Loc["Account_AlreadyHaveAccount"]
+            <a asp-action="Login" class="text-teal fw-bold text-decoration-none" style="color: var(--color-primary);">@Loc["Account_SignInNow"]</a>
         </div>
     </div>
 </div>

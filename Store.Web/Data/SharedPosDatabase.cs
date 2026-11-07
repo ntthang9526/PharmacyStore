@@ -80,6 +80,16 @@ public static class SharedPosDatabase
                     AND c.name=N'CustomerProfileId')
                 ALTER TABLE dbo.WebUsers WITH CHECK ADD CONSTRAINT FK_WebUsers_PosCustomer
                     FOREIGN KEY(CustomerProfileId) REFERENCES dbo.Customers(Id);
+            IF COL_LENGTH(N'dbo.WebOrders', N'IsRefunded') IS NULL
+                ALTER TABLE dbo.WebOrders ADD [IsRefunded] bit NOT NULL CONSTRAINT DF_WebOrders_IsRefunded DEFAULT 0;
+            IF COL_LENGTH(N'dbo.WebOrders', N'RefundAmount') IS NULL
+                ALTER TABLE dbo.WebOrders ADD [RefundAmount] decimal(18,2) NOT NULL CONSTRAINT DF_WebOrders_RefundAmount DEFAULT 0;
+            IF COL_LENGTH(N'dbo.WebOrders', N'RefundedAt') IS NULL
+                ALTER TABLE dbo.WebOrders ADD [RefundedAt] datetime2 NULL;
+            IF COL_LENGTH(N'dbo.WebOrders', N'RefundedByEmployee') IS NULL
+                ALTER TABLE dbo.WebOrders ADD [RefundedByEmployee] nvarchar(100) NULL;
+            IF COL_LENGTH(N'dbo.WebOrders', N'RefundReason') IS NULL
+                ALTER TABLE dbo.WebOrders ADD [RefundReason] nvarchar(500) NULL;
             COMMIT TRANSACTION;
             GO
             """);
@@ -93,7 +103,7 @@ public static class SharedPosDatabase
         try
         {
             using var command = context.Database.GetDbConnection().CreateCommand();
-            command.CommandText = "SELECT CASE WHEN COL_LENGTH(N'dbo.Batches',N'ReservedQuantity') IS NOT NULL AND OBJECT_ID(N'dbo.WebUsers',N'U') IS NOT NULL THEN 1 ELSE 0 END";
+            command.CommandText = "SELECT CASE WHEN COL_LENGTH(N'dbo.Batches',N'ReservedQuantity') IS NOT NULL AND OBJECT_ID(N'dbo.WebUsers',N'U') IS NOT NULL AND COL_LENGTH(N'dbo.WebOrders',N'IsRefunded') IS NOT NULL THEN 1 ELSE 0 END";
             if (Convert.ToInt32(await command.ExecuteScalarAsync()) != 1)
                 throw new InvalidOperationException("Cần áp dụng Database/IntegratePosDatabase.sql lên database POS trước khi chạy web.");
         }

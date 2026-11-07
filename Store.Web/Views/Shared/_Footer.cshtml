@@ -1,6 +1,8 @@
 @inject PharmacyWeb.Services.IProductService ProductService
 @{
     var footerCategories = (await ProductService.GetCategoriesWithCountAsync()).Take(4).ToList();
+    var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+    var isEn = currentCulture.StartsWith("en");
 }
 
 <footer class="bg-white border-top mt-5 pt-5 pb-4">
@@ -15,64 +17,67 @@
                     <span class="fs-4 fw-bold" style="color: var(--color-primary);">Pharmacy</span>
                 </div>
                 <p class="text-secondary small mb-3">
-                    Hệ thống nhà thuốc tiện lợi phục vụ tư vấn và cung ứng thuốc chất lượng cao, thực phẩm bảo vệ sức khỏe và vật tư y tế.
+                    @(isEn 
+                        ? "Convenient pharmacy system providing certified medicines, dietary supplements, and medical devices." 
+                        : "Hệ thống nhà thuốc tiện lợi phục vụ tư vấn và cung ứng thuốc chất lượng cao, thực phẩm bảo vệ sức khỏe và vật tư y tế.")
                 </p>
                 <div class="alert alert-info py-2 px-3 small border-0 mb-0" style="background-color: var(--color-info-bg); color: var(--color-info);">
                     <i class="bi bi-info-circle-fill me-1"></i>
-                    <strong>Dự án Học tập ASP.NET MVC:</strong> Dữ liệu và hình ảnh sử dụng phục vụ mục đích học thuật bài tập lớn môn học.
+                    <strong>@(isEn ? "ASP.NET MVC Academic Project:" : "Dự án Học tập ASP.NET MVC:")</strong> 
+                    @(isEn ? "Data and imagery are for educational capstone purposes only." : "Dữ liệu và hình ảnh sử dụng phục vụ mục đích học thuật bài tập lớn môn học.")
                 </div>
             </div>
 
             <!-- Quick Links -->
             <div class="col-lg-2 col-md-6 col-6">
-                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">Danh mục thuốc</h6>
+                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">@(isEn ? "Medicine Catalog" : "Danh mục thuốc")</h6>
                 <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
-                    <li><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-secondary">Tất cả sản phẩm</a></li>
-                    <li><a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="text-decoration-none text-secondary">Thuốc mua trực tiếp</a></li>
+                    <li><a asp-controller="Products" asp-action="Index" class="text-decoration-none text-secondary">@(isEn ? "All Products" : "Tất cả sản phẩm")</a></li>
+                    <li><a asp-controller="Products" asp-action="Index" asp-route-DirectPurchaseOnly="true" class="text-decoration-none text-secondary">@(isEn ? "Direct Purchase" : "Thuốc mua trực tiếp")</a></li>
                     @foreach (var c in footerCategories)
                     {
                         <li><a asp-controller="Products" asp-action="Index" asp-route-CategoryId="@c.Id" class="text-decoration-none text-secondary">@c.Name</a></li>
                     }
-                    <li><a asp-controller="PrescriptionRequest" asp-action="Index" class="text-decoration-none text-secondary">Tư vấn đơn thuốc</a></li>
+                    <li><a asp-controller="PrescriptionRequest" asp-action="Index" class="text-decoration-none text-secondary">@(isEn ? "Prescription Advice" : "Tư vấn đơn thuốc")</a></li>
                 </ul>
             </div>
 
             <!-- Policies -->
             <div class="col-lg-3 col-md-6 col-6">
-                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">Chính sách &amp; Hỗ trợ</h6>
+                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">@(isEn ? "Policies & Support" : "Chính sách & Hỗ trợ")</h6>
                 <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
-                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">Chính sách giao nhận &amp; Thanh toán</a></li>
-                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">Quy định bán thuốc theo đơn</a></li>
-                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">Bảo mật thông tin đơn thuốc</a></li>
-                    <li><a asp-controller="Home" asp-action="Contact" class="text-decoration-none text-secondary">Liên hệ &amp; Hỗ trợ khách hàng</a></li>
+                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">@(isEn ? "Delivery & Payment Policy" : "Chính sách giao nhận & Thanh toán")</a></li>
+                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">@(isEn ? "Prescription Medicine Regulations" : "Quy định bán thuốc theo đơn")</a></li>
+                    <li><a asp-controller="Home" asp-action="Policies" class="text-decoration-none text-secondary">@(isEn ? "Medical Data Privacy" : "Bảo mật thông tin đơn thuốc")</a></li>
+                    <li><a asp-controller="Home" asp-action="Contact" class="text-decoration-none text-secondary">@(isEn ? "Customer Contact & Support" : "Liên hệ & Hỗ trợ khách hàng")</a></li>
                 </ul>
             </div>
 
             <!-- Contact Hotline -->
             <div class="col-lg-3 col-md-6">
-                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">Tổng đài chăm sóc</h6>
+                <h6 class="fw-bold mb-3" style="color: var(--color-text-primary);">@(isEn ? "Support Center" : "Tổng đài chăm sóc")</h6>
                 <div class="mb-2">
-                    <span class="text-muted small d-block">Tư vấn mua thuốc & đặt hàng:</span>
+                    <span class="text-muted small d-block">@(isEn ? "Ordering & Pharmacist Advice:" : "Tư vấn mua thuốc & đặt hàng:")</span>
                     <strong class="fs-5" style="color: var(--color-primary);">1800 6928</strong>
-                    <span class="badge bg-light text-secondary ms-1">Miễn phí</span>
+                    <span class="badge bg-light text-secondary ms-1">@(isEn ? "Free" : "Miễn phí")</span>
                 </div>
                 <div class="mb-3">
-                    <span class="text-muted small d-block">Góp ý & Khiếu nại:</span>
+                    <span class="text-muted small d-block">@(isEn ? "Feedback & Inquiries:" : "Góp ý & Khiếu nại:")</span>
                     <strong class="text-dark">1800 6936</strong>
                 </div>
                 <div class="small text-muted">
                     <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
-                    Chi nhánh mẫu: 42 Đường 3/2, Q. Ninh Kiều, Cần Thơ
+                    @(isEn ? "Flagship Store: 42 3/2 Street, Ninh Kieu, Can Tho" : "Chi nhánh mẫu: 42 Đường 3/2, Q. Ninh Kiều, Cần Thơ")
                 </div>
             </div>
         </div>
 
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 small text-muted">
             <div>
-                &copy; @DateTime.UtcNow.Year <strong>Pharmacy Store</strong> — Hệ Thống Bán Hàng &amp; Quản Lý Nhà Thuốc.
+                &copy; @DateTime.UtcNow.Year <strong>Pharmacy Store</strong> — @(isEn ? "Retail & Pharmacy Management System." : "Hệ Thống Bán Hàng & Quản Lý Nhà Thuốc.")
             </div>
             <div class="d-flex gap-3 mt-2 mt-md-0">
-                <span>Dược sĩ tư vấn tận tâm • Giao hàng tận nơi</span>
+                <span>@(isEn ? "Dedicated Pharmacists • Prompt Delivery" : "Dược sĩ tư vấn tận tâm • Giao hàng tận nơi")</span>
             </div>
         </div>
     </div>

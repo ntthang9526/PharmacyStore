@@ -850,9 +850,20 @@ public class OrderService : IOrderService
             return (false, "Chỉ có thể hoàn tiền cho đơn hàng đã ghi nhận thanh toán (PAID).");
         }
 
+        // KT-01: Chặn hoàn tiền và giải phóng tồn sớm khi đơn đang xuất giao (SHIPPING)
+        if (order.OrderStatus == "SHIPPING")
+        {
+            return (false, "Đơn hàng đang giao không thể hoàn tiền theo luồng này. Cần xử lý giao thất bại hoặc nhận hàng trả trước khi hoàn tiền.");
+        }
+
         if (order.OrderStatus == "COMPLETED")
         {
             return (false, "Đơn hàng đã hoàn tất giao hàng thành công, không thể hủy hoàn tiền theo luồng này.");
+        }
+
+        if (order.OrderStatus != "NEW" && order.OrderStatus != "CONFIRMED")
+        {
+            return (false, $"Không thể hoàn tiền cho đơn hàng ở trạng thái {order.OrderStatus}. Chỉ hỗ trợ đơn chưa xuất giao (Chờ xác nhận hoặc Đã xác nhận).");
         }
 
         using var transaction = await _databaseContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);

@@ -1,6 +1,6 @@
 @model PharmacyWeb.Models.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Đăng Nhập Tài Khoản";
+    ViewData["Title"] = Loc["Account_LoginTitle"];
 }
 
 <div class="container py-5" style="max-width: 480px;">
@@ -9,8 +9,8 @@
             <div class="rounded-circle d-flex align-items-center justify-content-center text-white mx-auto mb-2" style="width: 48px; height: 48px; background-color: var(--color-primary);">
                 <i class="bi bi-person-fill fs-3"></i>
             </div>
-            <h4 class="fw-bold text-dark mb-1">Đăng Nhập</h4>
-            <span class="text-muted small">Chào mừng bạn quay lại hệ thống Nhà thuốc Pharmacy</span>
+            <h4 class="fw-bold text-dark mb-1">@Loc["Account_LoginTitle"]</h4>
+            <span class="text-muted small">@Loc["Account_LoginWelcome"]</span>
         </div>
 
         @if (!ViewData.ModelState.IsValid)
@@ -25,19 +25,19 @@
             <input type="hidden" asp-for="ReturnUrl" />
 
             <div class="mb-3">
-                <label asp-for="UsernameOrEmail" class="form-label small fw-semibold text-secondary"></label>
+                <label asp-for="UsernameOrEmail" class="form-label small fw-semibold text-secondary">@Loc["Account_PhoneOrEmail"]</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
-                    <input asp-for="UsernameOrEmail" class="form-control border-start-0" placeholder="Số điện thoại hoặc email..." />
+                    <input asp-for="UsernameOrEmail" class="form-control border-start-0" placeholder="@Loc["Account_PhoneOrEmail"]..." />
                 </div>
                 <span asp-validation-for="UsernameOrEmail" class="text-danger small"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Password" class="form-label small fw-semibold text-secondary"></label>
+                <label asp-for="Password" class="form-label small fw-semibold text-secondary">@Loc["Account_Password"]</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-key"></i></span>
-                    <input asp-for="Password" class="form-control border-start-0" placeholder="Mật khẩu của bạn..." />
+                    <input asp-for="Password" class="form-control border-start-0" placeholder="@Loc["Account_Password"]..." />
                 </div>
                 <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
@@ -45,20 +45,18 @@
             <div class="d-flex justify-content-between align-items-center mb-4 small">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" asp-for="RememberMe" id="remCheck" />
-                    <label class="form-check-label text-muted" for="remCheck">Ghi nhớ đăng nhập</label>
+                    <label class="form-check-label text-muted" for="remCheck">@Loc["Account_RememberMe"]</label>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm mb-3" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập
+                <i class="bi bi-box-arrow-in-right me-1"></i> @Loc["Header_SignIn"]
             </button>
         </form>
 
         <div class="text-center small text-muted mb-4">
-            Chưa có tài khoản?
-            <a asp-action="Register" class="text-teal fw-bold text-decoration-none" style="color: var(--color-primary);">Đăng ký tài khoản mới</a>
+            @Loc["Account_NoAccount"]
+            <a asp-action="Register" class="text-teal fw-bold text-decoration-none" style="color: var(--color-primary);">@Loc["Account_RegisterNew"]</a>
         </div>
-
-        <p class="small text-secondary mb-0">Đã có hồ sơ tại quầy? Liên hệ nhà thuốc để kích hoạt tài khoản mua hàng online.</p>
     </div>
 </div>

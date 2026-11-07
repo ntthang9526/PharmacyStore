@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PharmacyWeb.Data;
@@ -234,13 +235,15 @@ public class ReportService : IReportService
 
     /// <summary>
     /// Xuất báo cáo doanh thu ra định dạng tệp CSV để người vận hành mở trong Excel đối chiếu.
+    /// KT-02: Chuẩn hóa escape toàn bộ trường chuỗi theo chuẩn RFC 4180 (nhân đôi nháy kép và bọc trong nháy kép),
+    /// bảo đảm không bị lệch cột khi dữ liệu chứa dấu phẩy, nháy kép, xuống dòng hoặc ký tự đặc biệt.
     /// </summary>
     public async Task<string> GenerateRevenueCsvAsync(DateTime? fromDate, DateTime? toDate)
     {
         var revenueReport = await GetRevenueReportAsync(fromDate, toDate);
         var csvBuilder = new StringBuilder();
 
-        // Tiêu đề các cột dữ liệu
+        // Tiêu đề các cột dữ liệu (13 cột chuẩn)
         csvBuilder.AppendLine("Mã Đơn,Ngày Đặt,Ngày Thu Tiền,Trạng Thái TT,Khách Hàng,Phương Thức,Số Tiền Thu (VNĐ),Số Tiền Hoàn (VNĐ),Thực Nhận (VNĐ),Ngày Hoàn,Lý Do Hoàn,Người Thu,Người Hoàn");
 
         foreach (var order in revenueReport.Orders)
@@ -251,11 +254,30 @@ public class ReportService : IReportService
             
             decimal netCollectedAmount = order.CollectedInPeriod - order.RefundedInPeriod;
             string paymentStatusText = order.IsRefunded ? "Đã hoàn tiền" : "Đã thanh toán";
-            string escapedRefundReason = (order.RefundReason ?? "-").Replace("\"", "\"\"");
 
-            csvBuilder.AppendLine($"\"{order.OrderCode}\",\"{orderDateVietnamTime}\",\"{paidAtVietnamTime}\",\"{paymentStatusText}\",\"{order.CustomerName}\",\"{order.PaymentMethod}\",{order.CollectedInPeriod:0},{order.RefundedInPeriod:0},{netCollectedAmount:0},\"{refundedAtVietnamTime}\",\"{escapedRefundReason}\",\"{order.PaidBy}\",\"{order.RefundedBy ?? "-"}\"");
+            csvBuilder.AppendLine(string.Join(",",
+                EscapeCsvField(order.OrderCode),
+                EscapeCsvField(orderDateVietnamTime),
+                EscapeCsvField(paidAtVietnamTime),
+                EscapeCsvField(paymentStatusText),
+                EscapeCsvField(order.CustomerName),
+                EscapeCsvField(order.PaymentMethod),
+                order.CollectedInPeriod.ToString("0", CultureInfo.InvariantCulture),
+                order.RefundedInPeriod.ToString("0", CultureInfo.InvariantCulture),
+                netCollectedAmount.ToString("0", CultureInfo.InvariantCulture),
+                EscapeCsvField(refundedAtVietnamTime),
+                EscapeCsvField(order.RefundReason ?? "-"),
+                EscapeCsvField(order.PaidBy ?? "-"),
+                EscapeCsvField(order.RefundedBy ?? "-")
+            ));
         }
 
         return csvBuilder.ToString();
+    }
+
+    private static string EscapeCsvField(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return "\"\"";
+        return $"\"{value.Replace("\"", "\"\"")}\"";
     }
 }

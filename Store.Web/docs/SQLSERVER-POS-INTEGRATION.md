@@ -1,6 +1,6 @@
 # Web dùng chung SQL Server với POS
 
-Cập nhật 05/11/2026. Bản chạy trên máy này dùng `.\SQLEXPRESS`, database `PharmacyStoreDB`, Windows Authentication.
+**Cập nhật 07/11/2026.** Bản chạy trên máy này dùng `.\SQLEXPRESS`, database `PharmacyStoreDB`, Windows Authentication. Đã hoàn tất nâng cấp 5 cột hoàn tiền trên database local và xác nhận bảo toàn 100% dữ liệu gốc POS.
 
 ## Dữ liệu dùng chung
 
@@ -9,6 +9,13 @@ Web đọc/ghi trực tiếp các bảng `Medicines`, `Categories`, `Suppliers`,
 Các bảng riêng của website có tiền tố `Web`: tài khoản Identity, địa chỉ, ảnh, đơn đặt hàng, phân bổ giữ tồn, lịch sử đơn, voucher, yêu cầu tư vấn và phiếu nhập web. Các bảng `Orders`, `OrderDetails`, `StockIns`, `StockInDetails`, `Vouchers`, `Employees` của POS giữ nguyên cấu trúc và ý nghĩa nghiệp vụ.
 
 Do đó báo cáo/đơn/phiếu nhập ở web hiện chỉ liệt kê chứng từ web; chúng không tự nhập toàn bộ lịch sử chứng từ POS. Tồn kho, danh mục và hồ sơ khách là dữ liệu chung. Doanh thu web và POS chưa gộp thành một báo cáo tài chính chung.
+
+Bảng `WebOrders` của website bao gồm đầy đủ 5 cột phục vụ luồng hủy và hoàn tiền an toàn:
+- `IsRefunded` (`bit`, không null, default 0): Đánh dấu đơn đã được hoàn tiền.
+- `RefundAmount` (`decimal(18,2)`, không null, default 0): Số tiền thực tế hoàn lại cho khách.
+- `RefundedAt` (`datetime2`, cho phép null): Thời điểm thực hiện hoàn tiền.
+- `RefundedByEmployee` (`nvarchar(100)`, cho phép null): Tên nhân viên/quản trị viên thực hiện hoàn tiền.
+- `RefundReason` (`nvarchar(500)`, cho phép null): Lý do hoàn tiền (đối chiếu chứng từ).
 
 ## Giữ tồn giữa hai ứng dụng
 
@@ -61,11 +68,10 @@ Web không tự EnsureCreated hay nạp danh mục mẫu vào SQL Server. Khi th
 
 ## Kiểm tra đã thực hiện
 
-- Sao lưu COPY_ONLY trước khi sửa và thử script trên database phục hồi riêng; chạy lại script thành công.
-- 28 kiểm tra tích hợp trên SQL Server: đọc danh mục POS, giữ/hủy/thu tiền, POS nhìn lượng chưa giữ, POS không xuất vượt phần chưa giữ, xử lý lại thu tiền, hai request web tranh tồn cuối, kích hoạt tài khoản khách POS, chặn nhập sai nhà cung cấp và phân biệt lô cùng số nhưng khác hạn.
-- 17 ca xUnit đạt; có thêm test đảm bảo model dùng bảng POS cho danh mục và bảng Web riêng cho đơn/tài khoản. Bộ test hiện vẫn có một test mẫu rỗng từ dự án cũ.
-- Build POS đạt 0 lỗi/0 cảnh báo.
-- Trước/sau bổ sung schema chính: giữ nguyên 73 thuốc, 25 khách, 130 hóa đơn POS, 25 phiếu nhập POS, tổng tồn thực 14.900 và tổng tiền gốc hóa đơn POS 17.060.000 đồng.
-- Website chạy bằng SQL Server local; trang sắp xếp theo giá mở được, hiển thị 71 thuốc active từ POS.
-
-Đã có bản sao lưu SQL Server trước chuyển đổi. Đường dẫn được lưu trong kết quả kiểm tra của cuộc làm việc; không đặt bản backup có dữ liệu khách lên Git.
+- **Sao lưu SQL Server:** Đã tạo bản sao lưu đầy đủ `PharmacyStoreDB_backup_20261107.bak` (1058 pages) trước khi áp dụng nâng cấp.
+- **Cấu trúc SQL Server sau nâng cấp:** Truy vấn `sys.columns` xác nhận đủ 5 cột `IsRefunded`, `RefundAmount`, `RefundedAt`, `RefundedByEmployee`, `RefundReason` trên `dbo.WebOrders`.
+- **Bảo toàn dữ liệu POS:** Trước/sau bổ sung schema chính, số liệu POS nguyên vẹn: 73 thuốc, 74 lô hàng, 25 khách hàng, 130 hóa đơn POS, 25 phiếu nhập POS, tổng tồn thực 14.900 và tổng tiền gốc hóa đơn POS 17.060.000 đồng.
+- **Kiểm thử tự động:** **47/47 ca xUnit đạt 100%**, bao gồm kiểm thử logic nghiệp vụ, phân bổ FEFO, hoàn tiền (chặn đơn đang giao), làm sạch HTML, chuẩn hóa RFC 4180 cho CSV và đa ngôn ngữ VI/EN.
+- **Kiểm tra lịch sử:** 28 kiểm tra tích hợp trên SQL Server: đọc danh mục POS, giữ/hủy/thu tiền, POS nhìn lượng chưa giữ, POS không xuất vượt phần chưa giữ, xử lý lại thu tiền, hai request web tranh tồn cuối, kích hoạt tài khoản khách POS, chặn nhập sai nhà cung cấp và phân biệt lô cùng số nhưng khác hạn.
+- **Build POS & Web:** Đạt 0 lỗi, 0 cảnh báo.
+- **Website chạy thực tế:** Chạy bằng SQL Server local `PharmacyStoreDB`; trang sắp xếp theo giá mở được, hiển thị đầy đủ thuốc active từ POS.

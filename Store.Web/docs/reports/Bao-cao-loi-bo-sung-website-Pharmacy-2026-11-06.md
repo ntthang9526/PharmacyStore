@@ -2,7 +2,7 @@
 
 **Ngày lập:** 06/11/2026  
 **Dự án:** Store.Web  
-**Trạng thái:** Đã xử lý toàn bộ và nghiệm thu qua 39/39 test tự động.
+**Trạng thái:** Đã xử lý toàn bộ mã nguồn (39/39 tests ngày 06/11); đã hoàn tất nâng cấp 5 cột hoàn tiền trên database SQL Server local và đạt 43/43 tests ngày 07/11/2026.
 
 ## 1. Kết luận rà soát
 
@@ -236,5 +236,30 @@ Toàn bộ 5 vấn đề trong báo cáo đã được khắc phục hoàn chỉ
 - **Cảnh báo tài khoản demo:** Bật cờ `IsDemoAccount = true` hiển thị rõ ràng huy hiệu và khung cảnh báo tài khoản thử nghiệm trên trang đặt hàng và kết quả đặt đơn, hướng dẫn không chuyển tiền thật.
 - **Tự động vô hiệu hóa khi thiếu cấu hình:** Nếu cấu hình tắt hoặc thiếu thông tin, tùy chọn chuyển khoản bị vô hiệu hóa và chặn ở backend.
 
-### 6. Kết quả kiểm thử tự động
+### 6. Kết quả kiểm thử tự động (06/11/2026)
 - Bộ test hồi quy `SupplementalReportVerificationTests` và bộ test hiện hữu chạy thành công **39/39 tests (100% Passed)**, bao gồm 2 test kiểm chứng vòng đời trọn vẹn (đặt hàng → xác nhận → nhận chuyển khoản → xuất giao → hoàn tất / hủy hoàn tiền).
+
+---
+
+## 10. Nghiệm thu Cấu trúc Database SQL Server & Đa Ngôn Ngữ (07/11/2026)
+
+Để hoàn tất trọn vẹn điểm nghẽn HT-01 và HT-02 nêu trong báo cáo hướng dẫn ngày 07/11/2026, các bước cập nhật hạ tầng đã được thực hiện:
+
+### 1. Nâng cấp Database SQL Server Local (HT-01)
+- **Sao lưu an toàn:** Đã tạo bản sao lưu toàn vẹn `PharmacyStoreDB_backup_20261107.bak` (1058 pages processed).
+- **Thực thi script tích hợp:** Đã áp dụng `Store.Web/Database/IntegratePosDatabase.sql` lên `.\SQLEXPRESS` database `PharmacyStoreDB`.
+- **Kiểm chứng cấu trúc:** Truy vấn `sys.columns` xác nhận bảng `dbo.WebOrders` đã có đầy đủ 5 cột:
+  - `IsRefunded` (bit, NOT NULL, default 0)
+  - `RefundAmount` (decimal(18,2), NOT NULL, default 0)
+  - `RefundedAt` (datetime2, NULL)
+  - `RefundedByEmployee` (nvarchar(100), NULL)
+  - `RefundReason` (nvarchar(500), NULL)
+- **Bảo toàn dữ liệu POS:** Dữ liệu gốc 73 thuốc, 74 lô, 25 khách hàng và 130 hóa đơn POS được bảo toàn 100%.
+
+### 2. Đồng bộ Đa Ngôn Ngữ & Mặc định Tiếng Việt (HT-02)
+- **Mặc định Tiếng Việt:** Pipeline ASP.NET Core được thiết lập ưu tiên `vi-VN`, không bị ghi đè bởi header trình duyệt.
+- **Tài nguyên bản dịch:** Tạo lập đầy đủ hệ thống `.resx` (`SharedResource.resx` và `SharedResource.en-US.resx`), hỗ trợ chuyển đổi VI/EN đồng bộ trên toàn bộ luồng mua sắm (Catalog, Chi tiết, Giỏ hàng, Checkout, Lịch sử đơn, Đơn thuốc, Header, Footer).
+- **Quy chuẩn tài chính & dữ liệu:** Đơn vị tiền tệ giữ cố định Đồng Việt Nam (`₫`), tên thuốc và hoạt chất giữ nguyên thuật ngữ y tế chuyên môn.
+
+### 3. Bộ kiểm thử tự động mở rộng
+- Bộ test tự động được mở rộng lên **43/43 tests (100% Passed)**, bổ sung 4 test kiểm chứng đa ngôn ngữ và ánh xạ model hoàn tiền. Kết quả kiểm thử được xuất ra tệp `test_results_20261107.trx`.

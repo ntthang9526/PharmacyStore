@@ -1,6 +1,6 @@
 @model PharmacyWeb.Models.ViewModels.PrescriptionUploadViewModel
 @{
-    ViewData["Title"] = "Tư Vấn Đơn Thuốc Bác Sĩ";
+    ViewData["Title"] = Loc["Rx_Title"];
     var requests = ViewBag.Requests as List<PharmacyWeb.Models.ViewModels.PrescriptionRequestItemViewModel> ?? new();
 }
 
@@ -8,8 +8,8 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Tư vấn đơn thuốc</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Loc["Rx_Title"]</li>
         </ol>
     </nav>
 
@@ -22,14 +22,14 @@
                         <i class="bi bi-camera-fill fs-5"></i>
                     </div>
                     <div>
-                        <h5 class="fw-bold mb-0 text-teal" style="color: var(--color-primary);">Gửi Ảnh Đơn Thuốc</h5>
-                        <span class="text-muted small">Dược sĩ phản hồi trong vòng 15 phút</span>
+                        <h5 class="fw-bold mb-0 text-teal" style="color: var(--color-primary);">@Loc["Rx_Heading"]</h5>
+                        <span class="text-muted small">@Loc["Rx_ResponseTime"]</span>
                     </div>
                 </div>
 
                 <div class="alert alert-info py-2 px-3 small border-0 rounded-3 mb-3" style="background-color: var(--color-info-bg); color: var(--color-info);">
                     <i class="bi bi-shield-lock-fill me-1"></i>
-                    <strong>Bảo mật y tế:</strong> Ảnh đơn thuốc được lưu trữ riêng tư, chỉ dược sĩ phụ trách và bạn mới có quyền xem.
+                    <strong>@Loc["Rx_PrivacyNotice"]</strong>
                 </div>
 
                 @if (!ViewData.ModelState.IsValid)
@@ -43,30 +43,30 @@
                     @Html.AntiForgeryToken()
 
                     <div class="mb-3">
-                        <label asp-for="PatientName" class="form-label small fw-semibold text-secondary"></label>
-                        <input asp-for="PatientName" class="form-control rounded-3" placeholder="Họ và tên người bệnh..." />
+                        <label asp-for="PatientName" class="form-label small fw-semibold text-secondary">@Loc["Account_FullName"]</label>
+                        <input asp-for="PatientName" class="form-control rounded-3" placeholder="@Loc["Rx_PatientName"]" />
                         <span asp-validation-for="PatientName" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Phone" class="form-label small fw-semibold text-secondary"></label>
-                        <input asp-for="Phone" class="form-control rounded-3" placeholder="Số điện thoại dược sĩ liên hệ..." />
+                        <label asp-for="Phone" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Phone"]</label>
+                        <input asp-for="Phone" class="form-control rounded-3" placeholder="@Loc["Rx_ContactPhone"]" />
                         <span asp-validation-for="Phone" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="CustomerNote" class="form-label small fw-semibold text-secondary"></label>
-                        <textarea asp-for="CustomerNote" rows="2" class="form-control rounded-3" placeholder="Ghi chú về tiền sử dị ứng, triệu chứng hoặc câu hỏi cho dược sĩ..."></textarea>
+                        <label asp-for="CustomerNote" class="form-label small fw-semibold text-secondary">@Loc["Checkout_Note"]</label>
+                        <textarea asp-for="CustomerNote" rows="2" class="form-control rounded-3" placeholder="@Loc["Rx_CustomerNote"]"></textarea>
                     </div>
 
                     <div class="mb-4">
-                        <label asp-for="Images" class="form-label small fw-semibold text-secondary"></label>
+                        <label asp-for="Images" class="form-label small fw-semibold text-secondary">@Loc["Rx_PhotoUpload"]</label>
                         <input asp-for="Images" type="file" multiple class="form-control rounded-3" accept=".jpg,.jpeg,.png,.webp" required />
-                        <span class="text-muted" style="font-size: 0.75rem;">Hỗ trợ định dạng JPEG, PNG, WebP (Tối đa 5MB/ảnh).</span>
+                        <span class="text-muted" style="font-size: 0.75rem;">@Loc["Rx_PhotoNotice"]</span>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm" style="background-color: var(--color-primary); border-color: var(--color-primary);">
-                        <i class="bi bi-cloud-arrow-up-fill me-1"></i> Gửi đơn cho dược sĩ
+                        <i class="bi bi-cloud-arrow-up-fill me-1"></i> @Loc["Rx_SendBtn"]
                     </button>
                 </form>
             </div>
@@ -76,14 +76,14 @@
         <div class="col-lg-7">
             <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
                 <h5 class="fw-bold text-dark mb-3">
-                    <i class="bi bi-clock-history me-2 text-teal"></i>Đơn thuốc đã gửi (@requests.Count yêu cầu)
+                    <i class="bi bi-clock-history me-2 text-teal"></i>@string.Format(Loc["Rx_MyHistory"].Value, requests.Count)
                 </h5>
 
                 @if (!requests.Any())
                 {
                     <div class="p-5 text-center text-muted">
                         <i class="bi bi-file-earmark-medical display-4 opacity-50 mb-2"></i>
-                        <p class="small mb-0">Bạn chưa gửi ảnh đơn thuốc nào. Vui lòng gửi ảnh ở khung bên trái khi cần mua thuốc kê đơn.</p>
+                        <p class="small mb-0">@Loc["Rx_NoHistory"]</p>
                     </div>
                 }
                 else
@@ -96,34 +96,34 @@
                                     <span class="fw-bold font-monospace text-teal fs-6" style="color: var(--color-primary);">@req.Code</span>
                                     @if (req.Status == "PENDING_REVIEW")
                                     {
-                                        <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>Chờ dược sĩ kiểm tra</span>
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>@Loc["Rx_StatusPending"]</span>
                                     }
                                     else if (req.Status == "NEED_MORE_INFO")
                                     {
-                                        <span class="badge bg-danger text-white"><i class="bi bi-exclamation-triangle me-1"></i>Cần bổ sung ảnh/thông tin</span>
+                                        <span class="badge bg-danger text-white"><i class="bi bi-exclamation-triangle me-1"></i>@Loc["Rx_StatusNeedInfo"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-success text-white"><i class="bi bi-check-circle me-1"></i>Dược sĩ đã phản hồi</span>
+                                        <span class="badge bg-success text-white"><i class="bi bi-check-circle me-1"></i>@Loc["Rx_StatusAnswered"]</span>
                                     }
                                 </div>
 
                                 <div class="small text-muted mb-2">
-                                    <span>Bệnh nhân: <strong>@req.PatientName</strong> (@req.Phone)</span> • 
-                                    <span>Gửi lúc: @req.CreatedAt.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
+                                    <span>@req.PatientName (@req.Phone)</span> • 
+                                    <span>@req.CreatedAt.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
                                 </div>
 
                                 @if (!string.IsNullOrEmpty(req.CustomerNote))
                                 {
                                     <div class="p-2 rounded bg-white small mb-2 border">
-                                        <strong class="text-secondary">Ghi chú của bạn:</strong> @req.CustomerNote
+                                        <strong class="text-secondary">@Loc["Checkout_Note"]:</strong> @req.CustomerNote
                                     </div>
                                 }
 
                                 @if (!string.IsNullOrEmpty(req.PharmacistNote))
                                 {
                                     <div class="p-2 rounded bg-success-subtle border border-success-subtle small mb-2 text-dark">
-                                        <div class="fw-bold text-success mb-1"><i class="bi bi-chat-quote-fill me-1"></i>Phản hồi từ Dược sĩ:</div>
+                                        <div class="fw-bold text-success mb-1"><i class="bi bi-chat-quote-fill me-1"></i>@Loc["Rx_PharmacistFeedback"]</div>
                                         <div>@req.PharmacistNote</div>
                                     </div>
                                 }
@@ -133,7 +133,7 @@
                                     @foreach (var img in req.Images)
                                     {
                                         <a href="@img.ViewUrl" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill py-1 px-3" style="font-size: 0.75rem;">
-                                            <i class="bi bi-eye me-1"></i> Xem ảnh đơn (@img.FileName)
+                                            <i class="bi bi-eye me-1"></i> @string.Format(Loc["Rx_ViewImage"].Value, img.FileName)
                                         </a>
                                     }
                                 </div>

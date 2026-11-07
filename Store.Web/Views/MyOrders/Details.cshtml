@@ -1,14 +1,14 @@
 @model PharmacyWeb.Models.ViewModels.OrderResultViewModel
 @{
-    ViewData["Title"] = $"Chi Tiết Đơn Hàng {Model.OrderCode}";
+    ViewData["Title"] = $"{Loc["Orders_Title"]} - {Model.OrderCode}";
 }
 
 <div class="container py-4" style="max-width: 800px;">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a asp-controller="MyOrders" asp-action="Index" class="text-decoration-none text-muted">Đơn hàng của tôi</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">@Loc["Header_Home"]</a></li>
+            <li class="breadcrumb-item"><a asp-controller="MyOrders" asp-action="Index" class="text-decoration-none text-muted">@Loc["Orders_Title"]</a></li>
             <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">@Model.OrderCode</li>
         </ol>
     </nav>
@@ -16,63 +16,63 @@
     <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 border-bottom mb-3 gap-2">
             <div>
-                <h4 class="fw-bold text-dark mb-1">Đơn hàng <span class="font-monospace text-teal">@Model.OrderCode</span></h4>
-                <span class="text-muted small">Thời gian đặt: @Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
+                <h4 class="fw-bold text-dark mb-1">@Loc["Result_OrderCode"] <span class="font-monospace text-teal">@Model.OrderCode</span></h4>
+                <span class="text-muted small">@Loc["Result_OrderTime"] @Model.OrderDate.AddHours(7).ToString("dd/MM/yyyy HH:mm")</span>
             </div>
             <div>
                 @if (Model.OrderStatus == "NEW")
                 {
-                    <span class="badge bg-warning text-dark px-3 py-2 fs-6">Chờ xác nhận</span>
+                    <span class="badge bg-warning text-dark px-3 py-2 fs-6">@Loc["Status_NEW"]</span>
                 }
                 else if (Model.OrderStatus == "CONFIRMED")
                 {
-                    <span class="badge bg-info text-dark px-3 py-2 fs-6">Đã xác nhận</span>
+                    <span class="badge bg-info text-dark px-3 py-2 fs-6">@Loc["Status_CONFIRMED"]</span>
                 }
                 else if (Model.OrderStatus == "SHIPPING")
                 {
-                    <span class="badge bg-primary text-white px-3 py-2 fs-6">Đang giao hàng</span>
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6">@Loc["Status_SHIPPING"]</span>
                 }
                 else if (Model.OrderStatus == "COMPLETED")
                 {
-                    <span class="badge bg-success text-white px-3 py-2 fs-6">Hoàn tất</span>
+                    <span class="badge bg-success text-white px-3 py-2 fs-6">@Loc["Status_COMPLETED"]</span>
                 }
                 else
                 {
-                    <span class="badge bg-danger text-white px-3 py-2 fs-6">Đã hủy</span>
+                    <span class="badge bg-danger text-white px-3 py-2 fs-6">@Loc["Status_CANCELLED"]</span>
                 }
             </div>
         </div>
 
         <div class="row g-3 mb-4 small">
             <div class="col-md-6">
-                <span class="text-muted d-block">Người nhận:</span>
+                <span class="text-muted d-block">@Loc["Result_Recipient"]</span>
                 <strong>@Model.CustomerName (@Model.CustomerPhone)</strong>
             </div>
             <div class="col-md-6">
-                <span class="text-muted d-block">Địa chỉ nhận hàng:</span>
+                <span class="text-muted d-block">@Loc["Checkout_ShippingAddressTitle"]:</span>
                 <strong>@Model.ShippingAddress</strong>
             </div>
             <div class="col-md-6">
-                <span class="text-muted d-block">Phương thức thanh toán:</span>
-                <strong>@(Model.PaymentMethod == "COD" ? "Thanh toán khi nhận hàng" : "Chuyển khoản")</strong>
+                <span class="text-muted d-block">@Loc["Result_PaymentMethod"]</span>
+                <strong>@(Model.PaymentMethod == "COD" ? Loc["Checkout_COD"] : Loc["Checkout_BankTransfer"])</strong>
             </div>
             <div class="col-md-6">
-                <span class="text-muted d-block">Trạng thái thanh toán:</span>
+                <span class="text-muted d-block">@Loc["Result_OrderStatus"]:</span>
                 <span class="badge @(Model.PaymentStatus == "PAID" ? "bg-success" : "bg-secondary")">
-                    @(Model.PaymentStatus == "PAID" ? "Đã thu tiền" : "Chưa thanh toán")
+                    @(Model.PaymentStatus == "PAID" ? Loc["Status_PAID"] : Loc["Status_UNPAID"])
                 </span>
             </div>
         </div>
 
-        <h6 class="fw-bold text-dark mb-2">Danh sách thuốc:</h6>
+        <h6 class="fw-bold text-dark mb-2">@Loc["Result_ItemsTitle"]</h6>
         <div class="table-responsive border rounded-3 mb-4">
             <table class="table table-sm align-middle mb-0">
                 <thead class="table-light small">
                     <tr>
-                        <th class="ps-3 py-2">Tên thuốc</th>
-                        <th class="text-center">Số lượng</th>
-                        <th class="text-end">Đơn giá</th>
-                        <th class="text-end pe-3">Thành tiền</th>
+                        <th class="ps-3 py-2">@Loc["Cart_TableProduct"]</th>
+                        <th class="text-center">@Loc["Cart_TableQty"]</th>
+                        <th class="text-end">@Loc["Cart_TablePrice"]</th>
+                        <th class="text-end pe-3">@Loc["Cart_TableSubtotal"]</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -88,7 +88,7 @@
                 </tbody>
                 <tfoot class="table-light">
                     <tr>
-                        <td colspan="3" class="ps-3 fw-bold">Tổng thanh toán:</td>
+                        <td colspan="3" class="ps-3 fw-bold">@Loc["Cart_TotalAmount"]</td>
                         <td class="text-end pe-3 fs-6 fw-bold text-teal" style="color: var(--color-primary-active); font-variant-numeric: tabular-nums;">
                             @Model.TotalAmount.ToString("N0") ₫
                         </td>
@@ -98,8 +98,8 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 btn-sm">
-                <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách đơn
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-1"></i> @Loc["Common_Back"]
             </a>
         </div>
     </div>
