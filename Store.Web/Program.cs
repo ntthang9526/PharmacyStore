@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using PharmacyWeb.Data;
 using PharmacyWeb.Data.Entities;
-using PharmacyWeb.Data.Seed;
 using PharmacyWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,22 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 var provider = builder.Configuration["DatabaseProvider"] ?? "SqlServer";
 var sqlServerConn = Environment.GetEnvironmentVariable("PHARMACY_CONNECTION_STRING")
     ?? Store.DAL.DatabaseConfiguration.Load(builder.Environment.ContentRootPath);
-var sqliteConn = builder.Configuration.GetConnectionString("SqliteConnection") ?? "Data Source=PharmacyWeb.db";
-
-if (provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+if (!provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
 {
-    builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
-        options.UseSqlServer(sqlServerConn));
+    throw new InvalidOperationException("Website dùng SQL Server chung với POS.");
 }
-else if (provider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase) && builder.Environment.IsEnvironment("Testing"))
-{
-    builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
-        options.UseSqlite(sqliteConn));
-}
-else
-{
-    throw new InvalidOperationException("Website dùng SQL Server chung với POS. SQLite chỉ dành cho môi trường Testing.");
-}
+builder.Services.AddDbContext<PharmacyWebDbContext>(options =>
+    options.UseSqlServer(sqlServerConn));
 
 // 2. Identity Configuration
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -123,10 +112,7 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<PharmacyWebDbContext>();
         var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleMgr = services.GetRequiredService<RoleManager<ApplicationRole>>();
-        if (context.Database.IsSqlServer())
-            await SharedPosDatabase.InitializeAsync(context, userMgr, roleMgr, builder.Environment.ContentRootPath);
-        else
-            await DbInitializer.InitializeAsync(context, userMgr, roleMgr);
+        await SharedPosDatabase.InitializeAsync(context, userMgr, roleMgr, builder.Environment.ContentRootPath);
     }
     catch (Exception ex)
     {

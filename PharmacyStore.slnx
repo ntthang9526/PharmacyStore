@@ -13,13 +13,4 @@
   <Folder Name="/Shared/">
     <Project Path="Store.Shared/Store.Shared.csproj" Id="7e7f8d12-09bf-4bd9-9a3b-aa9da83abf6c" />
   </Folder>
-  <Folder Name="/Tests/">
-    <Project Path="Store.SmokeTests/Store.SmokeTests.csproj" />
-  </Folder>
-  <Folder Name="/Documentation/">
-    <File Path="README.md" />
-    <File Path="Docs/MERGE-NOTES.md" />
-    <File Path="Docs/SELLING-STATUS.md" />
-    <File Path="Docs/DOCUMENT-HISTORY.md" />
-  </Folder>
 </Solution>

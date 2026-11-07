@@ -17,7 +17,8 @@ Store.Web/.env.web
 *.user
 *.userosscache
 *.sln.docstates
-#Hi
+
+# Local documents and old smoke checks
 /Docs/
 /Store.SmokeTests/
 # User-specific files (MonoDevelop/Xamarin Studio)
@@ -490,3 +491,7 @@ $RECYCLE.BIN/
 
 # Generated review and test outputs
 graphify-out/
+
+# Local database backups
+*.bak
+*.trn
