@@ -21,25 +21,23 @@ public class CartController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Add(int medicineId, int quantity = 1)
+    public async Task<IActionResult> Add(int medicineId, int quantity = 1, string? returnUrl = null)
     {
         var success = await _cartService.AddToCartAsync(medicineId, quantity);
-        if (!success)
-        {
-            TempData["ErrorMessage"] = "Không thể thêm sản phẩm vào giỏ (thuốc kê đơn, tạm hết hàng hoặc vượt quá số lượng có thể bán).";
-        }
-        else
-        {
-            TempData["SuccessMessage"] = "Đã thêm sản phẩm vào giỏ hàng!";
-        }
+        var message = success
+            ? "Đã thêm vào giỏ hàng."
+            : "Không thêm được. Kiểm tra lại thuốc và số lượng.";
 
         if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
         {
             var cart = await _cartService.GetCartAsync();
-            return Json(new { success, cartCount = cart.Items.Sum(i => i.Quantity), message = TempData["SuccessMessage"] ?? TempData["ErrorMessage"] });
+            return Json(new { success, cartCount = cart.Items.Sum(i => i.Quantity), message });
         }
 
-        return RedirectToAction(nameof(Index));
+        TempData[success ? "SuccessMessage" : "ErrorMessage"] = message;
+        return Url.IsLocalUrl(returnUrl)
+            ? LocalRedirect(returnUrl!)
+            : RedirectToAction("Index", "Products");
     }
 
     [HttpPost]

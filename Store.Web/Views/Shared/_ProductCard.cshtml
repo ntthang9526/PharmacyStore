@@ -53,8 +53,9 @@
         }
         else if (Model.IsSelling && Model.AvailableStock > 0)
         {
-            <form asp-controller="Cart" asp-action="Add" method="post" class="m-0 w-100">
+            <form asp-controller="Cart" asp-action="Add" method="post" class="m-0 w-100" data-add-to-cart>
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@string.Concat(Context.Request.PathBase, Context.Request.Path, Context.Request.QueryString)" />
                 <input type="hidden" name="medicineId" value="@Model.Id" />
                 <input type="hidden" name="quantity" value="1" />
                 <button type="submit" class="btn-ph btn-ph-primary w-100">
