@@ -6,18 +6,21 @@ CHAY WEBSITE PHARMACY TREN WINDOWS
 2. Chuan bi database PharmacyStoreDB:
    - Neu duoc giao file .bak: Restore trong SSMS, dung SQL Server tuong thich
      voi phien ban tao backup. Khong ghi de database dang co du lieu can giu.
-   - Neu cai moi hoan toan: chay Store.DAL/Database/InitDatabase.sql.
-     File nay chi danh cho database chua ton tai. Trong SSMS, bat
-     Query > SQLCMD Mode khi chay file nay; hoac dung sqlcmd.
+   - Neu cai moi: mo Store.DAL/Database/InitDatabase.sql trong SSMS,
+     ket noi SQL Server local va nhan F5 chay TOAN BO file mot lan.
+     Khong can bat SQLCMD Mode. File tu tao PharmacyStoreDB, cau truc POS
+     va web, 123 thuoc, 12 nhom, 18 NCC, 27 khach hang, 124 lo,
+     130 hoa don POS, 25 phieu nhap, 16 voucher va 1 don web mau.
+     Chi tao moi; neu PharmacyStoreDB da ton tai, script dung de tranh
+     ghi de. Khong xoa database cu neu chua sao luu du lieu can giu.
 
-3. Chon dung database PharmacyStoreDB va chay lan luot:
-   Store.Web/Database/IntegratePosDatabase.sql
-   Store.Web/Database/Catalog/LongChau-20261107/Apply-Catalog.sql
-   Store.Web/Database/Catalog/LongChau-20261107/Seed-SampleStock.sql
-   Store.Web/Database/CleanSubmissionData.sql
-   Sao luu truoc khi chay tren database dang su dung.
-   Neu dung sqlcmd, them -f 65001 de doc SQL dung UTF-8.
-   Ton kho va han dung tu Seed-SampleStock.sql la du lieu gia dinh cho bai tap.
+3. Sau InitDatabase.sql KHONG can chay them cac script tich hop/catalog/ton kho.
+   Du lieu la ban mau cho bai tap; thong tin lien he da duoc thay the.
+   Khong sao chep tai khoan web cu. Khach hang web tu dang ky moi.
+   POS mau: admin / PharmacyPos!2026. Doi mat khau neu dung ngoai bai tap.
+   Neu dung sqlcmd: sqlcmd -S ".\SQLEXPRESS" -E -C -b -f 65001 -i ".\Store.DAL\Database\InitDatabase.sql"
+   Du an chi giu InitDatabase.sql. Database cu thieu cau truc can duoc sao
+   luu va nang cap rieng; khong chay init de thay the du lieu dang su dung.
 
 4. O thu muc goc, copy .env.example thanh .env.
    Sua DB_SERVER theo ten server dung de ket noi SSMS.

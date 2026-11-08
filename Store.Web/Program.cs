@@ -139,7 +139,7 @@ using (var scope = app.Services.CreateScope())
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Lỗi xảy ra trong quá trình khởi tạo dữ liệu mẫu (Seed).");
-        throw new InvalidOperationException("Chưa khởi tạo được database web dùng chung POS. Kiểm tra .env và script Database/IntegratePosDatabase.sql.", ex);
+        throw new InvalidOperationException("Chưa khởi tạo được website. Kiểm tra .env, .env.web và hướng dẫn CHAY-LOCAL.txt. Database mới cần chạy Store.DAL/Database/InitDatabase.sql.", ex);
     }
 }
 
