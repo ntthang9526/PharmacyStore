@@ -1,0 +1,45 @@
+CHAY WEBSITE PHARMACY TREN WINDOWS
+
+1. Cai .NET SDK 8, SQL Server va SSMS (hoac sqlcmd).
+   Lay ca thu muc PharmacyStore, khong chi lay rieng Store.Web.
+
+2. Chuan bi database PharmacyStoreDB:
+   - Neu duoc giao file .bak: Restore trong SSMS, dung SQL Server tuong thich
+     voi phien ban tao backup. Khong ghi de database dang co du lieu can giu.
+   - Neu cai moi hoan toan: chay Store.DAL/Database/InitDatabase.sql.
+     File nay chi danh cho database chua ton tai. Trong SSMS, bat
+     Query > SQLCMD Mode khi chay file nay; hoac dung sqlcmd.
+
+3. Chon dung database PharmacyStoreDB va chay lan luot:
+   Store.Web/Database/IntegratePosDatabase.sql
+   Store.Web/Database/Catalog/LongChau-20261107/Apply-Catalog.sql
+   Store.Web/Database/Catalog/LongChau-20261107/Seed-SampleStock.sql
+   Store.Web/Database/CleanSubmissionData.sql
+   Sao luu truoc khi chay tren database dang su dung.
+   Neu dung sqlcmd, them -f 65001 de doc SQL dung UTF-8.
+   Ton kho va han dung tu Seed-SampleStock.sql la du lieu gia dinh cho bai tap.
+
+4. O thu muc goc, copy .env.example thanh .env.
+   Sua DB_SERVER theo ten server dung de ket noi SSMS.
+   Mac dinh: .\SQLEXPRESS, Windows Authentication, PharmacyStoreDB.
+   Khong can mat khau SQL khi DB_INTEGRATED_SECURITY=true.
+
+5. Neu database chua co Admin web:
+   Copy Store.Web/.env.web.example thanh Store.Web/.env.web.
+   Dien mat khau rieng vao WEB_ADMIN_PASSWORD.
+   File nay chi tao Admin lan dau, khong doi mat khau tai khoan da ton tai.
+   Neu restore database da co Admin: dung tai khoan duoc nhom giao rieng.
+   Tai khoan POS va tai khoan website la hai he thong dang nhap rieng.
+
+6. Mo PowerShell tai thu muc goc du an, chay:
+   dotnet restore .\Store.Web\Store.Web.csproj
+   dotnet dev-certs https --trust
+   dotnet run --project .\Store.Web\Store.Web.csproj --launch-profile Store.Web
+
+7. Mo https://localhost:55441
+   Dang nhap: /Account/Login. Quan tri: /Admin.
+   Khach hang co the tu dang ky tai /Account/Register.
+   Nhan Ctrl+C trong PowerShell de dung website.
+
+Moi may dung database local rieng. Git pull khong tu dong cap nhat database.
+Khong dua .env, .env.web, mat khau hoac file backup len GitHub.
