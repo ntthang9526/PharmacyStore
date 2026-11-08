@@ -105,7 +105,7 @@ public static class SharedPosDatabase
             using var command = context.Database.GetDbConnection().CreateCommand();
             command.CommandText = "SELECT CASE WHEN COL_LENGTH(N'dbo.Batches',N'ReservedQuantity') IS NOT NULL AND OBJECT_ID(N'dbo.WebUsers',N'U') IS NOT NULL AND COL_LENGTH(N'dbo.WebOrders',N'IsRefunded') IS NOT NULL THEN 1 ELSE 0 END";
             if (Convert.ToInt32(await command.ExecuteScalarAsync()) != 1)
-                throw new InvalidOperationException("Database chưa đủ cấu trúc POS và web. Xem CHAY-LOCAL.txt; database mới cần chạy Store.DAL/Database/InitDatabase.sql. Không chạy init để ghi đè database đang có dữ liệu.");
+                throw new InvalidOperationException("Database chưa đủ cấu trúc POS và web. Xem CHAY-LOCAL.txt; InitDatabase.sql sẽ xóa database cũ rồi tạo lại. Hãy sao lưu nếu cần giữ dữ liệu.");
         }
         finally { await context.Database.CloseConnectionAsync(); }
 

@@ -6,21 +6,36 @@ CHAY WEBSITE PHARMACY TREN WINDOWS
 2. Chuan bi database PharmacyStoreDB:
    - Neu duoc giao file .bak: Restore trong SSMS, dung SQL Server tuong thich
      voi phien ban tao backup. Khong ghi de database dang co du lieu can giu.
-   - Neu cai moi: mo Store.DAL/Database/InitDatabase.sql trong SSMS,
+   - Neu khoi tao/cai lai: mo Store.DAL/Database/InitDatabase.sql trong SSMS,
      ket noi SQL Server local va nhan F5 chay TOAN BO file mot lan.
      Khong can bat SQLCMD Mode. File tu tao PharmacyStoreDB, cau truc POS
      va web, 123 thuoc, 12 nhom, 18 NCC, 27 khach hang, 124 lo,
      130 hoa don POS, 25 phieu nhap, 16 voucher va 1 don web mau.
-     Chi tao moi; neu PharmacyStoreDB da ton tai, script dung de tranh
-     ghi de. Khong xoa database cu neu chua sao luu du lieu can giu.
+     CANH BAO: neu PharmacyStoreDB da ton tai, script se XOA database cu
+     roi tao lai. Mat toan bo du lieu, tai khoan web va thay doi truoc do.
+     Sao luu du lieu can giu, dung website va dong POS truoc khi chay.
+     Cac ket noi toi database cu se bi ngat de xoa database.
+     File SQL luu UTF-8 co BOM. Neu SSMS hoi ma hoa, chon UTF-8.
+     Init tu kiem tra ma hoa truoc khi tao database va chu tieng Viet
+     truoc khi luu du lieu. Neu bao loi 50002/50003, dung lai, lay file goc
+     va mo dung UTF-8; khong bo qua kiem tra hoac chay tung doan cua file.
 
 3. Sau InitDatabase.sql KHONG can chay them cac script tich hop/catalog/ton kho.
+   Nguoi cai moi KHONG can chay RepairUnicodeData.sql.
    Du lieu la ban mau cho bai tap; thong tin lien he da duoc thay the.
    Khong sao chep tai khoan web cu. Khach hang web tu dang ky moi.
    POS mau: admin / PharmacyPos!2026. Doi mat khau neu dung ngoai bai tap.
    Neu dung sqlcmd: sqlcmd -S ".\SQLEXPRESS" -E -C -b -f 65001 -i ".\Store.DAL\Database\InitDatabase.sql"
-   Du an chi giu InitDatabase.sql. Database cu thieu cau truc can duoc sao
-   luu va nang cap rieng; khong chay init de thay the du lieu dang su dung.
+   File khoi tao duy nhat la InitDatabase.sql. Moi lan chay deu tao lai du lieu.
+   Sau khi chay lai init, admin web duoc tao lai tu .env.web khi mo website;
+   tai khoan khach hang cu khong con. Khong dung init de nang cap giu du lieu.
+
+   Neu chu du lieu thanh dau ? (vi du Thu?c), doi font khong khoi phuc duoc.
+   Sao luu database, mo Store.DAL/Database/RepairUnicodeData.sql trong SSMS,
+   chon PharmacyStoreDB va nhan F5. File nay chi sua gia tri du lieu mau
+   khop dung dang mat chu do chuyen sang Windows-1252; khong xoa database,
+   khong sua so tien, ton kho, tai khoan hay ghi de ten da chinh sua rieng.
+   Neu van con chu loi, can doi chieu ban sao luu hoac nguon du lieu goc.
 
 4. O thu muc goc, copy .env.example thanh .env.
    Sua DB_SERVER theo ten server dung de ket noi SSMS.

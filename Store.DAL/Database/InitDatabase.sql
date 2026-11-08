@@ -1,13 +1,21 @@
--- Pharmacy: khởi tạo đầy đủ POS + website, dữ liệu mẫu ngày 08/11/2026.
+﻿-- Pharmacy: khởi tạo đầy đủ POS + website, dữ liệu mẫu ngày 08/11/2026.
 -- Chạy toàn bộ file bằng SSMS (F5), không cần bật SQLCMD Mode.
--- Chỉ tạo database mới; không ghi đè database đã tồn tại.
+-- CHÚ Ý: nếu PharmacyStoreDB đã tồn tại, file sẽ XÓA database đó rồi tạo lại.
+-- Mất toàn bộ dữ liệu và tài khoản web cũ. Sao lưu và đóng POS/website trước khi chạy.
 -- Thông tin liên hệ đã thay bằng dữ liệu mẫu; không chứa tài khoản/mật khẩu web cũ.
 -- Admin web: cấu hình Store.Web/.env.web trước khi chạy website lần đầu.
 -- POS mẫu: admin / PharmacyPos!2026 (đổi mật khẩu nếu sử dụng ngoài bài tập).
 USE [master];
 SET NOCOUNT ON;
+-- Kiểm tra mã hóa trước khi tạo database, tránh lưu mất dấu thành dấu hỏi.
+IF UNICODE(N'ế') <> 7871 OR UNICODE(N'đ') <> 273 OR UNICODE(N'ộ') <> 7897
+    THROW 50002, 'File SQL khong dung Unicode. Mo lai file bang UTF-8; voi sqlcmd dung -f 65001.', 1;
 IF DB_ID(N'PharmacyStoreDB') IS NOT NULL
-    THROW 50001, N'PharmacyStoreDB đã tồn tại. Không ghi đè dữ liệu. Hãy sao lưu và dùng database mới.', 1;
+BEGIN
+    PRINT N'Đang xóa PharmacyStoreDB hiện tại để tạo lại dữ liệu mẫu...';
+    EXEC(N'ALTER DATABASE [PharmacyStoreDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+DROP DATABASE [PharmacyStoreDB];');
+END;
 EXEC(N'CREATE DATABASE [PharmacyStoreDB]');
 EXEC(N'USE [PharmacyStoreDB];
 SET ANSI_NULLS ON; SET QUOTED_IDENTIFIER ON; SET ANSI_PADDING ON; SET ANSI_WARNINGS ON; SET CONCAT_NULL_YIELDS_NULL ON; SET ARITHABORT ON; SET NUMERIC_ROUNDABORT OFF; SET XACT_ABORT ON;
@@ -1707,6 +1715,11 @@ ALTER TABLE [dbo].[WebUserRoles] WITH CHECK CHECK CONSTRAINT ALL;
 ALTER TABLE [dbo].[WebUsers] WITH CHECK CHECK CONSTRAINT ALL;
 ALTER TABLE [dbo].[WebUserTokens] WITH CHECK CHECK CONSTRAINT ALL;
 ALTER TABLE [dbo].[WebVouchers] WITH CHECK CHECK CONSTRAINT ALL;
+-- Mã kiểm tra độc lập với mã hóa file: chỉ lưu dữ liệu khi tiếng Việt còn nguyên.
+IF NOT EXISTS (SELECT 1 FROM dbo.Categories WHERE Id=1 AND HASHBYTES(''SHA2_256'', [Name])=0x2281E474A8DB15AFA35CEE88A99F6769CA7277204B07464549BE21B6BDD3C73B)
+ OR NOT EXISTS (SELECT 1 FROM dbo.Suppliers WHERE Id=3 AND HASHBYTES(''SHA2_256'', [Name])=0x9DFFC11BDE67F1B59DD68E500575324E4D799DCF2A9D4AD2A7CC069E941AD531)
+ OR NOT EXISTS (SELECT 1 FROM dbo.Medicines WHERE Id=1 AND HASHBYTES(''SHA2_256'', [Unit])=0x21BCCA4AE48689A2D1603159C2C04FEDF436BD935A8DCA537B3A8CA2203C1854)
+    THROW 50003, ''Du lieu tieng Viet bi sai ma hoa. Da huy nap du lieu. Mo lai file goc bang UTF-8; voi sqlcmd dung -f 65001.'', 1;
 COMMIT;
 END TRY
 BEGIN CATCH
