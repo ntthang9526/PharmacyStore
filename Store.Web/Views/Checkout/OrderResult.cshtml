@@ -39,56 +39,7 @@
             </div>
         </div>
 
-        @if (Model.PaymentMethod == "BANK_TRANSFER")
-        {
-            var bankInfo = Model.BankTransferInfo;
-            <!-- Bank Transfer Details Card -->
-            <div class="card border border-primary-subtle rounded-3 p-3 mb-4 bg-primary-subtle bg-opacity-10">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h6 class="fw-bold text-primary mb-0">
-                        <i class="bi bi-bank me-1"></i> @Loc["Result_BankGuideTitle"]
-                    </h6>
-                    @if (bankInfo?.IsDemoAccount == true)
-                    {
-                        <span class="badge bg-warning text-dark border border-warning">@Loc["Checkout_DemoAccount"]</span>
-                    }
-                </div>
-
-                @if (bankInfo?.IsDemoAccount == true)
-                {
-                    <div class="alert alert-warning py-2 px-3 small border border-warning rounded-3 mb-3 text-start">
-                        <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
-                        <strong>Lưu ý:</strong> @(bankInfo.DemoNotice ?? "Thông tin tài khoản ngân hàng thử nghiệm phục vụ đồ án/demo. Quý khách vui lòng không thực hiện giao dịch chuyển tiền thật.")
-                    </div>
-                }
-
-                <div class="row g-2 small">
-                    <div class="col-sm-6">
-                        <span class="text-muted d-block">@Loc["Result_BeneficiaryBank"]</span>
-                        <strong class="text-dark">@(bankInfo?.BankName ?? "Vietcombank")</strong>
-                    </div>
-                    <div class="col-sm-6">
-                        <span class="text-muted d-block">@Loc["Result_AccountNumber"]</span>
-                        <strong class="text-dark font-monospace fs-6">@(bankInfo?.AccountNumber ?? "1029384756")</strong>
-                    </div>
-                    <div class="col-sm-6">
-                        <span class="text-muted d-block">@Loc["Result_AccountHolder"]</span>
-                        <strong class="text-dark">@(bankInfo?.AccountHolder ?? "NHA THUOC PHARMACY STORE")</strong>
-                    </div>
-                    <div class="col-sm-6">
-                        <span class="text-muted d-block">@Loc["Result_AmountToPay"]</span>
-                        <strong class="text-success fs-6 fw-bold">@Model.TotalAmount.ToString("N0") ₫</strong>
-                    </div>
-                    <div class="col-12 mt-2 pt-2 border-top">
-                        <span class="text-muted d-block">@Loc["Result_TransferMemo"]</span>
-                        <div class="p-2 bg-white rounded border font-monospace text-primary fw-bold user-select-all">
-                            THANH TOAN @Model.OrderCode
-                        </div>
-                        <small class="text-muted mt-1 d-block">@(bankInfo?.TransferInstruction ?? "Dược sĩ sẽ kiểm tra biến động số dư và xác nhận ngay cho quý khách.")</small>
-                    </div>
-                </div>
-            </div>
-        }
+        <partial name="_BankTransferInstructions" model="Model" />
 
         <!-- Items Table -->
         <h6 class="fw-bold text-dark mb-2">@Loc["Result_ItemsTitle"]</h6>

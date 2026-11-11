@@ -375,9 +375,6 @@
   <data name="Checkout_BankTransferDesc" xml:space="preserve">
     <value>Chuyển khoản qua tài khoản ngân hàng của nhà thuốc</value>
   </data>
-  <data name="Checkout_DemoAccount" xml:space="preserve">
-    <value>Tài khoản demo</value>
-  </data>
   <data name="Checkout_BankSuspended" xml:space="preserve">
     <value>Phương thức chuyển khoản tạm ngưng phục vụ hoặc chưa thiết lập tài khoản nhận tiền.</value>
   </data>

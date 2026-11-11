@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Windows.Forms;
@@ -36,26 +35,7 @@ namespace Store.POS.FormBanHang
 
             try
             {
-                string nganHang = "970415";
-                string soTaiKhoan = "109669936206";
-                string chuTaiKhoan = "NGUYEN TRUNG THANG";
-
-                string soTien = tongTien.ToString(
-                    "0", CultureInfo.InvariantCulture);
-
-                string noiDung = Uri.EscapeDataString(
-                    "THANH TOAN HOA DON");
-
-                string tenTK = Uri.EscapeDataString(
-                    chuTaiKhoan);
-
-                // Sử dụng định dạng SVG mới
-                string url =
-                    "https://img.vietqr.io/image/" +
-                    $"{nganHang}-{soTaiKhoan}-compact.svg" +
-                    $"?amount={soTien}" +
-                    $"&addInfo={noiDung}" +
-                    $"&accountName={tenTK}";
+                string url = Store.Shared.BankTransferDetails.CreateQrImageUrl(tongTien, "THANH TOAN HOA DON");
 
                 using (HttpClient client = new HttpClient())
                 {

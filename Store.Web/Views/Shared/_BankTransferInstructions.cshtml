@@ -1,0 +1,55 @@
+@model OrderResultViewModel
+@using Store.Shared
+@{
+    var bankInfo = Model.BankTransferInfo;
+    var amount = TienTe.LamTron(Model.TotalAmount);
+}
+
+@if (bankInfo is not null
+    && Model.PaymentMethod == "BANK_TRANSFER"
+    && Model.PaymentStatus is ("PENDING_TRANSFER" or "UNPAID")
+    && Model.OrderStatus is not ("CANCELLED" or "COMPLETED")
+    && amount > 0)
+{
+    var memo = $"THANH TOAN {Model.OrderCode}";
+    var qrUrl = BankTransferDetails.CreateQrImageUrl(amount, memo);
+
+    <div class="card border border-primary-subtle rounded-3 p-3 mb-4 bg-primary-subtle text-start">
+        <h6 class="fw-bold text-primary mb-3">
+            <i class="bi bi-bank me-1"></i> @Loc["Result_BankGuideTitle"]
+        </h6>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-sm-auto text-center">
+                <img src="@qrUrl" alt="VietQR - @Model.OrderCode" width="180" height="180"
+                     class="img-fluid bg-white border rounded-3"
+                     referrerpolicy="no-referrer" />
+            </div>
+            <div class="col-sm">
+                <div class="row g-2 small">
+                    <div class="col-6">
+                        <span class="text-muted d-block">@Loc["Result_BeneficiaryBank"]</span>
+                        <strong>@bankInfo.BankName</strong>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-muted d-block">@Loc["Result_AccountNumber"]</span>
+                        <strong class="font-monospace user-select-all">@bankInfo.AccountNumber</strong>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-muted d-block">@Loc["Result_AccountHolder"]</span>
+                        <strong>@bankInfo.AccountHolder</strong>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-muted d-block">@Loc["Result_AmountToPay"]</span>
+                        <strong class="text-success fs-6">@amount.ToString("N0") ₫</strong>
+                    </div>
+                    <div class="col-12">
+                        <span class="text-muted d-block">@Loc["Result_TransferMemo"]</span>
+                        <div class="p-2 bg-white rounded border font-monospace fw-bold user-select-all">@memo</div>
+                        <small class="text-muted mt-2 d-block">@bankInfo.TransferInstruction</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -72,7 +72,7 @@ public class CheckoutController : Controller
             VoucherCode = cart.AppliedVoucherCode,
             IdempotencyKey = Guid.NewGuid().ToString("N"),
             Cart = cart,
-            BankTransferInfo = GetBankTransferInfo()
+            BankTransferInfo = _bankOptions
         };
 
         return View(model);
@@ -84,11 +84,11 @@ public class CheckoutController : Controller
     {
         var cart = await _cartService.GetCartAsync();
         model.Cart = cart;
-        model.BankTransferInfo = GetBankTransferInfo();
+        model.BankTransferInfo = _bankOptions;
 
-        if (model.PaymentMethod == "BANK_TRANSFER" && (!_bankOptions.IsEnabled || string.IsNullOrWhiteSpace(_bankOptions.BankName) || string.IsNullOrWhiteSpace(_bankOptions.AccountNumber)))
+        if (model.PaymentMethod == "BANK_TRANSFER" && !_bankOptions.IsEnabled)
         {
-            ModelState.AddModelError(string.Empty, "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).");
+            ModelState.AddModelError(string.Empty, "Phương thức chuyển khoản ngân hàng hiện tạm ngưng. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).");
             return View("Index", model);
         }
 
@@ -129,7 +129,6 @@ public class CheckoutController : Controller
             return NotFound();
         }
 
-        order.BankTransferInfo ??= GetBankTransferInfo();
         return View(order);
     }
 
@@ -144,9 +143,9 @@ public class CheckoutController : Controller
             return Unauthorized(new { success = false, message = "Vui lòng đăng nhập để đặt hàng." });
         }
 
-        if (model.PaymentMethod == "BANK_TRANSFER" && (!_bankOptions.IsEnabled || string.IsNullOrWhiteSpace(_bankOptions.BankName) || string.IsNullOrWhiteSpace(_bankOptions.AccountNumber)))
+        if (model.PaymentMethod == "BANK_TRANSFER" && !_bankOptions.IsEnabled)
         {
-            return BadRequest(new { success = false, message = "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền." });
+            return BadRequest(new { success = false, message = "Phương thức chuyển khoản ngân hàng hiện tạm ngưng." });
         }
 
         if (!ModelState.IsValid)
@@ -167,19 +166,5 @@ public class CheckoutController : Controller
             orderId = result.OrderId,
             orderCode = result.OrderCode
         });
-    }
-
-    private BankTransferInfoViewModel GetBankTransferInfo()
-    {
-        return new BankTransferInfoViewModel
-        {
-            IsEnabled = _bankOptions.IsEnabled,
-            IsDemoAccount = _bankOptions.IsDemoAccount,
-            BankName = _bankOptions.BankName,
-            AccountNumber = _bankOptions.AccountNumber,
-            AccountHolder = _bankOptions.AccountHolder,
-            TransferInstruction = _bankOptions.TransferInstruction,
-            DemoNotice = _bankOptions.DemoNotice
-        };
     }
 }

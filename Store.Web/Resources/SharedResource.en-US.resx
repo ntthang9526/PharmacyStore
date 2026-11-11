@@ -375,9 +375,6 @@
   <data name="Checkout_BankTransferDesc" xml:space="preserve">
     <value>Direct transfer to pharmacy&apos;s official bank account</value>
   </data>
-  <data name="Checkout_DemoAccount" xml:space="preserve">
-    <value>Demo account</value>
-  </data>
   <data name="Checkout_BankSuspended" xml:space="preserve">
     <value>Bank transfer method is currently suspended or not configured.</value>
   </data>

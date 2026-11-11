@@ -66,18 +66,7 @@ public class CheckoutFormViewModel
 
     // Summary for display
     public CartViewModel Cart { get; set; } = new();
-    public BankTransferInfoViewModel? BankTransferInfo { get; set; }
-}
-
-public class BankTransferInfoViewModel
-{
-    public bool IsEnabled { get; set; } = true;
-    public bool IsDemoAccount { get; set; } = true;
-    public string BankName { get; set; } = string.Empty;
-    public string AccountNumber { get; set; } = string.Empty;
-    public string AccountHolder { get; set; } = string.Empty;
-    public string TransferInstruction { get; set; } = string.Empty;
-    public string DemoNotice { get; set; } = string.Empty;
+    public BankTransferOptions? BankTransferInfo { get; set; }
 }
 
 public class OrderResultViewModel
@@ -93,7 +82,7 @@ public class OrderResultViewModel
     public string PaymentStatus { get; set; } = "UNPAID";
     public DateTime OrderDate { get; set; }
     public List<OrderItemViewModel> Items { get; set; } = new();
-    public BankTransferInfoViewModel? BankTransferInfo { get; set; }
+    public BankTransferOptions? BankTransferInfo { get; set; }
 }
 
 public class OrderItemViewModel

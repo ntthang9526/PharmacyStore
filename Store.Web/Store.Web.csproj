@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="..\Store.DAL\Common\DatabaseConfiguration.cs" Link="Infrastructure\DatabaseConfiguration.cs" />
+    <ProjectReference Include="..\Store.Shared\Store.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

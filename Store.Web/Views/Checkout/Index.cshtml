@@ -81,17 +81,13 @@
                             </label>
                         </div>
 
-                        @if (Model.BankTransferInfo?.IsEnabled == true && !string.IsNullOrWhiteSpace(Model.BankTransferInfo.AccountNumber))
+                        @if (Model.BankTransferInfo?.IsEnabled == true)
                         {
                             <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
                                 <input class="form-check-input ms-0 me-2" type="radio" asp-for="PaymentMethod" id="pay_bank" value="BANK_TRANSFER" />
                                 <label class="form-check-label w-100" for="pay_bank">
                                     <div class="fw-bold text-dark d-flex align-items-center">
                                         <i class="bi bi-bank me-1 text-primary"></i>@Loc["Checkout_BankTransfer"]
-                                        @if (Model.BankTransferInfo.IsDemoAccount)
-                                        {
-                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning ms-2" style="font-size: 0.7rem;">@Loc["Checkout_DemoAccount"]</span>
-                                        }
                                     </div>
                                     <div class="text-muted small">@Loc["Checkout_BankTransferDesc"]</div>
                                 </label>
@@ -104,7 +100,6 @@
                                 <label class="form-check-label w-100" for="pay_bank">
                                     <div class="fw-bold text-secondary d-flex align-items-center">
                                         <i class="bi bi-bank me-1"></i>@Loc["Checkout_BankTransfer"]
-                                        <span class="badge bg-secondary ms-2" style="font-size: 0.7rem;">@Loc["Checkout_DemoAccount"]</span>
                                     </div>
                                     <div class="text-muted small">@Loc["Checkout_BankSuspended"]</div>
                                 </label>

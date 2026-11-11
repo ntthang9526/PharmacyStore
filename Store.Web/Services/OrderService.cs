@@ -80,16 +80,9 @@ public class OrderService : IOrderService
 
         // Kiểm tra tính sẵn sàng của phương thức chuyển khoản ngân hàng (BS-05)
         bool isBankTransfer = model.PaymentMethod == "BANK_TRANSFER";
-        if (isBankTransfer)
+        if (isBankTransfer && !_bankTransferOptions.IsEnabled)
         {
-            bool isBankConfigured = _bankTransferOptions.IsEnabled &&
-                                   !string.IsNullOrWhiteSpace(_bankTransferOptions.BankName) &&
-                                   !string.IsNullOrWhiteSpace(_bankTransferOptions.AccountNumber);
-
-            if (!isBankConfigured)
-            {
-                return (false, "Phương thức chuyển khoản ngân hàng hiện chưa sẵn sàng do chưa cấu hình tài khoản nhận tiền. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).", null, null);
-            }
+            return (false, "Phương thức chuyển khoản ngân hàng hiện tạm ngưng. Quý khách vui lòng chọn thanh toán khi nhận hàng (COD).", null, null);
         }
 
         // Mở transaction Serializable để đảm bảo tranh chấp tồn kho và voucher được xử lý an toàn tuyệt đối
@@ -316,17 +309,6 @@ public class OrderService : IOrderService
             TotalPrice = item.TotalPrice
         }).ToList();
 
-        var bankTransferInfo = new BankTransferInfoViewModel
-        {
-            IsEnabled = _bankTransferOptions.IsEnabled,
-            IsDemoAccount = _bankTransferOptions.IsDemoAccount,
-            BankName = _bankTransferOptions.BankName,
-            AccountNumber = _bankTransferOptions.AccountNumber,
-            AccountHolder = _bankTransferOptions.AccountHolder,
-            TransferInstruction = _bankTransferOptions.TransferInstruction,
-            DemoNotice = _bankTransferOptions.DemoNotice
-        };
-
         return new OrderResultViewModel
         {
             OrderId = order.Id,
@@ -339,7 +321,7 @@ public class OrderService : IOrderService
             OrderStatus = order.OrderStatus,
             PaymentStatus = order.PaymentStatus,
             OrderDate = order.OrderDate,
-            BankTransferInfo = bankTransferInfo,
+            BankTransferInfo = _bankTransferOptions,
             Items = itemsViewModel
         };
     }
